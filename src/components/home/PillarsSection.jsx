@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Users, HandHeart } from 'lucide-react';
+import { Heart, Users, HandHeart, Cross } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
 const pillars = [
@@ -38,7 +38,10 @@ export default function PillarsSection({ images, isAdmin }) {
           className="text-center mb-20"
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
-          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Three Pillars of Hope</h2>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <Cross className="w-10 h-10 text-primary" strokeWidth={1.5} />
+            <h2 className="font-heading text-4xl sm:text-5xl text-primary">Three Pillars of Hope</h2>
+          </div>
           <blockquote className="font-heading text-xl italic text-primary/70 max-w-2xl mx-auto leading-relaxed mb-6">
             "Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself."
             <span className="block font-body text-sm not-italic text-accent mt-2">— Matthew 22:37–39</span>
