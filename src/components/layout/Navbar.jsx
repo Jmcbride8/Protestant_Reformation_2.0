@@ -89,17 +89,6 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link
-              to="/contact"
-              className={`font-body text-sm tracking-wide transition-colors ${
-                location.pathname === '/' && !scrolled
-                  ? location.pathname === '/contact' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                  : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
-              }`}
-            >
-              Contact
-            </Link>
-
             {/* Community dropdown */}
             <div className="relative" ref={communityRef}>
               <button
@@ -159,6 +148,18 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+
+            <Link
+              to="/contact"
+              className={`font-body text-sm tracking-wide transition-colors ${
+                location.pathname === '/' && !scrolled
+                  ? location.pathname === '/contact' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                  : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
+              }`}
+            >
+              Contact
+            </Link>
+
             {user ? (
               <div className="flex items-center gap-3">
                 {user.role === 'admin' && (
