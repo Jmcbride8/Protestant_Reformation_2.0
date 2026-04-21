@@ -14,7 +14,7 @@ export default function Footer() {
               className="h-16 w-auto brightness-0 invert mb-4"
             />
             <p className="font-body text-sm text-primary-foreground/70 leading-relaxed">
-              A community anchored in faith, built on love, and open to all.
+              A community anchored in faith, built on truth and love, and open to all.
             </p>
           </div>
 
