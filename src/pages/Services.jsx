@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { 
   HeartHandshake, Baby, Briefcase, BookOpen, HandHeart, Cross, 
-  Heart, UtensilsCrossed, Clock, MapPin, ArrowRight, Calendar
+  Heart, UtensilsCrossed, Clock, MapPin, ArrowRight, GraduationCap, Home
 } from 'lucide-react';
 
 const lifeServices = [
@@ -44,6 +44,41 @@ const lifeServices = [
     description: "Ready to take the next step in your faith journey? We'd love to walk with you through baptism, membership, and becoming part of the Hope Church family.",
     cta: "Learn More"
   }
+];
+
+const communityGroups = [
+  {
+    icon: GraduationCap,
+    audience: "UCSB Students",
+    tag: "College Ministry",
+    title: "You Belong Here — Even If You Just Moved",
+    description: "Far from home, juggling classes, and searching for something real? Our college ministry is a judgment-free space built specifically for UCSB students. We gather Friday nights for dinner, honest conversation, and faith that doesn't require you to have it together.",
+    bullets: [
+      "Free Friday night dinners — no cost, no strings",
+      "Small groups by major and interest",
+      "Mentorship with local professionals & alumni",
+      "Rides to Sunday service from campus",
+    ],
+    cta: "Connect With Us",
+    accentClass: "bg-accent/10 border-accent/20",
+    badgeClass: "bg-accent/15 text-accent",
+  },
+  {
+    icon: Home,
+    audience: "Young Families",
+    tag: "Family Ministry",
+    title: "Raising Kids Is Hard. We're In This Together.",
+    description: "Whether your kids are in diapers or dodgeball, our young family community was built for parents who want to raise their children in faith without doing it alone. From playdates to parenting workshops, there's a place for your whole family here.",
+    bullets: [
+      "Sunday kids' program (birth through 5th grade)",
+      "Monthly family dinners & playdates",
+      "Parenting workshops led by local counselors",
+      "Babysitting co-op for date nights",
+    ],
+    cta: "Meet the Family",
+    accentClass: "bg-secondary border-border/50",
+    badgeClass: "bg-primary/10 text-primary",
+  },
 ];
 
 const weeklySchedule = [
@@ -97,6 +132,66 @@ export default function Services() {
                   <Link to="/contact">
                     <Button variant="ghost" className="font-body text-sm p-0 h-auto text-accent hover:text-accent/80">
                       {service.cta} <ArrowRight className="ml-1 w-4 h-4" />
+                    </Button>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Community Groups — College & Young Families */}
+      <section className="py-24 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">You're Not Alone</p>
+            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Made for Your Season</h2>
+            <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Some chapters of life need a community that truly gets it. 
+              We've built two ministries designed exactly for where you are right now.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {communityGroups.map((group, index) => {
+              const Icon = group.icon;
+              return (
+                <motion.div
+                  key={group.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.12 }}
+                  className={`rounded-2xl border p-8 ${group.accentClass}`}
+                >
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-11 h-11 rounded-xl bg-white/70 flex items-center justify-center shadow-sm">
+                      <Icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <span className={`font-body text-xs tracking-wide px-3 py-1 rounded-full font-medium ${group.badgeClass}`}>
+                      {group.tag}
+                    </span>
+                  </div>
+                  <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">{group.audience}</p>
+                  <h3 className="font-heading text-2xl text-primary mb-3 leading-snug">{group.title}</h3>
+                  <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">{group.description}</p>
+                  <ul className="space-y-2 mb-6">
+                    {group.bullets.map((b, i) => (
+                      <li key={i} className="flex items-start gap-2 font-body text-sm text-foreground">
+                        <span className="text-accent mt-0.5">✦</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to="/contact">
+                    <Button variant="ghost" className="font-body text-sm p-0 h-auto text-accent hover:text-accent/80">
+                      {group.cta} <ArrowRight className="ml-1 w-4 h-4" />
                     </Button>
                   </Link>
                 </motion.div>
