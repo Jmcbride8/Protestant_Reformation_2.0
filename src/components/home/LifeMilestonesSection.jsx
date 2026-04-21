@@ -87,8 +87,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               </h3>
               <p className="font-body text-white font-semibold text-lg mb-1">$5 per person</p>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Every Wednesday evening, we share a home-style meal together — at cost. 
-                No membership required. Just come as you are and bring your appetite for good food and great company.
+                Santa Barbara is one of the wealthiest cities in America — and one of the loneliest for those left out. Jesus made a habit of sitting down with the hungry, the overlooked, and the uninvited. Every Wednesday, so do we.
               </p>
               <Link to="/services">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
