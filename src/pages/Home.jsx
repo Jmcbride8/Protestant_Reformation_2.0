@@ -16,6 +16,7 @@ const PILLAR_IMAGES = [
 const WEDDING_IMAGE = "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/f8ec93d73_generated_88529c19.png";
 const MEAL_IMAGE = "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/c5ea470bd_generated_d498e9e2.png";
 const KIDS_IMAGE = "https://images.unsplash.com/photo-1564516287928-4259ef38c4cb?w=600&q=80";
+const COLLEGE_IMAGE = "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80";
 
 export default function Home() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -30,7 +31,7 @@ export default function Home() {
     <div>
       <HeroSection heroImage={HERO_IMAGE} isAdmin={isAdmin} />
       <PillarsSection images={PILLAR_IMAGES} isAdmin={isAdmin} />
-      <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} kidsImage={KIDS_IMAGE} isAdmin={isAdmin} />
+      <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} kidsImage={KIDS_IMAGE} collegeImage={COLLEGE_IMAGE} isAdmin={isAdmin} />
       <ServicesPreview />
       <MemberCarousel isAdmin={isAdmin} />
       <CTASection />
