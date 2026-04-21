@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
 import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart } from 'lucide-react';
 import BudgetManager from '../components/admin/BudgetManager';
@@ -141,13 +142,13 @@ export default function Admin() {
     waitlisted: 'bg-blue-100 text-blue-700',
   };
 
-  const handlePromoteToAdmin = async (member) => {
+  const handleRoleChange = async (memberId, newRole) => {
     try {
-      await base44.functions.invoke('promoteUserToAdmin', { email: member.email });
-      toast.success(`${member.full_name} promoted to Admin`);
+      await base44.entities.MembershipRequest.update(memberId, { member_role: newRole });
+      toast.success(`Role updated to ${newRole}`);
       queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
     } catch (error) {
-      toast.error('User must be invited to the app first');
+      toast.error('Failed to update role');
     }
   };
 
@@ -389,7 +390,7 @@ export default function Admin() {
                   <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">
                     "{app.testimony}"
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 items-center">
                     {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
                       <Button
                         key={status}
@@ -401,16 +402,18 @@ export default function Admin() {
                         {status}
                       </Button>
                     ))}
-                    {app.status === 'approved' && isRegisteredUser && (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="font-body text-xs"
-                        onClick={() => handlePromoteToAdmin(app)}
-                      >
-                        Promote to Staff
-                      </Button>
-                    )}
+                    <Select defaultValue={app.member_role || 'Member'} onValueChange={(role) => handleRoleChange(app.id, role)}>
+                      <SelectTrigger className="w-40 h-8 font-body text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="font-body text-xs">
+                        <SelectItem value="Member">Member</SelectItem>
+                        <SelectItem value="Guest">Guest</SelectItem>
+                        <SelectItem value="Staff">Staff</SelectItem>
+                        <SelectItem value="Admin">Admin</SelectItem>
+                        <SelectItem value="Pastor">Pastor</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               );

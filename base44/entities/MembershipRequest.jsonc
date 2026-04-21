@@ -38,6 +38,18 @@
       "default": "pending",
       "description": "Admin review status"
     },
+    "member_role": {
+      "type": "string",
+      "enum": [
+        "Member",
+        "Guest",
+        "Staff",
+        "Admin",
+        "Pastor"
+      ],
+      "default": "Member",
+      "description": "Role of the member"
+    },
     "admin_notes": {
       "type": "string",
       "description": "Internal notes from admin"
