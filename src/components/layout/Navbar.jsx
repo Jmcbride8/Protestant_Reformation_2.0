@@ -11,8 +11,8 @@ const navLinks = [
 ];
 
 const communityLinks = [
-  { label: 'Groups', sub: 'Find your people', path: '/groups' },
-  { label: 'Services', sub: 'Learn what we offer', path: '/services' },
+  { label: 'Groups', sub: 'Do life Together', path: '/groups' },
+  { label: 'Services', sub: 'Something for every Season', path: '/services' },
 ];
 
 const giveLinks = [
