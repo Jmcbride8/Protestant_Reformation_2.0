@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import EditableImage from '@/components/admin/EditableImage';
 
-export default function HeroSection({ heroImage }) {
+export default function HeroSection({ heroImage, isAdmin }) {
   return (
     <section className="relative min-h-[90vh] flex items-center">
       <div className="absolute inset-0">
-        <img 
-          src={heroImage} 
-          alt="Hope Church Santa Barbara" 
+        <EditableImage
+          imageKey="hero"
+          src={heroImage}
+          alt="Hope Church Santa Barbara"
           className="w-full h-full object-cover"
+          isAdmin={isAdmin}
+          wrapperClassName="absolute inset-0 group/editimg"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-transparent" />
       </div>

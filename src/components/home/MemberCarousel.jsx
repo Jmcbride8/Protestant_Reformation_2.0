@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import EditableImage from '@/components/admin/EditableImage';
 
 const members = [
   {
@@ -38,7 +39,7 @@ const members = [
   },
   {
     name: "The Osei-Bonsu Family",
-    image: "https://images.unsplash.com/photo-1478473495191-2d8d2f8f9b0f?w=600&h=800&fit=crop&crop=center",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=faces",
     profession: "Emmanuel, Grace & their three children",
     shortQuote: "We came from Ghana with nothing but our faith. This church helped us build a new home.",
     testimony: "When we arrived in Santa Barbara, we were overwhelmed. We found Hope through a flyer at the community center. From the first week, people showed up — helping us find an apartment, connecting us with work, welcoming our kids into Sunday school. It wasn't charity; it felt like family. We have never forgotten that, and we try to do the same for every new face we see.",
@@ -46,7 +47,7 @@ const members = [
   },
 ];
 
-export default function MemberCarousel() {
+export default function MemberCarousel({ isAdmin }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [direction, setDirection] = useState(1);
@@ -105,10 +106,13 @@ export default function MemberCarousel() {
                 }`}
                 style={{ aspectRatio: '3/4' }}
               >
-                <img
+                <EditableImage
+                  imageKey={`member_${member.name.toLowerCase().replace(/\s+/g, '_')}`}
                   src={member.image}
                   alt={member.name}
                   className="absolute inset-0 w-full h-full object-cover"
+                  isAdmin={isAdmin && i === 1}
+                  wrapperClassName="absolute inset-0 group/editimg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">

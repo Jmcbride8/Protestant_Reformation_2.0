@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Users, HandHeart } from 'lucide-react';
+import EditableImage from '@/components/admin/EditableImage';
 
 const pillars = [
   {
@@ -26,7 +27,7 @@ const pillars = [
   }
 ];
 
-export default function PillarsSection({ images }) {
+export default function PillarsSection({ images, isAdmin }) {
   return (
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,14 +59,15 @@ export default function PillarsSection({ images }) {
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${isReversed ? 'lg:direction-rtl' : ''}`}
               >
                 <div className={`${isReversed ? 'lg:order-2' : ''}`}>
-                  <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
-                    <img 
-                      src={images[index]} 
-                      alt={pillar.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-                  </div>
+                  <EditableImage
+                    imageKey={`pillar_${pillar.title.toLowerCase()}`}
+                    src={images[index]}
+                    alt={pillar.title}
+                    className="w-full h-full object-cover"
+                    isAdmin={isAdmin}
+                    wrapperClassName="relative overflow-hidden rounded-2xl aspect-[4/3] group/editimg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
                 </div>
                 <div className={`${isReversed ? 'lg:order-1' : ''} space-y-6`}>
                   <div className="inline-flex items-center gap-3 bg-secondary/60 rounded-full px-4 py-2">

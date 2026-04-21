@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Heart, UtensilsCrossed, ArrowRight } from 'lucide-react';
+import EditableImage from '@/components/admin/EditableImage';
 
-export default function LifeMilestonesSection({ weddingImage, mealImage }) {
+export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin }) {
   return (
     <section className="py-24 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -30,13 +31,14 @@ export default function LifeMilestonesSection({ weddingImage, mealImage }) {
             viewport={{ once: true }}
             className="group relative overflow-hidden rounded-2xl"
           >
-            <div className="aspect-[4/3] overflow-hidden">
-              <img 
-                src={weddingImage} 
-                alt="Weddings at Hope Church" 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
+            <EditableImage
+              imageKey="milestone_wedding"
+              src={weddingImage}
+              alt="Weddings at Hope Church"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              isAdmin={isAdmin}
+              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
@@ -66,13 +68,14 @@ export default function LifeMilestonesSection({ weddingImage, mealImage }) {
             viewport={{ once: true }}
             className="group relative overflow-hidden rounded-2xl"
           >
-            <div className="aspect-[4/3] overflow-hidden">
-              <img 
-                src={mealImage} 
-                alt="Community Meals" 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
+            <EditableImage
+              imageKey="milestone_meals"
+              src={mealImage}
+              alt="Community Meals"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              isAdmin={isAdmin}
+              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">

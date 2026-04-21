@@ -1,0 +1,23 @@
+{
+  "name": "SiteImage",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique identifier for the image location (e.g. hero, pillar_faith, member_rivera)"
+    },
+    "url": {
+      "type": "string",
+      "description": "Uploaded image URL"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label shown in the edit button tooltip"
+    }
+  },
+  "required": [
+    "key",
+    "url",
+    "label"
+  ]
+}
