@@ -35,7 +35,15 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [editingSermon, setEditingSermon] = useState(null);
   const [adminSection, setAdminSection] = useState('website');
+  const [donationFilters, setDonationFilters] = useState({ year: '', fund: '' });
   const queryClient = useQueryClient();
+
+  const filteredDonations = donations.filter(d => {
+    const donationYear = new Date(d.created_date).getFullYear().toString();
+    const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
+    const fundMatch = !donationFilters.fund || d.fund === donationFilters.fund;
+    return yearMatch && fundMatch;
+  });
 
   useEffect(() => {
     base44.auth.isAuthenticated().then(async (authed) => {
@@ -363,25 +371,66 @@ export default function Admin() {
 
           {/* Donations Tab */}
           <TabsContent value="donations">
-            <div className="space-y-3">
-              {donations.map(donation => (
-                <div key={donation.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
-                  <div>
-                    <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
-                    <p className="font-body text-xs text-muted-foreground">
-                      {donation.donor_email} • {format(new Date(donation.created_date), 'MMM d, yyyy')}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
-                    <Badge variant="secondary" className="font-body text-xs capitalize">
-                      {donation.fund?.replace('_', ' ')}
-                    </Badge>
-                  </div>
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <div>
+                  <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>
+                  <select 
+                    onChange={(e) => setDonationFilters(prev => ({ ...prev, year: e.target.value }))} 
+                    value={donationFilters.year}
+                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background"
+                  >
+                    <option value="">All Years</option>
+                    {[...new Set(donations.map(d => new Date(d.created_date).getFullYear()))].sort((a,b) => b-a).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
                 </div>
-              ))}
-              {donations.length === 0 && (
-                <p className="font-body text-muted-foreground text-center py-8">No donations yet.</p>
+                <div>
+                  <label className="font-body text-sm text-muted-foreground block mb-1">Fund</label>
+                  <select 
+                    onChange={(e) => setDonationFilters(prev => ({ ...prev, fund: e.target.value }))} 
+                    value={donationFilters.fund}
+                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background"
+                  >
+                    <option value="">All Funds</option>
+                    {['general', 'building_campaign', 'missions', 'youth', 'community_meals'].map(fund => (
+                      <option key={fund} value={fund}>{fund.replace('_', ' ')}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {filteredDonations.map(donation => (
+                  <div key={donation.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                    <div>
+                      <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {donation.donor_email} • {format(new Date(donation.created_date), 'MMM d, yyyy')}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
+                      <Badge variant="secondary" className="font-body text-xs capitalize">
+                        {donation.fund?.replace('_', ' ')}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
+                {filteredDonations.length === 0 && (
+                  <p className="font-body text-muted-foreground text-center py-8">No donations matching filters.</p>
+                )}
+              </div>
+
+              {filteredDonations.length > 0 && (
+                <div className="mt-6 p-4 bg-secondary rounded-lg border border-border/50">
+                  <div className="flex justify-between items-center">
+                    <span className="font-heading text-lg text-primary">Total Donations</span>
+                    <span className="font-heading text-2xl text-primary">${filteredDonations.reduce((sum, d) => sum + (d.amount || 0), 0).toLocaleString()}</span>
+                  </div>
+                  <p className="font-body text-xs text-muted-foreground mt-2">{filteredDonations.length} donation{filteredDonations.length !== 1 ? 's' : ''}</p>
+                </div>
               )}
             </div>
           </TabsContent>
