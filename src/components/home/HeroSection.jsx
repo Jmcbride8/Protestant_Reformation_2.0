@@ -7,7 +7,7 @@ import EditableImage from '@/components/admin/EditableImage';
 
 export default function HeroSection({ heroImage, isAdmin }) {
   return (
-    <section className="relative min-h-[90vh] flex items-center">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <EditableImage
           imageKey="hero"
