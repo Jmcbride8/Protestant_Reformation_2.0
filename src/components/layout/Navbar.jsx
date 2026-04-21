@@ -116,7 +116,7 @@ export default function Navbar() {
               <div className="flex items-center gap-3">
                 {user.role === 'admin' && (
                   <Link to="/admin">
-                    <Button variant="outline" size="sm" className="font-body text-xs">
+                    <Button variant="outline" size="sm" className={`font-body text-xs ${location.pathname === '/' && !scrolled ? 'text-white border-white/60 hover:bg-white/10 hover:text-white' : ''}`}>
                       Admin
                     </Button>
                   </Link>
@@ -124,7 +124,7 @@ export default function Navbar() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="font-body text-xs"
+                  className={`font-body text-xs ${location.pathname === '/' && !scrolled ? 'text-white hover:bg-white/10 hover:text-white' : ''}`}
                   onClick={() => base44.auth.logout()}
                 >
                   Sign Out
@@ -133,7 +133,7 @@ export default function Navbar() {
             ) : (
               <Button 
                 size="sm" 
-                className="font-body text-xs bg-primary hover:bg-primary/90"
+                className={`font-body text-xs ${location.pathname === '/' && !scrolled ? 'bg-white/20 text-white hover:bg-white/30 border border-white/40' : 'bg-primary hover:bg-primary/90'}`}
                 onClick={() => base44.auth.redirectToLogin()}
               >
                 Member Login
