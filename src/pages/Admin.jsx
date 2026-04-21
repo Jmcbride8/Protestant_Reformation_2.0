@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2 } from 'lucide-react';
 import AddNeedForm from '../components/admin/AddNeedForm';
+import AddSermonForm from '../components/sermons/AddSermonForm';
 import { toast } from "sonner";
 
 const serviceLabels = {
@@ -56,6 +57,12 @@ export default function Admin() {
   const { data: signups = [] } = useQuery({
     queryKey: ['adminSignups'],
     queryFn: () => base44.entities.VolunteerSignup.list('-created_date', 100),
+    enabled: !!user,
+  });
+
+  const { data: sermons = [] } = useQuery({
+    queryKey: ['adminSermons'],
+    queryFn: () => base44.entities.Sermon.list('-date', 50),
     enabled: !!user,
   });
 
@@ -109,6 +116,7 @@ export default function Admin() {
             <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteers</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
+            <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
           </TabsList>
 
           {/* Volunteers Tab */}
@@ -190,6 +198,33 @@ export default function Admin() {
               {contacts.length === 0 && (
                 <p className="font-body text-muted-foreground text-center py-8">No contact requests yet.</p>
               )}
+            </div>
+          </TabsContent>
+
+          {/* Sermons Tab */}
+          <TabsContent value="sermons" className="space-y-8">
+            <AddSermonForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminSermons'] })} />
+            <div>
+              <h3 className="font-heading text-xl text-primary mb-4">All Sermons</h3>
+              <div className="space-y-3">
+                {sermons.map(sermon => (
+                  <div key={sermon.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-heading text-base text-primary">{sermon.title}</h4>
+                        {sermon.is_featured && <Badge className="font-body text-xs bg-accent/10 text-accent border-0">Featured</Badge>}
+                      </div>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {sermon.speaker} • {sermon.date}{sermon.series ? ` • ${sermon.series}` : ''}
+                      </p>
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Sermon.delete(sermon.id); queryClient.invalidateQueries({ queryKey: ['adminSermons'] }); }}>
+                      <Trash2 className="w-4 h-4 text-destructive" />
+                    </Button>
+                  </div>
+                ))}
+                {sermons.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>}
+              </div>
             </div>
           </TabsContent>
 

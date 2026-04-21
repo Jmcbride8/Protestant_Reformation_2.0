@@ -13,6 +13,7 @@ import Giving from './pages/Giving';
 import Volunteer from './pages/Volunteer';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import Sermons from './pages/Sermons';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -48,6 +49,7 @@ const AuthenticatedApp = () => {
         <Route path="/giving" element={<Giving />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/sermons" element={<Sermons />} />
         <Route path="/admin" element={<Admin />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />

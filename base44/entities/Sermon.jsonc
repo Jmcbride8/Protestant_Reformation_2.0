@@ -1,0 +1,46 @@
+{
+  "name": "Sermon",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Sermon title"
+    },
+    "speaker": {
+      "type": "string",
+      "description": "Name of the preacher/speaker"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the sermon was delivered"
+    },
+    "youtube_id": {
+      "type": "string",
+      "description": "YouTube video ID (e.g. dQw4w9WgXcQ from the URL)"
+    },
+    "series": {
+      "type": "string",
+      "description": "Sermon series title if part of a series"
+    },
+    "scripture_reference": {
+      "type": "string",
+      "description": "Bible passage (e.g. John 3:16)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief summary of the sermon"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pin to the top of the page"
+    }
+  },
+  "required": [
+    "title",
+    "speaker",
+    "date",
+    "youtube_id"
+  ]
+}

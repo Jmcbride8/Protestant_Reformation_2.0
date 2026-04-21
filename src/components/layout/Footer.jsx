@@ -49,6 +49,7 @@ export default function Footer() {
           <div>
             <h4 className="font-heading text-lg mb-4">Quick Links</h4>
             <div className="space-y-2 font-body text-sm">
+              <Link to="/sermons" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Sermons & Beliefs</Link>
               <Link to="/services" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Life Services</Link>
               <Link to="/giving" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Give</Link>
               <Link to="/volunteer" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Volunteer</Link>

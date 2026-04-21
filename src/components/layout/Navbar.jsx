@@ -7,6 +7,7 @@ import { base44 } from '@/api/base44Client';
 
 const navLinks = [
   { label: 'Home', path: '/' },
+  { label: 'Sermons', path: '/sermons' },
   { label: 'Services', path: '/services' },
   { label: 'Giving', path: '/giving' },
   { label: 'Volunteer', path: '/volunteer' },
