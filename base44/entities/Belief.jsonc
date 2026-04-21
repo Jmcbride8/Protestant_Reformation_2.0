@@ -1,0 +1,43 @@
+{
+  "name": "Belief",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the belief (e.g. The Authority of Scripture)"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short one-line summary shown in the accordion header"
+    },
+    "detail": {
+      "type": "string",
+      "description": "Full expanded text shown when the accordion is opened"
+    },
+    "icon": {
+      "type": "string",
+      "enum": [
+        "BookOpen",
+        "Cross",
+        "Heart",
+        "Globe",
+        "Users",
+        "Zap",
+        "Star",
+        "Church",
+        "Flame",
+        "Shield"
+      ],
+      "description": "Icon name from lucide-react"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order"
+    }
+  },
+  "required": [
+    "title",
+    "summary",
+    "detail"
+  ]
+}
