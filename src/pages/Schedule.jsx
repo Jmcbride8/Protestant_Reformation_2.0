@@ -1,15 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, MapPin, Cross, UtensilsCrossed, BookOpen, HeartHandshake } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
-const weeklySchedule = [
-  { day: "Sunday", time: "9:00 & 11:00 AM", event: "Worship Services", icon: Cross },
-  { day: "Wednesday", time: "6:00 PM", event: "Community Dinner (at cost)", icon: UtensilsCrossed },
-  { day: "Wednesday", time: "7:00 PM", event: "Midweek Study & Prayer", icon: BookOpen },
-  { day: "Saturday", time: "8:00 AM", event: "Men's & Women's Groups", icon: HeartHandshake },
-];
+const iconMap = {
+  Cross, UtensilsCrossed, BookOpen, HeartHandshake
+};
 
 export default function Schedule() {
+  const { data: scheduleItems = [] } = useQuery({
+    queryKey: ['scheduleItems'],
+    queryFn: () => base44.entities.ScheduleItem.list('sort_order', 50),
+  });
   return (
     <div className="pt-20">
       {/* Hero */}
@@ -31,11 +34,11 @@ export default function Schedule() {
       <section className="py-24 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-4">
-            {weeklySchedule.map((item, index) => {
-              const Icon = item.icon;
+            {scheduleItems.filter(item => item.is_active !== false).map((item, index) => {
+              const Icon = iconMap[item.icon_name];
               return (
                 <motion.div
-                  key={index}
+                  key={item.id}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -43,7 +46,7 @@ export default function Schedule() {
                   className="flex items-center gap-6 p-6 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10"
                 >
                   <div className="w-12 h-12 rounded-lg bg-primary-foreground/10 flex items-center justify-center shrink-0">
-                    <Icon className="w-6 h-6" />
+                    {Icon && <Icon className="w-6 h-6" />}
                   </div>
                   <div className="flex-1">
                     <h4 className="font-heading text-lg">{item.event}</h4>

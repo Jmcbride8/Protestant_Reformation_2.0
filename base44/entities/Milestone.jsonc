@@ -1,0 +1,44 @@
+{
+  "name": "Milestone",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the milestone (e.g. Baptism)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the milestone"
+    },
+    "cta": {
+      "type": "string",
+      "description": "Call-to-action button text"
+    },
+    "icon_name": {
+      "type": "string",
+      "enum": [
+        "Droplet",
+        "Heart",
+        "Baby",
+        "Flower2",
+        "Users"
+      ],
+      "description": "Icon name from lucide-react"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the milestone is active"
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "cta",
+    "icon_name"
+  ]
+}
