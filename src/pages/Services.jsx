@@ -7,6 +7,7 @@ import {
   Heart, UtensilsCrossed, Clock, MapPin, ArrowRight, GraduationCap, Home
 } from 'lucide-react';
 
+
 const lifeServices = [
   {
     icon: HeartHandshake,
@@ -76,6 +77,38 @@ const communityGroups = [
       "Babysitting co-op for date nights",
     ],
     cta: "Meet the Family",
+    accentClass: "bg-secondary border-border/50",
+    badgeClass: "bg-primary/10 text-primary",
+  },
+  {
+    icon: HeartHandshake,
+    audience: "Seniors & Elderly",
+    tag: "Senior Ministry",
+    title: "Honor, Community & Care for Every Elder.",
+    description: "Aging can bring isolation, but it doesn't have to. Our senior ministry offers friendship, practical help, and dignity to older members of our community — whether they attend Hope Church or not.",
+    bullets: [
+      "Weekly in-home visits and companionship",
+      "Transportation to Sunday services & appointments",
+      "Monthly senior luncheons and socials",
+      "Pastoral care and end-of-life support",
+    ],
+    cta: "Learn More",
+    accentClass: "bg-accent/10 border-accent/20",
+    badgeClass: "bg-accent/15 text-accent",
+  },
+  {
+    icon: UtensilsCrossed,
+    audience: "Neighbors Experiencing Homelessness",
+    tag: "Street Outreach",
+    title: "Everyone Deserves a Warm Meal and a Kind Word.",
+    description: "Every Thursday morning, our outreach team takes to the streets of Santa Barbara with hot meals, basic supplies, and open hearts. No agenda, no sermon required — just love in action for our unhoused neighbors.",
+    bullets: [
+      "Thursday morning street meals & supply kits",
+      "Connections to local housing & social services",
+      "Shower & laundry access partnerships",
+      "Prayer and pastoral presence, always available",
+    ],
+    cta: "Get Involved",
     accentClass: "bg-secondary border-border/50",
     badgeClass: "bg-primary/10 text-primary",
   },
