@@ -5,49 +5,44 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const members = [
   {
-    name: "Sarah & Tom Mitchell",
-    role: "Members since 2018",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=400&fit=crop&crop=face",
-    shortQuote: "Hope Church gave us a family when we were far from home.",
-    profession: "Nurse & High School Teacher",
-    testimony: "We moved to Santa Barbara in 2017 knowing no one. We'd walked away from church years before — life had gotten complicated. A neighbor invited us to a Wednesday dinner just to get out of the house. We came for the food, but stayed because of the people. Within months, we were in a small group, then leading one. Our faith came alive again in a way we didn't think was possible.",
-    whyHope: "No one asked us to have it together before they welcomed us. That's rare. And that's Jesus."
+    name: "The Rivera Family",
+    image: "https://images.unsplash.com/photo-1581952976147-5a2d15560349?w=600&h=800&fit=crop&crop=center",
+    profession: "Carlos, Maria & their four kids",
+    shortQuote: "We were searching for a church that would grow our whole family in the faith — we found it here.",
+    testimony: "We visited on a random Sunday in 2016, mostly because it was close to home. We didn't expect much. But the kids loved it, and the sermon hit us both hard. We were in a small group within the month. Now our oldest leads the youth worship team and our youngest can recite more Scripture than either of us. Hope Church is woven into the fabric of our family.",
+    whyHope: "They never treated our kids as an afterthought. They were discipled, loved, and taken seriously from day one."
   },
   {
-    name: "Marcus Johnson",
-    role: "Member since 2021",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-    shortQuote: "I came as a skeptic. The Gospel found me here.",
-    profession: "Software Engineer, UCSB Alum",
-    testimony: "I graduated UCSB as a convinced atheist. A coworker dragged me to a Sunday service on a dare. I sat in the back, arms crossed. But the pastor preached from Romans — no fluff, no performance — and something cracked open. I started asking questions nobody got defensive about. A year of honest conversation later, I was baptized in the Pacific.",
-    whyHope: "They let me doubt out loud. And they pointed me to Scripture every single time."
+    name: "The Andersons",
+    image: "https://images.unsplash.com/photo-1511895426328-dc8714191011?w=600&h=800&fit=crop&crop=top",
+    profession: "Newlyweds, married here in 2022",
+    shortQuote: "We got married at Hope. Now we're building our life here.",
+    testimony: "We met through a mutual friend at a young adults' group here. Neither of us was looking for anything serious — in faith or in love. But the community kept drawing us deeper into both. When the time came, there was nowhere else we'd have wanted to exchange our vows. Pastor prayed over us, the whole church celebrated with us. It felt like family.",
+    whyHope: "This place taught us what covenant means — before we made one to each other."
   },
   {
-    name: "Elena Vasquez",
-    role: "Member since 2019",
-    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=400&fit=crop&crop=face",
-    shortQuote: "After my divorce, I didn't think I belonged anywhere. Hope Church disagreed.",
-    profession: "Graphic Designer & Mom of Two",
-    testimony: "My marriage fell apart in 2018. I was embarrassed, broken, and convinced the church had no room for someone like me. A friend from work — who I didn't even know was a Christian — quietly told me about Hope. I came expecting judgment. Instead, the grief support group became my lifeline. Real women, real Scripture, real healing. I've never looked back.",
-    whyHope: "They preach the whole Bible — including the parts about God restoring what's broken. I needed that."
+    name: "The Kimura Family",
+    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&h=800&fit=crop&crop=center",
+    profession: "Kenji, Aiko & two toddlers",
+    shortQuote: "As a Japanese-American family, we weren't sure we'd feel at home. We do.",
+    testimony: "We moved to Santa Barbara from the Bay Area when Kenji's job relocated. We were nervous starting over. We visited half a dozen churches before someone told us about Hope. What struck us first was how genuinely diverse the congregation was — not performatively, but organically. Our daughters are growing up knowing the Gospel and knowing they belong.",
+    whyHope: "The Word is preached faithfully and the table is open wide. That's all we ever wanted."
   },
   {
-    name: "James & Ruth Okafor",
-    role: "Members since 2015",
-    image: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=400&h=400&fit=crop&crop=face",
-    shortQuote: "We've raised our three kids here. This church shaped who they're becoming.",
-    profession: "Accountant & Stay-at-Home Mom",
-    testimony: "We were looking for a church that took children seriously — not just a drop-off nursery, but a place that actually discipled kids. Hope's children's ministry does that. Our kids know their Bibles, they know their church family, and they know they're loved by God. Watching our son lead worship at 14 is something we couldn't have imagined elsewhere.",
-    whyHope: "The preaching is faithful and the community is real. That combination is harder to find than you'd think."
+    name: "Bob & Linda Hartman",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&crop=top",
+    profession: "Retired teachers, grandparents of six",
+    shortQuote: "We've been part of this church for over a decade. It keeps getting richer.",
+    testimony: "We joined Hope in 2013 after decades at another congregation that had slowly drifted from Scripture. What we found here was a return to the basics — expository preaching, genuine community, a passion for the lost. We've watched young families come in, grow, and now serve alongside us. That kind of multigenerational life is rare and beautiful.",
+    whyHope: "At our age, you know what's real. This is real."
   },
   {
-    name: "David Nguyen",
-    role: "Member since 2023",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    shortQuote: "I was homeless for two years. This church saw me as a person.",
-    profession: "Barista & Volunteer Outreach Lead",
-    testimony: "I spent two winters on the streets of Santa Barbara. The outreach team showed up every Thursday — hot food, no lecture. They remembered my name. Eventually one of the volunteers helped me connect with housing services. I got stable, got a job, and started attending. I've been a member for a year now and I lead the same Thursday outreach that found me.",
-    whyHope: "They lived out Matthew 25 before I ever knew the verse. That's the real thing."
+    name: "The Osei-Bonsu Family",
+    image: "https://images.unsplash.com/photo-1622368519655-d3d9a5e3ab23?w=600&h=800&fit=crop&crop=center",
+    profession: "Emmanuel, Grace & their three children",
+    shortQuote: "We came from Ghana with nothing but our faith. This church helped us build a new home.",
+    testimony: "When we arrived in Santa Barbara, we were overwhelmed. We found Hope through a flyer at the community center. From the first week, people showed up — helping us find an apartment, connecting us with work, welcoming our kids into Sunday school. It wasn't charity; it felt like family. We have never forgotten that, and we try to do the same for every new face we see.",
+    whyHope: "They did not just preach hospitality — they practiced it. That is the Gospel with skin on."
   },
 ];
 
