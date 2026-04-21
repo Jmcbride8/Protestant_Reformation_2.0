@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2 } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck } from 'lucide-react';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import AddSermonForm from '../components/sermons/AddSermonForm';
 import { toast } from "sonner";
+import { useMutation } from '@tanstack/react-query';
 
 const serviceLabels = {
   marriage_counseling: 'Marriage Counseling', parenting_support: 'Parenting Support',
@@ -66,6 +67,12 @@ export default function Admin() {
     enabled: !!user,
   });
 
+  const { data: memberships = [] } = useQuery({
+    queryKey: ['adminMemberships'],
+    queryFn: () => base44.entities.MembershipRequest.list('-created_date', 100),
+    enabled: !!user,
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
@@ -103,6 +110,19 @@ export default function Admin() {
     toast.success("Status updated");
   };
 
+  const handleUpdateMembershipStatus = async (id, status) => {
+    await base44.entities.MembershipRequest.update(id, { status });
+    queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
+    toast.success("Membership status updated");
+  };
+
+  const membershipStatusColors = {
+    pending: 'bg-yellow-100 text-yellow-700',
+    approved: 'bg-green-100 text-green-700',
+    declined: 'bg-red-100 text-red-700',
+    waitlisted: 'bg-blue-100 text-blue-700',
+  };
+
   return (
     <div className="pt-20 min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -112,11 +132,19 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="volunteers" className="space-y-6">
-          <TabsList className="bg-secondary font-body">
+          <TabsList className="bg-secondary font-body flex-wrap h-auto">
             <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteers</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
+            <TabsTrigger value="membership" className="gap-2">
+              <UserCheck className="w-4 h-4" /> Membership
+              {memberships.filter(m => m.status === 'pending').length > 0 && (
+                <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                  {memberships.filter(m => m.status === 'pending').length}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           {/* Volunteers Tab */}
@@ -225,6 +253,52 @@ export default function Admin() {
                 ))}
                 {sermons.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>}
               </div>
+            </div>
+          </TabsContent>
+
+          {/* Membership Tab */}
+          <TabsContent value="membership">
+            <div className="space-y-3">
+              {memberships.map(app => (
+                <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h4 className="font-heading text-base text-primary">{app.full_name}</h4>
+                      <p className="font-body text-xs text-muted-foreground">
+                        {app.email}{app.phone ? ` • ${app.phone}` : ''}
+                        {app.how_long_attending ? ` • Attending ${app.how_long_attending}` : ''}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${membershipStatusColors[app.status]}`}>
+                        {app.status}
+                      </span>
+                      {app.baptized && (
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Baptized</span>
+                      )}
+                    </div>
+                  </div>
+                  <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">
+                    "{app.testimony}"
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
+                      <Button
+                        key={status}
+                        variant={app.status === status ? "default" : "outline"}
+                        size="sm"
+                        className="font-body text-xs capitalize"
+                        onClick={() => handleUpdateMembershipStatus(app.id, status)}
+                      >
+                        {status}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {memberships.length === 0 && (
+                <p className="font-body text-muted-foreground text-center py-8">No membership applications yet.</p>
+              )}
             </div>
           </TabsContent>
 

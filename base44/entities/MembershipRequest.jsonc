@@ -1,0 +1,51 @@
+{
+  "name": "MembershipRequest",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Applicant's full name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "how_long_attending": {
+      "type": "string",
+      "description": "How long have you been attending Hope Church?"
+    },
+    "testimony": {
+      "type": "string",
+      "description": "Brief testimony or reason for wanting to join"
+    },
+    "baptized": {
+      "type": "boolean",
+      "default": false,
+      "description": "Have you been baptized?"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "declined",
+        "waitlisted"
+      ],
+      "default": "pending",
+      "description": "Admin review status"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Internal notes from admin"
+    }
+  },
+  "required": [
+    "full_name",
+    "email",
+    "testimony"
+  ]
+}
