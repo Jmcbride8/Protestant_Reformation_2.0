@@ -22,7 +22,7 @@ export default function Groups() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Community</p>
             <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
-              Find Your <span className="italic">People</span>
+              Better <span className="italic">Together</span>
             </h1>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Life is better together. Our community groups are where real friendships form, faith deepens, 
