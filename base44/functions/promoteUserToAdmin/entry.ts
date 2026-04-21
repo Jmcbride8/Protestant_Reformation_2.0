@@ -5,8 +5,8 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
 
-    if (!user || user.role !== 'admin') {
-      return Response.json({ error: 'Forbidden: Admin access required' }, { status: 403 });
+    if (!user || (user.role !== 'admin' && user.role !== 'staff')) {
+      return Response.json({ error: 'Forbidden: Admin or Staff access required' }, { status: 403 });
     }
 
     const { email } = await req.json();
@@ -22,7 +22,7 @@ Deno.serve(async (req) => {
     }
 
     const userId = users[0].id;
-    await base44.asServiceRole.entities.User.update(userId, { role: 'admin' });
+    await base44.asServiceRole.entities.User.update(userId, { role: 'staff' });
 
     return Response.json({ success: true, message: `User ${email} promoted to admin` });
   } catch (error) {

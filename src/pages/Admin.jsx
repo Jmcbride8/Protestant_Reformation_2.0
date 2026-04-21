@@ -91,13 +91,13 @@ export default function Admin() {
     );
   }
 
-  if (!user || user.role !== 'admin') {
+  if (!user || (user.role !== 'admin' && user.role !== 'staff')) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
         <div className="text-center">
           <ShieldCheck className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-          <h2 className="font-heading text-2xl text-primary mb-2">Admin Access Required</h2>
-          <p className="font-body text-muted-foreground mb-6">You need admin privileges to access this page.</p>
+          <h2 className="font-heading text-2xl text-primary mb-2">Access Required</h2>
+          <p className="font-body text-muted-foreground mb-6">You need admin or staff privileges to access this page.</p>
           {!user && (
             <Button onClick={() => base44.auth.redirectToLogin()} className="font-body bg-primary">
               Sign In
@@ -348,7 +348,7 @@ export default function Admin() {
                         className="font-body text-xs"
                         onClick={() => handlePromoteToAdmin(app)}
                       >
-                        Promote to Admin
+                        Promote to Staff
                       </Button>
                     )}
                   </div>
