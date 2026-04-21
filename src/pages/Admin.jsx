@@ -38,13 +38,6 @@ export default function Admin() {
   const [donationFilters, setDonationFilters] = useState({ year: '', fund: '' });
   const queryClient = useQueryClient();
 
-  const filteredDonations = donations.filter(d => {
-    const donationYear = new Date(d.created_date).getFullYear().toString();
-    const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
-    const fundMatch = !donationFilters.fund || d.fund === donationFilters.fund;
-    return yearMatch && fundMatch;
-  });
-
   useEffect(() => {
     base44.auth.isAuthenticated().then(async (authed) => {
       if (authed) {
@@ -89,6 +82,13 @@ export default function Admin() {
     queryKey: ['adminMemberships'],
     queryFn: () => base44.entities.MembershipRequest.list('-created_date', 100),
     enabled: !!user,
+  });
+
+  const filteredDonations = donations.filter(d => {
+    const donationYear = new Date(d.created_date).getFullYear().toString();
+    const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
+    const fundMatch = !donationFilters.fund || d.fund === donationFilters.fund;
+    return yearMatch && fundMatch;
   });
 
   if (loading) {
