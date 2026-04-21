@@ -4,17 +4,15 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Pencil, Plus } from 'lucide-react';
+import { Trash2, Pencil, Plus, Upload } from 'lucide-react';
 import { toast } from "sonner";
-
-const iconOptions = ['Droplet', 'Heart', 'Baby', 'Flower2', 'Users'];
 
 export default function MilestonesManager() {
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const [formData, setFormData] = useState({ title: '', description: '', cta: '', icon_name: 'Droplet', sort_order: 0 });
+  const [formData, setFormData] = useState({ title: '', description: '', cta: '', image_url: '', sort_order: 0 });
+  const [uploading, setUploading] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: items = [] } = useQuery({
@@ -49,7 +47,7 @@ export default function MilestonesManager() {
   });
 
   const resetForm = () => {
-    setFormData({ title: '', description: '', cta: '', icon_name: 'Droplet', sort_order: 0 });
+    setFormData({ title: '', description: '', cta: '', image_url: '', sort_order: 0 });
     setEditingItem(null);
     setShowForm(false);
   };
@@ -60,9 +58,25 @@ export default function MilestonesManager() {
     setShowForm(true);
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploading(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      setFormData({ ...formData, image_url: file_url });
+      toast.success('Image uploaded');
+    } catch (error) {
+      toast.error('Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = () => {
-    if (!formData.title || !formData.description || !formData.cta) {
-      toast.error('Please fill in all fields');
+    if (!formData.title || !formData.description || !formData.cta || !formData.image_url) {
+      toast.error('Please fill in all fields and upload an image');
       return;
     }
     if (editingItem) {
@@ -101,14 +115,21 @@ export default function MilestonesManager() {
             onChange={(e) => setFormData({ ...formData, cta: e.target.value })}
             className="font-body"
           />
-          <Select value={formData.icon_name} onValueChange={(val) => setFormData({ ...formData, icon_name: val })}>
-            <SelectTrigger className="font-body">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {iconOptions.map(icon => <SelectItem key={icon} value={icon}>{icon}</SelectItem>)}
-            </SelectContent>
-          </Select>
+          <div className="space-y-2">
+            <label className="font-body text-sm text-muted-foreground">Image</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="font-body text-sm flex-1 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-primary-foreground cursor-pointer"
+              />
+              {formData.image_url && (
+                <img src={formData.image_url} alt="preview" className="w-12 h-12 rounded object-cover" />
+              )}
+            </div>
+          </div>
           <Input
             type="number"
             placeholder="Sort order"
@@ -117,7 +138,7 @@ export default function MilestonesManager() {
             className="font-body"
           />
           <div className="flex gap-2">
-            <Button onClick={handleSubmit} className="font-body bg-primary">
+            <Button onClick={handleSubmit} disabled={uploading} className="font-body bg-primary">
               {editingItem ? 'Update' : 'Add'}
             </Button>
             <Button onClick={resetForm} variant="outline" className="font-body">
@@ -135,7 +156,7 @@ export default function MilestonesManager() {
               <p className="font-body text-xs text-muted-foreground">{item.cta}</p>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="font-body text-xs">{item.icon_name}</Badge>
+              {item.image_url && <img src={item.image_url} alt={item.title} className="w-8 h-8 rounded object-cover" />}
               <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
                 <Pencil className="w-4 h-4 text-muted-foreground" />
               </Button>

@@ -14,16 +14,9 @@
       "type": "string",
       "description": "Call-to-action button text"
     },
-    "icon_name": {
+    "image_url": {
       "type": "string",
-      "enum": [
-        "Droplet",
-        "Heart",
-        "Baby",
-        "Flower2",
-        "Users"
-      ],
-      "description": "Icon name from lucide-react"
+      "description": "URL of the milestone image"
     },
     "sort_order": {
       "type": "number",
@@ -39,6 +32,6 @@
     "title",
     "description",
     "cta",
-    "icon_name"
+    "image_url"
   ]
 }
