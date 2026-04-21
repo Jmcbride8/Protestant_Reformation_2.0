@@ -31,8 +31,7 @@ export default function HeroSection({ heroImage }) {
             <span className="italic">Hope & Light</span>
           </h1>
           <p className="font-body text-lg text-white/85 leading-relaxed mb-8 max-w-lg">
-            Where faith meets community in the heart of Santa Barbara. 
-            Join us as we build lives of meaning, connection, and purpose together.
+            Rooted in the Gospel of Jesus Christ, we gather to worship, grow, and love our neighbors — right here in Santa Barbara. All are welcome at His table.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/services">
