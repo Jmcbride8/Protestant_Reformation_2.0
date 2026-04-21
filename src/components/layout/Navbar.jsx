@@ -57,7 +57,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
             <img 
-              src="https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png" 
+              src={
+                location.pathname === '/' && !scrolled
+                  ? "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/d4fc6ede8_ChatGPTImageApr20202608_31_25PM.png"
+                  : "https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
+              }
               alt="Hope Santa Barbara" 
               className="h-14 w-auto"
             />
