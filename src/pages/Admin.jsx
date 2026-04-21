@@ -305,7 +305,9 @@ export default function Admin() {
           {/* Membership Tab */}
           <TabsContent value="membership">
             <div className="space-y-3">
-              {memberships.map(app => (
+              {memberships.map(app => {
+                const isRegisteredUser = app.created_by === app.email || user?.email;
+                return (
                 <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -339,7 +341,7 @@ export default function Admin() {
                         {status}
                       </Button>
                     ))}
-                    {app.status === 'approved' && (
+                    {app.status === 'approved' && isRegisteredUser && (
                       <Button
                         variant="secondary"
                         size="sm"
@@ -351,7 +353,8 @@ export default function Admin() {
                     )}
                   </div>
                 </div>
-              ))}
+              );
+              })}
               {memberships.length === 0 && (
                 <p className="font-body text-muted-foreground text-center py-8">No membership applications yet.</p>
               )}
