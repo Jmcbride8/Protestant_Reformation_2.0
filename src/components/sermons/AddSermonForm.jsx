@@ -19,6 +19,7 @@ export default function AddSermonForm({ onSuccess }) {
   const parseYoutubeId = (input) => {
     const patterns = [
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,
+      /youtube\.com\/live\/([A-Za-z0-9_-]{11})/,
     ];
     for (const pattern of patterns) {
       const match = input.match(pattern);
