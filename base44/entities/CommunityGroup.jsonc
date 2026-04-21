@@ -1,0 +1,52 @@
+{
+  "name": "CommunityGroup",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the community group (e.g. College Ministry)"
+    },
+    "tag": {
+      "type": "string",
+      "description": "Short tag label (e.g. Young Adults)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the group"
+    },
+    "meeting_time": {
+      "type": "string",
+      "description": "When and where the group meets (e.g. Fridays at 7pm)"
+    },
+    "leader_name": {
+      "type": "string",
+      "description": "Name of the group leader"
+    },
+    "leader_title": {
+      "type": "string",
+      "description": "Leader's title or role (e.g. Group Pastor)"
+    },
+    "leader_bio": {
+      "type": "string",
+      "description": "Short bio of the leader"
+    },
+    "leader_photo_url": {
+      "type": "string",
+      "description": "URL of the leader's photo"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the group is currently active"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "leader_name"
+  ]
+}
