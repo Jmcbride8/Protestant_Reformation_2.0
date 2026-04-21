@@ -29,8 +29,7 @@ export default function ServicesPreview() {
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">We're Here For You</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Life Services</h2>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            God cares deeply about what you're carrying — and so do we. Whatever you're facing, 
-            you don't have to face it alone. We're here to walk with you.
+            God cares for your cares - and do we. The building isn't the church - we are. Reach out to us, for the below or other steps on your life and faith journey.
           </p>
         </motion.div>
 
