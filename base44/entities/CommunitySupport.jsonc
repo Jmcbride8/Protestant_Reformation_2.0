@@ -1,0 +1,64 @@
+{
+  "name": "CommunitySupport",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "offer",
+        "request"
+      ],
+      "description": "Whether this is an offer of help or a request for help"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "rides",
+        "meals",
+        "prayer",
+        "financial",
+        "childcare",
+        "skills",
+        "emotional_support",
+        "other"
+      ],
+      "description": "Category of help"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of the offer or request"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "How to reach this person"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Name of the person posting"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "fulfilled",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hide the poster's name from other members"
+    }
+  },
+  "required": [
+    "type",
+    "category",
+    "title",
+    "description"
+  ]
+}
