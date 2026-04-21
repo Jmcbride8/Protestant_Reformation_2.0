@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { Play } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
 export default function HeroSection({ heroImage, isAdmin }) {
+  const [videoOpen, setVideoOpen] = useState(false);
+
   return (
     <section className="relative min-h-[90vh] flex items-center" style={{overflow: 'hidden', contain: 'paint'}}>
       <div style={{position: 'absolute', inset: 0, overflow: 'hidden'}}>
@@ -38,12 +41,14 @@ export default function HeroSection({ heroImage, isAdmin }) {
             Rooted in the Gospel of Jesus Christ, we gather to worship, grow, and love our neighbors — right here in Santa Barbara. All are welcome at His table.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link to="/services">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-body tracking-wide">
-                Explore Our Services
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              className="bg-white text-primary hover:bg-white/90 font-body tracking-wide"
+              onClick={() => setVideoOpen(true)}
+            >
+              <Play className="mr-2 w-4 h-4" />
+              What's Hope Like?
+            </Button>
             <Link to="/contact">
               <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 font-body tracking-wide">
                 Visit This Sunday
@@ -52,6 +57,21 @@ export default function HeroSection({ heroImage, isAdmin }) {
           </div>
         </motion.div>
       </div>
+
+      <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+        <DialogContent className="max-w-3xl p-0 overflow-hidden bg-black border-0">
+          <div className="aspect-video w-full">
+            {videoOpen && (
+              <iframe
+                src="https://www.youtube.com/embed/i8tajrzRqlk?start=38&autoplay=1"
+                className="w-full h-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
