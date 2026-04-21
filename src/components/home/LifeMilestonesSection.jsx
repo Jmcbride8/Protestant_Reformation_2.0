@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Heart, UtensilsCrossed, ArrowRight } from 'lucide-react';
+import { Heart, UtensilsCrossed, ArrowRight, Smile } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
-export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin }) {
+export default function LifeMilestonesSection({ weddingImage, mealImage, kidsImage, isAdmin }) {
   return (
     <section className="py-24 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +23,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Weddings Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -90,6 +90,42 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
                 Santa Barbara is one of the wealthiest cities in America — and one of the loneliest for those left out. Jesus made a habit of sitting down with the hungry, the overlooked, and the uninvited. Every Wednesday, so do we.
               </p>
               <Link to="/services">
+                <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
+                  Learn More
+                  <ArrowRight className="ml-2 w-3 h-3" />
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Hope 4 Kids Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="group relative overflow-hidden rounded-2xl"
+          >
+            <EditableImage
+              imageKey="milestone_kids"
+              src={kidsImage}
+              alt="Hope 4 Kids Early Learning Centers"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              isAdmin={isAdmin}
+              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Smile className="w-5 h-5 text-white/80" />
+                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Early Learning</span>
+              </div>
+              <h3 className="font-heading text-3xl text-white mb-3">
+                Hope 4 Kids <br /><span className="italic">Learning Centers</span>
+              </h3>
+              <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
+                Faith-based, nature-centered quality programs for children from birth through kindergarten. A nurturing community where your child's heart grows as much as their mind.
+              </p>
+              <Link to="/contact">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
                   Learn More
                   <ArrowRight className="ml-2 w-3 h-3" />
