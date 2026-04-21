@@ -17,12 +17,15 @@ Deno.serve(async (req) => {
 
     // Find the user by email
     const users = await base44.asServiceRole.entities.User.filter({ email });
+    
     if (!users || users.length === 0) {
-      return Response.json({ error: 'User not found' }, { status: 404 });
+      // User not registered yet, invite them with staff role
+      await base44.users.inviteUser(email, 'staff');
+    } else {
+      // User exists, update their role
+      const userId = users[0].id;
+      await base44.asServiceRole.entities.User.update(userId, { role: 'staff' });
     }
-
-    const userId = users[0].id;
-    await base44.asServiceRole.entities.User.update(userId, { role: 'staff' });
 
     return Response.json({ success: true, message: `User ${email} promoted to admin` });
   } catch (error) {
