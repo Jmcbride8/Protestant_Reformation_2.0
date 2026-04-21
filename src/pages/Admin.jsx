@@ -133,6 +133,17 @@ export default function Admin() {
     waitlisted: 'bg-blue-100 text-blue-700',
   };
 
+  const handlePromoteToAdmin = async (member) => {
+    try {
+      await base44.asServiceRole.entities.User.filter({ email: member.email });
+      await base44.asServiceRole.functions.invoke('promoteUserToAdmin', { email: member.email });
+      toast.success(`${member.full_name} promoted to Admin`);
+      queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
+    } catch (error) {
+      toast.error('Failed to promote member');
+    }
+  };
+
   return (
     <div className="pt-20 min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -329,6 +340,16 @@ export default function Admin() {
                         {status}
                       </Button>
                     ))}
+                    {app.status === 'approved' && (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="font-body text-xs"
+                        onClick={() => handlePromoteToAdmin(app)}
+                      >
+                        Promote to Admin
+                      </Button>
+                    )}
                   </div>
                 </div>
               ))}
