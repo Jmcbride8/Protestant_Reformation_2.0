@@ -39,13 +39,9 @@ export default function PillarsSection({ images, isAdmin }) {
           className="text-center mb-20"
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <ChristianCross className="w-10 h-10 text-primary" />
+          <div className="flex items-center justify-center gap-8 mb-4">
+            <ChristianCross className="w-12 h-32 text-primary" />
             <h2 className="font-heading text-4xl sm:text-5xl text-primary">Three Pillars of Hope</h2>
-            <ChristianCross className="w-10 h-10 text-primary" />
-          </div>
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <ChristianCross className="w-8 h-8 text-primary/70" />
           </div>
           <blockquote className="font-heading text-xl italic text-primary/70 max-w-2xl mx-auto leading-relaxed mb-6">
             "Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself."
