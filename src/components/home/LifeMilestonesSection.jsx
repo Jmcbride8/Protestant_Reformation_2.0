@@ -123,7 +123,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
                 Hope 4 Kids <br /><span className="italic">Learning Centers</span>
               </h3>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Faith-based, nature-centered quality programs for children from birth through kindergarten. A nurturing community where your child's heart grows as much as their mind.
+                Our ministry provides affordable, high-quality early learning for families in Santa Barbara. Because every child deserves care rooted in faith, compassion, and intentional community — regardless of circumstance.
               </p>
               <Link to="/contact">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
