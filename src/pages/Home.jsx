@@ -4,6 +4,7 @@ import PillarsSection from '../components/home/PillarsSection';
 import LifeMilestonesSection from '../components/home/LifeMilestonesSection';
 import ServicesPreview from '../components/home/ServicesPreview';
 import CTASection from '../components/home/CTASection';
+import MemberCarousel from '../components/home/MemberCarousel';
 
 const HERO_IMAGE = "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/bf1e22f72_generated_8701a21c.png";
 const PILLAR_IMAGES = [
@@ -21,6 +22,7 @@ export default function Home() {
       <PillarsSection images={PILLAR_IMAGES} />
       <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} />
       <ServicesPreview />
+      <MemberCarousel />
       <CTASection />
     </div>
   );
