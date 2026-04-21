@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart } from 'lucide-react';
+import BudgetManager from '../components/admin/BudgetManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import AddSermonForm from '../components/sermons/AddSermonForm';
 import { toast } from "sonner";
@@ -137,6 +138,7 @@ export default function Admin() {
             <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
+            <TabsTrigger value="budget" className="gap-2"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
             <TabsTrigger value="membership" className="gap-2">
               <UserCheck className="w-4 h-4" /> Membership
               {memberships.filter(m => m.status === 'pending').length > 0 && (
@@ -254,6 +256,11 @@ export default function Admin() {
                 {sermons.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>}
               </div>
             </div>
+          </TabsContent>
+
+          {/* Budget Tab */}
+          <TabsContent value="budget">
+            <BudgetManager />
           </TabsContent>
 
           {/* Membership Tab */}
