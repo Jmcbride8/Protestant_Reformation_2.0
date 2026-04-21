@@ -6,7 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 const members = [
   {
     name: "The Rivera Family",
-    image: "https://images.unsplash.com/photo-1581952976147-5a2d15560349?w=600&h=800&fit=crop&crop=center",
+    image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&h=800&fit=crop&crop=center",
     profession: "Carlos, Maria & their four kids",
     shortQuote: "We were searching for a church that would grow our whole family in the faith — we found it here.",
     testimony: "We visited on a random Sunday in 2016, mostly because it was close to home. We didn't expect much. But the kids loved it, and the sermon hit us both hard. We were in a small group within the month. Now our oldest leads the youth worship team and our youngest can recite more Scripture than either of us. Hope Church is woven into the fabric of our family.",
@@ -14,7 +14,7 @@ const members = [
   },
   {
     name: "The Andersons",
-    image: "https://images.unsplash.com/photo-1511895426328-dc8714191011?w=600&h=800&fit=crop&crop=top",
+    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=800&fit=crop&crop=top",
     profession: "Newlyweds, married here in 2022",
     shortQuote: "We got married at Hope. Now we're building our life here.",
     testimony: "We met through a mutual friend at a young adults' group here. Neither of us was looking for anything serious — in faith or in love. But the community kept drawing us deeper into both. When the time came, there was nowhere else we'd have wanted to exchange our vows. Pastor prayed over us, the whole church celebrated with us. It felt like family.",
@@ -22,7 +22,7 @@ const members = [
   },
   {
     name: "The Kimura Family",
-    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&h=800&fit=crop&crop=center",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop&crop=center",
     profession: "Kenji, Aiko & two toddlers",
     shortQuote: "As a Japanese-American family, we weren't sure we'd feel at home. We do.",
     testimony: "We moved to Santa Barbara from the Bay Area when Kenji's job relocated. We were nervous starting over. We visited half a dozen churches before someone told us about Hope. What struck us first was how genuinely diverse the congregation was — not performatively, but organically. Our daughters are growing up knowing the Gospel and knowing they belong.",
@@ -30,7 +30,7 @@ const members = [
   },
   {
     name: "Bob & Linda Hartman",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&crop=top",
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=top",
     profession: "Retired teachers, grandparents of six",
     shortQuote: "We've been part of this church for over a decade. It keeps getting richer.",
     testimony: "We joined Hope in 2013 after decades at another congregation that had slowly drifted from Scripture. What we found here was a return to the basics — expository preaching, genuine community, a passion for the lost. We've watched young families come in, grow, and now serve alongside us. That kind of multigenerational life is rare and beautiful.",
@@ -38,7 +38,7 @@ const members = [
   },
   {
     name: "The Osei-Bonsu Family",
-    image: "https://images.unsplash.com/photo-1622368519655-d3d9a5e3ab23?w=600&h=800&fit=crop&crop=center",
+    image: "https://images.unsplash.com/photo-1478473495191-2d8d2f8f9b0f?w=600&h=800&fit=crop&crop=center",
     profession: "Emmanuel, Grace & their three children",
     shortQuote: "We came from Ghana with nothing but our faith. This church helped us build a new home.",
     testimony: "When we arrived in Santa Barbara, we were overwhelmed. We found Hope through a flyer at the community center. From the first week, people showed up — helping us find an apartment, connecting us with work, welcoming our kids into Sunday school. It wasn't charity; it felt like family. We have never forgotten that, and we try to do the same for every new face we see.",
