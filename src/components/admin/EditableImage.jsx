@@ -61,7 +61,7 @@ export default function EditableImage({ imageKey, src, alt, className, style, is
   const displaySrc = overrideUrl || src;
 
   return (
-    <div className={`${wrapperClassName} group/editimg overflow-hidden`}>
+    <div className={`${wrapperClassName}`}>
       <img src={displaySrc} alt={alt} className={className} style={style} />
       {isAdmin && (
         <>

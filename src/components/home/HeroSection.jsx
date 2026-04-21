@@ -7,15 +7,15 @@ import EditableImage from '@/components/admin/EditableImage';
 
 export default function HeroSection({ heroImage, isAdmin }) {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden" style={{isolation: 'isolate'}}>
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center" style={{overflow: 'hidden', contain: 'paint'}}>
+      <div style={{position: 'absolute', inset: 0, overflow: 'hidden'}}>
         <EditableImage
           imageKey="hero"
           src={heroImage}
           alt="Hope Church Santa Barbara"
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           isAdmin={isAdmin}
-          wrapperClassName="absolute inset-0 overflow-hidden group/editimg"
+          wrapperClassName="absolute inset-0 group/editimg"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-transparent" />
       </div>
