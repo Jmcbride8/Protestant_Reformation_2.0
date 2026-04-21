@@ -86,11 +86,20 @@ function AnnualFundIndicator({ current, goal }) {
   );
 }
 
-export default function BudgetChart({ totalBudget }) {
+export default function BudgetChart({ totalBudget: totalBudgetProp }) {
   const { data: allocations = [] } = useQuery({
     queryKey: ['budgetAllocations'],
     queryFn: () => base44.entities.BudgetAllocation.list('sort_order', 50),
   });
+
+  const { data: fundSettings = [] } = useQuery({
+    queryKey: ['fundSettings'],
+    queryFn: () => base44.entities.FundSettings.filter({ key: 'annual_fund' }),
+  });
+
+  const fundRecord = fundSettings[0];
+  const totalBudget = fundRecord?.goal ?? totalBudgetProp ?? 250000;
+  const currentFund = fundRecord?.current ?? 187000;
 
   const data = allocations.length > 0
     ? allocations.map(a => ({ name: a.name, value: Number(a.percentage), color: a.color || 'hsl(224, 52%, 23%)' }))
@@ -136,7 +145,7 @@ export default function BudgetChart({ totalBudget }) {
           );
         })}
       </div>
-      {totalBudget && <AnnualFundIndicator current={187000} goal={totalBudget} />}
+      {totalBudget && <AnnualFundIndicator current={currentFund} goal={totalBudget} />}
     </div>
   );
 }

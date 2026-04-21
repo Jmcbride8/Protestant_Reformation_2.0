@@ -10,10 +10,19 @@ import BudgetChart from '../components/giving/BudgetChart';
 import FundingProgress from '../components/giving/FundingProgress';
 import CapitalCampaign from '../components/giving/CapitalCampaign';
 import { toast } from "sonner";
+import { useQuery } from '@tanstack/react-query';
 
 export default function Giving() {
   const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fund: 'general' });
   const [donationSubmitted, setDonationSubmitted] = useState(false);
+
+  const { data: fundSettings = [] } = useQuery({
+    queryKey: ['fundSettings'],
+    queryFn: () => base44.entities.FundSettings.filter({ key: 'annual_fund' }),
+  });
+  const fundRecord = fundSettings[0];
+  const fundGoal = fundRecord?.goal ?? 250000;
+  const fundCurrent = fundRecord?.current ?? 187000;
 
   const handleDonation = async (e) => {
     e.preventDefault();
@@ -60,7 +69,7 @@ export default function Giving() {
                 We believe you deserve to know exactly how your contributions are used. 
                 Our financial records are reviewed annually and available upon request.
               </p>
-              <FundingProgress label="Annual Fund" current={187000} goal={250000} />
+              <FundingProgress label="Annual Fund" current={fundCurrent} goal={fundGoal} />
             </motion.div>
 
             <motion.div
