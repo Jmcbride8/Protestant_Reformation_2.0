@@ -16,6 +16,8 @@ import Admin from './pages/Admin';
 import Sermons from './pages/Sermons';
 import CommunitySupport from './pages/CommunitySupport';
 import Groups from './pages/Groups';
+import Schedule from './pages/Schedule';
+import Milestones from './pages/Milestones';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -55,6 +57,8 @@ const AuthenticatedApp = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/community-support" element={<CommunitySupport />} />
         <Route path="/groups" element={<Groups />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/milestones" element={<Milestones />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
