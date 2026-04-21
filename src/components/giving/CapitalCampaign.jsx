@@ -7,6 +7,7 @@ import { base44 } from '@/api/base44Client';
 import { Building2, CheckCircle } from 'lucide-react';
 import FundingProgress from './FundingProgress';
 import { toast } from "sonner";
+import { useQuery } from '@tanstack/react-query';
 
 const campaignBreakdown = [
   { item: "Roof Restoration", cost: 12000 },
@@ -21,6 +22,15 @@ export default function CapitalCampaign() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  const { data: campaignSettings = [] } = useQuery({
+    queryKey: ['fundSettings', 'capital_campaign'],
+    queryFn: () => base44.entities.FundSettings.filter({ key: 'capital_campaign' }),
+  });
+
+  const campaignRecord = campaignSettings[0];
+  const campaignGoal = campaignRecord?.goal ?? 30000;
+  const campaignCurrent = campaignRecord?.current ?? 18750;
 
   const handlePledge = async (e) => {
     e.preventDefault();
@@ -43,14 +53,14 @@ export default function CapitalCampaign() {
           </div>
           <div>
             <h3 className="font-heading text-2xl text-primary">Building Renovation Fund</h3>
-            <p className="font-body text-sm text-muted-foreground">Goal: $30,000</p>
+            <p className="font-body text-sm text-muted-foreground">Goal: ${campaignGoal.toLocaleString()}</p>
           </div>
         </div>
 
         <FundingProgress 
           label="Total Raised" 
-          current={18750} 
-          goal={30000} 
+          current={campaignCurrent} 
+          goal={campaignGoal} 
           color="hsl(38, 45%, 60%)" 
         />
 

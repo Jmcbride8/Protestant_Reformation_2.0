@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart } from 'lucide-react';
 import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
+import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import AddSermonForm from '../components/sermons/AddSermonForm';
 import { toast } from "sonner";
@@ -262,6 +263,7 @@ export default function Admin() {
           {/* Budget Tab */}
           <TabsContent value="budget" className="space-y-10">
             <GivingManager />
+            <CapitalCampaignManager />
             <BudgetManager />
           </TabsContent>
 
