@@ -132,9 +132,12 @@ export default function Services() {
             <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
               We're Here for <span className="italic">Every Season</span>
             </h1>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
               In a digital world, finding real support can feel impossible. Hope Church is a place 
               where real people offer real help — for free, for everyone. You don't need to be a member.
+            </p>
+            <p className="font-heading text-xl sm:text-2xl italic text-accent max-w-xl mx-auto leading-relaxed">
+              "We're not a big church — and we can't do everything. But we bring big hearts, and what we do, we do well."
             </p>
           </motion.div>
         </div>

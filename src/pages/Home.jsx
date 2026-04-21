@@ -31,6 +31,14 @@ export default function Home() {
       <PillarsSection images={PILLAR_IMAGES} isAdmin={isAdmin} />
       <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} isAdmin={isAdmin} />
       <ServicesPreview />
+      <section className="py-16 bg-secondary/40">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <p className="font-heading text-3xl sm:text-4xl italic text-primary leading-relaxed">
+            "We're not a big church — and we can't do everything.<br className="hidden sm:block" /> But we bring big hearts, and what we do, we do well."
+          </p>
+          <div className="mt-6 w-12 h-0.5 bg-accent mx-auto" />
+        </div>
+      </section>
       <MemberCarousel isAdmin={isAdmin} />
       <CTASection />
     </div>
