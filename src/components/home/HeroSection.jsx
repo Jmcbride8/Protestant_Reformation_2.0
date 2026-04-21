@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion } from 'framer-motion';
-import { Play, Cross } from 'lucide-react';
+import { Play } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
 export default function HeroSection({ heroImage, isAdmin }) {
@@ -21,14 +21,6 @@ export default function HeroSection({ heroImage, isAdmin }) {
           wrapperClassName="absolute inset-0 group/editimg"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-transparent" />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="absolute top-12 right-12 sm:top-16 sm:right-16"
-        >
-          <Cross className="w-16 h-16 sm:w-20 sm:h-20 text-white/20" strokeWidth={1.5} />
-        </motion.div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
