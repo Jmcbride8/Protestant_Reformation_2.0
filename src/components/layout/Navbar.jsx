@@ -55,8 +55,10 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-body text-sm tracking-wide transition-colors hover:text-accent ${
-                  location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                className={`font-body text-sm tracking-wide transition-colors ${
+                  scrolled
+                    ? location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
+                    : location.pathname === link.path ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
                 }`}
               >
                 {link.label}
