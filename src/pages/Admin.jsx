@@ -135,12 +135,11 @@ export default function Admin() {
 
   const handlePromoteToAdmin = async (member) => {
     try {
-      await base44.asServiceRole.entities.User.filter({ email: member.email });
-      await base44.asServiceRole.functions.invoke('promoteUserToAdmin', { email: member.email });
+      await base44.functions.invoke('promoteUserToAdmin', { email: member.email });
       toast.success(`${member.full_name} promoted to Admin`);
       queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
     } catch (error) {
-      toast.error('Failed to promote member');
+      toast.error('User must be invited to the app first');
     }
   };
 
