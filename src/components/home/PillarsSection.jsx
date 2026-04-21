@@ -39,10 +39,10 @@ export default function PillarsSection({ images, isAdmin }) {
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Three Pillars of Hope</h2>
-          <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-6">
-            Jesus taught that the greatest commandments are simply to love God and love others. 
-            Everything we do flows from these two truths.
-          </p>
+          <blockquote className="font-heading text-xl italic text-primary/70 max-w-2xl mx-auto leading-relaxed mb-6">
+            "Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself."
+            <span className="block font-body text-sm not-italic text-accent mt-2">— Matthew 22:37–39</span>
+          </blockquote>
           <p className="font-heading text-xl italic text-accent max-w-xl mx-auto">
             "We're not a big church — and we can't do everything. But we bring big hearts, and what we do, we do well."
           </p>
