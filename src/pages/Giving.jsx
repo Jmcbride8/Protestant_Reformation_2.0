@@ -68,7 +68,7 @@ export default function Giving() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <BudgetChart />
+              <BudgetChart totalBudget={250000} />
             </motion.div>
           </div>
         </div>

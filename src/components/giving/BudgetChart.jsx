@@ -11,19 +11,23 @@ const FALLBACK = [
   { name: 'Building & Maintenance', percentage: 10, color: 'hsl(224, 20%, 70%)' },
 ];
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({ active, payload, totalBudget }) => {
   if (active && payload && payload.length) {
+    const dollars = totalBudget ? Math.round((payload[0].value / 100) * totalBudget) : null;
     return (
       <div className="bg-card border border-border rounded-lg shadow-lg p-3">
         <p className="font-heading text-sm text-primary">{payload[0].name}</p>
         <p className="font-body text-lg font-semibold text-primary">{payload[0].value}%</p>
+        {dollars !== null && (
+          <p className="font-body text-sm text-muted-foreground">${dollars.toLocaleString()}</p>
+        )}
       </div>
     );
   }
   return null;
 };
 
-export default function BudgetChart() {
+export default function BudgetChart({ totalBudget }) {
   const { data: allocations = [] } = useQuery({
     queryKey: ['budgetAllocations'],
     queryFn: () => base44.entities.BudgetAllocation.list('sort_order', 50),
@@ -51,16 +55,27 @@ export default function BudgetChart() {
               <Cell key={index} fill={entry.color} />
             ))}
           </Pie>
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip totalBudget={totalBudget} />} />
         </PieChart>
       </ResponsiveContainer>
-      <div className="flex flex-wrap justify-center gap-4 mt-4">
-        {data.map((item, index) => (
-          <div key={index} className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-            <span className="font-body text-xs text-muted-foreground">{item.name} ({item.value}%)</span>
-          </div>
-        ))}
+      <div className="flex flex-col gap-2 mt-6">
+        {data.map((item, index) => {
+          const dollars = totalBudget ? Math.round((item.value / 100) * totalBudget) : null;
+          return (
+            <div key={index} className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                <span className="font-body text-xs text-muted-foreground truncate">{item.name}</span>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {dollars !== null && (
+                  <span className="font-body text-xs font-medium text-primary">${dollars.toLocaleString()}</span>
+                )}
+                <span className="font-body text-xs text-muted-foreground">({item.value}%)</span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
