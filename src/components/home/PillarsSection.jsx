@@ -39,9 +39,12 @@ export default function PillarsSection({ images, isAdmin }) {
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Three Pillars of Hope</h2>
-          <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-6">
             Jesus taught that the greatest commandments are simply to love God and love others. 
             Everything we do flows from these two truths.
+          </p>
+          <p className="font-heading text-xl italic text-accent max-w-xl mx-auto">
+            "We're not a big church — and we can't do everything. But we bring big hearts, and what we do, we do well."
           </p>
         </motion.div>
 
