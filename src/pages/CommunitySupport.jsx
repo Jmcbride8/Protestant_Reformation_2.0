@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Heart, HandHeart, Plus, X, Car, UtensilsCrossed, BookOpen, HandCoins, Baby, Wrench, Smile, HelpCircle, Lock } from 'lucide-react';
+import { Heart, HandHeart, Plus, X, Car, UtensilsCrossed, BookOpen, HandCoins, Baby, Wrench, Smile, HelpCircle, Lock, Trash2, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CATEGORIES = [
@@ -33,10 +33,14 @@ const CATEGORY_COLORS = {
   other: 'bg-gray-100 text-gray-700',
 };
 
-function PostCard({ post }) {
+function PostCard({ post, user, onDelete, onEdit }) {
   const cat = CATEGORIES.find(c => c.value === post.category);
   const Icon = cat?.icon || HelpCircle;
   const isOffer = post.type === 'offer';
+  const isAdmin = user?.role === 'admin';
+  const isOwner = user?.email && post.created_by === user.email;
+  const canDelete = isAdmin || isOwner;
+  const canEdit = isOwner;
 
   return (
     <motion.div
@@ -54,9 +58,21 @@ function PostCard({ post }) {
             {isOffer ? 'Offering Help' : 'Seeking Help'}
           </span>
         </div>
-        {post.status !== 'open' && (
-          <span className="text-xs text-muted-foreground italic">{post.status}</span>
-        )}
+        <div className="flex items-center gap-1">
+          {post.status !== 'open' && (
+            <span className="text-xs text-muted-foreground italic mr-1">{post.status}</span>
+          )}
+          {canEdit && (
+            <button onClick={() => onEdit(post)} className="p-1.5 rounded-md hover:bg-secondary text-muted-foreground hover:text-primary transition-colors" title="Edit post">
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          )}
+          {canDelete && (
+            <button onClick={() => onDelete(post)} className="p-1.5 rounded-md hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors" title="Delete post">
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
       </div>
       <h4 className="font-heading text-lg text-primary leading-snug">{post.title}</h4>
       <p className="font-body text-sm text-muted-foreground leading-relaxed">{post.description}</p>
@@ -160,16 +176,116 @@ function NewPostForm({ user, onClose, onSuccess }) {
   );
 }
 
+function EditPostForm({ post, onClose, onSuccess }) {
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState({
+    title: post.title,
+    description: post.description,
+    category: post.category,
+    type: post.type,
+    contact_name: post.contact_name || '',
+    contact_email: post.contact_email || '',
+    is_anonymous: post.is_anonymous || false,
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data) => base44.entities.CommunitySupport.update(post.id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['communitySupport'] });
+      toast.success("Post updated.");
+      onSuccess?.();
+    },
+  });
+
+  return (
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-card rounded-2xl border border-border/50 p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto"
+      >
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="font-heading text-xl text-primary">Edit Post</h3>
+          <button onClick={onClose} className="text-muted-foreground hover:text-foreground"><X className="w-5 h-5" /></button>
+        </div>
+        <form onSubmit={(e) => { e.preventDefault(); mutation.mutate(form); }} className="space-y-4">
+          <div className="flex gap-3">
+            {['request', 'offer'].map(t => (
+              <button key={t} type="button" onClick={() => setForm(f => ({ ...f, type: t }))}
+                className={`flex-1 py-2 rounded-lg border text-sm font-body font-medium transition-colors ${form.type === t ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-muted-foreground hover:border-accent'}`}>
+                {t === 'request' ? '🙏 I need help' : '🤝 I can help'}
+              </button>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Label className="font-body text-sm">Category</Label>
+              <Select value={form.category} onValueChange={(v) => setForm(f => ({ ...f, category: v }))}>
+                <SelectTrigger className="font-body"><SelectValue placeholder="Select category" /></SelectTrigger>
+                <SelectContent>{CATEGORIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              <Label className="font-body text-sm">Short Title</Label>
+              <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required className="font-body" />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <Label className="font-body text-sm">Details</Label>
+            <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} required className="font-body h-24" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Label className="font-body text-sm">Your Name</Label>
+              <Input value={form.contact_name} onChange={e => setForm(f => ({ ...f, contact_name: e.target.value }))} className="font-body" />
+            </div>
+            <div className="space-y-1">
+              <Label className="font-body text-sm">Contact Email</Label>
+              <Input type="email" value={form.contact_email} onChange={e => setForm(f => ({ ...f, contact_email: e.target.value }))} className="font-body" />
+            </div>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked={form.is_anonymous} onChange={e => setForm(f => ({ ...f, is_anonymous: e.target.checked }))} className="rounded" />
+            <span className="font-body text-sm text-muted-foreground">Post anonymously</span>
+          </label>
+          <div className="flex gap-3">
+            <Button type="button" variant="outline" className="flex-1 font-body" onClick={onClose}>Cancel</Button>
+            <Button type="submit" disabled={mutation.isPending} className="flex-1 font-body bg-primary hover:bg-primary/90">
+              {mutation.isPending ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function CommunitySupport() {
   const [user, setUser] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
   const [filter, setFilter] = useState('all'); // 'all' | 'offer' | 'request'
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     base44.auth.isAuthenticated().then(async (authed) => {
       if (authed) setUser(await base44.auth.me());
     });
   }, []);
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => base44.entities.CommunitySupport.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['communitySupport'] });
+      toast.success("Post deleted.");
+    },
+  });
+
+  const handleDelete = (post) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      deleteMutation.mutate(post.id);
+    }
+  };
 
   const { data: posts = [] } = useQuery({
     queryKey: ['communitySupport'],
@@ -203,6 +319,10 @@ export default function CommunitySupport() {
           </motion.div>
         </div>
       </section>
+
+      {editingPost && (
+        <EditPostForm post={editingPost} onClose={() => setEditingPost(null)} onSuccess={() => setEditingPost(null)} />
+      )}
 
       {/* Board */}
       <section className="py-20 bg-background">
@@ -264,7 +384,9 @@ export default function CommunitySupport() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {filtered.map(post => <PostCard key={post.id} post={post} />)}
+                  {filtered.map(post => (
+                    <PostCard key={post.id} post={post} user={user} onDelete={handleDelete} onEdit={setEditingPost} />
+                  ))}
                 </div>
               )}
             </>
