@@ -59,7 +59,7 @@ export default function Navbar() {
             <img 
               src={
                 location.pathname === '/' && !scrolled
-                  ? "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/d4fc6ede8_ChatGPTImageApr20202608_31_25PM.png"
+                  ? "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
                   : "https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
               }
               alt="Hope Santa Barbara" 
