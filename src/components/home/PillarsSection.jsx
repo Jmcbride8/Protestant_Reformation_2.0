@@ -38,8 +38,8 @@ export default function PillarsSection({ images, isAdmin }) {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
-          <div className="flex items-center justify-center gap-8 mb-4">
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-8">Our Foundation</p>
+          <div className="flex items-center justify-center gap-8 mb-12">
             <ChristianCross className="w-12 h-32 text-primary" />
             <h2 className="font-heading text-4xl sm:text-5xl text-primary">Three Pillars of Hope</h2>
           </div>
