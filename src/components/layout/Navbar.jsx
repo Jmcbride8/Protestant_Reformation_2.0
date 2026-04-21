@@ -98,7 +98,7 @@ export default function Navbar() {
                 className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
                   location.pathname === '/' && !scrolled
                     ? communityLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                    : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
+                    : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 Community
@@ -128,7 +128,7 @@ export default function Navbar() {
                 className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
                   location.pathname === '/' && !scrolled
                     ? giveLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                    : giveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
+                    : giveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 Give
@@ -156,7 +156,7 @@ export default function Navbar() {
               className={`font-body text-sm tracking-wide transition-colors ${
                 location.pathname === '/' && !scrolled
                   ? location.pathname === '/contact' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                  : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-accent'
+                  : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-white'
               }`}
             >
               Contact
