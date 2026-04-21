@@ -188,6 +188,98 @@ export default function Admin() {
 
           {/* Sermons Tab */}
           <TabsContent value="sermons" className="space-y-8">
+            <AddSermonForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminSermons'] })} />
+            
+            <div>
+              <h3 className="font-heading text-xl text-primary mb-4">All Sermons</h3>
+              <div className="space-y-3">
+                {sermons.map(sermon => (
+                  <div key={sermon.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-heading text-base text-primary">{sermon.title}</h4>
+                        {sermon.is_featured && <Badge className="bg-accent/20 text-accent font-body text-xs">Featured</Badge>}
+                      </div>
+                      <p className="font-body text-xs text-muted-foreground">
+                        By {sermon.speaker} • {format(new Date(sermon.date + 'T00:00:00'), 'MMM d, yyyy')}
+                      </p>
+                      {sermon.series && (
+                        <p className="font-body text-xs text-muted-foreground mt-1">Series: {sermon.series}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="icon" onClick={() => setEditingSermon(sermon)}>
+                        <Pencil className="w-4 h-4 text-primary" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={async () => {
+                        await base44.entities.Sermon.delete(sermon.id);
+                        queryClient.invalidateQueries({ queryKey: ['adminSermons'] });
+                        toast.success("Sermon deleted");
+                      }}>
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                {sermons.length === 0 && (
+                  <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>
+                )}
+              </div>
+            </div>
+            {editingSermon && (
+              <EditSermonModal 
+                sermon={editingSermon} 
+                onClose={() => setEditingSermon(null)}
+                onSuccess={() => {
+                  queryClient.invalidateQueries({ queryKey: ['adminSermons'] });
+                  setEditingSermon(null);
+                }}
+              />
+            )}
+          </TabsContent>
+
+          {/* Schedule Tab */}
+          <TabsContent value="schedule">
+            <ScheduleManager />
+          </TabsContent>
+
+          {/* Milestones Tab */}
+          <TabsContent value="milestones">
+            <MilestonesManager />
+          </TabsContent>
+
+          {/* Groups Tab */}
+          <TabsContent value="groups">
+            <GroupsManager />
+          </TabsContent>
+
+          {/* Beliefs Tab */}
+          <TabsContent value="beliefs">
+            <BeliefsManager />
+          </TabsContent>
+        </Tabs>
+        )}
+
+        {/* Church Administration Section */}
+        {adminSection === 'church' && (
+        <Tabs defaultValue="volunteers" className="space-y-6">
+          <TabsList className="bg-secondary font-body flex-wrap h-auto">
+            <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
+            <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
+            <TabsTrigger value="membership" className="gap-2">
+              <UserCheck className="w-4 h-4" /> Membership
+              {memberships.filter(m => m.status === 'pending').length > 0 && (
+                <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                  {memberships.filter(m => m.status === 'pending').length}
+                </span>
+              )}
+            </TabsTrigger>
+            <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
+            <TabsTrigger value="budget" className="gap-2"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+          </TabsList>
+
+          {/* Volunteers Tab */}
+          <TabsContent value="volunteers" className="space-y-8">
             <AddNeedForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminNeeds'] })} />
             
             <div>
@@ -227,48 +319,8 @@ export default function Admin() {
             </div>
           </TabsContent>
 
-          {/* Schedule Tab */}
-          <TabsContent value="schedule">
-            <ScheduleManager />
-          </TabsContent>
-
-          {/* Milestones Tab */}
-          <TabsContent value="milestones">
-            <MilestonesManager />
-          </TabsContent>
-
-          {/* Groups Tab */}
-          <TabsContent value="groups">
-            <GroupsManager />
-          </TabsContent>
-
-          {/* Beliefs Tab */}
-          <TabsContent value="beliefs">
-            <BeliefsManager />
-          </TabsContent>
-        </Tabs>
-        )}
-
-        {/* Church Administration Section */}
-        {adminSection === 'church' && (
-        <Tabs defaultValue="volunteers" className="space-y-6">
-          <TabsList className="bg-secondary font-body flex-wrap h-auto">
-            <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteers</TabsTrigger>
-            <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
-            <TabsTrigger value="membership" className="gap-2">
-              <UserCheck className="w-4 h-4" /> Membership
-              {memberships.filter(m => m.status === 'pending').length > 0 && (
-                <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                  {memberships.filter(m => m.status === 'pending').length}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
-            <TabsTrigger value="budget" className="gap-2"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
-          </TabsList>
-
-          {/* Volunteers Tab */}
-          <TabsContent value="volunteers" className="space-y-8">
+          {/* Contacts Tab */}
+          <TabsContent value="contacts" className="space-y-8">
             <div className="space-y-3">
               {contacts.map(contact => (
                 <div key={contact.id} className="p-4 bg-card rounded-lg border border-border/50">
