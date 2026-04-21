@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { HeartHandshake, Baby, Briefcase, BookOpen, HandHeart, Cross, ArrowRight } from 'lucide-react';
+import { HeartHandshake, Baby, Briefcase, BookOpen, HandHeart, Cross, ArrowRight, Users, UtensilsCrossed } from 'lucide-react';
 
 const services = [
   { icon: HeartHandshake, label: "Marriage Counseling", description: "Strengthen your relationship with guided support" },
@@ -11,6 +11,8 @@ const services = [
   { icon: BookOpen, label: "Grief Support", description: "Find healing and comfort in community" },
   { icon: HandHeart, label: "Prayer Requests", description: "Let us stand with you in prayer" },
   { icon: Cross, label: "Membership", description: "Become part of the Hope Church family" },
+  { icon: Users, label: "Senior Ministry", description: "Companionship, transportation, and care for our elders" },
+  { icon: UtensilsCrossed, label: "Street Outreach", description: "Hot meals and compassion for our unhoused neighbors" },
 ];
 
 export default function ServicesPreview() {
