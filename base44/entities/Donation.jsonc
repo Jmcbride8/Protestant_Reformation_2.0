@@ -1,0 +1,41 @@
+{
+  "name": "Donation",
+  "type": "object",
+  "properties": {
+    "donor_name": {
+      "type": "string",
+      "description": "Name of the donor"
+    },
+    "donor_email": {
+      "type": "string",
+      "description": "Email of the donor"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Donation amount in dollars"
+    },
+    "fund": {
+      "type": "string",
+      "enum": [
+        "general",
+        "building_campaign",
+        "missions",
+        "youth",
+        "community_meals"
+      ],
+      "description": "Which fund the donation goes to"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "donor_name",
+    "amount",
+    "fund"
+  ]
+}

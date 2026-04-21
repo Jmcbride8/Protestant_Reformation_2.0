@@ -1,0 +1,65 @@
+{
+  "name": "VolunteerNeed",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Name of the volunteer opportunity"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details about the volunteer need"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the volunteer opportunity"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Start time (e.g. 9:00 AM)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "End time (e.g. 12:00 PM)"
+    },
+    "slots_needed": {
+      "type": "number",
+      "description": "Number of volunteers needed"
+    },
+    "slots_filled": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of slots already filled"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "setup",
+        "greeting",
+        "kitchen",
+        "childcare",
+        "worship",
+        "cleanup",
+        "events",
+        "outreach",
+        "other"
+      ],
+      "description": "Category of volunteer work"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "full",
+        "cancelled"
+      ],
+      "default": "open"
+    }
+  },
+  "required": [
+    "title",
+    "date",
+    "slots_needed"
+  ]
+}

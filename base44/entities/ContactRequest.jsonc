@@ -1,0 +1,51 @@
+{
+  "name": "ContactRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "marriage_counseling",
+        "parenting_support",
+        "career_guidance",
+        "wedding_inquiry",
+        "grief_support",
+        "general_prayer",
+        "membership",
+        "other"
+      ],
+      "description": "Type of service requested"
+    },
+    "message": {
+      "type": "string",
+      "description": "Details about the request"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_progress",
+        "resolved"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "service_type",
+    "message"
+  ]
+}

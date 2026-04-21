@@ -1,0 +1,35 @@
+{
+  "name": "VolunteerSignup",
+  "type": "object",
+  "properties": {
+    "volunteer_need_id": {
+      "type": "string",
+      "description": "Reference to the volunteer need"
+    },
+    "volunteer_name": {
+      "type": "string",
+      "description": "Name of the volunteer"
+    },
+    "volunteer_email": {
+      "type": "string",
+      "description": "Email of the volunteer"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes from the volunteer"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "cancelled"
+      ],
+      "default": "confirmed"
+    }
+  },
+  "required": [
+    "volunteer_need_id",
+    "volunteer_name",
+    "volunteer_email"
+  ]
+}

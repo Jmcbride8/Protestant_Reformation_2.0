@@ -1,0 +1,90 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Heart, Users, HandHeart } from 'lucide-react';
+
+const pillars = [
+  {
+    icon: Heart,
+    title: "Faith",
+    subtitle: "Love the Lord your God",
+    description: "At Hope Church, faith is not a destination but a journey we walk together. Through worship, prayer, and Scripture, we deepen our relationship with God and discover the peace that surpasses understanding.",
+    verse: "\"Love the Lord your God with all your heart and with all your soul and with all your mind.\" — Matthew 22:37",
+  },
+  {
+    icon: Users,
+    title: "Family",
+    subtitle: "Built on Love",
+    description: "Family is the first community God designed. Whether you're starting a family, growing one, or seeking one — Hope Church is a place where every stage of life is supported, celebrated, and cherished.",
+    verse: "\"As for me and my house, we will serve the Lord.\" — Joshua 24:15",
+  },
+  {
+    icon: HandHeart,
+    title: "Friendships",
+    subtitle: "Love Your Neighbor",
+    description: "Real, lasting friendships are built when we show up for each other. Through small groups, shared meals, and service, we form bonds that carry us through life's highest peaks and deepest valleys.",
+    verse: "\"Love your neighbor as yourself.\" — Matthew 22:39",
+  }
+];
+
+export default function PillarsSection({ images }) {
+  return (
+    <section className="py-24 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Foundation</p>
+          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Three Pillars of Hope</h2>
+          <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Jesus taught that the greatest commandments are simply to love God and love others. 
+            Everything we do flows from these two truths.
+          </p>
+        </motion.div>
+
+        <div className="space-y-24">
+          {pillars.map((pillar, index) => {
+            const Icon = pillar.icon;
+            const isReversed = index % 2 !== 0;
+            return (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${isReversed ? 'lg:direction-rtl' : ''}`}
+              >
+                <div className={`${isReversed ? 'lg:order-2' : ''}`}>
+                  <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
+                    <img 
+                      src={images[index]} 
+                      alt={pillar.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+                  </div>
+                </div>
+                <div className={`${isReversed ? 'lg:order-1' : ''} space-y-6`}>
+                  <div className="inline-flex items-center gap-3 bg-secondary/60 rounded-full px-4 py-2">
+                    <Icon className="w-5 h-5 text-accent" />
+                    <span className="font-body text-sm tracking-wide text-primary font-medium">{pillar.subtitle}</span>
+                  </div>
+                  <h3 className="font-heading text-4xl text-primary">{pillar.title}</h3>
+                  <p className="font-body text-muted-foreground leading-relaxed text-lg">
+                    {pillar.description}
+                  </p>
+                  <blockquote className="border-l-2 border-accent pl-4 italic font-heading text-primary/70">
+                    {pillar.verse}
+                  </blockquote>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

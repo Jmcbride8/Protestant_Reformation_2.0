@@ -1,0 +1,22 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "member"
+      ],
+      "default": "member",
+      "description": "User role - admin for church staff, member for congregants"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "member_since": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}
