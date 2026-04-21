@@ -48,7 +48,7 @@ export default function PillarsSection({ images, isAdmin }) {
             <span className="block font-body text-sm not-italic text-accent mt-2">— Matthew 22:37–39</span>
           </blockquote>
           <p className="font-heading text-xl italic text-accent max-w-xl mx-auto">
-            "We're not a big church — and we can't do everything. But we bring big hearts, and what we do, we do well."
+            "We're not a big church — and we can't do everything, so we bring big hearts, and what we do, we do well."
           </p>
         </motion.div>
 
