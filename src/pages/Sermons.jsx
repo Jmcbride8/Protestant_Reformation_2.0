@@ -142,7 +142,7 @@ export default function Sermons() {
 
 // Inline featured player to keep clean separation
 function FeaturedPlayer({ sermon }) {
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = React.useState(false);
   const thumbnail = `https://img.youtube.com/vi/${sermon.youtube_id}/maxresdefault.jpg`;
 
   if (playing) {
