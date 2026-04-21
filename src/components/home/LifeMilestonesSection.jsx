@@ -39,7 +39,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               isAdmin={isAdmin}
               wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
                 <Heart className="w-5 h-5 text-white/80" />
@@ -76,7 +76,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               isAdmin={isAdmin}
               wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
                 <UtensilsCrossed className="w-5 h-5 text-white/80" />
