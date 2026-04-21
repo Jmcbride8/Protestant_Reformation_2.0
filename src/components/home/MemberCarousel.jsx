@@ -103,31 +103,30 @@ export default function MemberCarousel() {
                   scale: i === 1 ? 1 : 0.92,
                 }}
                 transition={{ duration: 0.3 }}
-                className={`flex-1 min-w-0 rounded-2xl bg-card border p-6 text-left transition-all duration-300 ${
+                className={`flex-1 min-w-0 rounded-2xl overflow-hidden text-left transition-all duration-300 relative ${
                   i === 1
-                    ? 'border-accent/30 shadow-xl cursor-pointer hover:shadow-2xl'
-                    : 'border-border/30 cursor-default pointer-events-none'
+                    ? 'shadow-xl cursor-pointer hover:shadow-2xl'
+                    : 'cursor-default pointer-events-none'
                 }`}
+                style={{ aspectRatio: '3/4' }}
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-border"
-                  />
-                  <div>
-                    <h4 className="font-heading text-lg text-primary leading-tight">{member.name}</h4>
-                    <p className="font-body text-xs text-muted-foreground">{member.profession}</p>
-                    <p className="font-body text-xs text-accent">{member.role}</p>
-                  </div>
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <h4 className="font-heading text-xl text-white leading-tight">{member.name}</h4>
+                  <p className="font-body text-xs text-white/70 mb-2">{member.profession}</p>
+                  <Quote className="w-4 h-4 text-accent/80 mb-1" />
+                  <p className="font-body text-sm text-white/90 leading-relaxed italic line-clamp-2">
+                    {member.shortQuote}
+                  </p>
+                  {i === 1 && (
+                    <p className="font-body text-xs text-accent mt-2 font-medium">Click to read their story →</p>
+                  )}
                 </div>
-                <Quote className="w-5 h-5 text-accent/50 mb-2" />
-                <p className="font-body text-sm text-muted-foreground leading-relaxed italic line-clamp-3">
-                  {member.shortQuote}
-                </p>
-                {i === 1 && (
-                  <p className="font-body text-xs text-accent mt-3 font-medium">Click to read their story →</p>
-                )}
               </motion.button>
             ))}
           </div>
@@ -166,7 +165,6 @@ export default function MemberCarousel() {
                 <div>
                   <h3 className="font-heading text-2xl text-primary">{selected.name}</h3>
                   <p className="font-body text-sm text-muted-foreground">{selected.profession}</p>
-                  <p className="font-body text-xs text-accent font-medium">{selected.role}</p>
                 </div>
               </div>
 
