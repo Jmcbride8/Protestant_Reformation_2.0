@@ -48,6 +48,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               <h3 className="font-heading text-3xl text-white mb-3">
                 Beautiful Weddings, <br /><span className="italic">At Cost</span>
               </h3>
+              <p className="font-body text-white font-semibold text-lg mb-1">$500 venue rental</p>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
                 Our historic sanctuary is open to everyone — members and non-members alike. 
                 We offer weddings at cost because every love story deserves a beautiful beginning.
@@ -85,6 +86,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               <h3 className="font-heading text-3xl text-white mb-3">
                 Gather Around <br /><span className="italic">The Table</span>
               </h3>
+              <p className="font-body text-white font-semibold text-lg mb-1">$5 per person</p>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
                 Every Wednesday evening, we share a home-style meal together — at cost. 
                 No membership required. Just come as you are and bring your appetite for good food and great company.
