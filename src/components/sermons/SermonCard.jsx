@@ -109,9 +109,9 @@ export default function SermonCard({ sermon, index = 0 }) {
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${sermon.youtube_id}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${sermon.youtube_id}`}
                 title={sermon.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className="w-full h-full"
               />
