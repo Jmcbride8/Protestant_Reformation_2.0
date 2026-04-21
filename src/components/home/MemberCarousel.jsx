@@ -90,7 +90,7 @@ export default function MemberCarousel({ isAdmin }) {
 
           <div className="flex gap-4 overflow-hidden w-full max-w-3xl">
             {visible.map((member, i) => (
-              <motion.button
+              <motion.div
                 key={member.name}
                 onClick={() => i === 1 && setSelected(member)}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -126,7 +126,7 @@ export default function MemberCarousel({ isAdmin }) {
                     <p className="font-body text-xs text-accent mt-2 font-medium">Click to read their story →</p>
                   )}
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
 
