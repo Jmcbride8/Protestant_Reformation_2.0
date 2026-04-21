@@ -50,8 +50,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, isAdmin
               </h3>
               <p className="font-body text-white font-semibold text-lg mb-1">$500 venue rental</p>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Our historic sanctuary is open to everyone — members and non-members alike. 
-                We offer weddings at cost because every love story deserves a beautiful beginning.
+                In a world that often treats commitment as optional, Jesus calls love a covenant — and so do we. Our historic sanctuary is open to all as our way of saying: your marriage matters, and we'll walk with you into it.
               </p>
               <Link to="/contact">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
