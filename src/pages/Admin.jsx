@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil } from 'lucide-react';
 import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
 import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import AddSermonForm from '../components/sermons/AddSermonForm';
+import EditSermonModal from '../components/sermons/EditSermonModal';
 import { toast } from "sonner";
 import { useMutation } from '@tanstack/react-query';
 
@@ -28,6 +29,7 @@ const statusColors = {
 export default function Admin() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editingSermon, setEditingSermon] = useState(null);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -250,11 +252,21 @@ export default function Admin() {
                         {sermon.speaker} • {sermon.date}{sermon.series ? ` • ${sermon.series}` : ''}
                       </p>
                     </div>
-                    <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Sermon.delete(sermon.id); queryClient.invalidateQueries({ queryKey: ['adminSermons'] }); }}>
-                      <Trash2 className="w-4 h-4 text-destructive" />
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button variant="ghost" size="icon" onClick={() => setEditingSermon(sermon)}>
+                        <Pencil className="w-4 h-4 text-muted-foreground" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Sermon.delete(sermon.id); queryClient.invalidateQueries({ queryKey: ['adminSermons'] }); }}>
+                        <Trash2 className="w-4 h-4 text-destructive" />
+                      </Button>
+                    </div>
                   </div>
                 ))}
+                <EditSermonModal
+                  sermon={editingSermon}
+                  onClose={() => setEditingSermon(null)}
+                  onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminSermons'] })}
+                />
                 {sermons.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>}
               </div>
             </div>
