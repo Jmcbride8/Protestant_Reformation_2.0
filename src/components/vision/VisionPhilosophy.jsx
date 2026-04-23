@@ -15,11 +15,11 @@ export default function VisionPhilosophy() {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Foundational Philosophy</p>
           <h2 className="font-heading text-4xl text-primary mb-5">
-            A Centralized Collective of Decentralized Groups
+            One Family, Many Tables
           </h2>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            The most enduring community structures in history share a common trait: they scale through empowered local participation,
-            not through ever-expanding centralized authority.
+            The most enduring communities in history share a common trait: they grow through deeply rooted local belonging,
+            not through an ever-expanding center trying to reach everyone at once.
           </p>
         </motion.div>
 
@@ -67,12 +67,13 @@ export default function VisionPhilosophy() {
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
               <Globe className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">The Federated Model</h3>
+            <h3 className="font-heading text-xl text-primary mb-3">Roots Close to Home</h3>
             <p className="font-body text-muted-foreground leading-relaxed text-sm">
-              The United States achieved scale not by making Washington do everything, but by trusting local and state governments
-              to carry the load closest to the people. Churches can do the same — a strong center that holds, with
-              empowered groups doing the daily work of pastoral care, fellowship, and outreach at the neighborhood level.
-              No tech jargon required. This is simply how enduring communities have always worked.
+              The United States found its footing not by centralizing everything in Washington, but by trusting local 
+              communities to carry the weight closest to the people who needed it. Churches can live by the same wisdom — 
+              a strong, unified center of faith and worship, with small groups doing the daily work of friendship, 
+              care, and outreach right where people actually live. This isn't a new idea. It's how lasting communities 
+              have always worked.
             </p>
           </motion.div>
 
@@ -86,12 +87,13 @@ export default function VisionPhilosophy() {
             <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
               <Users className="w-6 h-6 text-accent" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">Relationships Over Messages</h3>
+            <h3 className="font-heading text-xl text-primary mb-3">People Before Programming</h3>
             <p className="font-body text-muted-foreground leading-relaxed text-sm">
-              The Sunday sermon is vital — but it cannot be the sum total of a church's relational life. When information
-              and programming dominate, community quietly erodes. People need to know each other: to share meals,
-              offer rides, carry burdens, and celebrate milestones together. This site is designed to make those
-              interactions easy, visible, and ongoing — not exceptional.
+              The Sunday sermon is irreplaceable — but a church is more than what happens on stage. 
+              When the service ends and the week begins, people still need each other: a shared meal, 
+              a ride, someone to pray with, a friend who notices when you're missing. 
+              This site is designed to make those ordinary, sacred moments of care easy to find and easy to offer — 
+              every week, not just on special occasions.
             </p>
           </motion.div>
         </div>

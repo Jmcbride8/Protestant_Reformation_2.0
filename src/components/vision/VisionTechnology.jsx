@@ -7,18 +7,18 @@ import { Button } from '@/components/ui/button';
 const advantages = [
   {
     icon: Clock,
-    title: 'Fast to Build',
-    description: 'Features that would take a development team weeks can be built and deployed in hours. The carpool system, the community support board, the sermon archive — all built rapidly.',
+    title: 'Quick to Build',
+    description: 'Things that would take a development agency weeks can be up and running in hours — the carpool board, the support wall, the sermon archive. Small teams can move fast.',
   },
   {
     icon: DollarSign,
-    title: 'Affordable at Scale',
-    description: 'Designed for small teams with small budgets. No expensive agencies, no ongoing developer retainers. A small church can have a powerful, relational digital presence.',
+    title: 'Built for Small Budgets',
+    description: 'No expensive agencies, no ongoing retainers. A small congregation with a willing volunteer can have a warm, fully functional online home.',
   },
   {
     icon: Zap,
-    title: 'Easy to Manage',
-    description: 'Non-technical staff can manage sermons, events, groups, and community features directly. The site stays alive without a dedicated web team.',
+    title: 'Simple to Keep Up',
+    description: 'Any staff member or volunteer can add sermons, update groups, and manage the community board — no technical background needed. The site stays fresh and alive.',
   },
 ];
 

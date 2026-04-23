@@ -17,7 +17,7 @@ const levels = [
   },
   {
     label: 'Individual Members',
-    description: 'Empowered contributors — offering rides, meals, skills, prayer, and presence to one another.',
+    description: 'People caring for people — offering rides, meals, a listening ear, prayer, and presence to one another.',
     color: 'bg-secondary text-secondary-foreground',
     border: 'border-border',
   },
@@ -36,12 +36,12 @@ export default function VisionScale() {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Scaling for Small Churches</p>
           <h2 className="font-heading text-4xl text-primary mb-5">
-            A Relational Marketplace, Not a Pyramid
+            A Church That Carries Its Own Weight — Together
           </h2>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            This model is especially suited to small churches with lean teams and tight budgets —
-            where the pastor can't do everything, and shouldn't have to. By connecting members with each other,
-            the community itself becomes the resource.
+            This model is especially well suited to small churches with lean teams and stretched staff —
+            where the pastor cannot be everywhere at once, and was never meant to be. When members are 
+            genuinely connected to one another, the family carries each other.
           </p>
         </motion.div>
 
@@ -85,8 +85,8 @@ export default function VisionScale() {
             <span className="italic">It's the people, caring for each other, all week long."</span>
           </h3>
           <p className="font-body text-sm text-muted-foreground max-w-xl mx-auto">
-            This site is built to make that vision tangible — not just aspirational.
-            Every feature exists to lower the barrier for members to connect, serve, and belong.
+            This site is built to make that vision real — not just inspiring.
+            Every feature exists to lower the barrier for people to find each other, show up for each other, and belong.
           </p>
         </motion.div>
       </div>

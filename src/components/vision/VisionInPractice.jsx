@@ -11,17 +11,17 @@ const features = [
   {
     icon: HandHeart,
     title: 'Community Support Board',
-    description: 'A living board where members post needs and offers: meals, childcare, prayer, financial help, skills. The church as a mutual aid network.',
+    description: 'A living board where members post needs and offers: meals, childcare, prayer, a helping hand, practical skills. Neighbors caring for neighbors.',
   },
   {
     icon: Users,
     title: 'Group Directories',
-    description: 'Community groups are visible, searchable, and led by real people with bios. Members find their people — not just a program.',
+    description: 'Groups are led by real people with real stories. Members find their people — not just a program to attend.',
   },
   {
     icon: Calendar,
     title: 'Volunteer Coordination',
-    description: 'Specific needs, specific dates, specific roles. Members see exactly where they\'re needed and sign up in seconds.',
+    description: 'Specific needs, real dates, real people. Members see where they can show up and make it happen in seconds.',
   },
   {
     icon: HeartHandshake,
