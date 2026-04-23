@@ -74,9 +74,24 @@ export default function MemberCarousel({ isAdmin }) {
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Community</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Meet a Few of Our Members</h2>
-          <p className="font-body text-muted-foreground max-w-xl mx-auto leading-relaxed">
+          <p className="font-body text-muted-foreground max-w-xl mx-auto leading-relaxed mb-10">
             Every story here is a testament to God's faithfulness. Click any card to hear more.
           </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-4">
+            <div className="bg-white border border-border/50 rounded-xl p-5 text-left shadow-sm">
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">What We Are</p>
+              <p className="font-body text-sm text-foreground leading-relaxed">A place and platform for life and relationships — with God, and with each other.</p>
+            </div>
+            <div className="bg-white border border-border/50 rounded-xl p-5 text-left shadow-sm">
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">What We Are Not</p>
+              <p className="font-body text-sm text-foreground leading-relaxed">A one-person show or a lecture hall. We're here together, not just in rows.</p>
+            </div>
+            <div className="bg-primary rounded-xl p-5 text-left shadow-sm">
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Our Belief</p>
+              <p className="font-body text-sm text-primary-foreground leading-relaxed italic">"People, not a place, are the church."</p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Carousel */}
