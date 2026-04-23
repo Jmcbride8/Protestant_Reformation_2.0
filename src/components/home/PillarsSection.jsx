@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Users, HandHeart } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
-import ChristianCross from './ChristianCross';
 
 const pillars = [
   {
@@ -40,7 +39,6 @@ export default function PillarsSection({ images, isAdmin }) {
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-1">Our Foundation</p>
           <div className="flex items-center justify-center gap-8 mb-2">
-            <ChristianCross className="w-12 h-20 text-primary" />
             <h2 className="font-heading text-4xl sm:text-5xl text-primary">Three Pillars of Hope</h2>
           </div>
           <blockquote className="font-heading text-xl italic text-primary/70 max-w-2xl mx-auto leading-relaxed mb-6">
