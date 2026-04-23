@@ -24,41 +24,76 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Weddings Card */}
+          {/* Carpool Card */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-2xl"
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="group relative overflow-hidden rounded-2xl"
           >
-            <EditableImage
-              imageKey="milestone_wedding"
-              src={weddingImage}
-              alt="Weddings at Hope Church"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              isAdmin={isAdmin}
-              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <div className="flex items-center gap-2 mb-3">
-                <Heart className="w-5 h-5 text-white/80" />
-                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Weddings</span>
-              </div>
-              <h3 className="font-heading text-3xl text-white mb-3">
-                Beautiful Weddings, <br /><span className="italic">At Cost</span>
-              </h3>
-              <p className="font-body text-white font-semibold text-lg mb-1">$500 venue rental</p>
-              <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Our sanctuary is open to all as our way of honoring marriage, and helping you start that journey
-              </p>
-              <Link to="/contact">
-                <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
-                  Inquire About Weddings
-                  <ArrowRight className="ml-2 w-3 h-3" />
-                </Button>
-              </Link>
-            </div>
+           <EditableImage
+             imageKey="milestone_carpool"
+             src={collegeImage}
+             alt="College Carpool"
+             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             isAdmin={isAdmin}
+             wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
+           <div className="absolute bottom-0 left-0 right-0 p-8">
+             <div className="flex items-center gap-2 mb-3">
+               <Car className="w-5 h-5 text-white/80" />
+               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">College Carpool</span>
+             </div>
+             <h3 className="font-heading text-3xl text-white mb-3">
+               Rides to Church <br /><span className="italic">Free of Charge</span>
+             </h3>
+             <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
+               No car? No problem. Church members offer free Sunday rides to UCSB and college students in Santa Barbara. Just add your name and number — we'll handle the rest.
+             </p>
+             <Link to="/carpool">
+               <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
+                 Find a Ride
+                 <ArrowRight className="ml-2 w-3 h-3" />
+               </Button>
+             </Link>
+           </div>
+          </motion.div>
+
+          {/* Hope 4 Kids Card */}
+          <motion.div
+           initial={{ opacity: 0, x: 0 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="group relative overflow-hidden rounded-2xl"
+          >
+           <EditableImage
+             imageKey="milestone_kids"
+             src={kidsImage}
+             alt="Hope 4 Kids Early Learning Centers"
+             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             isAdmin={isAdmin}
+             wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
+           <div className="absolute bottom-0 left-0 right-0 p-8">
+             <div className="flex items-center gap-2 mb-3">
+               <Smile className="w-5 h-5 text-white/80" />
+               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Early Learning</span>
+             </div>
+             <h3 className="font-heading text-3xl text-white mb-3">
+               Hope 4 Kids <br /><span className="italic">Learning Centers</span>
+             </h3>
+             <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
+               Our ministry provides affordable, high-quality early learning for families in Santa Barbara. Because every child deserves care rooted in faith, compassion, and intentional community — regardless of circumstance.
+             </p>
+             <Link to="/contact">
+               <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
+                 Learn More
+                 <ArrowRight className="ml-2 w-3 h-3" />
+               </Button>
+             </Link>
+           </div>
           </motion.div>
 
           {/* Community Meals Card */}
@@ -98,76 +133,41 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
             </div>
           </motion.div>
 
-          {/* Hope 4 Kids Card */}
+          {/* Weddings Card */}
           <motion.div
-           initial={{ opacity: 0, x: 0 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="group relative overflow-hidden rounded-2xl"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="group relative overflow-hidden rounded-2xl"
           >
-           <EditableImage
-             imageKey="milestone_kids"
-             src={kidsImage}
-             alt="Hope 4 Kids Early Learning Centers"
-             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-             isAdmin={isAdmin}
-             wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
-           />
-           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
-           <div className="absolute bottom-0 left-0 right-0 p-8">
-             <div className="flex items-center gap-2 mb-3">
-               <Smile className="w-5 h-5 text-white/80" />
-               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Early Learning</span>
-             </div>
-             <h3 className="font-heading text-3xl text-white mb-3">
-               Hope 4 Kids <br /><span className="italic">Learning Centers</span>
-             </h3>
-             <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-               Our ministry provides affordable, high-quality early learning for families in Santa Barbara. Because every child deserves care rooted in faith, compassion, and intentional community — regardless of circumstance.
-             </p>
-             <Link to="/contact">
-               <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
-                 Learn More
-                 <ArrowRight className="ml-2 w-3 h-3" />
-               </Button>
-             </Link>
-           </div>
-          </motion.div>
-
-          {/* Carpool Card */}
-          <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="group relative overflow-hidden rounded-2xl"
-          >
-           <EditableImage
-             imageKey="milestone_carpool"
-             src={collegeImage}
-             alt="College Carpool"
-             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-             isAdmin={isAdmin}
-             wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
-           />
-           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
-           <div className="absolute bottom-0 left-0 right-0 p-8">
-             <div className="flex items-center gap-2 mb-3">
-               <Car className="w-5 h-5 text-white/80" />
-               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">College Carpool</span>
-             </div>
-             <h3 className="font-heading text-3xl text-white mb-3">
-               Rides to Church <br /><span className="italic">Free of Charge</span>
-             </h3>
-             <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-               No car? No problem. Church members offer free Sunday rides to UCSB and college students in Santa Barbara. Just add your name and number — we'll handle the rest.
-             </p>
-             <Link to="/carpool">
-               <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
-                 Find a Ride
-                 <ArrowRight className="ml-2 w-3 h-3" />
-               </Button>
-             </Link>
-           </div>
+            <EditableImage
+              imageKey="milestone_wedding"
+              src={weddingImage}
+              alt="Weddings at Hope Church"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              isAdmin={isAdmin}
+              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Heart className="w-5 h-5 text-white/80" />
+                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Weddings</span>
+              </div>
+              <h3 className="font-heading text-3xl text-white mb-3">
+                Beautiful Weddings, <br /><span className="italic">At Cost</span>
+              </h3>
+              <p className="font-body text-white font-semibold text-lg mb-1">$500 venue rental</p>
+              <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
+                Our sanctuary is open to all as our way of honoring marriage, and helping you start that journey
+              </p>
+              <Link to="/contact">
+                <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
+                  Inquire About Weddings
+                  <ArrowRight className="ml-2 w-3 h-3" />
+                </Button>
+              </Link>
+            </div>
           </motion.div>
           </div>
       </div>
