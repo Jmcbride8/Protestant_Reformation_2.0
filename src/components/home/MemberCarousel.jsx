@@ -99,7 +99,7 @@ export default function MemberCarousel({ isAdmin }) {
             </div>
             <h3 className="font-heading text-2xl sm:text-3xl text-primary mb-2">Real Families. Real Faith.</h3>
             <p className="font-body text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
-              These are a few of the people you'll run into on a Sunday morning — neighbours, newcomers, and longtime friends. Every story here is a testament to God's faithfulness. Click any card to hear more.
+              These are a few of the people you'll run into on a Sunday morning — neighbours, newcomers, and longtime friends. Click on a card to get to know them more.
             </p>
           </div>
         </motion.div>
