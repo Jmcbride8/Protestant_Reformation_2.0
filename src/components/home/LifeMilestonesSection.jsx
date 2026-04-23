@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Heart, UtensilsCrossed, ArrowRight, Smile, Users } from 'lucide-react';
+import { Heart, UtensilsCrossed, ArrowRight, Smile, Car } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
 export default function LifeMilestonesSection({ weddingImage, mealImage, kidsImage, collegeImage, isAdmin }) {
@@ -134,7 +134,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
            </div>
           </motion.div>
 
-          {/* College Community Card */}
+          {/* Carpool Card */}
           <motion.div
            initial={{ opacity: 0, y: 30 }}
            whileInView={{ opacity: 1, y: 0 }}
@@ -142,9 +142,9 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
            className="group relative overflow-hidden rounded-2xl"
           >
            <EditableImage
-             imageKey="milestone_college"
+             imageKey="milestone_carpool"
              src={collegeImage}
-             alt="College Community At Hope"
+             alt="College Carpool"
              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
              isAdmin={isAdmin}
              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
@@ -152,18 +152,18 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-primary/10" />
            <div className="absolute bottom-0 left-0 right-0 p-8">
              <div className="flex items-center gap-2 mb-3">
-               <Users className="w-5 h-5 text-white/80" />
-               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Young Adults</span>
+               <Car className="w-5 h-5 text-white/80" />
+               <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">College Carpool</span>
              </div>
              <h3 className="font-heading text-3xl text-white mb-3">
-               College Community <br /><span className="italic">At Hope</span>
+               Rides to Church <br /><span className="italic">Free of Charge</span>
              </h3>
              <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-               A vibrant community of young adults exploring faith, building deep friendships, and discovering your purpose. Real questions, real answers, and real community — where you belong.
+               No car? No problem. Church members offer free Sunday rides to UCSB and college students in Santa Barbara. Just add your name and number — we'll handle the rest.
              </p>
-             <Link to="/groups">
+             <Link to="/carpool">
                <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
-                 Join Us
+                 Find a Ride
                  <ArrowRight className="ml-2 w-3 h-3" />
                </Button>
              </Link>

@@ -1,0 +1,37 @@
+{
+  "name": "RideRequest",
+  "type": "object",
+  "properties": {
+    "carpool_ride_id": {
+      "type": "string",
+      "description": "Reference to the CarpoolRide"
+    },
+    "student_name": {
+      "type": "string",
+      "description": "Student's name"
+    },
+    "student_phone": {
+      "type": "string",
+      "description": "Student's cell number"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes from the student"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined"
+      ],
+      "default": "pending",
+      "description": "Driver's response to the request"
+    }
+  },
+  "required": [
+    "carpool_ride_id",
+    "student_name",
+    "student_phone"
+  ]
+}

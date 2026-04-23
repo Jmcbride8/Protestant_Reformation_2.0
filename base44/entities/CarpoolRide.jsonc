@@ -1,0 +1,55 @@
+{
+  "name": "CarpoolRide",
+  "type": "object",
+  "properties": {
+    "driver_name": {
+      "type": "string",
+      "description": "Name of the driver"
+    },
+    "driver_phone": {
+      "type": "string",
+      "description": "Driver's contact phone number"
+    },
+    "driver_user_id": {
+      "type": "string",
+      "description": "User ID of the driver (if logged in)"
+    },
+    "pickup_location": {
+      "type": "string",
+      "description": "Pickup location description or address"
+    },
+    "pickup_time": {
+      "type": "string",
+      "description": "Pickup date and time (ISO string)"
+    },
+    "destination": {
+      "type": "string",
+      "description": "Destination (e.g. Hope Church)"
+    },
+    "capacity": {
+      "type": "number",
+      "description": "Total seats available"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes from the driver"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "completed",
+        "cancelled"
+      ],
+      "default": "active",
+      "description": "Status of the ride"
+    }
+  },
+  "required": [
+    "driver_name",
+    "driver_phone",
+    "pickup_location",
+    "pickup_time",
+    "capacity"
+  ]
+}
