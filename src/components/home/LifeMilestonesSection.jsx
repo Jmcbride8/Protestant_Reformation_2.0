@@ -46,10 +46,10 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">College Carpool</span>
              </div>
              <h3 className="font-heading text-3xl text-white mb-3">
-               Rides to Church <br /><span className="italic">Free of Charge</span>
+               Carpool to Church <br /><span className="italic">for College Students</span>
              </h3>
              <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-               No car? No problem. Church members offer free Sunday rides to UCSB and college students in Santa Barbara. Just add your name and number — we'll handle the rest.
+               No car? No problem. Church members offer free Sunday rides to students from UCSB, Westmont University, and across Santa Barbara. Just add your name and number — we'll handle the rest.
              </p>
              <Link to="/carpool">
                <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
