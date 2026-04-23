@@ -3,27 +3,38 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
-export default function OfferRideForm({ currentUser, onClose, onSuccess }) {
+export default function OfferRideForm({ currentUser, onClose, onSuccess, existingRide }) {
   const [form, setForm] = useState({
-    driver_name: currentUser?.full_name || '',
-    driver_phone: '',
-    pickup_location: '',
-    pickup_time: '',
-    destination: 'Hope Church Santa Barbara',
-    capacity: 3,
-    notes: '',
+    driver_name: existingRide?.driver_name || currentUser?.full_name || '',
+    driver_phone: existingRide?.driver_phone || '',
+    pickup_location: existingRide?.pickup_location || '',
+    pickup_time: existingRide?.pickup_time
+      ? new Date(existingRide.pickup_time).toISOString().slice(0, 16)
+      : '',
+    destination: existingRide?.destination || 'Hope Church Santa Barbara',
+    capacity: existingRide?.capacity || 3,
+    notes: existingRide?.notes || '',
   });
   const [saving, setSaving] = useState(false);
+
+  const isEditing = !!existingRide;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.CarpoolRide.create({
+    const data = {
       ...form,
       capacity: Number(form.capacity),
-      driver_user_id: currentUser?.id || '',
-      status: 'active',
-    });
+    };
+    if (isEditing) {
+      await base44.entities.CarpoolRide.update(existingRide.id, data);
+    } else {
+      await base44.entities.CarpoolRide.create({
+        ...data,
+        driver_user_id: currentUser?.id || '',
+        status: 'active',
+      });
+    }
     setSaving(false);
     onSuccess();
   };
@@ -34,7 +45,7 @@ export default function OfferRideForm({ currentUser, onClose, onSuccess }) {
         <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
           <X className="w-5 h-5" />
         </button>
-        <h2 className="font-heading text-2xl text-primary mb-5">Offer a Ride</h2>
+        <h2 className="font-heading text-2xl text-primary mb-5">{isEditing ? 'Edit Ride' : 'Offer a Ride'}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="font-body text-sm text-muted-foreground block mb-1">Your Name</label>
@@ -98,7 +109,7 @@ export default function OfferRideForm({ currentUser, onClose, onSuccess }) {
             />
           </div>
           <Button type="submit" disabled={saving} className="w-full">
-            {saving ? 'Posting...' : 'Post Ride'}
+            {saving ? (isEditing ? 'Saving...' : 'Posting...') : (isEditing ? 'Save Changes' : 'Post Ride')}
           </Button>
         </form>
       </div>

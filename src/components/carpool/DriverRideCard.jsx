@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock, Users, Phone, ChevronDown, ChevronUp, Check, X } from 'lucide-react';
+import { MapPin, Clock, Users, Phone, ChevronDown, ChevronUp, Check, X, Pencil } from 'lucide-react';
 import { format } from 'date-fns';
+import OfferRideForm from './OfferRideForm';
 
-export default function DriverRideCard({ ride, requests, onRefresh }) {
+export default function DriverRideCard({ ride, requests, onRefresh, currentUser }) {
   const [expanded, setExpanded] = useState(true);
   const [updating, setUpdating] = useState(null);
+  const [editing, setEditing] = useState(false);
 
   const acceptedCount = requests.filter(r => r.status === 'accepted').length;
   const pendingCount = requests.filter(r => r.status === 'pending').length;
@@ -24,6 +26,7 @@ export default function DriverRideCard({ ride, requests, onRefresh }) {
   };
 
   return (
+    <>
     <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">
@@ -48,12 +51,23 @@ export default function DriverRideCard({ ride, requests, onRefresh }) {
             }`}>
               {ride.status}
             </span>
-            <button
-              onClick={() => setExpanded(e => !e)}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            </button>
+            <div className="flex items-center gap-2">
+              {ride.status === 'active' && (
+                <button
+                  onClick={() => setEditing(true)}
+                  className="text-muted-foreground hover:text-foreground"
+                  title="Edit ride"
+                >
+                  <Pencil className="w-4 h-4" />
+                </button>
+              )}
+              <button
+                onClick={() => setExpanded(e => !e)}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -116,5 +130,18 @@ export default function DriverRideCard({ ride, requests, onRefresh }) {
         </div>
       )}
     </div>
+
+    {editing && (
+      <OfferRideForm
+        currentUser={currentUser}
+        existingRide={ride}
+        onClose={() => setEditing(false)}
+        onSuccess={() => {
+          setEditing(false);
+          onRefresh();
+        }}
+      />
+    )}
+    </>
   );
 }

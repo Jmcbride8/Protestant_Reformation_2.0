@@ -86,6 +86,11 @@ export default function Carpool() {
                   <Plus className="w-4 h-4" /> Offer a Ride
                 </Button>
               )}
+              {!currentUser && (
+                <Button size="sm" variant="outline" onClick={() => base44.auth.redirectToLogin()} className="gap-2">
+                  Sign in to Offer a Ride
+                </Button>
+              )}
             </div>
 
             {activeRides.length === 0 ? (
@@ -152,13 +157,7 @@ export default function Carpool() {
               </div>
             )}
 
-            {!currentUser && (
-              <p className="text-center font-body text-sm text-muted-foreground mt-8">
-                Want to offer rides?{' '}
-                <button onClick={() => base44.auth.redirectToLogin()} className="text-accent underline">Sign in</button>
-                {' '}as a church member.
-              </p>
-            )}
+
           </div>
         )}
 
@@ -182,6 +181,7 @@ export default function Carpool() {
                   <DriverRideCard
                     key={ride.id}
                     ride={ride}
+                    currentUser={currentUser}
                     requests={allRequests.filter(r => r.carpool_ride_id === ride.id)}
                     onRefresh={() => queryClient.invalidateQueries({ queryKey: ['rideRequests', 'carpoolRides'] })}
                   />
