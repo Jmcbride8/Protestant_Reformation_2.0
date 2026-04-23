@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Upload } from 'lucide-react';
+import EditableText from './EditableText';
 
 function UploadableImage({ src, onUpload, alt, aspectClass = 'aspect-square', rounded = 'rounded-2xl' }) {
   const inputRef = useRef(null);
@@ -41,7 +42,7 @@ function UploadableImage({ src, onUpload, alt, aspectClass = 'aspect-square', ro
   );
 }
 
-export default function VisionBackground() {
+export default function VisionBackground({ isAdmin }) {
   return (
     <section className="py-24 px-4 bg-muted/30">
       <div className="max-w-5xl mx-auto">
@@ -56,9 +57,12 @@ export default function VisionBackground() {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">The Story Behind It</p>
           <h2 className="font-heading text-4xl text-primary mb-5">Background & Inspiration</h2>
-          <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Every design has a story. This one begins not with a technology, but with a community.
-          </p>
+          <EditableText
+            storageKey="bg_intro"
+            defaultText="Every design has a story. This one begins not with a technology, but with a community."
+            className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+            isAdmin={isAdmin}
+          />
         </motion.div>
 
         {/* Personal profile */}
@@ -79,24 +83,24 @@ export default function VisionBackground() {
           </div>
           <div className="flex-1">
             <p className="font-body text-xs tracking-widest uppercase text-accent mb-2">The Creator's Perspective</p>
-            <p className="font-body text-muted-foreground leading-relaxed mb-4">
-              My relationship with church has always been relational before institutional. I was part of VIVE Church 
-              — a remarkable community — from its earliest days, when it was just twenty people gathering with a shared 
-              conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, 
-              unchecked by intentional relational infrastructure, has a quiet cost: the larger a congregation becomes, 
-              the easier it is for individuals to become anonymous.
-            </p>
-            <p className="font-body text-muted-foreground leading-relaxed mb-4">
-              That observation isn't a critique — it's an invitation. The Sunday service, the worship, the teaching — 
-              these are irreplaceable. What this site attempts to add is the connective tissue in between: 
-              the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. 
-              It's not about doing church differently. It's about doing more of what church has always done best — 
-              caring for people — and giving that care a practical, accessible home online.
-            </p>
-            <p className="font-body text-muted-foreground leading-relaxed italic">
-              "The goal was never to replace what's sacred about gathering together. It was to extend it 
-              into the six days between Sundays."
-            </p>
+            <EditableText
+              storageKey="bg_para1"
+              defaultText="My relationship with church has always been relational before institutional. I was part of VIVE Church — a remarkable community — from its earliest days, when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, has a quiet cost: the larger a congregation becomes, the easier it is for individuals to become anonymous."
+              className="font-body text-muted-foreground leading-relaxed mb-4"
+              isAdmin={isAdmin}
+            />
+            <EditableText
+              storageKey="bg_para2"
+              defaultText="That observation isn't a critique — it's an invitation. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online."
+              className="font-body text-muted-foreground leading-relaxed mb-4"
+              isAdmin={isAdmin}
+            />
+            <EditableText
+              storageKey="bg_quote"
+              defaultText={`"The goal was never to replace what's sacred about gathering together. It was to extend it into the six days between Sundays."`}
+              className="font-body text-muted-foreground leading-relaxed italic"
+              isAdmin={isAdmin}
+            />
           </div>
         </motion.div>
 
@@ -110,14 +114,12 @@ export default function VisionBackground() {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">A Formative Example</p>
           <h3 className="font-heading text-2xl text-primary mb-3">VIVE Church</h3>
-          <p className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8">
-            VIVE Church is a thriving, well-run congregation with excellent production quality, strong teaching, 
-            and a genuinely warm culture. It is, in many ways, a model of what a modern church can be. 
-            The reflection here is not a criticism — it's the natural question that success raises: 
-            <em> "As we grow, how do we make sure no one falls through the cracks?"</em> 
-            The answer, I believe, lies in building relational infrastructure alongside inspirational programming — 
-            so that the warmth of a 20-person gathering doesn't get lost in a congregation of thousands.
-          </p>
+          <EditableText
+            storageKey="bg_vive"
+            defaultText={`VIVE Church is a thriving, well-run congregation with excellent production quality, strong teaching, and a genuinely warm culture. It is, in many ways, a model of what a modern church can be. The reflection here is not a criticism — it's the natural question that success raises: "As we grow, how do we make sure no one falls through the cracks?" The answer, I believe, lies in building relational infrastructure alongside inspirational programming — so that the warmth of a 20-person gathering doesn't get lost in a congregation of thousands.`}
+            className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
+            isAdmin={isAdmin}
+          />
         </motion.div>
 
         {/* Three uploadable VIVE images */}

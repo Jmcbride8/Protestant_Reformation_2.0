@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import EditableText from './EditableText';
 
-export default function VisionHero() {
+export default function VisionHero({ isAdmin }) {
   return (
     <section className="relative pt-40 pb-24 px-4 overflow-hidden bg-primary">
-      {/* Subtle background texture */}
       <div className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `radial-gradient(circle at 20% 50%, hsl(38 45% 60%) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(38 45% 60%) 0%, transparent 40%)`
@@ -29,15 +29,18 @@ export default function VisionHero() {
           <br />
           <span className="italic text-accent">Always.</span>
         </motion.h1>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="font-body text-lg text-white/75 max-w-2xl mx-auto leading-relaxed"
         >
-          A vision for a church website that moves beyond broadcasting information
-          to cultivating genuine, lasting human connection — at any scale.
-        </motion.p>
+          <EditableText
+            storageKey="hero_subtitle"
+            defaultText="A vision for a church website that moves beyond broadcasting information to cultivating genuine, lasting human connection — at any scale."
+            className="font-body text-lg text-white/75 max-w-2xl mx-auto leading-relaxed"
+            isAdmin={isAdmin}
+          />
+        </motion.div>
       </div>
     </section>
   );
