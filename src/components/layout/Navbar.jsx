@@ -25,6 +25,8 @@ const giveLinks = [
 
 export default function Navbar() {
   const location = useLocation();
+  const lightPages = ['/admin'];
+  const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
@@ -59,16 +61,16 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      scrolled || !useWhiteNav ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
             <img 
               src={
-                scrolled
-                  ? "https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
-                  : "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
+                useWhiteNav
+                  ? "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
+                  : "https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
               }
               alt="Hope Santa Barbara" 
               className="h-14 w-auto"
@@ -82,7 +84,7 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`font-body text-sm tracking-wide transition-colors ${
-                  !scrolled
+                  useWhiteNav
                     ? location.pathname === link.path ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
                     : location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                 }`}
@@ -96,7 +98,7 @@ export default function Navbar() {
               <button
                 onClick={() => setCommunityOpen(v => !v)}
                 className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
-                  !scrolled
+                  useWhiteNav
                     ? communityLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
                     : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                 }`}
@@ -126,7 +128,7 @@ export default function Navbar() {
               <button
                 onClick={() => setGiveOpen(v => !v)}
                 className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
-                  !scrolled
+                  useWhiteNav
                     ? giveLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
                     : giveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                 }`}
@@ -154,7 +156,7 @@ export default function Navbar() {
             <Link
               to="/contact"
               className={`font-body text-sm tracking-wide transition-colors ${
-                !scrolled
+                useWhiteNav
                   ? location.pathname === '/contact' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
                   : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
               }`}
@@ -166,7 +168,7 @@ export default function Navbar() {
               <div className="flex items-center gap-3">
                 {(user.role === 'admin' || user.role === 'staff') && (
                   <Link to="/admin">
-                    <Button variant="outline" size="sm" className={`font-body text-xs ${!scrolled ? 'text-white border-white/60 hover:bg-white/10 hover:text-white' : ''}`}>
+                    <Button variant="outline" size="sm" className={`font-body text-xs ${useWhiteNav ? 'text-white border-white/60 hover:bg-white/10 hover:text-white' : ''}`}>
                       Admin
                     </Button>
                   </Link>
@@ -174,7 +176,7 @@ export default function Navbar() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className={`font-body text-xs ${!scrolled ? 'text-white hover:bg-white/10 hover:text-white' : ''}`}
+                  className={`font-body text-xs ${useWhiteNav ? 'text-white hover:bg-white/10 hover:text-white' : ''}`}
                   onClick={() => base44.auth.logout()}
                 >
                   Sign Out
@@ -183,7 +185,7 @@ export default function Navbar() {
             ) : (
               <Button 
                 size="sm" 
-                className={`font-body text-xs ${!scrolled ? 'bg-white/20 text-white hover:bg-white/30 border border-white/40' : 'bg-primary hover:bg-primary/90'}`}
+                className={`font-body text-xs ${useWhiteNav ? 'bg-white/20 text-white hover:bg-white/30 border border-white/40' : 'bg-primary hover:bg-primary/90'}`}
                 onClick={() => base44.auth.redirectToLogin()}
               >
                 Member Login
