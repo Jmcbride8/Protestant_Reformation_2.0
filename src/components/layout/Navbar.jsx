@@ -26,7 +26,7 @@ const giveLinks = [
 export default function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin'];
+  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
