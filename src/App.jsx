@@ -19,6 +19,7 @@ import Groups from './pages/Groups';
 import Schedule from './pages/Schedule';
 import Milestones from './pages/Milestones';
 import Carpool from './pages/Carpool';
+import Vision from './pages/Vision';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -61,6 +62,7 @@ const AuthenticatedApp = () => {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/milestones" element={<Milestones />} />
         <Route path="/carpool" element={<Carpool />} />
+        <Route path="/vision" element={<Vision />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

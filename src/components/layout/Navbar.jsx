@@ -8,6 +8,7 @@ import { base44 } from '@/api/base44Client';
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Sermons', path: '/sermons' },
+  { label: 'Vision', path: '/vision' },
 ];
 
 const communityLinks = [
@@ -26,7 +27,7 @@ const giveLinks = [
 export default function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool'];
+  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
