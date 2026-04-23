@@ -86,7 +86,7 @@ export default function MemberCarousel({ isAdmin }) {
             </div>
             <div className="bg-primary rounded-xl p-5 text-left shadow-sm">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Our Belief</p>
-              <p className="font-body text-sm text-primary-foreground leading-relaxed italic">"People, not a place, are the church."</p>
+              <p className="font-body text-sm text-primary-foreground leading-relaxed italic">"It's the people, not the place, that are the church."</p>
             </div>
           </div>
 
