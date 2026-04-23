@@ -25,9 +25,9 @@ const giveLinks = [
 
 export default function Navbar() {
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
   const lightPages = ['/admin'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
-  const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
