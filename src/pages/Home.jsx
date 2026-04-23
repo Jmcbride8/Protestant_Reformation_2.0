@@ -31,9 +31,9 @@ export default function Home() {
     <div>
       <HeroSection heroImage={HERO_IMAGE} isAdmin={isAdmin} />
       <PillarsSection images={PILLAR_IMAGES} isAdmin={isAdmin} />
+      <MemberCarousel isAdmin={isAdmin} />
       <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} kidsImage={KIDS_IMAGE} collegeImage={COLLEGE_IMAGE} isAdmin={isAdmin} />
       <ServicesPreview />
-      <MemberCarousel isAdmin={isAdmin} />
       <CTASection />
     </div>
   );
