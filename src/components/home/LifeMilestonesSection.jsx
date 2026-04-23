@@ -15,7 +15,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Community Life</p>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real People, Real Life</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Your Church for Life's Moments</h2>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Hope Church is more than a Sunday service. We're here for weddings, meals, milestones, 
