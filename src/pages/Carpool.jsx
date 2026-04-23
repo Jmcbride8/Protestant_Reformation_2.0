@@ -53,7 +53,7 @@ export default function Carpool() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <div className="bg-primary text-primary-foreground py-16 px-4">
+      <div className="bg-primary text-primary-foreground pt-36 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-4">
             <Car className="w-4 h-4 text-accent" />
