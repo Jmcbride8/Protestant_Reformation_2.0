@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import VisionHero from '@/components/vision/VisionHero';
+import VisionBackground from '@/components/vision/VisionBackground';
 import VisionPhilosophy from '@/components/vision/VisionPhilosophy';
 import VisionScale from '@/components/vision/VisionScale';
 import VisionInPractice from '@/components/vision/VisionInPractice';
@@ -12,6 +13,7 @@ export default function Vision() {
   return (
     <div className="min-h-screen bg-background">
       <VisionHero />
+      <VisionBackground />
       <VisionPhilosophy />
       <VisionScale />
       <VisionInPractice />

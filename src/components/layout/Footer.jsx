@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
           <div className="md:col-span-1">
             <img 
               src="https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png" 
@@ -54,6 +54,13 @@ export default function Footer() {
               <Link to="/giving" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Give</Link>
               <Link to="/volunteer" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Volunteer</Link>
               <Link to="/contact" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Contact Us</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-heading text-lg mb-4">About This Site</h4>
+            <div className="space-y-2 font-body text-sm">
+              <Link to="/vision" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Vision & Design Philosophy</Link>
             </div>
           </div>
         </div>
