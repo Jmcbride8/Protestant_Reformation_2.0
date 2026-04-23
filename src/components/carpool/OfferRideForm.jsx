@@ -25,6 +25,7 @@ export default function OfferRideForm({ currentUser, onClose, onSuccess, existin
     const data = {
       ...form,
       capacity: Number(form.capacity),
+      pickup_time: form.pickup_time ? new Date(form.pickup_time).toISOString() : '',
     };
     if (isEditing) {
       await base44.entities.CarpoolRide.update(existingRide.id, data);

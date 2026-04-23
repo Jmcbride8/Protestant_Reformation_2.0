@@ -217,7 +217,10 @@ export default function Carpool() {
                     ride={ride}
                     currentUser={currentUser}
                     requests={allRequests.filter(r => r.carpool_ride_id === ride.id)}
-                    onRefresh={() => queryClient.invalidateQueries({ queryKey: ['rideRequests', 'carpoolRides'] })}
+                    onRefresh={() => {
+                       queryClient.invalidateQueries({ queryKey: ['carpoolRides'] });
+                       queryClient.invalidateQueries({ queryKey: ['rideRequests'] });
+                     }}
                   />
                 ))}
               </div>
