@@ -4,10 +4,11 @@ import { base44 } from '@/api/base44Client';
 import { Upload } from 'lucide-react';
 import EditableText from './EditableText';
 
-function UploadableImage({ src, onUpload, alt, aspectClass = 'aspect-square', rounded = 'rounded-2xl' }) {
+function UploadableImage({ src, storageKey, onUpload, alt, aspectClass = 'aspect-square', rounded = 'rounded-2xl' }) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
-  const [preview, setPreview] = useState(src);
+  const lsKey = storageKey ? `vision_img_${storageKey}` : null;
+  const [preview, setPreview] = useState(() => (lsKey && localStorage.getItem(lsKey)) || src);
 
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -15,6 +16,7 @@ function UploadableImage({ src, onUpload, alt, aspectClass = 'aspect-square', ro
     setUploading(true);
     const { file_url } = await base44.integrations.Core.UploadFile({ file });
     setPreview(file_url);
+    if (lsKey) localStorage.setItem(lsKey, file_url);
     onUpload && onUpload(file_url);
     setUploading(false);
   };
@@ -76,6 +78,7 @@ export default function VisionBackground({ isAdmin }) {
           <div className="flex-shrink-0 w-36 h-36">
             <UploadableImage
               src={null}
+              storageKey="creator_photo"
               alt="Creator photo"
               aspectClass="w-36 h-36"
               rounded="rounded-full"
@@ -125,9 +128,9 @@ export default function VisionBackground({ isAdmin }) {
         {/* Three uploadable VIVE images */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { label: 'The Community', hint: 'Upload a photo of VIVE Church or congregation' },
-            { label: 'The Gathering', hint: 'Upload a worship or event photo' },
-            { label: 'The Digital Presence', hint: 'Upload a screenshot of the VIVE website' },
+            { label: 'The Community', hint: 'Upload a photo of VIVE Church or congregation', key: 'vive_community' },
+            { label: 'The Gathering', hint: 'Upload a worship or event photo', key: 'vive_gathering' },
+            { label: 'The Digital Presence', hint: 'Upload a screenshot of the VIVE website', key: 'vive_digital' },
           ].map((slot, i) => (
             <motion.div
               key={slot.label}
@@ -139,6 +142,7 @@ export default function VisionBackground({ isAdmin }) {
             >
               <UploadableImage
                 src={null}
+                storageKey={slot.key}
                 alt={slot.label}
                 aspectClass="aspect-video w-full"
                 rounded="rounded-xl"
