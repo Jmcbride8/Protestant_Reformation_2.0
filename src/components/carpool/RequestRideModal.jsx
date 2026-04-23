@@ -19,6 +19,7 @@ export default function RequestRideModal({ ride, onClose, onSuccess }) {
     });
     setSaving(false);
     setDone(true);
+    onSuccess();
   };
 
   return (
