@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Car, MapPin, Clock, Users, Phone, Plus } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, isSameDay, startOfDay } from 'date-fns';
 import OfferRideForm from '@/components/carpool/OfferRideForm';
 import RequestRideModal from '@/components/carpool/RequestRideModal';
 import DriverRideCard from '@/components/carpool/DriverRideCard';
@@ -13,6 +14,7 @@ export default function Carpool() {
   const [showOfferForm, setShowOfferForm] = useState(false);
   const [requestingRide, setRequestingRide] = useState(null);
   const [activeTab, setActiveTab] = useState('find');
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -26,6 +28,14 @@ export default function Carpool() {
   });
 
   const activeRides = allRides.filter(r => r.status === 'active');
+
+  const rideDates = activeRides
+    .filter(r => r.pickup_time)
+    .map(r => startOfDay(new Date(r.pickup_time)));
+
+  const filteredRides = selectedDate
+    ? activeRides.filter(r => r.pickup_time && isSameDay(new Date(r.pickup_time), selectedDate))
+    : activeRides;
   const myRides = allRides.filter(r => currentUser && r.driver_user_id === currentUser.id);
 
   const { data: allRequests = [] } = useQuery({
@@ -79,85 +89,109 @@ export default function Carpool() {
         {/* Find a Ride Tab */}
         {activeTab === 'find' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="font-heading text-2xl text-primary">Available Rides</h2>
-              {currentUser && (
-                <Button onClick={() => setShowOfferForm(true)} size="sm" className="gap-2">
-                  <Plus className="w-4 h-4" /> Offer a Ride
-                </Button>
-              )}
-              {!currentUser && (
-                <Button size="sm" variant="outline" onClick={() => base44.auth.redirectToLogin()} className="gap-2">
-                  Sign in to Offer a Ride
-                </Button>
-              )}
+            {/* Calendar + Rides side by side */}
+            <div className="flex flex-col sm:flex-row gap-6 items-start">
+              {/* Calendar */}
+              <div className="bg-card border border-border rounded-xl p-3 shadow-sm shrink-0">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={date => setSelectedDate(date && selectedDate && isSameDay(date, selectedDate) ? null : date)}
+                  modifiers={{ hasRide: rideDates }}
+                  modifiersStyles={{ hasRide: { fontWeight: 'bold', textDecoration: 'underline', color: 'hsl(var(--accent))' } }}
+                />
+                {selectedDate && (
+                  <button
+                    onClick={() => setSelectedDate(null)}
+                    className="w-full mt-2 font-body text-xs text-muted-foreground hover:text-foreground underline text-center"
+                  >
+                    Clear filter
+                  </button>
+                )}
+              </div>
+
+              {/* Rides list */}
+              <div className="flex-1 w-full space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-heading text-2xl text-primary">
+                    {selectedDate ? `Rides on ${format(selectedDate, 'MMM d')}` : 'Available Rides'}
+                  </h2>
+                  {currentUser ? (
+                    <Button onClick={() => setShowOfferForm(true)} size="sm" className="gap-2">
+                      <Plus className="w-4 h-4" /> Offer a Ride
+                    </Button>
+                  ) : (
+                    <Button size="sm" variant="outline" onClick={() => base44.auth.redirectToLogin()} className="gap-2">
+                      Sign in to Offer a Ride
+                    </Button>
+                  )}
+                </div>
+
+                {filteredRides.length === 0 ? (
+                  <div className="text-center py-16 text-muted-foreground">
+                    <Car className="w-10 h-10 mx-auto mb-3 opacity-40" />
+                    <p className="font-body">{selectedDate ? 'No rides on this day.' : 'No rides listed yet. Check back soon!'}</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {filteredRides.map(ride => {
+                      const takenSpots = riderCounts[ride.id] || 0;
+                      const openSpots = ride.capacity - takenSpots;
+                      const isFull = openSpots <= 0;
+                      return (
+                        <div key={ride.id} className="bg-card border border-border rounded-xl p-6 shadow-sm">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                            <div className="space-y-2 flex-1">
+                              <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
+                                  <Car className="w-4 h-4 text-accent" />
+                                </div>
+                                <div>
+                                  <p className="font-body font-semibold text-foreground">{ride.driver_name}</p>
+                                  <p className="font-body text-xs text-muted-foreground flex items-center gap-1">
+                                    <Phone className="w-3 h-3" /> {ride.driver_phone}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex flex-col gap-1 pl-10">
+                                <p className="font-body text-sm text-foreground flex items-center gap-2">
+                                  <MapPin className="w-3 h-3 text-accent shrink-0" />
+                                  {ride.pickup_location}
+                                </p>
+                                <p className="font-body text-sm text-foreground flex items-center gap-2">
+                                  <Clock className="w-3 h-3 text-accent shrink-0" />
+                                  {ride.pickup_time ? format(new Date(ride.pickup_time), 'EEE, MMM d · h:mm a') : 'Time TBD'}
+                                </p>
+                                {ride.destination && (
+                                  <p className="font-body text-xs text-muted-foreground">→ {ride.destination}</p>
+                                )}
+                                {ride.notes && (
+                                  <p className="font-body text-xs text-muted-foreground italic mt-1">"{ride.notes}"</p>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-end gap-3 shrink-0">
+                              <div className={`flex items-center gap-1 text-sm font-body font-medium ${isFull ? 'text-destructive' : 'text-green-700'}`}>
+                                <Users className="w-4 h-4" />
+                                {isFull ? 'Full' : `${openSpots} spot${openSpots !== 1 ? 's' : ''} left`}
+                              </div>
+                              <Button
+                                size="sm"
+                                disabled={isFull}
+                                onClick={() => setRequestingRide(ride)}
+                                variant={isFull ? 'secondary' : 'default'}
+                              >
+                                {isFull ? 'Full' : 'Request Ride'}
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
-
-            {activeRides.length === 0 ? (
-              <div className="text-center py-16 text-muted-foreground">
-                <Car className="w-10 h-10 mx-auto mb-3 opacity-40" />
-                <p className="font-body">No rides listed yet. Check back soon!</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {activeRides.map(ride => {
-                  const takenSpots = riderCounts[ride.id] || 0;
-                  const openSpots = ride.capacity - takenSpots;
-                  const isFull = openSpots <= 0;
-                  return (
-                    <div key={ride.id} className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                        <div className="space-y-2 flex-1">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                              <Car className="w-4 h-4 text-accent" />
-                            </div>
-                            <div>
-                              <p className="font-body font-semibold text-foreground">{ride.driver_name}</p>
-                              <p className="font-body text-xs text-muted-foreground flex items-center gap-1">
-                                <Phone className="w-3 h-3" /> {ride.driver_phone}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-1 pl-10">
-                            <p className="font-body text-sm text-foreground flex items-center gap-2">
-                              <MapPin className="w-3 h-3 text-accent shrink-0" />
-                              {ride.pickup_location}
-                            </p>
-                            <p className="font-body text-sm text-foreground flex items-center gap-2">
-                              <Clock className="w-3 h-3 text-accent shrink-0" />
-                              {ride.pickup_time ? format(new Date(ride.pickup_time), 'EEE, MMM d · h:mm a') : 'Time TBD'}
-                            </p>
-                            {ride.destination && (
-                              <p className="font-body text-xs text-muted-foreground">→ {ride.destination}</p>
-                            )}
-                            {ride.notes && (
-                              <p className="font-body text-xs text-muted-foreground italic mt-1">"{ride.notes}"</p>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end gap-3 shrink-0">
-                          <div className={`flex items-center gap-1 text-sm font-body font-medium ${isFull ? 'text-destructive' : 'text-green-700'}`}>
-                            <Users className="w-4 h-4" />
-                            {isFull ? 'Full' : `${openSpots} spot${openSpots !== 1 ? 's' : ''} left`}
-                          </div>
-                          <Button
-                            size="sm"
-                            disabled={isFull}
-                            onClick={() => setRequestingRide(ride)}
-                            variant={isFull ? 'secondary' : 'default'}
-                          >
-                            {isFull ? 'Full' : 'Request Ride'}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-
           </div>
         )}
 
