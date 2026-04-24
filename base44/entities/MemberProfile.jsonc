@@ -1,0 +1,93 @@
+{
+  "name": "MemberProfile",
+  "type": "object",
+  "properties": {
+    "membership_request_id": {
+      "type": "string",
+      "description": "Reference to the MembershipRequest record"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Member's full name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Member's email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Member's phone number"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Profile photo URL"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "Member",
+        "Guest",
+        "Staff",
+        "Admin",
+        "Pastor"
+      ],
+      "default": "Member",
+      "description": "Member's role in the church"
+    },
+    "small_group_id": {
+      "type": "string",
+      "description": "Reference to CommunityGroup"
+    },
+    "small_group_name": {
+      "type": "string",
+      "description": "Cached name of the small group for display"
+    },
+    "spiritual_gifts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of spiritual gifts (e.g. Teaching, Hospitality)"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Personal interests and hobbies"
+    },
+    "family_members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Names of family members also attending (e.g. ['Sarah Rivera', 'Mia Rivera'])"
+    },
+    "family_unit_id": {
+      "type": "string",
+      "description": "Shared ID to link family members together"
+    },
+    "baptized": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string",
+      "description": "Pastoral/admin notes (not visible to member)"
+    },
+    "is_directory_visible": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this member appears in the directory"
+    },
+    "joined_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date member officially joined"
+    }
+  },
+  "required": [
+    "full_name",
+    "email"
+  ]
+}

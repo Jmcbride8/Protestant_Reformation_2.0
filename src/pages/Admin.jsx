@@ -16,6 +16,7 @@ import ScheduleManager from '../components/admin/ScheduleManager';
 import EventsManager from '../components/admin/EventsManager';
 import MilestonesManager from '../components/admin/MilestonesManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
+import MemberDirectory from '../components/admin/MemberDirectory';
 import AddSermonForm from '../components/sermons/AddSermonForm';
 import EditSermonModal from '../components/sermons/EditSermonModal';
 import { toast } from "sonner";
@@ -372,63 +373,80 @@ export default function Admin() {
 
           {/* Membership Tab */}
           <TabsContent value="membership">
-            <div className="space-y-3">
-              {memberships.map(app => {
-                const isRegisteredUser = app.created_by === app.email || user?.email;
-                return (
-                <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h4 className="font-heading text-base text-primary">{app.full_name}</h4>
-                      <p className="font-body text-xs text-muted-foreground">
-                        {app.email}{app.phone ? ` • ${app.phone}` : ''}
-                        {app.how_long_attending ? ` • Attending ${app.how_long_attending}` : ''}
+            <Tabs defaultValue="directory" className="space-y-4">
+              <TabsList className="bg-muted font-body">
+                <TabsTrigger value="directory">Member Directory</TabsTrigger>
+                <TabsTrigger value="applications">
+                  Applications
+                  {memberships.filter(m => m.status === 'pending').length > 0 && (
+                    <span className="ml-2 bg-accent text-white text-xs rounded-full w-5 h-5 inline-flex items-center justify-center font-medium">
+                      {memberships.filter(m => m.status === 'pending').length}
+                    </span>
+                  )}
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="directory">
+                <MemberDirectory />
+              </TabsContent>
+
+              <TabsContent value="applications">
+                <div className="space-y-3">
+                  {memberships.map(app => (
+                    <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h4 className="font-heading text-base text-primary">{app.full_name}</h4>
+                          <p className="font-body text-xs text-muted-foreground">
+                            {app.email}{app.phone ? ` • ${app.phone}` : ''}
+                            {app.how_long_attending ? ` • Attending ${app.how_long_attending}` : ''}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${membershipStatusColors[app.status]}`}>
+                            {app.status}
+                          </span>
+                          {app.baptized && (
+                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Baptized</span>
+                          )}
+                        </div>
+                      </div>
+                      <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">
+                        "{app.testimony}"
                       </p>
+                      <div className="flex flex-wrap gap-2 items-center">
+                        {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
+                          <Button
+                            key={status}
+                            variant={app.status === status ? "default" : "outline"}
+                            size="sm"
+                            className="font-body text-xs capitalize"
+                            onClick={() => handleUpdateMembershipStatus(app.id, status)}
+                          >
+                            {status}
+                          </Button>
+                        ))}
+                        <Select defaultValue={app.member_role || 'Member'} onValueChange={(role) => handleRoleChange(app.id, role)}>
+                          <SelectTrigger className="w-40 h-8 font-body text-xs">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="font-body text-xs">
+                            <SelectItem value="Member">Member</SelectItem>
+                            <SelectItem value="Guest">Guest</SelectItem>
+                            <SelectItem value="Staff">Staff</SelectItem>
+                            <SelectItem value="Admin">Admin</SelectItem>
+                            <SelectItem value="Pastor">Pastor</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${membershipStatusColors[app.status]}`}>
-                        {app.status}
-                      </span>
-                      {app.baptized && (
-                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Baptized</span>
-                      )}
-                    </div>
-                  </div>
-                  <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">
-                    "{app.testimony}"
-                  </p>
-                  <div className="flex flex-wrap gap-2 items-center">
-                    {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
-                      <Button
-                        key={status}
-                        variant={app.status === status ? "default" : "outline"}
-                        size="sm"
-                        className="font-body text-xs capitalize"
-                        onClick={() => handleUpdateMembershipStatus(app.id, status)}
-                      >
-                        {status}
-                      </Button>
-                    ))}
-                    <Select defaultValue={app.member_role || 'Member'} onValueChange={(role) => handleRoleChange(app.id, role)}>
-                      <SelectTrigger className="w-40 h-8 font-body text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="font-body text-xs">
-                        <SelectItem value="Member">Member</SelectItem>
-                        <SelectItem value="Guest">Guest</SelectItem>
-                        <SelectItem value="Staff">Staff</SelectItem>
-                        <SelectItem value="Admin">Admin</SelectItem>
-                        <SelectItem value="Pastor">Pastor</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  ))}
+                  {memberships.length === 0 && (
+                    <p className="font-body text-muted-foreground text-center py-8">No membership applications yet.</p>
+                  )}
                 </div>
-              );
-              })}
-              {memberships.length === 0 && (
-                <p className="font-body text-muted-foreground text-center py-8">No membership applications yet.</p>
-              )}
-            </div>
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
           {/* Donations Tab */}
