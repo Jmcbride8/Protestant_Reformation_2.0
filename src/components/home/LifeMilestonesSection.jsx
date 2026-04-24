@@ -39,7 +39,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
              isAdmin={isAdmin}
              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
            />
-           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
+           <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary/70 to-primary/20" />
            <div className="absolute bottom-0 left-0 right-0 p-8">
              <div className="flex items-center gap-2 mb-3">
                <Car className="w-5 h-5 text-white/80" />
@@ -75,7 +75,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
              isAdmin={isAdmin}
              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
            />
-           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
+           <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary/70 to-primary/20" />
            <div className="absolute bottom-0 left-0 right-0 p-8">
              <div className="flex items-center gap-2 mb-3">
                <Smile className="w-5 h-5 text-white/80" />
@@ -111,7 +111,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
               isAdmin={isAdmin}
               wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary/70 to-primary/20" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
                 <UtensilsCrossed className="w-5 h-5 text-white/80" />
@@ -148,7 +148,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
               isAdmin={isAdmin}
               wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/20" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary/70 to-primary/20" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
                 <Heart className="w-5 h-5 text-white/80" />
