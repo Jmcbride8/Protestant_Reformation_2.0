@@ -152,17 +152,7 @@ export default function MemberDirectory() {
                     </p>
                   )}
 
-                  {/* Spiritual gifts preview */}
-                  {member.spiritual_gifts?.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {member.spiritual_gifts.slice(0, 2).map(g => (
-                        <span key={g} className="font-body text-xs text-accent">✦ {g}</span>
-                      ))}
-                      {member.spiritual_gifts.length > 2 && (
-                        <span className="font-body text-xs text-muted-foreground">+{member.spiritual_gifts.length - 2} more</span>
-                      )}
-                    </div>
-                  )}
+
                 </div>
 
                 <Button variant="ghost" size="icon" onClick={() => setEditingMember(member)}>

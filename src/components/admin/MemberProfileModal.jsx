@@ -7,12 +7,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { toast } from 'sonner';
 import { X, Upload, Plus, Trash2 } from 'lucide-react';
 
-const SPIRITUAL_GIFTS = [
-  'Teaching', 'Preaching', 'Worship', 'Hospitality', 'Mercy', 'Giving',
-  'Administration', 'Leadership', 'Evangelism', 'Prophecy', 'Prayer',
-  'Service', 'Encouragement', 'Wisdom', 'Faith',
-];
-
 function TagInput({ label, values = [], onChange, suggestions = [] }) {
   const [input, setInput] = useState('');
 
@@ -82,8 +76,6 @@ export default function MemberProfileModal({ member, groups = [], onClose, onSav
     photo_url: member?.photo_url || '',
     role: member?.role || 'Member',
     small_group_id: member?.small_group_id || '',
-    spiritual_gifts: member?.spiritual_gifts || [],
-    interests: member?.interests || [],
     family_members: member?.family_members || [],
     family_unit_id: member?.family_unit_id || '',
     baptized: member?.baptized || false,
@@ -216,21 +208,6 @@ export default function MemberProfileModal({ member, groups = [], onClose, onSav
               />
             </div>
           </div>
-
-          {/* Spiritual Gifts */}
-          <TagInput
-            label="Spiritual Gifts"
-            values={form.spiritual_gifts}
-            onChange={v => set('spiritual_gifts', v)}
-            suggestions={SPIRITUAL_GIFTS}
-          />
-
-          {/* Interests */}
-          <TagInput
-            label="Interests & Hobbies"
-            values={form.interests}
-            onChange={v => set('interests', v)}
-          />
 
           {/* Flags */}
           <div className="flex flex-wrap gap-6">
