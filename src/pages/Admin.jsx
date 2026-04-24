@@ -131,10 +131,27 @@ export default function Admin() {
     toast.success("Status updated");
   };
 
-  const handleUpdateMembershipStatus = async (id, status) => {
-    await base44.entities.MembershipRequest.update(id, { status });
+  const handleUpdateMembershipStatus = async (app, status) => {
+    await base44.entities.MembershipRequest.update(app.id, { status });
+    if (status === 'approved') {
+      // Check if a MemberProfile already exists for this application
+      const existing = await base44.entities.MemberProfile.filter({ membership_request_id: app.id });
+      if (!existing || existing.length === 0) {
+        await base44.entities.MemberProfile.create({
+          membership_request_id: app.id,
+          full_name: app.full_name,
+          email: app.email,
+          phone: app.phone || '',
+          baptized: app.baptized || false,
+          role: app.member_role || 'Member',
+          joined_date: new Date().toISOString().split('T')[0],
+          is_directory_visible: true,
+        });
+      }
+    }
     queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
-    toast.success("Membership status updated");
+    queryClient.invalidateQueries({ queryKey: ['memberProfiles'] });
+    toast.success(status === 'approved' ? 'Member approved and added to directory' : 'Status updated');
   };
 
   const membershipStatusColors = {
@@ -144,15 +161,6 @@ export default function Admin() {
     waitlisted: 'bg-blue-100 text-blue-700',
   };
 
-  const handleRoleChange = async (memberId, newRole) => {
-    try {
-      await base44.entities.MembershipRequest.update(memberId, { member_role: newRole });
-      toast.success(`Role updated to ${newRole}`);
-      queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
-    } catch (error) {
-      toast.error('Failed to update role');
-    }
-  };
 
   return (
     <div className="pt-20 min-h-screen bg-background">
@@ -392,7 +400,7 @@ export default function Admin() {
 
               <TabsContent value="applications">
                 <div className="space-y-3">
-                  {memberships.map(app => (
+                  {memberships.filter(m => m.status !== 'approved').map(app => (
                     <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
                       <div className="flex items-start justify-between mb-3">
                         <div>
@@ -421,28 +429,16 @@ export default function Admin() {
                             variant={app.status === status ? "default" : "outline"}
                             size="sm"
                             className="font-body text-xs capitalize"
-                            onClick={() => handleUpdateMembershipStatus(app.id, status)}
+                            onClick={() => handleUpdateMembershipStatus(app, status)}
                           >
                             {status}
                           </Button>
                         ))}
-                        <Select defaultValue={app.member_role || 'Member'} onValueChange={(role) => handleRoleChange(app.id, role)}>
-                          <SelectTrigger className="w-40 h-8 font-body text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="font-body text-xs">
-                            <SelectItem value="Member">Member</SelectItem>
-                            <SelectItem value="Guest">Guest</SelectItem>
-                            <SelectItem value="Staff">Staff</SelectItem>
-                            <SelectItem value="Admin">Admin</SelectItem>
-                            <SelectItem value="Pastor">Pastor</SelectItem>
-                          </SelectContent>
-                        </Select>
                       </div>
                     </div>
                   ))}
-                  {memberships.length === 0 && (
-                    <p className="font-body text-muted-foreground text-center py-8">No membership applications yet.</p>
+                  {memberships.filter(m => m.status !== 'approved').length === 0 && (
+                    <p className="font-body text-muted-foreground text-center py-8">No pending applications.</p>
                   )}
                 </div>
               </TabsContent>
