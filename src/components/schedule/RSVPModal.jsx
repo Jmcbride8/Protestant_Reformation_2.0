@@ -91,7 +91,7 @@ export default function RSVPModal({ event, user, onClose, onSuccess }) {
               />
             </div>
             <div className="flex gap-3 pt-2">
-              <Button type="button" variant="outline" onClick={onClose} className="flex-1 font-body">
+              <Button type="button" variant="outline" onClick={onClose} className="flex-1 font-body border-border text-foreground hover:bg-secondary">
                 Cancel
               </Button>
               <Button type="submit" disabled={loading} className="flex-1 font-body bg-accent hover:bg-accent/90 text-white">
