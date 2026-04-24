@@ -119,7 +119,7 @@ export default function VisionBackground({ isAdmin }) {
           <h3 className="font-heading text-2xl text-primary mb-3">VIVE Church</h3>
           <EditableText
             storageKey="bg_vive"
-            defaultText={`VIVE Church is a thriving, well-run congregation with excellent production quality, strong teaching, and a genuinely warm culture. It is, in many ways, a model of what a modern church can be. The reflection here is not a criticism — it's the natural question that success raises: "As we grow, how do we make sure no one falls through the cracks?" The answer, I believe, lies in building relational infrastructure alongside inspirational programming — so that the warmth of a 20-person gathering doesn't get lost in a congregation of thousands.`}
+            defaultText={`VIVE Church is a thriving, well-run congregation with excellent production quality, strong teaching, and a genuinely enthusiastic culture. It is, in many ways, a model of what a modern church can be. The pastors were genuinely hospitable individuals, however they were still human and could only cover so much ground. This raised a question they struggled to solve: "As we grow, how do we keep church a family and not an impersonal institution?". This site is not an answer, but an experiment in building relational infrastructure alongside inspirational programming — so that the warmth of a 5 person gathering doesn't get lost in a congregation of dozens or thousands.`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
             isAdmin={isAdmin}
           />
