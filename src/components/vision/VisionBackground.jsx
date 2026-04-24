@@ -85,16 +85,16 @@ export default function VisionBackground({ isAdmin }) {
             />
           </div>
           <div className="flex-1">
-            <p className="font-body text-xs tracking-widest uppercase text-accent mb-2">The Creator's Perspective</p>
+            <p className="font-body text-xs tracking-widest uppercase text-accent mb-2">Why I Built This</p>
             <EditableText
               storageKey="bg_para1"
-              defaultText="My relationship with church has always been relational before institutional. I was part of VIVE Church — a remarkable community — from its earliest days, when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, has a quiet cost: the larger a congregation becomes, the easier it is for individuals to become anonymous."
+              defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
               className="font-body text-muted-foreground leading-relaxed mb-4"
               isAdmin={isAdmin}
             />
             <EditableText
               storageKey="bg_para2"
-              defaultText="That observation isn't a critique — it's an invitation. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online."
+              defaultText="Having worked in startups, that observation wasn't unique to church — as is often the case, people tend to feel nostalgic about earlier times when the organization was smaller and relationships more organic. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online and an emphasis on the main page as a reminder to ourselves to keep the main thing the main thing."
               className="font-body text-muted-foreground leading-relaxed mb-4"
               isAdmin={isAdmin}
             />
