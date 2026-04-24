@@ -13,6 +13,7 @@ import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import BeliefsManager from '../components/admin/BeliefsManager';
 import GroupsManager from '../components/admin/GroupsManager';
 import ScheduleManager from '../components/admin/ScheduleManager';
+import EventsManager from '../components/admin/EventsManager';
 import MilestonesManager from '../components/admin/MilestonesManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import AddSermonForm from '../components/sermons/AddSermonForm';
@@ -185,6 +186,7 @@ export default function Admin() {
             <TabsTrigger value="milestones" className="gap-2"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
             <TabsTrigger value="groups" className="gap-2"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
+            <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
           </TabsList>
 
           {/* Sermons Tab */}
@@ -257,6 +259,11 @@ export default function Admin() {
           {/* Beliefs Tab */}
           <TabsContent value="beliefs">
             <BeliefsManager />
+          </TabsContent>
+
+          {/* Events Tab */}
+          <TabsContent value="events">
+            <EventsManager />
           </TabsContent>
         </Tabs>
         )}

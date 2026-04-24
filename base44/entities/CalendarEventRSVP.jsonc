@@ -1,0 +1,32 @@
+{
+  "name": "CalendarEventRSVP",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Reference to CalendarEvent"
+    },
+    "member_name": {
+      "type": "string",
+      "description": "Name of the RSVP-ing member"
+    },
+    "member_email": {
+      "type": "string",
+      "description": "Email of the RSVP-ing member"
+    },
+    "guest_count": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of people including the member"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes"
+    }
+  },
+  "required": [
+    "event_id",
+    "member_name",
+    "member_email"
+  ]
+}
