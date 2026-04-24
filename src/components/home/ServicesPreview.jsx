@@ -29,7 +29,7 @@ export default function ServicesPreview() {
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real Challenges, Real Services</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Ministries</h2>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            God cares for your cares - and do we. The building isn't the church - we are. Reach out to us, for the below or other steps on your life and faith journey.
+            The building isn't the church - we are. Reach out to us, for the below or other steps on your life and faith journey.
           </p>
         </motion.div>
 
