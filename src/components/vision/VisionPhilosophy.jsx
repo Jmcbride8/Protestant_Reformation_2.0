@@ -14,11 +14,11 @@ export default function VisionPhilosophy({ isAdmin }) {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Foundational Philosophy</p>
+          <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">The Philosophical Lineage</p>
           <h2 className="font-heading text-4xl text-primary mb-5">One Family, Many Tables</h2>
           <EditableText
             storageKey="philosophy_intro"
-            defaultText="The most enduring communities in history share a common trait: they grow through deeply rooted local belonging, not through an ever-expanding center trying to reach everyone at once."
+            defaultText="These ideas didn't begin here. They were inherited — from scripture, from history, from thinkers and practitioners who understood that the deepest human needs are met not by institutions, but by people who know each other's names."
             className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             isAdmin={isAdmin}
           />
@@ -67,10 +67,10 @@ export default function VisionPhilosophy({ isAdmin }) {
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
               <Globe className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">Roots Close to Home</h3>
+            <h3 className="font-heading text-xl text-primary mb-3">The Early Church Model</h3>
             <EditableText
               storageKey="philosophy_roots"
-              defaultText="The United States found its footing not by centralizing everything in Washington, but by trusting local communities to carry the weight closest to the people who needed it. Churches can live by the same wisdom — a strong, unified center of faith and worship, with small groups doing the daily work of friendship, care, and outreach right where people actually live. This isn't a new idea. It's how lasting communities have always worked."
+              defaultText="The first Christians didn't build cathedrals — they met in homes. They ate together, shared what they had, and looked after one another across neighborhoods and cities. The book of Acts describes a community so tangibly caring that outsiders took notice. This site is an attempt to ask: what would it look like to make that kind of daily, practical love easy again — in a modern church, in a connected age?"
               className="font-body text-muted-foreground leading-relaxed text-sm"
               isAdmin={isAdmin}
             />
