@@ -72,8 +72,8 @@ export default function MemberCarousel({ isAdmin }) {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Our Community</p>
-          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Meet a Few of Our Members</h2>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real People Keeping it Real</p>
+          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Who You'll Meet</h2>
           {/* Identity Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto mt-10 mb-14">
             <div className="bg-white border border-border/50 rounded-xl p-5 text-left shadow-sm">
@@ -92,12 +92,6 @@ export default function MemberCarousel({ isAdmin }) {
 
           {/* Segue into member cards */}
           <div className="text-center mb-2">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="h-px bg-border flex-1 max-w-[80px]" />
-              <p className="font-body text-xs tracking-[0.3em] uppercase text-accent">Who You'll Meet</p>
-              <div className="h-px bg-border flex-1 max-w-[80px]" />
-            </div>
-            <h3 className="font-heading text-2xl sm:text-3xl text-primary mb-2">Real Families. Real Faith.</h3>
             <p className="font-body text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
               These are a few of the people you'll run into on a Sunday morning — neighbours, newcomers, and longtime friends. Click on a card to get to know them more.
             </p>
