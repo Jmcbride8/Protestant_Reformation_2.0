@@ -1,48 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
-import { Upload } from 'lucide-react';
 import EditableText from './EditableText';
-
-function UploadableImage({ src, storageKey, onUpload, alt, aspectClass = 'aspect-square', rounded = 'rounded-2xl' }) {
-  const inputRef = useRef(null);
-  const [uploading, setUploading] = useState(false);
-  const lsKey = storageKey ? `vision_img_${storageKey}` : null;
-  const [preview, setPreview] = useState(() => (lsKey && localStorage.getItem(lsKey)) || src);
-
-  const handleFile = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    setPreview(file_url);
-    if (lsKey) localStorage.setItem(lsKey, file_url);
-    onUpload && onUpload(file_url);
-    setUploading(false);
-  };
-
-  return (
-    <div className={`relative group ${aspectClass} ${rounded} overflow-hidden bg-muted cursor-pointer`} onClick={() => inputRef.current?.click()}>
-      {preview
-        ? <img src={preview} alt={alt} className="w-full h-full object-cover" />
-        : <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
-            <Upload className="w-6 h-6" />
-            <span className="font-body text-xs">Upload photo</span>
-          </div>
-      }
-      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-        {uploading
-          ? <span className="font-body text-xs text-white">Uploading…</span>
-          : <div className="flex flex-col items-center gap-1 text-white">
-              <Upload className="w-5 h-5" />
-              <span className="font-body text-xs">Replace</span>
-            </div>
-        }
-      </div>
-      <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
-    </div>
-  );
-}
+import EditableImage from '@/components/admin/EditableImage';
 
 export default function VisionBackground({ isAdmin }) {
   return (
@@ -75,13 +34,14 @@ export default function VisionBackground({ isAdmin }) {
           transition={{ duration: 0.6 }}
           className="bg-card border border-border rounded-2xl p-8 mb-10 flex flex-col md:flex-row gap-8 items-start"
         >
-          <div className="flex-shrink-0 w-36 h-36">
-            <UploadableImage
+          <div className="flex-shrink-0 w-36 h-36 rounded-full overflow-hidden bg-muted group/editimg">
+            <EditableImage
+              imageKey="vision_creator_photo"
               src={null}
-              storageKey="creator_photo"
               alt="Creator photo"
-              aspectClass="w-36 h-36"
-              rounded="rounded-full"
+              className="w-full h-full object-cover"
+              wrapperClassName="relative w-full h-full"
+              isAdmin={isAdmin}
             />
           </div>
           <div className="flex-1">
@@ -140,13 +100,16 @@ export default function VisionBackground({ isAdmin }) {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="flex flex-col gap-2"
             >
-              <UploadableImage
-                src={null}
-                storageKey={slot.key}
-                alt={slot.label}
-                aspectClass="aspect-video w-full"
-                rounded="rounded-xl"
-              />
+              <div className="aspect-video w-full rounded-xl overflow-hidden bg-muted group/editimg">
+                <EditableImage
+                  imageKey={`vision_${slot.key}`}
+                  src={null}
+                  alt={slot.label}
+                  className="w-full h-full object-cover"
+                  wrapperClassName="relative w-full h-full"
+                  isAdmin={isAdmin}
+                />
+              </div>
               <p className="font-body text-xs font-medium text-foreground">{slot.label}</p>
               <p className="font-body text-xs text-muted-foreground">{slot.hint}</p>
             </motion.div>
