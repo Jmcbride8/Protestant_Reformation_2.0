@@ -12,7 +12,7 @@ const navLinks = [
 
 const communityLinks = [
   { label: 'Groups', sub: 'Do life Together', path: '/groups' },
-  { label: 'Services', sub: 'Something for every Season', path: '/services' },
+  { label: 'Care', sub: 'Something for every Season', path: '/services' },
   { label: 'Schedule', sub: 'When we gather', path: '/schedule' },
   { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones' },
 ];
