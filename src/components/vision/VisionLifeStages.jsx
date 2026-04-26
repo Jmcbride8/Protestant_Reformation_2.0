@@ -1,30 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MapPin, Users, Zap } from 'lucide-react';
 import EditableText from './EditableText';
-
-const stages = [
-  {
-    icon: Heart,
-    title: "New Beginnings",
-    description: "Young singles finding community, meeting, falling in love, and building families in faith."
-  },
-  {
-    icon: Users,
-    title: "Growing Together",
-    description: "Young families navigating parenthood, raising children in the Gospel, and building rhythms of discipleship."
-  },
-  {
-    icon: MapPin,
-    title: "Roots & Legacy",
-    description: "Established families stewarding their gifts, mentoring the next generation, and deepening their walk."
-  },
-  {
-    icon: Zap,
-    title: "Seasons of Change",
-    description: "Empty nesters, retirees, those facing health challenges, grief, and the end of life — all equally worthy of pastoral care."
-  }
-];
+import MilestoneTimeline from './MilestoneTimeline';
 
 export default function VisionLifeStages({ isAdmin }) {
   return (
@@ -47,28 +24,8 @@ export default function VisionLifeStages({ isAdmin }) {
           />
         </motion.div>
 
-        {/* Life stages grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {stages.map((stage, i) => {
-            const Icon = stage.icon;
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="bg-card border border-border rounded-2xl p-7"
-              >
-                <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="font-heading text-lg text-primary mb-2">{stage.title}</h3>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">{stage.description}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Milestone Timeline */}
+        <MilestoneTimeline isAdmin={isAdmin} />
 
         {/* Core conviction */}
         <motion.div
