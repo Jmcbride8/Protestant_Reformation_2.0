@@ -40,14 +40,18 @@ export default function Contact() {
   return (
     <div className="pt-20">
       {showMemberModal && <BecomeMemberModal onClose={() => setShowMemberModal(false)} />}
-      {/* Hero */}
+
+      {/* Hero — Meet the Team */}
+      <TeamSection />
+
+      {/* We'd Love to Hear From You */}
       <section className="py-20 bg-secondary/30">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Reach Out</p>
-            <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
+            <h2 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
               We'd Love to <span className="italic">Hear From You</span>
-            </h1>
+            </h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
               Whether you need support, have a question, or just want to say hello — 
               we're here. No gatekeepers, no judgment. Just people who care.
@@ -63,9 +67,6 @@ export default function Contact() {
           </motion.div>
         </div>
       </section>
-
-      {/* Team Section */}
-      <TeamSection />
 
       {/* Form + Info */}
       <section className="py-24 bg-background">
