@@ -173,7 +173,7 @@ export default function Admin() {
         </div>
 
         {/* Section Selector */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 flex-wrap">
           <Button
             onClick={() => setAdminSection('website')}
             className={`font-body font-semibold ${adminSection === 'website' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
@@ -185,6 +185,12 @@ export default function Admin() {
             className={`font-body font-semibold ${adminSection === 'church' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
           >
             Church Administration
+          </Button>
+          <Button
+            onClick={() => setAdminSection('config')}
+            className={`font-body font-semibold ${adminSection === 'config' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
+          >
+            Configuration
           </Button>
         </div>
 
@@ -199,7 +205,6 @@ export default function Admin() {
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
             <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Features</TabsTrigger>
-            <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
           </TabsList>
 
           {/* Sermons Tab */}
@@ -283,10 +288,23 @@ export default function Admin() {
           <TabsContent value="features">
             <FeatureTogglesManager />
           </TabsContent>
+        </Tabs>
+        )}
 
-          {/* Church Info Tab */}
+        {/* Configuration Section */}
+        {adminSection === 'config' && (
+        <Tabs defaultValue="church_info" className="space-y-6">
+          <TabsList className="bg-secondary font-body flex-wrap h-auto">
+            <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
+            <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
+          </TabsList>
+
           <TabsContent value="church_info">
             <ChurchInfoManager />
+          </TabsContent>
+
+          <TabsContent value="features">
+            <FeatureTogglesManager />
           </TabsContent>
         </Tabs>
         )}

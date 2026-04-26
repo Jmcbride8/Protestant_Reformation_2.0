@@ -97,12 +97,6 @@ export default function MemberCarousel({ isAdmin }) {
             <p className="font-body text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
               These are a few of the people you'll run into on a Sunday morning — neighbours, newcomers, and longtime friends. Click on a card to get to know them more.
             </p>
-            <Link to="/contact" className="inline-block mt-6">
-              <Button className="font-body bg-primary hover:bg-primary/90 gap-2">
-                <UserPlus className="w-4 h-4" />
-                Become a Member
-              </Button>
-            </Link>
           </div>
         </motion.div>
 
@@ -207,6 +201,16 @@ export default function MemberCarousel({ isAdmin }) {
               className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-accent w-5' : 'bg-border'}`}
             />
           ))}
+        </div>
+
+        {/* CTA below carousel */}
+        <div className="text-center mt-10">
+          <Link to="/contact">
+            <Button className="font-body bg-primary hover:bg-primary/90 gap-2">
+              <UserPlus className="w-4 h-4" />
+              Become a Member
+            </Button>
+          </Link>
         </div>
       </div>
 
