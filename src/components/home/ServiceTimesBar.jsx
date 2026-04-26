@@ -32,12 +32,12 @@ export default function ServiceTimesBar() {
             <h2 className="font-heading text-3xl sm:text-4xl mb-8 italic">Service Times</h2>
             <div className="space-y-4">
               {SERVICE_TIMES.map((s, i) => (
-                <div key={i} className="flex items-center justify-between border-b border-white/10 pb-4 last:border-0 last:pb-0">
+                <div key={i} className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-5 last:border-0 last:pb-0 gap-1 sm:gap-0">
                   <div>
                     <p className="font-body font-semibold text-white text-base">{s.day}</p>
                     <p className="font-body text-sm text-white/60">{s.label}</p>
                   </div>
-                  <p className="font-heading text-xl italic text-white/90">{s.time}</p>
+                  <p className="font-heading text-2xl italic text-white/90">{s.time}</p>
                 </div>
               ))}
             </div>
