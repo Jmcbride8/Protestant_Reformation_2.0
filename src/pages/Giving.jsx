@@ -167,20 +167,7 @@ export default function Giving() {
                     required 
                     className="font-body"
                   />
-                  <div className="flex gap-2 flex-wrap pt-2">
-                    {[25, 50, 100, 250, 500].map(val => (
-                      <Button 
-                        key={val} 
-                        type="button" 
-                        variant={donationForm.amount === String(val) ? "default" : "outline"} 
-                        size="sm"
-                        className="font-body text-xs"
-                        onClick={() => setDonationForm({ ...donationForm, amount: String(val) })}
-                      >
-                        ${val}
-                      </Button>
-                    ))}
-                  </div>
+
                 </div>
                 <div className="space-y-2">
                   <Label className="font-body text-sm">Frequency</Label>
