@@ -86,10 +86,10 @@ export default function VisionPhilosophy({ isAdmin }) {
             <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
               <Users className="w-6 h-6 text-accent" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">People Before Programming</h3>
+            <h3 className="font-heading text-xl text-primary mb-3">Technology as Platform, Not Replacement</h3>
             <EditableText
               storageKey="philosophy_people"
-              defaultText="The Sunday sermon is irreplaceable — but a church is more than what happens on stage. When the service ends and the week begins, people still need each other: a shared meal, a ride, someone to pray with, a friend who notices when you're missing. This site is designed to make those ordinary, sacred moments of care easy to find and easy to offer — every week, not just on special occasions."
+              defaultText="The building on Calle Real is a physical platform — the place where community gathers, where worship happens, where lives intersect. This site is the digital equivalent. Just as the building doesn't replace the relationships that form inside it, this app doesn't replace the meals, conversations, and care that happen between Sundays. It simply makes them easier to find, easier to offer, and easier to sustain — using technology to enable real life, not substitute for it."
               className="font-body text-muted-foreground leading-relaxed text-sm"
               isAdmin={isAdmin}
             />
