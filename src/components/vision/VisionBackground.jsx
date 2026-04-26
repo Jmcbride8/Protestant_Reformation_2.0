@@ -126,9 +126,62 @@ export default function VisionBackground({ isAdmin }) {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">A Radical Reimagining</p>
           <h3 className="font-heading text-2xl text-primary mb-3">From the Megachurch to the Margin</h3>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-start mb-8">
+            {/* Video */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-border/30"
+            >
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/P5GD9ftscFQ?si=OrPiuXXfWWbSEBA7"
+                title="Francis Chan Challenge"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0"
+              />
+            </motion.div>
+
+            {/* Text content */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <div>
+                <h4 className="font-heading text-lg text-primary mb-2">Why He Left</h4>
+                <EditableText
+                  storageKey="bg_francis_why_left"
+                  defaultText="Cornerstone Church had grown to thousands. Francis had influence, platform, and success by every measure. But he couldn't shake a conviction: the New Testament describes churches that were small, personal, and radically generous. He was leading a machine. He wanted to lead a family."
+                  className="font-body text-sm text-muted-foreground leading-relaxed"
+                  isAdmin={isAdmin}
+                />
+              </div>
+
+              <div>
+                <h4 className="font-heading text-lg text-primary mb-2">The Call to Action</h4>
+                <EditableText
+                  storageKey="bg_francis_call"
+                  defaultText="What if your church wasn't measured by attendance, budget, or programs — but by whether your members actually know each other? Whether they carry each other's burdens? Whether a single mom down the street feels like she has a family? That's the challenge Francis lives. That's what we're building toward."
+                  className="font-body text-sm text-muted-foreground leading-relaxed"
+                  isAdmin={isAdmin}
+                />
+              </div>
+            </motion.div>
+          </div>
+
           <EditableText
-            storageKey="bg_francis_chan"
-            defaultText={`Francis Chan walked away from a thriving megachurch to ask a harder question: What if the church looked less like an organization and more like a family? He abandoned the stage, the crowds, and the comfort to return to something ancient and radical — a church small enough to know people's names, brave enough to live generously, and faithful enough to make disciples, not just decisions. His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. Hope Church exists in that tension: not abandoning the gifts that come with intentional leadership and teaching, but ensuring that the structure serves community, not the other way around.`}
+            storageKey="bg_francis_reflection"
+            defaultText={`His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. Hope Church exists in that tension: not abandoning the gifts that come with intentional leadership and teaching, but ensuring that the structure serves community, not the other way around.`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl"
             isAdmin={isAdmin}
           />
