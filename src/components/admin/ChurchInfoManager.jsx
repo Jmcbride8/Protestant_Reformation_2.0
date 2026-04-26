@@ -134,7 +134,10 @@ export default function ChurchInfoManager() {
           <div className="space-y-1.5">
             <Label className="font-body text-sm">Google Maps Embed URL</Label>
             <Input value={form.maps_embed_url} onChange={e => set('maps_embed_url', e.target.value)} className="font-body" placeholder="https://www.google.com/maps/embed?pb=..." />
-            <p className="font-body text-xs text-muted-foreground">Get this from Google Maps → Share → Embed a map</p>
+            <p className="font-body text-xs text-muted-foreground">
+              Paste only the <strong>URL</strong> from the embed code — not the full &lt;iframe&gt; tag.<br />
+              In Google Maps: Share → Embed a map → copy only the <code className="bg-muted px-1 rounded text-xs">src="..."</code> value.
+            </p>
           </div>
         </div>
       </div>
