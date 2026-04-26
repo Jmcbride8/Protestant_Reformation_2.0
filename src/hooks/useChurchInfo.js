@@ -25,8 +25,15 @@ export function useChurchInfo() {
       const results = await base44.entities.ChurchInfo.filter({ key: 'main' });
       return results?.[0] || null;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
   });
 
-  return { ...DEFAULT_INFO, ...data };
+  if (!data) return DEFAULT_INFO;
+
+  return {
+    ...DEFAULT_INFO,
+    ...data,
+    // Ensure service_times falls back to default if empty/missing
+    service_times: data.service_times?.length ? data.service_times : DEFAULT_INFO.service_times,
+  };
 }
