@@ -4,27 +4,29 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { useFeatures } from '@/lib/FeatureContext';
 
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Sermons', path: '/sermons' },
 ];
 
-const communityLinks = [
-  { label: 'Groups', sub: 'Do life Together', path: '/groups' },
-  { label: 'Care', sub: 'Something for every Season', path: '/services' },
-  { label: 'Schedule', sub: 'When we gather', path: '/schedule' },
-  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones' },
+const communityLinksAll = [
+  { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups' },
+  { label: 'Care', sub: 'Something for every Season', path: '/services', featureKey: 'link_community_care' },
+  { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule' },
+  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones' },
 ];
 
-const giveLinks = [
-  { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer' },
-  { label: 'Give Financially', sub: 'Support our mission', path: '/giving' },
-  { label: 'Give to Each Other', sub: 'Community support board', path: '/community-support' },
+const giveLinksAll = [
+  { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time' },
+  { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially' },
+  { label: 'Give to Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other' },
 ];
 
 export default function Navbar() {
   const location = useLocation();
+  const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
   const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
@@ -32,6 +34,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
+  const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey));
+  const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey));
   const communityRef = useRef(null);
   const giveRef = useRef(null);
 

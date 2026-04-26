@@ -4,10 +4,12 @@ import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import { FeatureProvider } from '@/lib/FeatureContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
 import PageLayout from './components/layout/PageLayout';
 import MemberRoute from './components/MemberRoute';
+import FeatureRoute from './components/FeatureRoute';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Giving from './pages/Giving';
@@ -56,15 +58,15 @@ const AuthenticatedApp = () => {
         <Route path="/sermons" element={<Sermons />} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}
-        <Route path="/services" element={<MemberRoute><Services /></MemberRoute>} />
-        <Route path="/giving" element={<MemberRoute><Giving /></MemberRoute>} />
-        <Route path="/volunteer" element={<MemberRoute><Volunteer /></MemberRoute>} />
+        <Route path="/services" element={<FeatureRoute featureKey="page_services"><Services /></FeatureRoute>} />
+        <Route path="/giving" element={<FeatureRoute featureKey="page_giving"><Giving /></FeatureRoute>} />
+        <Route path="/volunteer" element={<FeatureRoute featureKey="page_volunteer"><Volunteer /></FeatureRoute>} />
         <Route path="/admin" element={<MemberRoute><Admin /></MemberRoute>} />
-        <Route path="/community-support" element={<MemberRoute><CommunitySupport /></MemberRoute>} />
-        <Route path="/groups" element={<MemberRoute><Groups /></MemberRoute>} />
-        <Route path="/schedule" element={<MemberRoute><Schedule /></MemberRoute>} />
-        <Route path="/milestones" element={<MemberRoute><Milestones /></MemberRoute>} />
-        <Route path="/carpool" element={<MemberRoute><Carpool /></MemberRoute>} />
+        <Route path="/community-support" element={<FeatureRoute featureKey="page_community_support"><CommunitySupport /></FeatureRoute>} />
+        <Route path="/groups" element={<FeatureRoute featureKey="page_groups"><Groups /></FeatureRoute>} />
+        <Route path="/schedule" element={<FeatureRoute featureKey="page_schedule"><Schedule /></FeatureRoute>} />
+        <Route path="/milestones" element={<FeatureRoute featureKey="page_milestones"><Milestones /></FeatureRoute>} />
+        <Route path="/carpool" element={<FeatureRoute featureKey="page_carpool"><Carpool /></FeatureRoute>} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
@@ -74,12 +76,14 @@ const AuthenticatedApp = () => {
 function App() {
   return (
     <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
+      <FeatureProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </FeatureProvider>
     </AuthProvider>
   )
 }

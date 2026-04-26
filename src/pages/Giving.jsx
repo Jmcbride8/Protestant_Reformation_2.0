@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useFeatures } from '@/lib/FeatureContext';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function Giving() {
   const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fund: 'general' });
   const [donationSubmitted, setDonationSubmitted] = useState(false);
+  const { isEnabled } = useFeatures();
 
   const { data: fundSettings = [] } = useQuery({
     queryKey: ['fundSettings'],
@@ -55,6 +57,7 @@ export default function Giving() {
       </section>
 
       {/* Budget Transparency */}
+      {isEnabled('giving_annual_budget') && (
       <section className="py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -82,6 +85,7 @@ export default function Giving() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Give Now */}
       <section className="py-24 bg-secondary/30">
@@ -186,6 +190,7 @@ export default function Giving() {
       </section>
 
       {/* Capital Campaign */}
+      {isEnabled('giving_capital_campaign') && (
       <section className="py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -199,6 +204,7 @@ export default function Giving() {
           <CapitalCampaign />
         </div>
       </section>
+      )}
     </div>
   );
 }

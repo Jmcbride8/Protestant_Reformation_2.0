@@ -1,0 +1,28 @@
+{
+  "name": "FeatureToggle",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique identifier for the feature (e.g. page_giving, giving_capital_campaign)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable name shown in the admin UI"
+    },
+    "group": {
+      "type": "string",
+      "description": "Grouping for display (e.g. Pages, Community, Give, Giving Sub-features)"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the feature is currently enabled"
+    }
+  },
+  "required": [
+    "key",
+    "label",
+    "enabled"
+  ]
+}

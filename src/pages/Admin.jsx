@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft } from 'lucide-react';
+import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
 import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
@@ -196,6 +197,7 @@ export default function Admin() {
             <TabsTrigger value="groups" className="gap-2"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Features</TabsTrigger>
           </TabsList>
 
           {/* Sermons Tab */}
@@ -273,6 +275,11 @@ export default function Admin() {
           {/* Events Tab */}
           <TabsContent value="events">
             <EventsManager />
+          </TabsContent>
+
+          {/* Features Tab */}
+          <TabsContent value="features">
+            <FeatureTogglesManager />
           </TabsContent>
         </Tabs>
         )}
