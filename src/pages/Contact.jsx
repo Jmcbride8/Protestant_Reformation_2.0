@@ -9,6 +9,8 @@ import { base44 } from '@/api/base44Client';
 import { CheckCircle, MapPin, Phone, Mail, Clock, UserPlus } from 'lucide-react';
 import { toast } from "sonner";
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
+import { useQuery } from '@tanstack/react-query';
+import TeamSection from '@/components/contact/TeamSection';
 
 const serviceTypes = [
   { value: 'marriage_counseling', label: 'Marriage Counseling' },
@@ -61,6 +63,9 @@ export default function Contact() {
           </motion.div>
         </div>
       </section>
+
+      {/* Team Section */}
+      <TeamSection />
 
       {/* Form + Info */}
       <section className="py-24 bg-background">

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, UserPlus, Users, Pencil } from 'lucide-react';
+import { Search, UserPlus, Users, Pencil, Camera } from 'lucide-react';
 import MemberProfileModal from './MemberProfileModal';
+import { toast } from 'sonner';
 
 const roleColors = {
   Member: 'bg-secondary text-secondary-foreground',
@@ -23,6 +24,28 @@ export default function MemberDirectory() {
   const [filterRole, setFilterRole] = useState('all');
   const [editingMember, setEditingMember] = useState(null);
   const [creatingNew, setCreatingNew] = useState(false);
+  const [uploadingPhotoId, setUploadingPhotoId] = useState(null);
+  const photoInputRef = useRef(null);
+  const uploadTargetRef = useRef(null);
+
+  const handlePhotoClick = (member) => {
+    uploadTargetRef.current = member;
+    photoInputRef.current?.click();
+  };
+
+  const handlePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    const member = uploadTargetRef.current;
+    if (!file || !member) return;
+    setUploadingPhotoId(member.id);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    await base44.entities.MemberProfile.update(member.id, { photo_url: file_url });
+    queryClient.invalidateQueries({ queryKey: ['memberProfiles'] });
+    queryClient.invalidateQueries({ queryKey: ['teamMembers'] });
+    toast.success('Photo updated');
+    setUploadingPhotoId(null);
+    e.target.value = '';
+  };
 
   const { data: members = [] } = useQuery({
     queryKey: ['memberProfiles'],
@@ -119,12 +142,22 @@ export default function MemberDirectory() {
               className="p-4 bg-card rounded-xl border border-border/50 hover:border-accent/30 hover:shadow-md transition-all"
             >
               <div className="flex items-start gap-3">
-                {/* Avatar */}
-                <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden bg-secondary flex items-center justify-center">
+                {/* Avatar with photo upload */}
+                <div
+                  className="relative flex-shrink-0 w-12 h-12 rounded-full overflow-hidden bg-secondary flex items-center justify-center cursor-pointer group"
+                  onClick={() => handlePhotoClick(member)}
+                  title="Click to update photo"
+                >
                   {member.photo_url
                     ? <img src={member.photo_url} alt={member.full_name} className="w-full h-full object-cover" />
                     : <span className="font-heading text-lg text-primary">{member.full_name?.[0]}</span>
                   }
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
+                    {uploadingPhotoId === member.id
+                      ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      : <Camera className="w-4 h-4 text-white" />
+                    }
+                  </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -169,6 +202,9 @@ export default function MemberDirectory() {
           No members found.
         </div>
       )}
+
+      {/* Hidden file input for photo uploads */}
+      <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
 
       {(editingMember || creatingNew) && (
         <MemberProfileModal
