@@ -8,7 +8,7 @@ import { useFeatures } from '@/lib/FeatureContext';
 
 const navLinks = [
   { label: 'Home', path: '/' },
-  { label: 'Sermons', path: '/sermons' },
+  { label: 'Sermons', path: '/sermons', featureKey: 'page_sermons' },
 ];
 
 const communityLinksAll = [
@@ -34,6 +34,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
+  const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey));
   const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey));
   const communityRef = useRef(null);
@@ -83,7 +84,7 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => (
+            {filteredNavLinks.map(link => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -210,7 +211,7 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
               <div className="flex flex-col gap-6 mt-8">
-                {navLinks.map(link => (
+                {filteredNavLinks.map(link => (
                   <Link
                     key={link.path}
                     to={link.path}
