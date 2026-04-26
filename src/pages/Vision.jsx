@@ -28,9 +28,9 @@ export default function Vision() {
       <VisionHero isAdmin={isAdmin} />
       <VisionBackground isAdmin={isAdmin} />
       <FrancisChanChallenge isAdmin={isAdmin} />
+      <VisionScale isAdmin={isAdmin} />
       <VisionPhilosophy isAdmin={isAdmin} />
       <VisionLifeStages isAdmin={isAdmin} />
-      <VisionScale isAdmin={isAdmin} />
       <VisionInPractice isAdmin={isAdmin} />
       <VisionTechnology isAdmin={isAdmin} />
     </div>
