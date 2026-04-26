@@ -77,26 +77,7 @@ export default function VisionScale({ isAdmin }) {
           ))}
         </div>
 
-        {/* Key insight callout */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-primary/5 border border-primary/20 rounded-2xl p-8 text-center"
-        >
-          <Heart className="w-8 h-8 text-accent mx-auto mb-4" />
-          <h3 className="font-heading text-2xl text-primary mb-3">
-            "The church is not the building. It's not even the Sunday service.<br />
-            <span className="italic">It's the people, caring for each other, all week long."</span>
-          </h3>
-          <EditableText
-            storageKey="scale_callout"
-            defaultText="This site is built to make that vision real — not just inspiring. Every feature exists to lower the barrier for people to find each other, show up for each other, and belong."
-            className="font-body text-sm text-muted-foreground max-w-xl mx-auto"
-            isAdmin={isAdmin}
-          />
-        </motion.div>
+
       </div>
     </section>
   );
