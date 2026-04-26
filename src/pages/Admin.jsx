@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church, Eye } from 'lucide-react';
+import { startMemberPreview } from '../components/layout/MemberPreviewBanner';
+import { useNavigate } from 'react-router-dom';
 import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import ChurchInfoManager from '../components/admin/ChurchInfoManager';
 import BudgetManager from '../components/admin/BudgetManager';
@@ -42,6 +44,12 @@ export default function Admin() {
   const [adminSection, setAdminSection] = useState('website');
   const [donationFilters, setDonationFilters] = useState({ year: '', fund: '' });
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handlePreviewAsMember = () => {
+    startMemberPreview();
+    navigate('/');
+  };
 
   useEffect(() => {
     base44.auth.isAuthenticated().then(async (authed) => {
@@ -167,9 +175,19 @@ export default function Admin() {
   return (
     <div className="pt-20 min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-center gap-3 mb-8">
-          <ShieldCheck className="w-8 h-8 text-primary" />
-          <h1 className="font-heading text-3xl text-primary">Admin Dashboard</h1>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="w-8 h-8 text-primary" />
+            <h1 className="font-heading text-3xl text-primary">Admin Dashboard</h1>
+          </div>
+          <Button
+            variant="outline"
+            onClick={handlePreviewAsMember}
+            className="font-body gap-2 border-accent text-accent hover:bg-accent/10"
+          >
+            <Eye className="w-4 h-4" />
+            Preview as Member
+          </Button>
         </div>
 
         {/* Section Selector */}
