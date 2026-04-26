@@ -204,8 +204,8 @@ export default function Navbar() {
           {/* Mobile nav */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
+              <Button variant="ghost" size="icon" className={`h-12 w-12 ${useWhiteNav ? 'text-white hover:bg-white/20' : 'text-primary hover:bg-secondary'}`}>
+                <Menu className="h-8 w-8" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
