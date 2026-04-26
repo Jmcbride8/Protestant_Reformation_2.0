@@ -157,7 +157,7 @@ export default function FrancisChanChallenge({ isAdmin }) {
           <h3 className="font-heading text-2xl text-primary mb-4">The Question for Us</h3>
           <EditableText
             storageKey="francis_challenge"
-            defaultText="Could we build a church that could truly be a family, with real relationships at any stage — where regardless of the numbers, everyone was a name that someone knew? That's what Hope Church exists to do. Not to be the biggest. To be what a family looks like when it takes Jesus seriously."
+            defaultText="Could we build a church that could truly be a family, with real relationships at any stage — where regardless of the numbers, everyone was a name that someone knew."
             className="font-body text-lg text-muted-foreground italic leading-relaxed max-w-2xl mx-auto"
             isAdmin={isAdmin}
           />
