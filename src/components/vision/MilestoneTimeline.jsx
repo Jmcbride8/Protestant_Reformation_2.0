@@ -38,13 +38,13 @@ export default function MilestoneTimeline({ isAdmin }) {
 
   return (
     <div className="py-12 mb-12">
-      {/* Timeline */}
+      {/* Horizontal Timeline */}
       <div className="relative">
-        {/* Vertical line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-accent to-accent/30" />
+        {/* Horizontal line */}
+        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/30 transform -translate-y-1/2" />
 
         {/* Milestone cards */}
-        <div className="space-y-16">
+        <div className="flex gap-6 overflow-x-auto pb-4">
           {milestones.map((milestone, idx) => (
             <motion.div
               key={milestone.id}
@@ -52,11 +52,21 @@ export default function MilestoneTimeline({ isAdmin }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className={`flex items-start ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+              className="flex-shrink-0 w-72"
             >
-              {/* Content side */}
-              <div className={`w-1/2 ${idx % 2 === 0 ? 'pr-12' : 'pl-12'}`}>
-                <div className="bg-card border border-border rounded-2xl p-6 h-full flex flex-col">
+              <div className="relative">
+                {/* Timeline dot */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex justify-center">
+                  <motion.div
+                    whileInView={{ scale: 1 }}
+                    initial={{ scale: 0 }}
+                    viewport={{ once: true }}
+                    className="w-5 h-5 bg-accent rounded-full border-4 border-background z-10"
+                  />
+                </div>
+
+                {/* Content card */}
+                <div className="bg-card border border-border rounded-2xl p-6 h-full flex flex-col pt-10">
                   <h3 className="font-heading text-lg text-primary mb-2">{milestone.title}</h3>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
                     {milestone.description}
@@ -93,7 +103,7 @@ export default function MilestoneTimeline({ isAdmin }) {
                           <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent/50 transition-colors bg-secondary/20">
                             <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
                             <p className="font-body text-xs text-muted-foreground">
-                              {uploading[milestone.id] ? 'Uploading...' : 'Click to upload image'}
+                              {uploading[milestone.id] ? 'Uploading...' : 'Click to upload'}
                             </p>
                           </div>
                         )}
@@ -102,19 +112,6 @@ export default function MilestoneTimeline({ isAdmin }) {
                   </div>
                 </div>
               </div>
-
-              {/* Timeline dot */}
-              <div className="w-0 flex justify-center">
-                <motion.div
-                  whileInView={{ scale: 1 }}
-                  initial={{ scale: 0 }}
-                  viewport={{ once: true }}
-                  className="w-5 h-5 bg-accent rounded-full border-4 border-background z-10"
-                />
-              </div>
-
-              {/* Spacer for alternate layout */}
-              <div className="w-1/2" />
             </motion.div>
           ))}
         </div>
