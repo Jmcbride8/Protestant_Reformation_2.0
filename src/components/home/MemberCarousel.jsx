@@ -1,51 +1,58 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import EditableImage from '@/components/admin/EditableImage';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
-const members = [
+const FALLBACK_MEMBERS = [
   {
+    id: 'fallback-1',
     name: "The Rivera Family",
-    image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&h=800&fit=crop&crop=center",
+    image_url: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&h=800&fit=crop&crop=center",
     profession: "Carlos, Maria & their four kids",
-    shortQuote: "We were searching for a church that would grow our whole family in the faith — we found it here.",
+    short_quote: "We were searching for a church that would grow our whole family in the faith — we found it here.",
     testimony: "We visited on a random Sunday in 2016, mostly because it was close to home. We didn't expect much. But the kids loved it, and the sermon hit us both hard. We were in a small group within the month. Now our oldest leads the youth worship team and our youngest can recite more Scripture than either of us. Hope Church is woven into the fabric of our family.",
-    whyHope: "They never treated our kids as an afterthought. They were discipled, loved, and taken seriously from day one."
+    why_hope: "They never treated our kids as an afterthought. They were discipled, loved, and taken seriously from day one."
   },
   {
+    id: 'fallback-2',
     name: "The Andersons",
-    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=800&fit=crop&crop=top",
+    image_url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=800&fit=crop&crop=top",
     profession: "Newlyweds, married here in 2022",
-    shortQuote: "We got married at Hope. Now we're building our life here.",
+    short_quote: "We got married at Hope. Now we're building our life here.",
     testimony: "We met through a mutual friend at a young adults' group here. Neither of us was looking for anything serious — in faith or in love. But the community kept drawing us deeper into both. When the time came, there was nowhere else we'd have wanted to exchange our vows. Pastor prayed over us, the whole church celebrated with us. It felt like family.",
-    whyHope: "This place taught us what covenant means — before we made one to each other."
+    why_hope: "This place taught us what covenant means — before we made one to each other."
   },
   {
+    id: 'fallback-3',
     name: "The Kimura Family",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop&crop=center",
+    image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop&crop=center",
     profession: "Kenji, Aiko & two toddlers",
-    shortQuote: "As a Japanese-American family, we weren't sure we'd feel at home. We do.",
+    short_quote: "As a Japanese-American family, we weren't sure we'd feel at home. We do.",
     testimony: "We moved to Santa Barbara from the Bay Area when Kenji's job relocated. We were nervous starting over. We visited half a dozen churches before someone told us about Hope. What struck us first was how genuinely diverse the congregation was — not performatively, but organically. Our daughters are growing up knowing the Gospel and knowing they belong.",
-    whyHope: "The Word is preached faithfully and the table is open wide. That's all we ever wanted."
+    why_hope: "The Word is preached faithfully and the table is open wide. That's all we ever wanted."
   },
   {
+    id: 'fallback-4',
     name: "Bob & Linda Hartman",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=top",
+    image_url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=top",
     profession: "Retired teachers, grandparents of six",
-    shortQuote: "We've been part of this church for over a decade. It keeps getting richer.",
+    short_quote: "We've been part of this church for over a decade. It keeps getting richer.",
     testimony: "We joined Hope in 2013 after decades at another congregation that had slowly drifted from Scripture. What we found here was a return to the basics — expository preaching, genuine community, a passion for the lost. We've watched young families come in, grow, and now serve alongside us. That kind of multigenerational life is rare and beautiful.",
-    whyHope: "At our age, you know what's real. This is real."
+    why_hope: "At our age, you know what's real. This is real."
   },
   {
+    id: 'fallback-5',
     name: "The Osei-Bonsu Family",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=faces",
+    image_url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=800&fit=crop&crop=faces",
     profession: "Emmanuel, Grace & their three children",
-    shortQuote: "We came from Ghana with nothing but our faith. This church helped us build a new home.",
+    short_quote: "We came from Ghana with nothing but our faith. This church helped us build a new home.",
     testimony: "When we arrived in Santa Barbara, we were overwhelmed. We found Hope through a flyer at the community center. From the first week, people showed up — helping us find an apartment, connecting us with work, welcoming our kids into Sunday school. It wasn't charity; it felt like family. We have never forgotten that, and we try to do the same for every new face we see.",
-    whyHope: "They did not just preach hospitality — they practiced it. That is the Gospel with skin on."
+    why_hope: "They did not just preach hospitality — they practiced it. That is the Gospel with skin on."
   },
 ];
 
@@ -53,6 +60,15 @@ export default function MemberCarousel({ isAdmin }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [direction, setDirection] = useState(1);
+
+  const { data: dbMembers = [] } = useQuery({
+    queryKey: ['carouselMembers'],
+    queryFn: () => base44.entities.CarouselMember.list('sort_order', 50),
+  });
+
+  const members = dbMembers.filter(m => m.is_active).length > 0
+    ? dbMembers.filter(m => m.is_active)
+    : FALLBACK_MEMBERS;
 
   const go = (dir) => {
     setDirection(dir);
@@ -112,7 +128,7 @@ export default function MemberCarousel({ isAdmin }) {
           {/* Mobile: single full-width card */}
           <div className="sm:hidden w-full max-w-sm mx-auto">
             <motion.div
-              key={members[current].name}
+              key={members[current].id || members[current].name}
               onClick={() => setSelected(members[current])}
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -122,7 +138,7 @@ export default function MemberCarousel({ isAdmin }) {
             >
               <EditableImage
                 imageKey={`member_${members[current].name.toLowerCase().replace(/\s+/g, '_')}`}
-                src={members[current].image}
+                src={members[current].image_url}
                 alt={members[current].name}
                 className="absolute inset-0 w-full h-full object-cover"
                 isAdmin={isAdmin}
@@ -134,7 +150,7 @@ export default function MemberCarousel({ isAdmin }) {
                 <p className="font-body text-sm text-white/70 mb-3">{members[current].profession}</p>
                 <Quote className="w-5 h-5 text-accent/80 mb-1" />
                 <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-3">
-                  {members[current].shortQuote}
+                  {members[current].short_quote}
                 </p>
                 <p className="font-body text-sm text-accent mt-3 font-medium">Tap to read their story →</p>
               </div>
@@ -145,7 +161,7 @@ export default function MemberCarousel({ isAdmin }) {
           <div className="hidden sm:flex gap-5 overflow-hidden w-full max-w-4xl">
             {visible.map((member, i) => (
               <motion.div
-                key={member.name}
+                key={member.id || member.name}
                 onClick={() => i === 1 && setSelected(member)}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
@@ -162,7 +178,7 @@ export default function MemberCarousel({ isAdmin }) {
               >
                 <EditableImage
                   imageKey={`member_${member.name.toLowerCase().replace(/\s+/g, '_')}`}
-                  src={member.image}
+                  src={member.image_url}
                   alt={member.name}
                   className="absolute inset-0 w-full h-full object-cover"
                   isAdmin={isAdmin && i === 1}
@@ -174,7 +190,7 @@ export default function MemberCarousel({ isAdmin }) {
                   <p className="font-body text-sm text-white/70 mb-3">{member.profession}</p>
                   <Quote className="w-5 h-5 text-accent/80 mb-1" />
                   <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-2">
-                    {member.shortQuote}
+                    {member.short_quote}
                   </p>
                   {i === 1 && (
                     <p className="font-body text-sm text-accent mt-3 font-medium">Click to read their story →</p>
@@ -194,9 +210,9 @@ export default function MemberCarousel({ isAdmin }) {
 
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-8">
-          {members.map((_, i) => (
+          {members.map((m, i) => (
             <button
-              key={i}
+              key={m.id || i}
               onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
               className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-accent w-5' : 'bg-border'}`}
             />
@@ -221,7 +237,7 @@ export default function MemberCarousel({ isAdmin }) {
             <div>
               <div className="flex items-center gap-4 mb-6">
                 <img
-                  src={selected.image}
+                  src={selected.image_url}
                   alt={selected.name}
                   className="w-20 h-20 rounded-full object-cover border-2 border-accent/30"
                 />
@@ -232,14 +248,18 @@ export default function MemberCarousel({ isAdmin }) {
               </div>
 
               <div className="space-y-4">
-                <div>
-                  <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Their Testimony</p>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">{selected.testimony}</p>
-                </div>
-                <div className="border-t pt-4">
-                  <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Why Hope Church?</p>
-                  <p className="font-body text-sm text-foreground leading-relaxed italic">"{selected.whyHope}"</p>
-                </div>
+                {selected.testimony && (
+                  <div>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Their Testimony</p>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{selected.testimony}</p>
+                  </div>
+                )}
+                {selected.why_hope && (
+                  <div className="border-t pt-4">
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Why Hope Church?</p>
+                    <p className="font-body text-sm text-foreground leading-relaxed italic">"{selected.why_hope}"</p>
+                  </div>
+                )}
               </div>
             </div>
           )}

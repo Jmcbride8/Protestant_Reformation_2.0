@@ -19,6 +19,7 @@ import GroupsManager from '../components/admin/GroupsManager';
 import ScheduleManager from '../components/admin/ScheduleManager';
 import EventsManager from '../components/admin/EventsManager';
 import MilestonesManager from '../components/admin/MilestonesManager';
+import CarouselMembersManager from '../components/admin/CarouselMembersManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import MemberDirectory from '../components/admin/MemberDirectory';
 import AddSermonForm from '../components/sermons/AddSermonForm';
@@ -222,6 +223,7 @@ export default function Admin() {
             <TabsTrigger value="groups" className="gap-2"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            <TabsTrigger value="carousel" className="gap-2"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
           </TabsList>
 
           {/* Sermons Tab */}
@@ -299,6 +301,11 @@ export default function Admin() {
           {/* Events Tab */}
           <TabsContent value="events">
             <EventsManager />
+          </TabsContent>
+
+          {/* Carousel Tab */}
+          <TabsContent value="carousel">
+            <CarouselMembersManager />
           </TabsContent>
 
         </Tabs>

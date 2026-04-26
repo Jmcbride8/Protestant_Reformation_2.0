@@ -1,0 +1,43 @@
+{
+  "name": "CarouselMember",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the member or family (e.g. The Rivera Family)"
+    },
+    "profession": {
+      "type": "string",
+      "description": "Subtitle shown on the card (e.g. Carlos, Maria & their four kids)"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Photo URL for the card"
+    },
+    "short_quote": {
+      "type": "string",
+      "description": "Short quote shown on the carousel card"
+    },
+    "testimony": {
+      "type": "string",
+      "description": "Full testimony shown in the detail dialog"
+    },
+    "why_hope": {
+      "type": "string",
+      "description": "Answer to 'Why Hope Church?' shown in the detail dialog"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order in the carousel"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this card is shown in the carousel"
+    }
+  },
+  "required": [
+    "name",
+    "short_quote"
+  ]
+}
