@@ -1,33 +1,94 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-function TeamMemberCard({ member, index }) {
+function TeamMemberCard({ member }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 + index * 0.1 }}
-      className="relative w-52 h-64 rounded-2xl overflow-hidden shadow-2xl group"
-    >
-      {/* Photo */}
+    <div className="relative w-52 h-64 rounded-2xl overflow-hidden shadow-2xl flex-shrink-0">
       {member.photo_url
         ? <img src={member.photo_url} alt={member.full_name} className="w-full h-full object-cover" />
         : <div className="w-full h-full bg-white/10 flex items-center justify-center">
             <span className="font-heading text-6xl text-white/40">{member.full_name?.[0]}</span>
           </div>
       }
-
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-      {/* Name + role overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
         <h4 className="font-heading text-lg text-white leading-tight">{member.full_name}</h4>
         <p className="font-body text-xs text-white/70 mt-0.5 tracking-wide">{member.role}</p>
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+function TeamCarousel({ members }) {
+  const [index, setIndex] = useState(0);
+
+  if (members.length === 0) return null;
+
+  const prev = () => setIndex(i => (i - 1 + members.length) % members.length);
+  const next = () => setIndex(i => (i + 1) % members.length);
+
+  // On desktop show up to 3 at a time; on mobile show 1
+  const visibleCount = Math.min(members.length, 3);
+  const visible = Array.from({ length: visibleCount }, (_, i) =>
+    members[(index + i) % members.length]
+  );
+
+  return (
+    <div>
+      {/* Desktop: up to 3 cards side by side */}
+      <div className="hidden sm:flex items-center justify-center gap-4">
+        {members.length > visibleCount && (
+          <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+        )}
+        <div className="flex gap-8 justify-center">
+          {visible.map((m, i) => (
+            <motion.div key={m.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+              <TeamMemberCard member={m} />
+            </motion.div>
+          ))}
+        </div>
+        {members.length > visibleCount && (
+          <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+        )}
+      </div>
+
+      {/* Mobile: single card */}
+      <div className="sm:hidden flex items-center justify-center gap-4">
+        {members.length > 1 && (
+          <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+        )}
+        <motion.div key={members[index].id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
+          <TeamMemberCard member={members[index]} />
+        </motion.div>
+        {members.length > 1 && (
+          <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
+            <ChevronRight className="w-5 h-5 text-white" />
+          </button>
+        )}
+      </div>
+
+      {/* Dots */}
+      {members.length > 1 && (
+        <div className="flex justify-center gap-2 mt-6">
+          {members.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all ${i === index ? 'w-5 bg-accent' : 'w-1.5 bg-white/30'}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -42,7 +103,6 @@ export default function TeamSection() {
 
   return (
     <section className="py-28 bg-primary relative overflow-hidden">
-      {/* Subtle background texture */}
       <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '60px 60px'}} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -64,21 +124,15 @@ export default function TeamSection() {
         {pastors.length > 0 && (
           <div className="mb-20">
             <p className="font-body text-xs tracking-[0.25em] uppercase text-white/40 font-semibold text-center mb-12">Pastoral Team</p>
-            <div className="flex flex-wrap justify-center gap-12">
-              {pastors.map((m, i) => <TeamMemberCard key={m.id} member={m} index={i} />)}
-            </div>
+            <TeamCarousel members={pastors} />
           </div>
         )}
 
         {staff.length > 0 && (
           <div>
-            {pastors.length > 0 && (
-              <div className="w-16 h-px bg-white/20 mx-auto mb-16" />
-            )}
+            {pastors.length > 0 && <div className="w-16 h-px bg-white/20 mx-auto mb-16" />}
             <p className="font-body text-xs tracking-[0.25em] uppercase text-white/40 font-semibold text-center mb-12">Staff</p>
-            <div className="flex flex-wrap justify-center gap-12">
-              {staff.map((m, i) => <TeamMemberCard key={m.id} member={m} index={pastors.length + i} />)}
-            </div>
+            <TeamCarousel members={staff} />
           </div>
         )}
       </div>
