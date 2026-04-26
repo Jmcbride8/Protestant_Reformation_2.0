@@ -125,7 +125,7 @@ export default function VisionBackground({ isAdmin }) {
           className="mb-4"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">A Radical Reimagining</p>
-          <h3 className="font-heading text-2xl text-primary mb-3">From the Megachurch to the Margin</h3>
+          <h3 className="font-heading text-2xl text-primary mb-3">The Francis Chan Challenge</h3>
           
           <div className="grid lg:grid-cols-2 gap-12 items-start mb-8">
             {/* Video */}
