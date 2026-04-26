@@ -204,7 +204,6 @@ export default function Admin() {
             <TabsTrigger value="groups" className="gap-2"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
-            <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Features</TabsTrigger>
           </TabsList>
 
           {/* Sermons Tab */}
@@ -284,10 +283,6 @@ export default function Admin() {
             <EventsManager />
           </TabsContent>
 
-          {/* Features Tab */}
-          <TabsContent value="features">
-            <FeatureTogglesManager />
-          </TabsContent>
         </Tabs>
         )}
 
