@@ -62,28 +62,17 @@ export default function ServiceTimesBar() {
               {ADDRESS}
               <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
             </a>
-
-            {/* Elegant map card */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group/map">
-              {/* Subtle vignette overlay that fades on hover */}
-              <div className="absolute inset-0 pointer-events-none z-10 bg-gradient-to-t from-primary/30 via-transparent to-transparent group-hover/map:opacity-0 transition-opacity duration-500" />
-              {/* Top-left frosted pin badge */}
-              <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1.5 shadow-lg">
-                <MapPin className="w-3.5 h-3.5 text-white" />
-                <span className="font-body text-xs text-white font-medium tracking-wide">Hope Church</span>
-              </div>
-              <div className="aspect-video w-full">
-                <iframe
-                  src={EMBED_URL}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Hope Church location"
-                />
-              </div>
+            <div className="rounded-xl overflow-hidden border border-white/10 aspect-video w-full">
+              <iframe
+                src={EMBED_URL}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Hope Church location"
+              />
             </div>
           </div>
         </motion.div>
