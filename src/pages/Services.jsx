@@ -53,7 +53,7 @@ const communityGroups = [
     audience: "UCSB Students",
     tag: "College Ministry",
     title: "You Belong Here — Even If You Just Moved",
-    description: "Far from home, juggling classes, and searching for something real? Our college ministry is a judgment-free space built specifically for UCSB students. We gather Friday nights for dinner, honest conversation, and faith that doesn't require you to have it together.",
+    description: "Far from home, juggling classes, and searching for something real? Our college ministry is built specifically for UCSB students. We gather Friday nights for dinner, honest conversation, and faith that doesn't require you to have it together.",
     bullets: [
       "Free Friday night dinners — no cost, no strings",
       "Small groups by major and interest",
