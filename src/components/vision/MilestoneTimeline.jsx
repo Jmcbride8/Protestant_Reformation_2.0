@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Upload, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -13,7 +13,18 @@ const defaultMilestones = [
 ];
 
 export default function MilestoneTimeline({ isAdmin }) {
-  const [milestones, setMilestones] = useState(defaultMilestones);
+  const [milestones, setMilestones] = useState(() => {
+    const saved = localStorage.getItem('milestone_images');
+    if (saved) {
+      try {
+        const savedImages = JSON.parse(saved);
+        return defaultMilestones.map(m => ({ ...m, image_url: savedImages[m.id] }));
+      } catch (e) {
+        return defaultMilestones;
+      }
+    }
+    return defaultMilestones;
+  });
   const [uploading, setUploading] = useState({});
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', containScroll: 'trimSnaps' });
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -38,9 +49,13 @@ export default function MilestoneTimeline({ isAdmin }) {
     setUploading(prev => ({ ...prev, [milestoneId]: true }));
     try {
       const result = await base44.integrations.Core.UploadFile({ file });
-      setMilestones(prev =>
-        prev.map(m => m.id === milestoneId ? { ...m, image_url: result.file_url } : m)
-      );
+      setMilestones(prev => {
+        const updated = prev.map(m => m.id === milestoneId ? { ...m, image_url: result.file_url } : m);
+        localStorage.setItem('milestone_images', JSON.stringify(
+          Object.fromEntries(updated.map(m => [m.id, m.image_url]))
+        ));
+        return updated;
+      });
     } catch (error) {
       console.error('Upload failed:', error);
     }
@@ -48,9 +63,13 @@ export default function MilestoneTimeline({ isAdmin }) {
   };
 
   const handleRemoveImage = (milestoneId) => {
-    setMilestones(prev =>
-      prev.map(m => m.id === milestoneId ? { ...m, image_url: null } : m)
-    );
+    setMilestones(prev => {
+      const updated = prev.map(m => m.id === milestoneId ? { ...m, image_url: null } : m);
+      localStorage.setItem('milestone_images', JSON.stringify(
+        Object.fromEntries(updated.map(m => [m.id, m.image_url]))
+      ));
+      return updated;
+    });
   };
 
   return (
