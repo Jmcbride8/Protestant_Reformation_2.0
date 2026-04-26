@@ -86,7 +86,7 @@ export default function VisionBackground({ isAdmin }) {
         </motion.div>
 
         {/* Three uploadable VIVE images */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
           {[
             { label: 'The Community', hint: 'Upload a photo of VIVE Church or congregation', key: 'vive_community' },
             { label: 'The Gathering', hint: 'Upload a worship or event photo', key: 'vive_gathering' },
@@ -115,6 +115,24 @@ export default function VisionBackground({ isAdmin }) {
             </motion.div>
           ))}
         </div>
+
+        {/* Francis Chan Challenge as second example */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-4"
+        >
+          <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">A Radical Reimagining</p>
+          <h3 className="font-heading text-2xl text-primary mb-3">From the Megachurch to the Margin</h3>
+          <EditableText
+            storageKey="bg_francis_chan"
+            defaultText={`Francis Chan walked away from a thriving megachurch to ask a harder question: What if the church looked less like an organization and more like a family? He abandoned the stage, the crowds, and the comfort to return to something ancient and radical — a church small enough to know people's names, brave enough to live generously, and faithful enough to make disciples, not just decisions. His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. Hope Church exists in that tension: not abandoning the gifts that come with intentional leadership and teaching, but ensuring that the structure serves community, not the other way around.`}
+            className="font-body text-muted-foreground leading-relaxed max-w-3xl"
+            isAdmin={isAdmin}
+          />
+        </motion.div>
 
       </div>
     </section>
