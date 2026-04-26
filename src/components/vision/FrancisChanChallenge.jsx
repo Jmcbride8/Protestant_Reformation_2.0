@@ -85,9 +85,11 @@ export default function FrancisChanChallenge({ isAdmin }) {
                 <iframe
                   width="100%"
                   height="100%"
-                  src={`https://www.youtube.com/embed/${youtubeId}`}
+                  src={`https://www.youtube.com/embed/${youtubeId}?si=OrPiuXXfWWbSEBA7`}
                   title="Francis Chan Challenge"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                   className="absolute inset-0"
                 />
