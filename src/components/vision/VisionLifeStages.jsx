@@ -41,7 +41,7 @@ export default function VisionLifeStages({ isAdmin }) {
           <h2 className="font-heading text-4xl text-primary mb-5">Making Major Moments Count</h2>
           <EditableText
             storageKey="lifecycle_intro"
-            defaultText="Life's biggest moments — births, weddings, graduations, health crises, loss — are sacred opportunities. They're when people in our church turn to the Gospel, and when people outside our church might turn to us. Are we there? Can we help people navigate these pivotal seasons with Jesus? The Christian life doesn't follow a single template. It's earthy, practical, and deeply seasonal. Every stage — from young singles to empty nesters to those facing their final chapter — deserves a church that shows up, pays attention, and helps people progress in their faith. Not all moments matter equally, but when the big questions arise, when milestone moments come, when real challenges hit — the church should be ready."
+            defaultText="John Bunyan's Pilgrim's Progress shows us that faith is a journey — not a destination you reach on Sunday. Every major moment in life is a waypoint: births, weddings, graduations, health crises, loss. These are the moments when people in our church deepen their faith, when people outside our church might turn to us, when growth actually happens. Are we there? Can we help people not just survive these seasons, but progress — drawing closer to Christ, to each other, and to the fullness He offers? This platform exists to catalyze that growth, enable genuine engagement, and help churches create lasting memories at every milestone."
             className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             isAdmin={isAdmin}
           />
@@ -81,7 +81,7 @@ export default function VisionLifeStages({ isAdmin }) {
           <p className="font-body text-xs tracking-widest uppercase mb-4 text-primary-foreground/70">Our Conviction</p>
           <EditableText
             storageKey="lifecycle_conviction"
-            defaultText="Christ cared for all seasons of human life — the celebrations and the sorrows, the beginnings and the endings. So should we. We built this platform to help churches recognize that all of life matters, to show up for the moments that truly matter, and to help people navigate their unique spiritual journey — from one milestone to the next. Like Pilgrim's Progress, the Christian life is a journey. We're here to help churches walk alongside people every step of the way."
+            defaultText="Like Pilgrim's Progress, the Christian life is a journey of growth — not a single destination. We built this platform to help churches catalyze real spiritual progress, enable deeper engagement at life's pivotal moments, and create meaningful memories that last a lifetime. When a young couple gets married in your church, when a family welcomes a newborn, when someone faces their final season — these are sacred opportunities to walk alongside people and help them progress in faith. The journey matters. Every milestone counts."
             className="font-body text-lg leading-relaxed italic"
             isAdmin={isAdmin}
           />
