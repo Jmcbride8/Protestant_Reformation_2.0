@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import { useQuery } from '@tanstack/react-query';
 
 export default function Giving() {
-  const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fund: 'general' });
+  const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fund: 'general', frequency: 'one_time' });
   const [donationSubmitted, setDonationSubmitted] = useState(false);
   const { isEnabled } = useFeatures();
 
@@ -33,6 +33,8 @@ export default function Giving() {
       donor_email: donationForm.email,
       amount: parseFloat(donationForm.amount),
       fund: donationForm.fund,
+      is_recurring: donationForm.frequency !== 'one_time',
+      notes: donationForm.frequency !== 'one_time' ? `Recurring: ${donationForm.frequency}` : '',
     });
     setDonationSubmitted(true);
     toast.success("Thank you for your generous gift!");
@@ -112,7 +114,7 @@ export default function Giving() {
                 <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
                 <h3 className="font-heading text-2xl text-primary mb-2">Thank You!</h3>
                 <p className="font-body text-muted-foreground">Your gift has been recorded. You'll receive a receipt by email.</p>
-                <Button className="mt-6 font-body" onClick={() => { setDonationSubmitted(false); setDonationForm({ name: '', email: '', amount: '', fund: 'general' }); }}>
+                <Button className="mt-6 font-body" onClick={() => { setDonationSubmitted(false); setDonationForm({ name: '', email: '', amount: '', fund: 'general', frequency: 'one_time' }); }}>
                   Make Another Gift
                 </Button>
               </motion.div>
@@ -180,8 +182,32 @@ export default function Giving() {
                     ))}
                   </div>
                 </div>
+                <div className="space-y-2">
+                  <Label className="font-body text-sm">Frequency</Label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { value: 'one_time', label: 'One-Time' },
+                      { value: 'weekly', label: 'Weekly' },
+                      { value: 'monthly', label: 'Monthly' },
+                      { value: 'annually', label: 'Annually' },
+                    ].map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setDonationForm({ ...donationForm, frequency: value })}
+                        className={`font-body text-sm py-2 px-3 rounded-lg border transition-colors ${
+                          donationForm.frequency === value
+                            ? 'bg-primary text-primary-foreground border-primary'
+                            : 'bg-background border-border hover:bg-secondary'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <Button type="submit" className="w-full font-body tracking-wide bg-primary hover:bg-primary/90" size="lg">
-                  Give Now
+                  {donationForm.frequency === 'one_time' ? 'Give Now' : `Give ${donationForm.frequency.charAt(0).toUpperCase() + donationForm.frequency.slice(1)}`}
                 </Button>
               </form>
             )}
