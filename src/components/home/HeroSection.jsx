@@ -38,7 +38,7 @@ export default function HeroSection({ heroImage, isAdmin }) {
             <span className="italic">Hope & Life</span>
           </h1>
           <p className="font-body text-lg text-white/85 leading-relaxed mb-8 max-w-lg">
-            Rooted in the Gospel of Jesus Christ, we gather to worship, grow and God and each other — right here in Santa Barbara. No perfect people allowed!
+            We gather to worship, grow in faith in Jesus Christ, and love for each other — right here in Santa Barbara. No perfect people allowed!
           </p>
           <div className="flex flex-wrap gap-4">
             <Button
