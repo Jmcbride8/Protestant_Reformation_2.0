@@ -15,7 +15,7 @@ export default function VisionLifeStages({ isAdmin }) {
           className="text-center mb-16"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Christian Life Stages</p>
-          <h2 className="font-heading text-4xl text-primary mb-5">Making Major Moments Count</h2>
+          <h2 className="font-heading text-4xl text-primary mb-5">Living with Intentionality</h2>
           <EditableText
             storageKey="lifecycle_intro"
             defaultText="John Bunyan's Pilgrim's Progress shows us that faith is a journey — not a destination you reach on Sunday. Every major moment in life is a waypoint: births, weddings, graduations, health crises, loss. These are the moments when people in our church deepen their faith, when people outside our church might turn to us, when growth actually happens. Are we there? Can we help people not just survive these seasons, but progress — drawing closer to Christ, to each other, and to the fullness He offers? This platform exists to catalyze that growth, enable genuine engagement, and help churches create lasting memories at every milestone."
