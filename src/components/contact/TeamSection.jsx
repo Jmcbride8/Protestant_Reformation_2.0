@@ -9,18 +9,24 @@ function TeamMemberCard({ member, index }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 + index * 0.1 }}
-      className="flex flex-col items-center text-center"
+      className="relative w-52 h-64 rounded-2xl overflow-hidden shadow-2xl group"
     >
-      <div className="w-36 h-36 rounded-full overflow-hidden bg-white/10 mb-4 ring-4 ring-white/20 shadow-xl">
-        {member.photo_url
-          ? <img src={member.photo_url} alt={member.full_name} className="w-full h-full object-cover" />
-          : <div className="w-full h-full flex items-center justify-center">
-              <span className="font-heading text-4xl text-white/50">{member.full_name?.[0]}</span>
-            </div>
-        }
+      {/* Photo */}
+      {member.photo_url
+        ? <img src={member.photo_url} alt={member.full_name} className="w-full h-full object-cover" />
+        : <div className="w-full h-full bg-white/10 flex items-center justify-center">
+            <span className="font-heading text-6xl text-white/40">{member.full_name?.[0]}</span>
+          </div>
+      }
+
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+      {/* Name + role overlay */}
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <h4 className="font-heading text-lg text-white leading-tight">{member.full_name}</h4>
+        <p className="font-body text-xs text-white/70 mt-0.5 tracking-wide">{member.role}</p>
       </div>
-      <h4 className="font-heading text-xl text-white">{member.full_name}</h4>
-      <p className="font-body text-sm text-white/60 mt-0.5 tracking-wide">{member.role}</p>
     </motion.div>
   );
 }
