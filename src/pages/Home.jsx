@@ -5,6 +5,7 @@ import LifeMilestonesSection from '../components/home/LifeMilestonesSection';
 import ServicesPreview from '../components/home/ServicesPreview';
 import CTASection from '../components/home/CTASection';
 import MemberCarousel from '../components/home/MemberCarousel';
+import ServiceTimesBar from '../components/home/ServiceTimesBar';
 import { base44 } from '@/api/base44Client';
 
 const HERO_IMAGE = "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/bf1e22f72_generated_8701a21c.png";
@@ -30,6 +31,7 @@ export default function Home() {
   return (
     <div>
       <HeroSection heroImage={HERO_IMAGE} isAdmin={isAdmin} />
+      <ServiceTimesBar />
       <PillarsSection images={PILLAR_IMAGES} isAdmin={isAdmin} />
       <MemberCarousel isAdmin={isAdmin} />
       <LifeMilestonesSection weddingImage={WEDDING_IMAGE} mealImage={MEAL_IMAGE} kidsImage={KIDS_IMAGE} collegeImage={COLLEGE_IMAGE} isAdmin={isAdmin} />
