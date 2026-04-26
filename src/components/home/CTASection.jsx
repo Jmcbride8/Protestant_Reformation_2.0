@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { MapPin, Clock } from 'lucide-react';
+import { useChurchInfo } from '@/hooks/useChurchInfo';
 
 export default function CTASection() {
+  const info = useChurchInfo();
   return (
     <section className="py-24 bg-primary text-primary-foreground">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -24,11 +26,11 @@ export default function CTASection() {
           <div className="flex flex-wrap justify-center gap-8 mb-10">
             <div className="flex items-center gap-2 text-primary-foreground/70">
               <Clock className="w-5 h-5" />
-              <span className="font-body">Sundays 9:00 & 11:00 AM</span>
+              <span className="font-body">{info.sunday_times_display}</span>
             </div>
             <div className="flex items-center gap-2 text-primary-foreground/70">
               <MapPin className="w-5 h-5" />
-              <span className="font-body">123 Hope Street, Santa Barbara</span>
+              <span className="font-body">{info.address}</span>
             </div>
           </div>
 

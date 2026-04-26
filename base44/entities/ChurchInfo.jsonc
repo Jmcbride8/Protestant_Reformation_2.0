@@ -1,0 +1,67 @@
+{
+  "name": "ChurchInfo",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique key for this setting (e.g. 'main')"
+    },
+    "church_name": {
+      "type": "string",
+      "description": "Church name"
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Short tagline shown in the footer/hero"
+    },
+    "address": {
+      "type": "string",
+      "description": "Street address (e.g. 123 Hope Street, Santa Barbara, CA 93101)"
+    },
+    "maps_url": {
+      "type": "string",
+      "description": "Google Maps link"
+    },
+    "maps_embed_url": {
+      "type": "string",
+      "description": "Google Maps embed iframe URL"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Main phone number"
+    },
+    "email": {
+      "type": "string",
+      "description": "Main contact email"
+    },
+    "office_hours": {
+      "type": "string",
+      "description": "Office hours text (e.g. Mon\u2013Fri, 9:00 AM \u2013 4:00 PM)"
+    },
+    "service_times": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "List of service times"
+    },
+    "sunday_times_display": {
+      "type": "string",
+      "description": "Short display string for Sunday times (e.g. Sundays 9:00 & 11:00 AM)"
+    }
+  },
+  "required": [
+    "key"
+  ]
+}

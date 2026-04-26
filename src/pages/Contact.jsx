@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
 import { useQuery } from '@tanstack/react-query';
 import TeamSection from '@/components/contact/TeamSection';
+import { useChurchInfo } from '@/hooks/useChurchInfo';
 
 const serviceTypes = [
   { value: 'marriage_counseling', label: 'Marriage Counseling' },
@@ -27,6 +28,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service_type: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
+  const info = useChurchInfo();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +85,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-body font-medium text-primary">Visit Us</p>
-                      <p className="font-body text-sm text-muted-foreground">123 Hope Street<br />Santa Barbara, CA 93101</p>
+                      <p className="font-body text-sm text-muted-foreground">{info.address}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -92,7 +94,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-body font-medium text-primary">Call Us</p>
-                      <p className="font-body text-sm text-muted-foreground">(805) 555-HOPE</p>
+                      <p className="font-body text-sm text-muted-foreground">{info.phone}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -101,7 +103,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-body font-medium text-primary">Email Us</p>
-                      <p className="font-body text-sm text-muted-foreground">hello@hopesantabarbara.org</p>
+                      <p className="font-body text-sm text-muted-foreground">{info.email}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -110,7 +112,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-body font-medium text-primary">Office Hours</p>
-                      <p className="font-body text-sm text-muted-foreground">Mon–Fri, 9:00 AM – 4:00 PM</p>
+                      <p className="font-body text-sm text-muted-foreground">{info.office_hours}</p>
                     </div>
                   </div>
                 </div>
