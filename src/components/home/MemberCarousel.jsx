@@ -99,28 +99,61 @@ export default function MemberCarousel({ isAdmin }) {
         </motion.div>
 
         {/* Carousel */}
-        <div className="relative flex items-center justify-center gap-4">
+        <div className="relative flex items-center justify-center gap-3 sm:gap-5">
           <button
             onClick={() => go(-1)}
-            className="z-10 w-10 h-10 rounded-full bg-white border border-border shadow-sm flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
+            className="z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-border shadow-md flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
           >
             <ChevronLeft className="w-5 h-5 text-primary" />
           </button>
 
-          <div className="flex gap-4 overflow-hidden w-full max-w-3xl">
+          {/* Mobile: single full-width card */}
+          <div className="sm:hidden w-full max-w-sm mx-auto">
+            <motion.div
+              key={members[current].name}
+              onClick={() => setSelected(members[current])}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-2xl overflow-hidden text-left shadow-2xl cursor-pointer relative w-full"
+              style={{ aspectRatio: '3/4' }}
+            >
+              <EditableImage
+                imageKey={`member_${members[current].name.toLowerCase().replace(/\s+/g, '_')}`}
+                src={members[current].image}
+                alt={members[current].name}
+                className="absolute inset-0 w-full h-full object-cover"
+                isAdmin={isAdmin}
+                wrapperClassName="absolute inset-0 group/editimg"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h4 className="font-heading text-2xl text-white leading-tight">{members[current].name}</h4>
+                <p className="font-body text-sm text-white/70 mb-3">{members[current].profession}</p>
+                <Quote className="w-5 h-5 text-accent/80 mb-1" />
+                <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-3">
+                  {members[current].shortQuote}
+                </p>
+                <p className="font-body text-sm text-accent mt-3 font-medium">Tap to read their story →</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Desktop: three-card carousel */}
+          <div className="hidden sm:flex gap-5 overflow-hidden w-full max-w-4xl">
             {visible.map((member, i) => (
               <motion.div
                 key={member.name}
                 onClick={() => i === 1 && setSelected(member)}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{
-                  opacity: i === 1 ? 1 : 0.45,
-                  scale: i === 1 ? 1 : 0.92,
+                  opacity: i === 1 ? 1 : 0.4,
+                  scale: i === 1 ? 1 : 0.9,
                 }}
                 transition={{ duration: 0.3 }}
                 className={`flex-1 min-w-0 rounded-2xl overflow-hidden text-left transition-all duration-300 relative ${
                   i === 1
-                    ? 'shadow-xl cursor-pointer hover:shadow-2xl'
+                    ? 'shadow-2xl cursor-pointer hover:shadow-2xl'
                     : 'cursor-default pointer-events-none'
                 }`}
                 style={{ aspectRatio: '3/4' }}
@@ -133,16 +166,16 @@ export default function MemberCarousel({ isAdmin }) {
                   isAdmin={isAdmin && i === 1}
                   wrapperClassName="absolute inset-0 group/editimg"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h4 className="font-heading text-xl text-white leading-tight">{member.name}</h4>
-                  <p className="font-body text-xs text-white/70 mb-2">{member.profession}</p>
-                  <Quote className="w-4 h-4 text-accent/80 mb-1" />
-                  <p className="font-body text-sm text-white/90 leading-relaxed italic line-clamp-2">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <h4 className="font-heading text-2xl text-white leading-tight">{member.name}</h4>
+                  <p className="font-body text-sm text-white/70 mb-3">{member.profession}</p>
+                  <Quote className="w-5 h-5 text-accent/80 mb-1" />
+                  <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-2">
                     {member.shortQuote}
                   </p>
                   {i === 1 && (
-                    <p className="font-body text-xs text-accent mt-2 font-medium">Click to read their story →</p>
+                    <p className="font-body text-sm text-accent mt-3 font-medium">Click to read their story →</p>
                   )}
                 </div>
               </motion.div>
@@ -151,7 +184,7 @@ export default function MemberCarousel({ isAdmin }) {
 
           <button
             onClick={() => go(1)}
-            className="z-10 w-10 h-10 rounded-full bg-white border border-border shadow-sm flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
+            className="z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-border shadow-md flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
           >
             <ChevronRight className="w-5 h-5 text-primary" />
           </button>
