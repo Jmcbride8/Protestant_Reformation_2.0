@@ -12,16 +12,16 @@ const navLinks = [
 ];
 
 const communityLinksAll = [
-  { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups' },
-  { label: 'Care', sub: 'Something for every Season', path: '/services', featureKey: 'link_community_care' },
-  { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule' },
-  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones' },
+  { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
+  { label: 'Care', sub: 'Something for every Season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
+  { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule', pageKey: 'page_schedule' },
+  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
 ];
 
 const giveLinksAll = [
-  { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time' },
-  { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially' },
-  { label: 'Give to Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other' },
+  { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time', pageKey: 'page_volunteer' },
+  { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially', pageKey: 'page_giving' },
+  { label: 'Give to Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
 ];
 
 export default function Navbar() {
@@ -35,8 +35,8 @@ export default function Navbar() {
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
-  const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey));
-  const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey));
+  const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
+  const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const communityRef = useRef(null);
   const giveRef = useRef(null);
 
