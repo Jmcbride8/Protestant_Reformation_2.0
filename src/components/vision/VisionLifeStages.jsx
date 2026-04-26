@@ -38,10 +38,10 @@ export default function VisionLifeStages({ isAdmin }) {
           className="text-center mb-16"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Christian Life Stages</p>
-          <h2 className="font-heading text-4xl text-primary mb-5">The Product Lifecycle of Faith</h2>
+          <h2 className="font-heading text-4xl text-primary mb-5">Making Major Moments Count</h2>
           <EditableText
             storageKey="lifecycle_intro"
-            defaultText="The Christian life doesn't follow a single template. It's earthy, practical, and deeply seasonal. Every stage — from young singles to empty nesters to those facing their final chapter — deserves a church that shows up, pays attention, and meets people where they actually are. Not all moments matter equally, but when the big questions arise, when milestone moments come, when real challenges hit — the church should be ready."
+            defaultText="Life's biggest moments — births, weddings, graduations, health crises, loss — are sacred opportunities. They're when people in our church turn to the Gospel, and when people outside our church might turn to us. Are we there? Can we help people navigate these pivotal seasons with Jesus? The Christian life doesn't follow a single template. It's earthy, practical, and deeply seasonal. Every stage — from young singles to empty nesters to those facing their final chapter — deserves a church that shows up, pays attention, and helps people progress in their faith. Not all moments matter equally, but when the big questions arise, when milestone moments come, when real challenges hit — the church should be ready."
             className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             isAdmin={isAdmin}
           />
