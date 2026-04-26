@@ -23,6 +23,7 @@ import CarouselMembersManager from '../components/admin/CarouselMembersManager';
 import AddNeedForm from '../components/admin/AddNeedForm';
 import MemberDirectory from '../components/admin/MemberDirectory';
 import AddSermonForm from '../components/sermons/AddSermonForm';
+import MemoriesManager from '../components/admin/MemoriesManager';
 import EditSermonModal from '../components/sermons/EditSermonModal';
 import { toast } from "sonner";
 import { useMutation } from '@tanstack/react-query';
@@ -224,7 +225,8 @@ export default function Admin() {
             <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
             <TabsTrigger value="carousel" className="gap-2"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
-          </TabsList>
+            <TabsTrigger value="memories" className="gap-2"><Users className="w-4 h-4" /> Memories</TabsTrigger>
+            </TabsList>
 
           {/* Sermons Tab */}
           <TabsContent value="sermons" className="space-y-8">
@@ -308,7 +310,12 @@ export default function Admin() {
             <CarouselMembersManager />
           </TabsContent>
 
-        </Tabs>
+          {/* Memories Tab */}
+          <TabsContent value="memories">
+            <MemoriesManager />
+          </TabsContent>
+
+          </Tabs>
         )}
 
         {/* Configuration Section */}
