@@ -181,7 +181,7 @@ export default function VisionBackground({ isAdmin }) {
 
           <EditableText
             storageKey="bg_francis_reflection"
-            defaultText={`His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. Hope Church exists in that tension: not abandoning the gifts that come with intentional leadership and teaching, but ensuring that the structure serves community, not the other way around.`}
+            defaultText={`His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. At Hope Church, we believed we could do both. We believed we could build up people and build up programs — that excellence in teaching, intentional leadership, and relational depth weren't opposing forces, but partners in creating something genuinely transformative. This platform is an experiment in that belief: Can technology actually serve community instead of replacing it?`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl"
             isAdmin={isAdmin}
           />
