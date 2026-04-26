@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, Edit2, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import EditableText from './EditableText';
 
 export default function FrancisChanChallenge({ isAdmin }) {
-  const youtubeId = 'P5GD9ftscFQ';
+  const [youtubeId, setYoutubeId] = useState('P5GD9ftscFQ');
+  const [editingVideo, setEditingVideo] = useState(false);
+  const [videoInput, setVideoInput] = useState('P5GD9ftscFQ');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('francis_youtube_id');
+    if (saved) {
+      setYoutubeId(saved);
+      setVideoInput(saved);
+    }
+  }, []);
+
+  const handleSaveVideo = () => {
+    const id = videoInput.includes('youtube.com') 
+      ? new URL(videoInput).searchParams.get('v') 
+      : videoInput;
+    if (id) {
+      localStorage.setItem('francis_youtube_id', id);
+      setYoutubeId(id);
+      setEditingVideo(false);
+    }
+  };
 
   return (
     <section className="py-24 px-4 bg-background">
@@ -35,17 +56,51 @@ export default function FrancisChanChallenge({ isAdmin }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/30"
+            className="relative group"
           >
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${youtubeId}`}
-              title="Francis Chan Challenge"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0"
-            />
+            {editingVideo ? (
+              <div className="space-y-3 p-6 bg-secondary rounded-2xl">
+                <input
+                  type="text"
+                  value={videoInput}
+                  onChange={(e) => setVideoInput(e.target.value)}
+                  placeholder="YouTube URL or video ID"
+                  className="w-full px-3 py-2 border border-border rounded-lg font-body text-sm"
+                />
+                <p className="text-xs text-muted-foreground">Paste a YouTube URL or video ID (e.g., P5GD9ftscFQ)</p>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={handleSaveVideo} className="gap-1">
+                    <Check className="w-4 h-4" /> Save
+                  </Button>
+                  <Button size="sm" variant="outline" onClick={() => {
+                    setEditingVideo(false);
+                    setVideoInput(youtubeId);
+                  }} className="gap-1">
+                    <X className="w-4 h-4" /> Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/30">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${youtubeId}`}
+                  title="Francis Chan Challenge"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0"
+                />
+                {isAdmin && (
+                  <button
+                    onClick={() => setEditingVideo(true)}
+                    className="absolute top-3 right-3 bg-black/50 hover:bg-black/70 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            )}
           </motion.div>
 
           {/* Text content */}
