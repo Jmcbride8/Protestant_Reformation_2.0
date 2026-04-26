@@ -35,7 +35,7 @@ export default function HeroSection({ heroImage, isAdmin }) {
           </p>
           <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl text-white leading-tight mb-6">
             A Place of <br />
-            <span className="italic">Hope & Light</span>
+            <span className="italic">Hope & Life</span>
           </h1>
           <p className="font-body text-lg text-white/85 leading-relaxed mb-8 max-w-lg">
             Rooted in the Gospel of Jesus Christ, we gather to worship, grow and God and each other — right here in Santa Barbara. No perfect people allowed!
