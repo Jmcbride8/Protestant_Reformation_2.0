@@ -23,6 +23,7 @@ import Schedule from './pages/Schedule';
 import Milestones from './pages/Milestones';
 import Carpool from './pages/Carpool';
 import Vision from './pages/Vision';
+import Memories from './pages/Memories';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -67,6 +68,7 @@ const AuthenticatedApp = () => {
         <Route path="/schedule" element={<FeatureRoute featureKey="page_schedule"><Schedule /></FeatureRoute>} />
         <Route path="/milestones" element={<FeatureRoute featureKey="page_milestones"><Milestones /></FeatureRoute>} />
         <Route path="/carpool" element={<FeatureRoute featureKey="page_carpool"><Carpool /></FeatureRoute>} />
+        <Route path="/memories" element={<FeatureRoute featureKey="page_memories"><Memories /></FeatureRoute>} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

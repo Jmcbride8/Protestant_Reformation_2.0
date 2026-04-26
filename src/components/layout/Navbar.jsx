@@ -16,6 +16,7 @@ const communityLinksAll = [
   { label: 'Care', sub: 'Something for every Season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
   { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule', pageKey: 'page_schedule' },
   { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
+  { label: 'Memories', sub: 'Photos & videos from our year', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
 ];
 
 const giveLinksAll = [
@@ -28,7 +29,7 @@ export default function Navbar() {
   const location = useLocation();
   const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision'];
+  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);

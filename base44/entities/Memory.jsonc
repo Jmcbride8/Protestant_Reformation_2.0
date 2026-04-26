@@ -1,0 +1,55 @@
+{
+  "name": "Memory",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event or memory title (e.g. Summer Picnic, Easter Celebration)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the event or memory"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the event"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "worship",
+        "community",
+        "celebration",
+        "outreach",
+        "youth",
+        "family",
+        "seasonal",
+        "other"
+      ],
+      "default": "community",
+      "description": "Category of the memory"
+    },
+    "media_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of image and video URLs"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order (higher numbers appear first)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the memory is visible"
+    }
+  },
+  "required": [
+    "title",
+    "date",
+    "media_urls"
+  ]
+}
