@@ -18,7 +18,7 @@ export default function VisionLifeStages({ isAdmin }) {
           <h2 className="font-heading text-4xl text-primary mb-5">Living with Intentionality</h2>
           <EditableText
             storageKey="lifecycle_intro"
-            defaultText="Faith is a journey, not a Sunday destination. Life's biggest moments — births, weddings, losses — are when people truly grow. Are we there for them? This platform helps churches walk alongside members through every milestone, turning moments of change into deeper faith and lasting community."
+            defaultText="The Christian life is a journey — marked by sacred moments. Weddings, newborns, losses, health crises — these are when people truly grow, when the church matters most, when faith deepens. This platform exists to help you be present, engaged, and memorable at every milestone."
             className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             isAdmin={isAdmin}
           />
@@ -26,23 +26,6 @@ export default function VisionLifeStages({ isAdmin }) {
 
         {/* Milestone Timeline */}
         <MilestoneTimeline isAdmin={isAdmin} />
-
-        {/* Core conviction */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-primary rounded-2xl p-10 text-center text-primary-foreground"
-        >
-          <p className="font-body text-xs tracking-widest uppercase mb-4 text-primary-foreground/70">Our Conviction</p>
-          <EditableText
-            storageKey="lifecycle_conviction"
-            defaultText="The Christian life is a journey. Weddings, newborns, grief, health crises — these sacred moments are when people need the church most. This platform helps you be present, engaged, and memorable through every season of life."
-            className="font-body text-lg leading-relaxed italic"
-            isAdmin={isAdmin}
-          />
-        </motion.div>
       </div>
     </section>
   );
