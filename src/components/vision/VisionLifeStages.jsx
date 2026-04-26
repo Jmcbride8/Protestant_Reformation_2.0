@@ -18,7 +18,7 @@ export default function VisionLifeStages({ isAdmin }) {
           <h2 className="font-heading text-4xl text-primary mb-5">Living with Intentionality</h2>
           <EditableText
             storageKey="lifecycle_intro"
-            defaultText="John Bunyan's Pilgrim's Progress shows us that faith is a journey — not a destination you reach on Sunday. Every major moment in life is a waypoint: births, weddings, graduations, health crises, loss. These are the moments when people in our church deepen their faith, when people outside our church might turn to us, when growth actually happens. Are we there? Can we help people not just survive these seasons, but progress — drawing closer to Christ, to each other, and to the fullness He offers? This platform exists to catalyze that growth, enable genuine engagement, and help churches create lasting memories at every milestone."
+            defaultText="Faith is a journey, not a Sunday destination. Life's biggest moments — births, weddings, losses — are when people truly grow. Are we there for them? This platform helps churches walk alongside members through every milestone, turning moments of change into deeper faith and lasting community."
             className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
             isAdmin={isAdmin}
           />
@@ -38,7 +38,7 @@ export default function VisionLifeStages({ isAdmin }) {
           <p className="font-body text-xs tracking-widest uppercase mb-4 text-primary-foreground/70">Our Conviction</p>
           <EditableText
             storageKey="lifecycle_conviction"
-            defaultText="Like Pilgrim's Progress, the Christian life is a journey of growth — not a single destination. We built this platform to help churches catalyze real spiritual progress, enable deeper engagement at life's pivotal moments, and create meaningful memories that last a lifetime. When a young couple gets married in your church, when a family welcomes a newborn, when someone faces their final season — these are sacred opportunities to walk alongside people and help them progress in faith. The journey matters. Every milestone counts."
+            defaultText="The Christian life is a journey. Weddings, newborns, grief, health crises — these sacred moments are when people need the church most. This platform helps you be present, engaged, and memorable through every season of life."
             className="font-body text-lg leading-relaxed italic"
             isAdmin={isAdmin}
           />
