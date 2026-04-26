@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { 
   HeartHandshake, Baby, Briefcase, BookOpen, HandHeart, Cross, 
-  Heart, UtensilsCrossed, ArrowRight, GraduationCap, Home
+  UtensilsCrossed, ArrowRight, GraduationCap, Home
 } from 'lucide-react';
 
 
@@ -230,36 +230,6 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Weddings */}
-      <section className="py-24 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Heart className="w-10 h-10 text-accent mx-auto mb-4" />
-            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">
-              Weddings at Hope Church
-            </h2>
-            <p className="font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-4">
-              Our beautiful 1950s sanctuary — lovingly renovated with warm farmhouse charm — 
-              is available for weddings <strong>at cost</strong> to everyone in the Santa Barbara community, 
-              regardless of membership.
-            </p>
-            <p className="font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-              We believe every couple deserves a beautiful place to begin their journey. 
-              No markup, no pressure — just a sacred space for your special day.
-            </p>
-            <Link to="/contact">
-              <Button size="lg" className="font-body tracking-wide bg-primary hover:bg-primary/90">
-                Inquire About Weddings
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }
