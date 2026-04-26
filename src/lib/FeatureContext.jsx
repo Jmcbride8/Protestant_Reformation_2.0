@@ -4,34 +4,49 @@ import { base44 } from '@/api/base44Client';
 const FeatureContext = createContext({});
 
 // All features with their defaults (enabled = true means ON by default)
+// Children have a `parentKey` pointing to their parent page key.
 const DEFAULT_FEATURES = [
-  // Pages
-  { key: 'page_sermons',          label: 'Sermons Page',             group: 'Pages', enabled: true },
-  { key: 'page_vision',           label: 'Vision Page',              group: 'Pages', enabled: true },
-  { key: 'page_contact',          label: 'Contact Page',             group: 'Pages', enabled: true },
-  { key: 'page_services',         label: 'Care Page',                group: 'Pages', enabled: true },
-  { key: 'page_giving',           label: 'Giving Page',              group: 'Pages', enabled: true },
-  { key: 'page_volunteer',        label: 'Volunteer Page',           group: 'Pages', enabled: true },
-  { key: 'page_community_support',label: 'Community Support Page',   group: 'Pages', enabled: true },
-  { key: 'page_groups',           label: 'Groups Page',              group: 'Pages', enabled: true },
-  { key: 'page_schedule',         label: 'Schedule Page',            group: 'Pages', enabled: true },
-  { key: 'page_milestones',       label: 'Milestones Page',          group: 'Pages', enabled: true },
-  { key: 'page_carpool',          label: 'Carpool Page',             group: 'Pages', enabled: true },
-  // Community nav links
-  { key: 'link_community_groups',     label: 'Groups Nav Link',          group: 'Community Nav', enabled: true },
-  { key: 'link_community_care',       label: 'Care Nav Link',            group: 'Community Nav', enabled: true },
-  { key: 'link_community_schedule',   label: 'Schedule Nav Link',        group: 'Community Nav', enabled: true },
-  { key: 'link_community_milestones', label: 'Milestones Nav Link',      group: 'Community Nav', enabled: true },
-  // Give nav links
-  { key: 'link_give_time',            label: 'Give Time Nav Link',       group: 'Give Nav', enabled: true },
-  { key: 'link_give_financially',     label: 'Give Financially Nav Link',group: 'Give Nav', enabled: true },
-  { key: 'link_give_to_each_other',   label: 'Give to Each Other Nav Link', group: 'Give Nav', enabled: true },
-  // Giving sub-features
-  { key: 'giving_annual_budget',      label: 'Annual Budget & Transparency', group: 'Giving Features', enabled: true },
-  { key: 'giving_capital_campaign',   label: 'Capital Campaign',         group: 'Giving Features', enabled: true },
-  // Home sub-features
-  { key: 'home_member_carousel',      label: 'Member Carousel (Home)',   group: 'Home Features', enabled: true },
-  { key: 'home_hero_video',           label: 'Hero Video Button (Home)', group: 'Home Features', enabled: true },
+  // Pages (top-level)
+  { key: 'page_sermons',           label: 'Sermons',              group: 'Pages', enabled: true },
+  { key: 'page_vision',            label: 'Vision',               group: 'Pages', enabled: true },
+  { key: 'page_contact',           label: 'Contact',              group: 'Pages', enabled: true },
+  { key: 'page_services',          label: 'Care',                 group: 'Pages', enabled: true },
+  { key: 'page_giving',            label: 'Giving',               group: 'Pages', enabled: true },
+  { key: 'page_volunteer',         label: 'Volunteer',            group: 'Pages', enabled: true },
+  { key: 'page_community_support', label: 'Community Support',    group: 'Pages', enabled: true },
+  { key: 'page_groups',            label: 'Groups',               group: 'Pages', enabled: true },
+  { key: 'page_schedule',          label: 'Schedule',             group: 'Pages', enabled: true },
+  { key: 'page_milestones',        label: 'Milestones',           group: 'Pages', enabled: true },
+  { key: 'page_carpool',           label: 'Carpool',              group: 'Pages', enabled: true },
+
+  // Children of Giving
+  { key: 'giving_annual_budget',      label: 'Annual Budget & Transparency', group: 'Pages', enabled: true, parentKey: 'page_giving' },
+  { key: 'giving_capital_campaign',   label: 'Capital Campaign',             group: 'Pages', enabled: true, parentKey: 'page_giving' },
+
+  // Children of Groups
+  { key: 'link_community_groups',     label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_groups' },
+
+  // Children of Care
+  { key: 'link_community_care',       label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_services' },
+
+  // Children of Schedule
+  { key: 'link_community_schedule',   label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_schedule' },
+
+  // Children of Milestones
+  { key: 'link_community_milestones', label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_milestones' },
+
+  // Children of Volunteer
+  { key: 'link_give_time',            label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_volunteer' },
+
+  // Children of Giving (nav)
+  { key: 'link_give_financially',     label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_giving' },
+
+  // Children of Community Support
+  { key: 'link_give_to_each_other',   label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_community_support' },
+
+  // Home sub-features (standalone group)
+  { key: 'home_member_carousel',      label: 'Member Carousel',    group: 'Home', enabled: true },
+  { key: 'home_hero_video',           label: 'Hero Video Button',  group: 'Home', enabled: true },
 ];
 
 export const FeatureProvider = ({ children }) => {
