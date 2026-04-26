@@ -5,6 +5,7 @@ import VisionBackground from '@/components/vision/VisionBackground';
 import VisionPhilosophy from '@/components/vision/VisionPhilosophy';
 import VisionLifeStages from '@/components/vision/VisionLifeStages';
 import VisionScale from '@/components/vision/VisionScale';
+import FrancisChanChallenge from '@/components/vision/FrancisChanChallenge';
 import VisionInPractice from '@/components/vision/VisionInPractice';
 import VisionTechnology from '@/components/vision/VisionTechnology';
 
@@ -29,6 +30,7 @@ export default function Vision() {
       <VisionPhilosophy isAdmin={isAdmin} />
       <VisionLifeStages isAdmin={isAdmin} />
       <VisionScale isAdmin={isAdmin} />
+      <FrancisChanChallenge isAdmin={isAdmin} />
       <VisionInPractice isAdmin={isAdmin} />
       <VisionTechnology isAdmin={isAdmin} />
     </div>
