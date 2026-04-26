@@ -38,9 +38,9 @@ export default function CTASection() {
                 Plan Your Visit
               </Button>
             </Link>
-            <Link to="/giving">
+            <Link to="/contact">
               <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 font-body tracking-wide">
-                Support Hope Church
+                Become a Member
               </Button>
             </Link>
           </div>

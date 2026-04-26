@@ -54,7 +54,7 @@ export default function Contact() {
             </h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
               Whether you need support, have a question, or just want to say hello — 
-              we're here. No gatekeepers, no judgment. Just people who care.
+              we're here.
             </p>
             <Button
               size="lg"
