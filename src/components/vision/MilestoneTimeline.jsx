@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
-import { Upload, Trash2 } from 'lucide-react';
+import { Upload, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import useEmblaCarousel from 'embla-carousel-react';
 
 const defaultMilestones = [
   { id: 'new_beginnings', title: 'New Beginnings', description: 'Young singles finding community, meeting, falling in love, and building families in faith.' },
@@ -14,6 +15,22 @@ const defaultMilestones = [
 export default function MilestoneTimeline({ isAdmin }) {
   const [milestones, setMilestones] = useState(defaultMilestones);
   const [uploading, setUploading] = useState({});
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start', containScroll: 'trimSnaps' });
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+
+  const onSelect = React.useCallback(() => {
+    if (!emblaApi) return;
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollLeft(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  React.useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    return () => emblaApi.off('select', onSelect);
+  }, [emblaApi, onSelect]);
 
   const handleImageUpload = async (milestoneId, file) => {
     if (!file) return;
@@ -38,35 +55,21 @@ export default function MilestoneTimeline({ isAdmin }) {
 
   return (
     <div className="py-12 mb-12">
-      {/* Horizontal Timeline */}
+      {/* Carousel Container */}
       <div className="relative">
-        {/* Horizontal line */}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/30 transform -translate-y-1/2" />
-
-        {/* Milestone cards */}
-        <div className="flex gap-6 overflow-x-auto pb-4">
-          {milestones.map((milestone, idx) => (
-            <motion.div
-              key={milestone.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="flex-shrink-0 w-72"
-            >
-              <div className="relative">
-                {/* Timeline dot */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex justify-center">
-                  <motion.div
-                    whileInView={{ scale: 1 }}
-                    initial={{ scale: 0 }}
-                    viewport={{ once: true }}
-                    className="w-5 h-5 bg-accent rounded-full border-4 border-background z-10"
-                  />
-                </div>
-
-                {/* Content card */}
-                <div className="bg-card border border-border rounded-2xl p-6 h-full flex flex-col pt-10">
+        {/* Embla Carousel */}
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6">
+            {milestones.map((milestone, idx) => (
+              <motion.div
+                key={milestone.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="flex-shrink-0 min-w-0 w-full sm:w-96"
+              >
+                <div className="bg-card border border-border rounded-2xl p-6 h-full flex flex-col">
                   <h3 className="font-heading text-lg text-primary mb-2">{milestone.title}</h3>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
                     {milestone.description}
@@ -111,10 +114,26 @@ export default function MilestoneTimeline({ isAdmin }) {
                     )}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
+
+        {/* Navigation Buttons */}
+        <button
+          onClick={() => emblaApi?.scrollPrev()}
+          disabled={!canScrollPrev}
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 bg-primary text-primary-foreground rounded-full p-2 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <button
+          onClick={() => emblaApi?.scrollNext()}
+          disabled={!canScrollLeft}
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 bg-primary text-primary-foreground rounded-full p-2 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );
