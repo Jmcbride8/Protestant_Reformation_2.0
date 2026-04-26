@@ -44,9 +44,12 @@ const DEFAULT_FEATURES = [
   // Children of Community Support
   { key: 'link_give_to_each_other',   label: 'Nav Link',   group: 'Pages', enabled: true, parentKey: 'page_community_support' },
 
-  // Home sub-features (standalone group)
-  { key: 'home_member_carousel',      label: 'Member Carousel',    group: 'Home', enabled: true },
-  { key: 'home_hero_video',           label: 'Hero Video Button',  group: 'Home', enabled: true },
+  // Home page (non-toggleable parent for home sub-features)
+  { key: 'page_home', label: 'Home', group: 'Pages', enabled: true, nonToggleable: true },
+
+  // Home sub-features
+  { key: 'home_member_carousel',      label: 'Member Carousel',    group: 'Home', enabled: true, parentKey: 'page_home' },
+  { key: 'home_hero_video',           label: 'Hero Video Button',  group: 'Home', enabled: true, parentKey: 'page_home' },
 ];
 
 export const FeatureProvider = ({ children }) => {

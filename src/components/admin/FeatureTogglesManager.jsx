@@ -7,10 +7,11 @@ import { toast } from 'sonner';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 function FeatureRow({ feature, getEnabled, saving, onToggle, children, depth = 0 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const enabled = getEnabled(feature);
   const isSaving = saving[feature.key];
   const hasChildren = children && children.length > 0;
+  const hideToggle = feature.nonToggleable;
 
   return (
     <div>
@@ -32,18 +33,23 @@ function FeatureRow({ feature, getEnabled, saving, onToggle, children, depth = 0
             <p className={`font-body font-medium text-foreground ${depth === 0 ? 'text-sm' : 'text-xs'}`}>
               {feature.label}
             </p>
-            {depth === 0 && (
+            {depth === 0 && !hideToggle && (
               <p className="font-body text-xs text-muted-foreground font-mono mt-0.5">{feature.key}</p>
+            )}
+            {depth === 0 && hideToggle && (
+              <p className="font-body text-xs text-muted-foreground mt-0.5">Always visible</p>
             )}
           </div>
         </div>
         <div className="flex items-center gap-2">
           {isSaving && <Loader2 className="w-3.5 h-3.5 animate-spin text-muted-foreground" />}
-          <Switch
-            checked={enabled}
-            onCheckedChange={(val) => onToggle(feature, val)}
-            disabled={isSaving}
-          />
+          {!hideToggle && (
+            <Switch
+              checked={enabled}
+              onCheckedChange={(val) => onToggle(feature, val)}
+              disabled={isSaving}
+            />
+          )}
         </div>
       </div>
 
@@ -102,9 +108,8 @@ export default function FeatureTogglesManager() {
     return rec ? rec.enabled : feature.enabled;
   };
 
-  // Build hierarchy: top-level pages, home standalone
-  const topLevelPages = DEFAULT_FEATURES.filter(f => f.group === 'Pages' && !f.parentKey);
-  const homeFeatures = DEFAULT_FEATURES.filter(f => f.group === 'Home');
+  // Build hierarchy: all top-level pages (Pages group, no parent), children by parentKey
+  const topLevelPages = DEFAULT_FEATURES.filter(f => (f.group === 'Pages' || f.group === 'Home') && !f.parentKey);
   const getChildren = (key) => DEFAULT_FEATURES.filter(f => f.parentKey === key);
 
   if (isLoading) {
@@ -145,24 +150,7 @@ export default function FeatureTogglesManager() {
         </div>
       </div>
 
-      {/* Home Features section */}
-      <div className="bg-card border border-border/50 rounded-xl overflow-hidden">
-        <div className="px-5 py-3 bg-secondary/40 border-b border-border/50">
-          <p className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground font-semibold">Home Page Features</p>
-        </div>
-        <div className="divide-y divide-border/40">
-          {homeFeatures.map(feature => (
-            <FeatureRow
-              key={feature.key}
-              feature={feature}
-              getEnabled={getEnabled}
-              saving={saving}
-              onToggle={handleToggle}
-              depth={0}
-            />
-          ))}
-        </div>
-      </div>
+
     </div>
   );
 }
