@@ -8,6 +8,7 @@ import { FeatureProvider } from '@/lib/FeatureContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
 import PageLayout from './components/layout/PageLayout';
+import ScrollToTop from './components/ScrollToTop';
 import MemberRoute from './components/MemberRoute';
 import FeatureRoute from './components/FeatureRoute';
 import Home from './pages/Home';
@@ -52,6 +53,8 @@ const AuthenticatedApp = () => {
   }
 
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       <Route element={<PageLayout />}>
         <Route path="/" element={<Home />} />
@@ -72,6 +75,7 @@ const AuthenticatedApp = () => {
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </>
   );
 };
 
