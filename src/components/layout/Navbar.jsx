@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useFeatures } from '@/lib/FeatureContext';
+import { isPreviewingAsGuest } from './MemberPreviewBanner';
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -57,6 +58,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    if (isPreviewingAsGuest()) return; // Show as logged-out guest
     base44.auth.isAuthenticated().then(async (authed) => {
       if (authed) {
         const me = await base44.auth.me();

@@ -1,29 +1,44 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { Eye, X } from 'lucide-react';
 
 export const PREVIEW_KEY = 'previewAsMember';
+export const GUEST_PREVIEW_KEY = 'previewAsGuest';
 
 export function isPreviewingAsMember() {
   return sessionStorage.getItem(PREVIEW_KEY) === 'true';
 }
 
+export function isPreviewingAsGuest() {
+  return sessionStorage.getItem(GUEST_PREVIEW_KEY) === 'true';
+}
+
 export function startMemberPreview() {
   sessionStorage.setItem(PREVIEW_KEY, 'true');
+  sessionStorage.removeItem(GUEST_PREVIEW_KEY);
+}
+
+export function startGuestPreview() {
+  sessionStorage.setItem(GUEST_PREVIEW_KEY, 'true');
+  sessionStorage.removeItem(PREVIEW_KEY);
 }
 
 export function stopMemberPreview() {
   sessionStorage.removeItem(PREVIEW_KEY);
 }
 
-export default function MemberPreviewBanner() {
-  const [active, setActive] = React.useState(isPreviewingAsMember());
+export function stopGuestPreview() {
+  sessionStorage.removeItem(GUEST_PREVIEW_KEY);
+}
 
-  if (!active) return null;
+export default function MemberPreviewBanner() {
+  const isMember = isPreviewingAsMember();
+  const isGuest = isPreviewingAsGuest();
+
+  if (!isMember && !isGuest) return null;
 
   const handleExit = () => {
     stopMemberPreview();
-    setActive(false);
+    stopGuestPreview();
     window.location.href = '/admin';
   };
 
@@ -31,7 +46,7 @@ export default function MemberPreviewBanner() {
     <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-accent text-accent-foreground px-4 py-2.5 flex items-center justify-between shadow-lg">
       <div className="flex items-center gap-2 font-body text-sm font-medium">
         <Eye className="w-4 h-4" />
-        Previewing as Member
+        {isMember ? 'Previewing as Member' : 'Previewing as Guest (not signed in)'}
       </div>
       <button
         onClick={handleExit}

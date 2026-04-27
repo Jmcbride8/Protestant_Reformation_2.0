@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
 import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church, Eye } from 'lucide-react';
-import { startMemberPreview } from '../components/layout/MemberPreviewBanner';
+import { startMemberPreview, startGuestPreview } from '../components/layout/MemberPreviewBanner';
 import { useNavigate } from 'react-router-dom';
 import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import ChurchInfoManager from '../components/admin/ChurchInfoManager';
@@ -50,6 +50,11 @@ export default function Admin() {
 
   const handlePreviewAsMember = () => {
     startMemberPreview();
+    navigate('/');
+  };
+
+  const handlePreviewAsGuest = () => {
+    startGuestPreview();
     navigate('/');
   };
 
@@ -182,14 +187,24 @@ export default function Admin() {
             <ShieldCheck className="w-8 h-8 text-primary" />
             <h1 className="font-heading text-3xl text-primary">Admin Dashboard</h1>
           </div>
-          <Button
-            variant="outline"
-            onClick={handlePreviewAsMember}
-            className="font-body gap-2 border-accent text-accent hover:bg-accent/10"
-          >
-            <Eye className="w-4 h-4" />
-            Preview as Member
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={handlePreviewAsGuest}
+              className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted"
+            >
+              <Eye className="w-4 h-4" />
+              Preview as Guest
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handlePreviewAsMember}
+              className="font-body gap-2 border-accent text-accent hover:bg-accent/10"
+            >
+              <Eye className="w-4 h-4" />
+              Preview as Member
+            </Button>
+          </div>
         </div>
 
         {/* Section Selector */}
