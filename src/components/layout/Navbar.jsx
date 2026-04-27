@@ -23,7 +23,7 @@ const communityLinksAll = [
 const giveLinksAll = [
   { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time', pageKey: 'page_volunteer' },
   { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially', pageKey: 'page_giving' },
-  { label: 'Give to Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
+  { label: 'Support Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
 ];
 
 export default function Navbar() {
