@@ -58,7 +58,10 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isPreviewingAsGuest()) return; // Show as logged-out guest
+    if (isPreviewingAsGuest()) {
+      setUser(null); // Explicitly clear user so member-only nav items are hidden
+      return;
+    }
     base44.auth.isAuthenticated().then(async (authed) => {
       if (authed) {
         const me = await base44.auth.me();

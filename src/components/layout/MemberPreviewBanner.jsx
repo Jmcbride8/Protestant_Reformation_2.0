@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, X } from 'lucide-react';
 
 export const PREVIEW_KEY = 'previewAsMember';
@@ -31,8 +31,13 @@ export function stopGuestPreview() {
 }
 
 export default function MemberPreviewBanner() {
-  const isMember = isPreviewingAsMember();
-  const isGuest = isPreviewingAsGuest();
+  const [isMember, setIsMember] = useState(isPreviewingAsMember());
+  const [isGuest, setIsGuest] = useState(isPreviewingAsGuest());
+
+  useEffect(() => {
+    setIsMember(isPreviewingAsMember());
+    setIsGuest(isPreviewingAsGuest());
+  }, []);
 
   if (!isMember && !isGuest) return null;
 
