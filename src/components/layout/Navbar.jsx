@@ -13,7 +13,7 @@ const navLinks = [
 
 const churchLinksAll = [
   { label: 'Sermons', sub: 'Watch & listen', path: '/sermons', featureKey: 'page_sermons', pageKey: 'page_sermons' },
-  { label: 'Care', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
+  { label: 'Programs', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
   { label: 'Contact', sub: 'Get in touch with us', path: '/contact', featureKey: null, pageKey: null },
 ];
 
