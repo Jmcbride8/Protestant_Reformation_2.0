@@ -14,6 +14,7 @@ const navLinks = [
 const churchLinksAll = [
   { label: 'Sermons', sub: 'Watch & listen', path: '/sermons', featureKey: 'page_sermons', pageKey: 'page_sermons' },
   { label: 'Care', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
+  { label: 'Contact', sub: 'Get in touch with us', path: '/contact', featureKey: null, pageKey: null },
 ];
 
 const communityLinksAll = [
@@ -41,7 +42,7 @@ export default function Navbar() {
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
-  const churchLinks = churchLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
+  const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const churchRef = useRef(null);
@@ -206,17 +207,6 @@ export default function Navbar() {
                 )}
               </div>
             )}
-
-            <Link
-              to="/contact"
-              className={`font-body text-sm tracking-wide transition-colors ${
-                useWhiteNav
-                  ? location.pathname === '/contact' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                  : location.pathname === '/contact' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
-              }`}
-            >
-              Contact
-            </Link>
 
             {user ? (
               <div className="flex items-center gap-3">
