@@ -43,7 +43,7 @@ export default function MemberPreviewBanner() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] bg-accent text-accent-foreground px-4 py-2.5 flex items-center justify-between shadow-lg">
+    <div className="sticky top-20 left-0 right-0 z-40 bg-accent text-accent-foreground px-4 py-2.5 flex items-center justify-between shadow-lg">
       <div className="flex items-center gap-2 font-body text-sm font-medium">
         <Eye className="w-4 h-4" />
         {isMember ? 'Previewing as Member' : 'Previewing as Guest (not signed in)'}

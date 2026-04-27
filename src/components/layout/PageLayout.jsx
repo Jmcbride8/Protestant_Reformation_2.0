@@ -8,11 +8,11 @@ export default function PageLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <MemberPreviewBanner />
       <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
-      <MemberPreviewBanner />
     </div>
   );
 }
