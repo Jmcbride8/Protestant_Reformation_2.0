@@ -179,55 +179,63 @@ export default function Admin() {
   };
 
 
+  const sidebarSections = [
+    { key: 'website', label: 'Website', icon: Tv2, description: 'Sermons, events & content' },
+    { key: 'church', label: 'Church', icon: Users, description: 'Members, contacts & giving' },
+    { key: 'config', label: 'Settings', icon: ToggleLeft, description: 'Info & feature flags' },
+  ];
+
   return (
     <div className="pt-20 min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="w-8 h-8 text-primary" />
+            <ShieldCheck className="w-7 h-7 text-primary" />
             <h1 className="font-heading text-3xl text-primary">Admin Dashboard</h1>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={handlePreviewAsGuest}
-              className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted"
-            >
-              <Eye className="w-4 h-4" />
-              Preview as Guest
+            <Button variant="outline" onClick={handlePreviewAsGuest} className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted text-sm">
+              <Eye className="w-4 h-4" /> Guest Preview
             </Button>
-            <Button
-              variant="outline"
-              onClick={handlePreviewAsMember}
-              className="font-body gap-2 border-accent text-accent hover:bg-accent/10"
-            >
-              <Eye className="w-4 h-4" />
-              Preview as Member
+            <Button variant="outline" onClick={handlePreviewAsMember} className="font-body gap-2 border-accent text-accent hover:bg-accent/10 text-sm">
+              <Eye className="w-4 h-4" /> Member Preview
             </Button>
           </div>
         </div>
 
-        {/* Section Selector */}
-        <div className="flex gap-2 mb-6 flex-wrap">
-          <Button
-            onClick={() => setAdminSection('website')}
-            className={`font-body font-semibold ${adminSection === 'website' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
-          >
-            Website Administration
-          </Button>
-          <Button
-            onClick={() => setAdminSection('church')}
-            className={`font-body font-semibold ${adminSection === 'church' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
-          >
-            Church Administration
-          </Button>
-          <Button
-            onClick={() => setAdminSection('config')}
-            className={`font-body font-semibold ${adminSection === 'config' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'}`}
-          >
-            Configuration
-          </Button>
-        </div>
+        {/* Two-column layout: sidebar + content */}
+        <div className="flex gap-8 items-start">
+
+          {/* Sidebar */}
+          <nav className="w-52 shrink-0 sticky top-24">
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-widest mb-3 px-3">Sections</p>
+            <div className="space-y-1">
+              {sidebarSections.map(({ key, label, icon: Icon, description }) => (
+                <button
+                  key={key}
+                  onClick={() => setAdminSection(key)}
+                  className={`w-full text-left px-3 py-3 rounded-lg transition-all group ${
+                    adminSection === key
+                      ? 'bg-primary text-primary-foreground'
+                      : 'hover:bg-secondary text-foreground'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5 mb-0.5">
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span className="font-body font-semibold text-sm">{label}</span>
+                  </div>
+                  <p className={`font-body text-xs ml-6.5 leading-tight ${adminSection === key ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
+                    {description}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </nav>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
@@ -593,7 +601,10 @@ export default function Admin() {
           </TabsContent>
         </Tabs>
         )}
-      </div>
-    </div>
-  );
-}
+
+        </div>{/* end content */}
+        </div>{/* end two-column */}
+        </div>
+        </div>
+        );
+        }
