@@ -22,8 +22,8 @@ const pillars = [
     icon: HandHeart,
     title: "Friendships",
     subtitle: "People who actually show up",
-    description: "The kind of friends who know your name, notice when you're gone, and show up when life gets hard. That's what we're building.",
-    verse: "\"Love your neighbor as yourself.\" — Matthew 22:39",
+    description: "In a world of screens and scrolling, real connection has never been harder — or more needed. The kind of friends who know your name, notice when you're gone, and speak truth into your life. We weren't made to do this alone.",
+    verse: "\"As iron sharpens iron, so one person sharpens another.\" — Proverbs 27:17",
   }
 ];
 
