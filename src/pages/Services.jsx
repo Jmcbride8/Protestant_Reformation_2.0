@@ -179,11 +179,12 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">You're Not Alone</p>
-            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Made for Your Season</h2>
+            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Core Programs</p>
+            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Where We Focus Our Best</h2>
             <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Some chapters of life need a community that truly gets it. 
-              We've built two ministries designed exactly for where you are right now.
+              We're a small church, so we don't try to do everything. Instead, we've chosen a few ministries 
+              and programs to pour our hearts into — and do them really well. These are the areas where we're 
+              most intentional, most invested, and where we believe we can make the deepest impact.
             </p>
           </motion.div>
 
