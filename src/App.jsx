@@ -59,7 +59,7 @@ const AuthenticatedApp = () => {
       <Route element={<PageLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons"><Sermons /></FeatureRoute>} />
+        <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}
         <Route path="/services" element={<FeatureRoute featureKey="page_services"><Services /></FeatureRoute>} />

@@ -6,7 +6,7 @@ import { isPreviewingAsGuest } from './layout/MemberPreviewBanner';
 import { Button } from '@/components/ui/button';
 import { LogIn } from 'lucide-react';
 
-export default function FeatureRoute({ children, featureKey }) {
+export default function FeatureRoute({ children, featureKey, isPublic = false }) {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
   const { isEnabled, loaded } = useFeatures();
@@ -14,7 +14,7 @@ export default function FeatureRoute({ children, featureKey }) {
   const guestPreview = isPreviewingAsGuest();
 
   useEffect(() => {
-    if (guestPreview) {
+    if (isPublic || guestPreview) {
       setAuthChecked(true);
       return;
     }
@@ -26,7 +26,7 @@ export default function FeatureRoute({ children, featureKey }) {
       }
       setAuthChecked(true);
     });
-  }, [guestPreview]);
+  }, [guestPreview, isPublic]);
 
   if (!authChecked || !loaded) return null;
 
@@ -35,6 +35,10 @@ export default function FeatureRoute({ children, featureKey }) {
     return null;
   }
 
+  // Public routes: always show content
+  if (isPublic) return children;
+
+  // Guest preview: show sign-in wall
   if (guestPreview) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20">
