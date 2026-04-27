@@ -93,12 +93,6 @@ export default function Groups() {
                     <div className="border-t border-border/50 pt-4 mt-4">
                       <p className="font-body text-xs tracking-[0.15em] uppercase text-muted-foreground mb-2">Led by</p>
                       <p className="font-heading text-base text-primary">{group.leader_name}</p>
-                      {group.leader_title && (
-                        <p className="font-body text-xs text-accent">{group.leader_title}</p>
-                      )}
-                      {group.leader_bio && (
-                        <p className="font-body text-xs text-muted-foreground mt-1 leading-relaxed">{group.leader_bio}</p>
-                      )}
                     </div>
 
                     <div className="mt-5">
