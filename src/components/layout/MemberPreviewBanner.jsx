@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Eye, X } from 'lucide-react';
 
 export const PREVIEW_KEY = 'previewAsMember';
@@ -31,13 +32,14 @@ export function stopGuestPreview() {
 }
 
 export default function MemberPreviewBanner() {
+  const location = useLocation();
   const [isMember, setIsMember] = useState(isPreviewingAsMember());
   const [isGuest, setIsGuest] = useState(isPreviewingAsGuest());
 
   useEffect(() => {
     setIsMember(isPreviewingAsMember());
     setIsGuest(isPreviewingAsGuest());
-  }, []);
+  }, [location.pathname]);
 
   if (!isMember && !isGuest) return null;
 
