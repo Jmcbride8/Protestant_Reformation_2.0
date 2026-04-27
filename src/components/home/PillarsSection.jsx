@@ -14,9 +14,9 @@ const pillars = [
   {
     icon: Users,
     title: "Family",
-    subtitle: "Every stage, every season",
-    description: "Whether you're raising kids, flying solo, or somewhere in between — you belong here. No perfect family required.",
-    verse: "\"As for me and my house, we will serve the Lord.\" — Joshua 24:15",
+    subtitle: "The most important structure God ever made",
+    description: "Family is the foundation God designed for human flourishing — the place where love is first learned and life is most fully lived. For those without one, or far from their own, the church exists to be that family. A place where no one sits alone, no one walks through hard seasons unaccompanied, and everyone has a table to come home to.",
+    verse: "\"God sets the lonely in families.\" — Psalm 68:6",
   },
   {
     icon: HandHeart,
