@@ -9,12 +9,15 @@ import { isPreviewingAsGuest } from './MemberPreviewBanner';
 
 const navLinks = [
   { label: 'Home', path: '/' },
-  { label: 'Sermons', path: '/sermons', featureKey: 'page_sermons' },
+];
+
+const churchLinksAll = [
+  { label: 'Sermons', sub: 'Watch & listen', path: '/sermons', featureKey: 'page_sermons', pageKey: 'page_sermons' },
+  { label: 'Care', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
 ];
 
 const communityLinksAll = [
   { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
-  { label: 'Care', sub: 'Something for every Season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
   { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule', pageKey: 'page_schedule' },
   { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
   { label: 'Memories', sub: 'Photos & videos from our year', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
@@ -34,16 +37,20 @@ export default function Navbar() {
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
+  const [churchOpen, setChurchOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
+  const churchLinks = churchLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
+  const churchRef = useRef(null);
   const communityRef = useRef(null);
   const giveRef = useRef(null);
 
   useEffect(() => {
     const handleClick = (e) => {
+      if (churchRef.current && !churchRef.current.contains(e.target)) setChurchOpen(false);
       if (communityRef.current && !communityRef.current.contains(e.target)) setCommunityOpen(false);
       if (giveRef.current && !giveRef.current.contains(e.target)) setGiveOpen(false);
     };
@@ -103,6 +110,38 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Church dropdown — always visible */}
+            {churchLinks.length > 0 && (
+              <div className="relative" ref={churchRef}>
+                <button
+                  onClick={() => setChurchOpen(v => !v)}
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                    useWhiteNav
+                      ? churchLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  Church
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {churchOpen && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                    {churchLinks.map(link => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setChurchOpen(false)}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
+                      >
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Community dropdown — members only */}
             {user && (
@@ -229,6 +268,26 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {/* Church submenu in mobile — always visible */}
+                {churchLinks.length > 0 && (
+                  <div>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Church</p>
+                    <div className="flex flex-col gap-4 pl-2">
+                      {churchLinks.map(link => (
+                        <Link
+                          key={link.path}
+                          to={link.path}
+                          onClick={() => setOpen(false)}
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {/* Community submenu in mobile — members only */}
                 {user && (
                   <div>
