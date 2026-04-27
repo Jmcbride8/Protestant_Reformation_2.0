@@ -7,22 +7,22 @@ const pillars = [
   {
     icon: Heart,
     title: "Faith",
-    subtitle: "Love the Lord your God",
-    description: "At Hope Church, faith is not a destination but a journey we walk together. Through worship, prayer, and Scripture, we deepen our relationship with God and discover the peace that surpasses understanding.",
+    subtitle: "Something to believe in",
+    description: "Not a set of rules — a relationship. We ask hard questions, sit with doubt, and find something worth anchoring to.",
     verse: "\"Love the Lord your God with all your heart and with all your soul and with all your mind.\" — Matthew 22:37",
   },
   {
     icon: Users,
     title: "Family",
-    subtitle: "Built on Love",
-    description: "Family is the first community God designed. Whether you're starting a family, growing one, or seeking one — Hope Church is a place where every stage of life is supported, celebrated, and cherished.",
+    subtitle: "Every stage, every season",
+    description: "Whether you're raising kids, flying solo, or somewhere in between — you belong here. No perfect family required.",
     verse: "\"As for me and my house, we will serve the Lord.\" — Joshua 24:15",
   },
   {
     icon: HandHeart,
     title: "Friendships",
-    subtitle: "Love Your Neighbor",
-    description: "Real, lasting friendships are built when we show up for each other. Through small groups, shared meals, and service, we form bonds that carry us through life's highest peaks and deepest valleys.",
+    subtitle: "People who actually show up",
+    description: "The kind of friends who know your name, notice when you're gone, and show up when life gets hard. That's what we're building.",
     verse: "\"Love your neighbor as yourself.\" — Matthew 22:39",
   }
 ];
