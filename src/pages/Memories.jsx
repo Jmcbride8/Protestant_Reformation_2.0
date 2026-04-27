@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Download, Play, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+const MONTHS = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December'
+];
 
 const categoryColors = {
   worship: 'bg-primary/10 text-primary',
@@ -18,11 +23,29 @@ const categoryColors = {
 
 export default function Memories() {
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
   const { data: memories = [] } = useQuery({
     queryKey: ['memories'],
     queryFn: () => base44.entities.Memory.filter({ is_active: true }, '-date'),
   });
+
+  // Derive available years from data
+  const availableYears = useMemo(() => {
+    const years = [...new Set(memories.map(m => new Date(m.date).getFullYear()))].sort((a, b) => b - a);
+    return years;
+  }, [memories]);
+
+  // Filter memories by selected year/month
+  const filteredMemories = useMemo(() => {
+    return memories.filter(m => {
+      const d = new Date(m.date);
+      if (selectedYear && d.getFullYear() !== Number(selectedYear)) return false;
+      if (selectedMonth && d.getMonth() !== Number(selectedMonth)) return false;
+      return true;
+    });
+  }, [memories, selectedYear, selectedMonth]);
 
   const handleDownload = async (url) => {
     try {
@@ -60,10 +83,47 @@ export default function Memories() {
           </p>
         </motion.div>
 
+        {/* Filters */}
+        {memories.length > 0 && (
+          <div className="flex flex-wrap items-center gap-3 mb-10 justify-center">
+            <select
+              value={selectedYear}
+              onChange={e => { setSelectedYear(e.target.value); setSelectedMonth(''); }}
+              className="font-body text-sm px-4 py-2 rounded-lg border border-input bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              <option value="">All Years</option>
+              {availableYears.map(y => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+
+            <select
+              value={selectedMonth}
+              onChange={e => setSelectedMonth(e.target.value)}
+              disabled={!selectedYear}
+              className="font-body text-sm px-4 py-2 rounded-lg border border-input bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-40"
+            >
+              <option value="">All Months</option>
+              {MONTHS.map((name, idx) => (
+                <option key={idx} value={idx}>{name}</option>
+              ))}
+            </select>
+
+            {(selectedYear || selectedMonth) && (
+              <button
+                onClick={() => { setSelectedYear(''); setSelectedMonth(''); }}
+                className="font-body text-sm text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Memories Grid */}
-        {memories.length > 0 ? (
+        {filteredMemories.length > 0 ? (
           <div className="space-y-16">
-            {memories.map((memory, idx) => (
+            {filteredMemories.map((memory, idx) => (
               <motion.div
                 key={memory.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -139,7 +199,9 @@ export default function Memories() {
             animate={{ opacity: 1 }}
             className="text-center py-16"
           >
-            <p className="font-body text-lg text-muted-foreground">Coming soon — memories from our church family.</p>
+            <p className="font-body text-lg text-muted-foreground">
+              {memories.length === 0 ? 'Coming soon — memories from our church family.' : 'No memories found for the selected period.'}
+            </p>
           </motion.div>
         )}
       </div>
