@@ -190,17 +190,17 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-3">
             <ShieldCheck className="w-7 h-7 text-primary" />
             <h1 className="font-heading text-3xl text-primary">Admin Dashboard</h1>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={handlePreviewAsGuest} className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted text-sm">
-              <Eye className="w-4 h-4" /> Guest Preview
+          <div className="flex gap-2 flex-wrap">
+            <Button variant="outline" onClick={handlePreviewAsGuest} size="sm" className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted">
+              <Eye className="w-3.5 h-3.5" /> Preview as Guest
             </Button>
-            <Button variant="outline" onClick={handlePreviewAsMember} className="font-body gap-2 border-accent text-accent hover:bg-accent/10 text-sm">
-              <Eye className="w-4 h-4" /> Member Preview
+            <Button variant="outline" onClick={handlePreviewAsMember} size="sm" className="font-body gap-2 border-accent text-accent hover:bg-accent/10">
+              <Eye className="w-3.5 h-3.5" /> Preview as Member
             </Button>
           </div>
         </div>
