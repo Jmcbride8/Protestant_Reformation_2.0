@@ -15,19 +15,19 @@ const churchLinksAll = [
   { label: 'Sermons', sub: 'Watch & listen', path: '/sermons', featureKey: 'page_sermons', pageKey: 'page_sermons' },
   { label: 'Programs', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
   { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule', pageKey: 'page_schedule' },
+  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
   { label: 'Contact', sub: 'Get in touch with us', path: '/contact', featureKey: null, pageKey: null },
 ];
 
 const communityLinksAll = [
   { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
-  { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
+  { label: 'Care & Support', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
   { label: 'Memories', sub: 'Photos & videos from our year', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
 ];
 
 const giveLinksAll = [
   { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time', pageKey: 'page_volunteer' },
   { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially', pageKey: 'page_giving' },
-  { label: 'Support Each Other', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
 ];
 
 export default function Navbar() {
