@@ -180,9 +180,9 @@ export default function Admin() {
 
 
   const sidebarSections = [
-    { key: 'website', label: 'Website', icon: Tv2, description: 'Sermons, events & content' },
-    { key: 'church', label: 'Church', icon: Users, description: 'Members, contacts & giving' },
-    { key: 'config', label: 'Settings', icon: ToggleLeft, description: 'Info & feature flags' },
+    { key: 'website', label: 'Website', icon: Tv2 },
+    { key: 'church', label: 'Church', icon: Users },
+    { key: 'config', label: 'Settings', icon: ToggleLeft },
   ];
 
   return (
@@ -205,37 +205,26 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Two-column layout: sidebar + content */}
-        <div className="flex gap-8 items-start">
-
-          {/* Sidebar */}
-          <nav className="w-52 shrink-0 sticky top-24">
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-widest mb-3 px-3">Sections</p>
-            <div className="space-y-1">
-              {sidebarSections.map(({ key, label, icon: Icon, description }) => (
-                <button
-                  key={key}
-                  onClick={() => setAdminSection(key)}
-                  className={`w-full text-left px-3 py-3 rounded-lg transition-all group ${
-                    adminSection === key
-                      ? 'bg-primary text-primary-foreground'
-                      : 'hover:bg-secondary text-foreground'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 mb-0.5">
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span className="font-body font-semibold text-sm">{label}</span>
-                  </div>
-                  <p className={`font-body text-xs ml-6.5 leading-tight ${adminSection === key ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                    {description}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </nav>
+        {/* Section selector */}
+        <div className="flex gap-2 mb-6 p-1 bg-secondary rounded-xl w-fit">
+          {sidebarSections.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setAdminSection(key)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-body font-semibold text-sm transition-all ${
+                adminSection === key
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
 
           {/* Content */}
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
@@ -603,7 +592,6 @@ export default function Admin() {
         )}
 
         </div>{/* end content */}
-        </div>{/* end two-column */}
         </div>
         </div>
         );
