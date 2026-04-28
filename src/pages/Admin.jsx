@@ -565,7 +565,7 @@ export default function Admin() {
                     <div>
                       <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
                       <p className="font-body text-xs text-muted-foreground">
-                        {donation.donor_email} • {format(new Date(donation.created_date), 'MMM d, yyyy')}
+                        {donation.donor_email} • {format(new Date(donation.donation_date + 'T00:00:00'), 'MMM d, yyyy')}
                       </p>
                     </div>
                     <div className="text-right">
