@@ -29,6 +29,11 @@
       ],
       "description": "Which fund the donation goes to"
     },
+    "donation_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the donation was made (YYYY-MM-DD)"
+    },
     "is_recurring": {
       "type": "boolean",
       "default": false
