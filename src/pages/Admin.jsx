@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
-import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church, Eye } from 'lucide-react';
+import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church, Eye, Kanban } from 'lucide-react';
 import { startMemberPreview, startGuestPreview } from '../components/layout/MemberPreviewBanner';
 import { useNavigate } from 'react-router-dom';
 import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
@@ -14,6 +14,7 @@ import ChurchInfoManager from '../components/admin/ChurchInfoManager';
 import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
 import FundsManager from '../components/admin/FundsManager';
+import StaffKanban from '../components/admin/StaffKanban';
 import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import BeliefsManager from '../components/admin/BeliefsManager';
 import GroupsManager from '../components/admin/GroupsManager';
@@ -183,6 +184,7 @@ export default function Admin() {
   const sidebarSections = [
     { key: 'website', label: 'Website', icon: Tv2 },
     { key: 'church', label: 'Church', icon: Users },
+    { key: 'actions', label: 'Actions', icon: Kanban },
     { key: 'config', label: 'Settings', icon: ToggleLeft },
   ];
 
@@ -329,6 +331,11 @@ export default function Admin() {
           </TabsContent>
 
           </Tabs>
+        )}
+
+        {/* Actions Section */}
+        {adminSection === 'actions' && (
+          <StaffKanban />
         )}
 
         {/* Configuration Section */}

@@ -1,0 +1,45 @@
+{
+  "name": "ActionItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Short title of the action item"
+    },
+    "description": {
+      "type": "string",
+      "description": "Details or context"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "todo",
+        "in_progress",
+        "done"
+      ],
+      "default": "todo",
+      "description": "Kanban column"
+    },
+    "assignee": {
+      "type": "string",
+      "description": "Name of the staff member responsible"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Optional due date"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
