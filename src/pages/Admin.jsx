@@ -13,6 +13,7 @@ import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import ChurchInfoManager from '../components/admin/ChurchInfoManager';
 import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
+import FundsManager from '../components/admin/FundsManager';
 import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import BeliefsManager from '../components/admin/BeliefsManager';
 import GroupsManager from '../components/admin/GroupsManager';
@@ -584,6 +585,7 @@ export default function Admin() {
 
           {/* Budget Tab */}
           <TabsContent value="budget" className="space-y-10">
+            <FundsManager />
             <GivingManager />
             <CapitalCampaignManager />
             <BudgetManager />

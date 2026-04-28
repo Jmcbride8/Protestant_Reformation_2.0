@@ -2,26 +2,63 @@
   "name": "FundSettings",
   "type": "object",
   "properties": {
-    "key": {
+    "name": {
       "type": "string",
-      "description": "Unique settings key (e.g. 'annual_fund')"
+      "description": "Display name of the fund (e.g. Church Annual Fund)"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-safe key used in donations (e.g. annual_fund)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description shown to donors"
     },
     "goal": {
       "type": "number",
-      "description": "Annual fund goal in dollars"
+      "description": "Annual fundraising goal in dollars"
     },
-    "current": {
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this fund is currently accepting donations"
+    },
+    "itemization": {
+      "type": "array",
+      "description": "Breakdown of what this fund covers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Line item name (e.g. Staff Salaries)"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Dollar amount for this line item"
+          },
+          "percentage": {
+            "type": "number",
+            "description": "Optional percentage of total"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional detail"
+          }
+        },
+        "required": [
+          "label",
+          "amount"
+        ]
+      }
+    },
+    "sort_order": {
       "type": "number",
-      "description": "Contributions to date in dollars"
-    },
-    "label": {
-      "type": "string",
-      "description": "Display label"
+      "description": "Display order"
     }
   },
   "required": [
-    "key",
-    "goal",
-    "current"
+    "name",
+    "slug"
   ]
 }
