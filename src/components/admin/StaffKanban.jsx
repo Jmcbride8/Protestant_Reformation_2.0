@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Plus, X, Trash2, ChevronRight } from 'lucide-react';
+import { Plus, X, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 const COLUMNS = [
   { key: 'todo', label: 'To Do', color: 'bg-muted', dot: 'bg-muted-foreground' },
@@ -79,18 +80,23 @@ function AddCardForm({ column, onAdd, onClose }) {
   );
 }
 
-function KanbanCard({ item, onMove, onDelete }) {
-  const nextStatus = { todo: 'in_progress', in_progress: 'done', done: null };
-  const prevStatus = { todo: null, in_progress: 'todo', done: 'in_progress' };
-
+function KanbanCard({ item, onDelete, dragHandleProps, draggableProps, innerRef, isDragging }) {
   return (
-    <div className="bg-card border border-border/60 rounded-xl p-4 space-y-2 shadow-sm hover:shadow-md transition-shadow group">
+    <div
+      ref={innerRef}
+      {...draggableProps}
+      {...dragHandleProps}
+      className={`bg-card border rounded-xl p-4 space-y-2 shadow-sm transition-shadow group cursor-grab active:cursor-grabbing ${
+        isDragging ? 'shadow-lg border-primary/40 rotate-1 opacity-90' : 'border-border/60 hover:shadow-md'
+      }`}
+    >
       <div className="flex items-start justify-between gap-2">
         <p className={`font-body text-sm font-medium text-foreground leading-snug flex-1 ${item.status === 'done' ? 'line-through text-muted-foreground' : ''}`}>
           {item.title}
         </p>
         <button
-          onClick={() => onDelete(item.id)}
+          onMouseDown={e => e.stopPropagation()}
+          onClick={e => { e.stopPropagation(); onDelete(item.id); }}
           className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive/60 hover:text-destructive shrink-0"
         >
           <Trash2 className="w-3.5 h-3.5" />
@@ -107,30 +113,9 @@ function KanbanCard({ item, onMove, onDelete }) {
           <span className="font-body text-xs text-muted-foreground">→ {item.assignee}</span>
         )}
         {item.due_date && (
-          <span className="font-body text-xs text-muted-foreground">{new Date(item.due_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-        )}
-      </div>
-
-      <div className="flex gap-1 pt-1">
-        {prevStatus[item.status] && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="font-body text-xs h-6 px-2 text-muted-foreground hover:text-foreground"
-            onClick={() => onMove(item.id, prevStatus[item.status])}
-          >
-            ← Back
-          </Button>
-        )}
-        {nextStatus[item.status] && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="font-body text-xs h-6 px-2 text-muted-foreground hover:text-foreground ml-auto"
-            onClick={() => onMove(item.id, nextStatus[item.status])}
-          >
-            {nextStatus[item.status] === 'in_progress' ? 'Start' : 'Done'} <ChevronRight className="w-3 h-3 ml-0.5" />
-          </Button>
+          <span className="font-body text-xs text-muted-foreground">
+            {new Date(item.due_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </span>
         )}
       </div>
     </div>
@@ -139,7 +124,7 @@ function KanbanCard({ item, onMove, onDelete }) {
 
 export default function StaffKanban() {
   const queryClient = useQueryClient();
-  const [addingTo, setAddingTo] = useState(null); // column key
+  const [addingTo, setAddingTo] = useState(null);
 
   const { data: items = [] } = useQuery({
     queryKey: ['actionItems'],
@@ -161,64 +146,88 @@ export default function StaffKanban() {
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['actionItems'] }); toast.success('Removed'); },
   });
 
-  const handleMove = (id, status) => updateMutation.mutate({ id, data: { status } });
+  const handleDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId) return;
+    updateMutation.mutate({ id: draggableId, data: { status: destination.droppableId } });
+  };
 
   return (
     <div className="space-y-4">
       <div>
         <h3 className="font-heading text-xl text-primary">Staff Action Board</h3>
-        <p className="font-body text-sm text-muted-foreground mt-0.5">Track and clear action items across your team.</p>
+        <p className="font-body text-sm text-muted-foreground mt-0.5">Drag cards between columns to update their status.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {COLUMNS.map(col => {
-          const colItems = items.filter(i => i.status === col.key);
-          return (
-            <div key={col.key} className={`rounded-2xl p-4 ${col.color} min-h-[300px]`}>
-              {/* Column header */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${col.dot}`} />
-                  <span className="font-body text-sm font-semibold text-foreground">{col.label}</span>
-                  <span className="font-body text-xs text-muted-foreground bg-card/60 px-1.5 py-0.5 rounded-full">{colItems.length}</span>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {COLUMNS.map(col => {
+            const colItems = items.filter(i => i.status === col.key);
+            return (
+              <div key={col.key} className={`rounded-2xl p-4 ${col.color} flex flex-col`} style={{ minHeight: '600px' }}>
+                {/* Column header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${col.dot}`} />
+                    <span className="font-body text-sm font-semibold text-foreground">{col.label}</span>
+                    <span className="font-body text-xs text-muted-foreground bg-card/60 px-1.5 py-0.5 rounded-full">{colItems.length}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="w-6 h-6 text-muted-foreground hover:text-primary"
+                    onClick={() => setAddingTo(addingTo === col.key ? null : col.key)}
+                  >
+                    <Plus className="w-4 h-4" />
+                  </Button>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="w-6 h-6 text-muted-foreground hover:text-primary"
-                  onClick={() => setAddingTo(addingTo === col.key ? null : col.key)}
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
 
-              {/* Add form */}
-              {addingTo === col.key && (
-                <AddCardForm
-                  column={col.key}
-                  onAdd={(data) => createMutation.mutate(data)}
-                  onClose={() => setAddingTo(null)}
-                />
-              )}
-
-              {/* Cards */}
-              <div className="space-y-3 mt-2">
-                {colItems.map(item => (
-                  <KanbanCard
-                    key={item.id}
-                    item={item}
-                    onMove={handleMove}
-                    onDelete={(id) => deleteMutation.mutate(id)}
+                {/* Add form */}
+                {addingTo === col.key && (
+                  <AddCardForm
+                    column={col.key}
+                    onAdd={(data) => createMutation.mutate(data)}
+                    onClose={() => setAddingTo(null)}
                   />
-                ))}
-                {colItems.length === 0 && addingTo !== col.key && (
-                  <p className="font-body text-xs text-muted-foreground text-center pt-6">Nothing here</p>
                 )}
+
+                {/* Droppable card list */}
+                <Droppable droppableId={col.key}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className={`flex-1 space-y-3 mt-2 rounded-xl transition-colors ${snapshot.isDraggingOver ? 'bg-primary/5' : ''}`}
+                    >
+                      {colItems.map((item, index) => (
+                        <Draggable key={item.id} draggableId={item.id} index={index}>
+                          {(provided, snapshot) => (
+                            <KanbanCard
+                              item={item}
+                              onDelete={(id) => deleteMutation.mutate(id)}
+                              innerRef={provided.innerRef}
+                              draggableProps={provided.draggableProps}
+                              dragHandleProps={provided.dragHandleProps}
+                              isDragging={snapshot.isDragging}
+                            />
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                      {colItems.length === 0 && addingTo !== col.key && (
+                        <p className="font-body text-xs text-muted-foreground text-center pt-10">
+                          {snapshot.isDraggingOver ? 'Drop here' : 'Nothing here'}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </Droppable>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      </DragDropContext>
     </div>
   );
 }
