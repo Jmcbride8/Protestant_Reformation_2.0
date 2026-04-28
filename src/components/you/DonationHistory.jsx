@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, DollarSign } from 'lucide-react';
 import { format } from 'date-fns';
+import GivingChart from './GivingChart';
 
 const fundLabels = {
   general: 'General Fund',
@@ -29,6 +30,8 @@ export default function DonationHistory({ donations }) {
           </span>
         )}
       </div>
+
+      {donations.length > 1 && <GivingChart donations={donations} />}
 
       {donations.length === 0 ? (
         <div className="bg-secondary/30 border border-dashed border-border rounded-2xl p-8 text-center">
