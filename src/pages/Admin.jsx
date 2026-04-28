@@ -28,6 +28,7 @@ import MemoriesManager from '../components/admin/MemoriesManager';
 import EditSermonModal from '../components/sermons/EditSermonModal';
 import DonationMonthlyChart from '../components/admin/DonationMonthlyChart';
 import DonationKPIs from '../components/admin/DonationKPIs';
+import { Treemap, ResponsiveContainer } from 'recharts';
 import { toast } from "sonner";
 import { useMutation } from '@tanstack/react-query';
 
@@ -47,7 +48,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [editingSermon, setEditingSermon] = useState(null);
   const [adminSection, setAdminSection] = useState('website');
-  const [donationFilters, setDonationFilters] = useState({ year: '', fund: '' });
+  const [donationFilters, setDonationFilters] = useState({ year: '', fund: '', donor: '' });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -111,7 +112,8 @@ export default function Admin() {
     const donationYear = new Date(d.created_date).getFullYear().toString();
     const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
     const fundMatch = !donationFilters.fund || d.fund === donationFilters.fund;
-    return yearMatch && fundMatch;
+    const donorMatch = !donationFilters.donor || d.donor_name.toLowerCase().includes(donationFilters.donor.toLowerCase());
+    return yearMatch && fundMatch && donorMatch;
   });
 
   if (loading) {
@@ -520,7 +522,7 @@ export default function Admin() {
               <DonationMonthlyChart donations={filteredDonations} />
 
               <div className="space-y-4">
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 <div>
                   <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>
                   <select 
@@ -546,6 +548,16 @@ export default function Admin() {
                       <option key={fund} value={fund}>{fund.replace('_', ' ')}</option>
                     ))}
                   </select>
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                  <label className="font-body text-sm text-muted-foreground block mb-1">Donor Name</label>
+                  <input 
+                    type="text"
+                    onChange={(e) => setDonationFilters(prev => ({ ...prev, donor: e.target.value }))} 
+                    value={donationFilters.donor}
+                    placeholder="Search donor..."
+                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background w-full"
+                  />
                 </div>
               </div>
 
@@ -578,6 +590,29 @@ export default function Admin() {
                     <span className="font-heading text-2xl text-primary">${filteredDonations.reduce((sum, d) => sum + (d.amount || 0), 0).toLocaleString()}</span>
                   </div>
                   <p className="font-body text-xs text-muted-foreground mt-2">{filteredDonations.length} donation{filteredDonations.length !== 1 ? 's' : ''}</p>
+                </div>
+              )}
+
+              {filteredDonations.length > 0 && (
+                <div className="bg-card border border-border/50 rounded-2xl p-5">
+                  <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">Donations by Donor</p>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <Treemap
+                      data={filteredDonations.reduce((acc, d) => {
+                        const existing = acc.find(item => item.name === d.donor_name);
+                        if (existing) {
+                          existing.value += d.amount || 0;
+                        } else {
+                          acc.push({ name: d.donor_name, value: d.amount || 0 });
+                        }
+                        return acc;
+                      }, []).sort((a, b) => b.value - a.value)}
+                      dataKey="value"
+                      stroke="#fff"
+                      fill="hsl(var(--primary))"
+                    >
+                    </Treemap>
+                  </ResponsiveContainer>
                 </div>
               )}
               </div>
