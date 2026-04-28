@@ -119,6 +119,11 @@ export default function You() {
                     <span className="text-foreground/60">Interests:</span> {myProfile.interests.join(', ')}
                   </p>
                 )}
+                {myProfile?.joined_date && (
+                  <p className="font-body text-xs text-muted-foreground mt-1">
+                    <span className="text-foreground/60">Member since:</span> {new Date(myProfile.joined_date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                  </p>
+                )}
                 <div className="flex items-center gap-3 mt-3 flex-wrap">
                   {myProfile?.role && (
                     <span className="font-body text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
