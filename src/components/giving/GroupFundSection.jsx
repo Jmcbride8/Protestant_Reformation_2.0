@@ -121,7 +121,7 @@ function LogExpenseForm({ group, onSuccess }) {
            transaction_date: form.transaction_date,
          });
        }}
-       className="space-y-4 pt-4 border-t border-border/50 mt-4"
+       className="space-y-4"
      >
        <h4 className="font-heading text-base text-primary">Log an Expense</h4>
        <div className="grid grid-cols-3 gap-3">
@@ -203,21 +203,27 @@ export default function GroupFundSection({ group, user }) {
 
       <GroupFundTrendChart transactions={transactions} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
-        {/* Left: Give form + leader expense form */}
-        <div className="bg-card border border-border/50 rounded-2xl p-8">
-          <GiveToGroupForm group={group} user={user} />
-          {isLeader && <LogExpenseForm group={group} />}
-        </div>
+      <div className={`grid gap-12 mt-12 ${isLeader ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
+         {/* Give form */}
+         <div className="bg-card border border-border/50 rounded-2xl p-8">
+           <GiveToGroupForm group={group} user={user} />
+         </div>
 
-        {/* Right: Transaction history */}
-        <div>
-          <h3 className="font-heading text-xl text-primary mb-4">Transaction History</h3>
-          <div className="bg-card border border-border/50 rounded-2xl px-6 py-2">
-            <TransactionList transactions={transactions} />
-          </div>
-        </div>
-      </div>
+         {/* Log expense form (leader only) */}
+         {isLeader && (
+           <div className="bg-card border border-border/50 rounded-2xl p-8">
+             <LogExpenseForm group={group} />
+           </div>
+         )}
+
+         {/* Transaction history */}
+         <div>
+           <h3 className="font-heading text-xl text-primary mb-4">Transaction History</h3>
+           <div className="bg-card border border-border/50 rounded-2xl px-6 py-2">
+             <TransactionList transactions={transactions} />
+           </div>
+         </div>
+       </div>
     </motion.div>
   );
 }
