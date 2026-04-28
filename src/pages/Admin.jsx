@@ -237,7 +237,7 @@ export default function Admin() {
         {/* Website Administration Section */}
         {adminSection === 'website' && (
         <Tabs defaultValue="sermons" className="space-y-6">
-          <TabsList className="bg-card font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b border-border/40 rounded-none">
+          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
             <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
             <TabsTrigger value="schedule" className="gap-2"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
             <TabsTrigger value="milestones" className="gap-2"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
@@ -346,7 +346,7 @@ export default function Admin() {
         {/* Configuration Section */}
         {adminSection === 'config' && (
         <Tabs defaultValue="church_info" className="space-y-6">
-          <TabsList className="bg-card font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b border-border/40 rounded-none">
+          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
             <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
             <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
           </TabsList>
@@ -364,7 +364,7 @@ export default function Admin() {
         {/* Church Administration Section */}
         {adminSection === 'church' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
-          <TabsList className="bg-card font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b border-border/40 rounded-none">
+          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
             <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="directory" className="gap-2"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
