@@ -8,6 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowDownCircle, ArrowUpCircle, MinusCircle, CheckCircle, Users } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import GroupFundTrendChart from '@/components/giving/GroupFundTrendChart';
 
 const TYPE_CONFIG = {
   given:    { label: 'Given',    icon: ArrowUpCircle,   color: 'text-green-600',  sign: '+' },
@@ -203,7 +204,9 @@ export default function GroupFundSection({ group, user }) {
 
       <PoolBalance transactions={transactions} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <GroupFundTrendChart transactions={transactions} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
         {/* Left: Give form + leader expense form */}
         <div className="bg-card border border-border/50 rounded-2xl p-8">
           <GiveToGroupForm group={group} user={user} />
