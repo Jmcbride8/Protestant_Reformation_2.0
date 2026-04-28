@@ -29,7 +29,7 @@ export default function GivingChart({ donations }) {
   const monthMap = {};
   donations.forEach(d => {
     if (!d.created_date) return;
-    const key = format(new Date(d.created_date), 'MMM yyyy');
+    const key = format(new Date(d.donation_date || d.created_date), 'MMM yyyy');
     monthMap[key] = (monthMap[key] || 0) + (d.amount || 0);
   });
 

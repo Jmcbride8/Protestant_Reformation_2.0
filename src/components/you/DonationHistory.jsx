@@ -40,12 +40,12 @@ export default function DonationHistory({ donations }) {
         </div>
       ) : (
         <div className="bg-card border border-border/50 rounded-2xl overflow-hidden divide-y divide-border/40">
-          {donations.sort((a, b) => new Date(b.created_date) - new Date(a.created_date)).map(d => (
+          {donations.sort((a, b) => new Date(b.donation_date || b.created_date) - new Date(a.donation_date || a.created_date)).map(d => (
             <div key={d.id} className="flex items-center justify-between px-5 py-4">
               <div>
                 <p className="font-body text-sm font-medium text-foreground">{fundLabels[d.fund] || d.fund}</p>
                 <p className="font-body text-xs text-muted-foreground">
-                  {d.created_date ? format(new Date(d.created_date), 'MMMM d, yyyy') : ''}
+                  {format(new Date(d.donation_date || d.created_date), 'MMMM d, yyyy')}
                   {d.is_recurring && <span className="ml-2 px-2 py-0.5 bg-accent/10 text-accent rounded-full text-[10px]">Recurring</span>}
                 </p>
               </div>
