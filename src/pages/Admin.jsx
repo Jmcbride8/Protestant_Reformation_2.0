@@ -212,7 +212,7 @@ export default function Admin() {
         </div>
 
         {/* Section selector */}
-        <div className="mb-8 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-card border-b border-border/40">
+        <div className="mb-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-secondary/30 border-b-2 border-border shadow-sm">
           <div className="flex flex-wrap gap-2">
             {sidebarSections.map(({ key, label, icon: Icon }) => (
               <button
