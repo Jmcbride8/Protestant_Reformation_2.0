@@ -369,7 +369,7 @@ export default function Admin() {
         {adminSection === 'church' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
           <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none gap-3 [&_[role=tablist]]:bg-transparent">
             <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="directory" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
