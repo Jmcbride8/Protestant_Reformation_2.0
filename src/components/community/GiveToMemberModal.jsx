@@ -33,8 +33,10 @@ export default function GiveToMemberModal({ post, user, onClose }) {
     mutation.mutate({
       donor_name: user?.full_name || 'Anonymous',
       donor_email: user?.email || '',
+      donor_user_id: user?.id || '',
       amount: finalAmount,
-      fund: 'general',
+      fund: 'people',
+      recipient_name: post.is_anonymous ? 'Anonymous' : (post.contact_name || 'A member'),
       notes: `Community support gift for: "${post.title}" — ${note}`,
     });
   };

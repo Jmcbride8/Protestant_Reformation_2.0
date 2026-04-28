@@ -25,14 +25,19 @@
         "building_campaign",
         "missions",
         "youth",
-        "community_meals"
+        "community_meals",
+        "people"
       ],
-      "description": "Which fund the donation goes to"
+      "description": "Which fund the donation goes to. 'people' = gift to an individual via Care & Support board."
     },
     "donation_date": {
       "type": "string",
       "format": "date",
       "description": "Date the donation was made (YYYY-MM-DD)"
+    },
+    "recipient_name": {
+      "type": "string",
+      "description": "Name of the individual recipient for 'people' fund gifts"
     },
     "is_recurring": {
       "type": "boolean",
