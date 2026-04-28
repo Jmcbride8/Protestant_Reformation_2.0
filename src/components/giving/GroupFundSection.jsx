@@ -203,7 +203,7 @@ export default function GroupFundSection({ group, user }) {
 
       <GroupFundTrendChart transactions={transactions} />
 
-      <div className={`grid gap-12 mt-12 ${isLeader ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
+      <div className={`grid gap-12 mt-12 ${isLeader ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
          {/* Give form */}
          <div className="bg-card border border-border/50 rounded-2xl p-8">
            <GiveToGroupForm group={group} user={user} />
@@ -215,15 +215,15 @@ export default function GroupFundSection({ group, user }) {
              <LogExpenseForm group={group} />
            </div>
          )}
-
-         {/* Transaction history */}
-         <div>
-           <h3 className="font-heading text-xl text-primary mb-4">Transaction History</h3>
-           <div className="bg-card border border-border/50 rounded-2xl px-6 py-2">
-             <TransactionList transactions={transactions} />
-           </div>
-         </div>
        </div>
+
+      {/* Transaction history */}
+      <div className="mt-12">
+        <h3 className="font-heading text-xl text-primary mb-4">Transaction History</h3>
+        <div className="bg-card border border-border/50 rounded-2xl px-6 py-2">
+          <TransactionList transactions={transactions} />
+        </div>
+      </div>
     </motion.div>
   );
 }
