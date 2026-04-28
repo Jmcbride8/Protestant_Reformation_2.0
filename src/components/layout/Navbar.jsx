@@ -41,6 +41,8 @@ export default function Navbar() {
   const [churchOpen, setChurchOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const [giveOpen, setGiveOpen] = useState(false);
+  const [meOpen, setMeOpen] = useState(false);
+  const meRef = useRef(null);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
   const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
@@ -54,6 +56,7 @@ export default function Navbar() {
       if (churchRef.current && !churchRef.current.contains(e.target)) setChurchOpen(false);
       if (communityRef.current && !communityRef.current.contains(e.target)) setCommunityOpen(false);
       if (giveRef.current && !giveRef.current.contains(e.target)) setGiveOpen(false);
+      if (meRef.current && !meRef.current.contains(e.target)) setMeOpen(false);
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
@@ -210,16 +213,42 @@ export default function Navbar() {
 
             {user ? (
               <div className="flex items-center gap-3">
-                <Link
-                  to="/you"
-                  className={`font-body text-sm tracking-wide transition-colors ${
-                    useWhiteNav
-                      ? location.pathname === '/you' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                      : location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
-                  }`}
-                >
-                  You
-                </Link>
+                {/* Me dropdown */}
+                <div className="relative" ref={meRef}>
+                  <button
+                    onClick={() => setMeOpen(v => !v)}
+                    className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                      useWhiteNav
+                        ? ['/you', '/admin'].includes(location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                        : ['/you', '/admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                    }`}
+                  >
+                    Me
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {meOpen && (
+                    <div className="absolute top-full right-0 mt-3 w-48 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                      <Link
+                        to="/you"
+                        onClick={() => setMeOpen(false)}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/you' ? 'bg-secondary/40' : ''}`}
+                      >
+                        <span className="font-body text-sm font-medium text-foreground">Profile</span>
+                        <span className="font-body text-xs text-muted-foreground">Your info & settings</span>
+                      </Link>
+                      {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setMeOpen(false)}
+                          className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors ${location.pathname === '/admin' ? 'bg-secondary/40' : ''}`}
+                        >
+                          <span className="font-body text-sm font-medium text-foreground">Admin Dashboard</span>
+                          <span className="font-body text-xs text-muted-foreground">Manage the church</span>
+                        </Link>
+                      )}
+                    </div>
+                  )}
+                </div>
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -324,14 +353,25 @@ export default function Navbar() {
                 <div className="border-t pt-4 mt-2">
                    {user ? (
                      <div className="flex flex-col gap-3">
-                       <Link
-                         to="/you"
-                         onClick={() => setOpen(false)}
-                         className={`font-body text-lg tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
-                       >
-                         You
-                       </Link>
-                       
+                       <p className="font-body text-xs tracking-[0.2em] uppercase text-accent">Me</p>
+                       <div className="flex flex-col gap-4 pl-2">
+                         <Link
+                           to="/you"
+                           onClick={() => setOpen(false)}
+                           className={`font-body text-base tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                         >
+                           Profile
+                         </Link>
+                         {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                           <Link
+                             to="/admin"
+                             onClick={() => setOpen(false)}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                           >
+                             Admin Dashboard
+                           </Link>
+                         )}
+                       </div>
                       <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
                         Sign Out
                       </Button>
