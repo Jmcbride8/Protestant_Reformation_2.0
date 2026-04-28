@@ -125,7 +125,7 @@ export default function Navbar() {
                       : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
-                  Church
+                  Programs
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {churchOpen && (
@@ -157,7 +157,7 @@ export default function Navbar() {
                       : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
-                  Community
+                  People
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${communityOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {communityOpen && (
@@ -262,7 +262,7 @@ export default function Navbar() {
                 {/* Church submenu in mobile — always visible */}
                 {churchLinks.length > 0 && (
                   <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Church</p>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Programs</p>
                     <div className="flex flex-col gap-4 pl-2">
                       {churchLinks.map(link => (
                         <Link
@@ -282,7 +282,7 @@ export default function Navbar() {
                 {/* Community submenu in mobile — members only */}
                 {user && (
                   <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Community</p>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">People</p>
                     <div className="flex flex-col gap-4 pl-2">
                       {communityLinks.map(link => (
                         <Link
