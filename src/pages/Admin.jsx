@@ -237,7 +237,8 @@ export default function Admin() {
         {/* Website Administration Section */}
         {adminSection === 'website' && (
         <Tabs defaultValue="sermons" className="space-y-6">
-          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
             <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
             <TabsTrigger value="schedule" className="gap-2"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
             <TabsTrigger value="milestones" className="gap-2"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
@@ -247,6 +248,7 @@ export default function Admin() {
             <TabsTrigger value="carousel" className="gap-2"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
             <TabsTrigger value="memories" className="gap-2"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
+          </div>
 
           {/* Sermons Tab */}
           <TabsContent value="sermons" className="space-y-8">
@@ -346,10 +348,12 @@ export default function Admin() {
         {/* Configuration Section */}
         {adminSection === 'config' && (
         <Tabs defaultValue="church_info" className="space-y-6">
-          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
             <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
             <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
-          </TabsList>
+            </TabsList>
+            </div>
 
           <TabsContent value="church_info">
             <ChurchInfoManager />
@@ -364,7 +368,8 @@ export default function Admin() {
         {/* Church Administration Section */}
         {adminSection === 'church' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
-          <TabsList className="bg-secondary/30 font-body flex-wrap h-auto -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 border-b-2 border-border rounded-none shadow-sm">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
             <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
             <TabsTrigger value="directory" className="gap-2"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
@@ -378,7 +383,8 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="budget" className="gap-2"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
-          </TabsList>
+            </TabsList>
+            </div>
 
           {/* Volunteers Tab */}
           <TabsContent value="volunteers" className="space-y-8">
