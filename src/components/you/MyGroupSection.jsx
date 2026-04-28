@@ -105,15 +105,6 @@ export default function MyGroupSection({ myProfile, myRequests, user }) {
             )}
           </div>
         </div>
-
-        {giveTarget && (
-          <GiveToGroupMemberModal
-            member={giveTarget}
-            group={myGroup}
-            user={user}
-            onClose={() => setGiveTarget(null)}
-          />
-        )}
       ) : pendingRequest ? (
         /* Pending request */
         <div className="bg-card border border-amber-200 rounded-2xl p-6">
@@ -148,6 +139,15 @@ export default function MyGroupSection({ myProfile, myRequests, user }) {
             </div>
           )}
         </div>
+      )}
+
+      {giveTarget && (
+        <GiveToGroupMemberModal
+          member={giveTarget}
+          group={myGroup}
+          user={user}
+          onClose={() => setGiveTarget(null)}
+        />
       )}
     </motion.section>
   );
