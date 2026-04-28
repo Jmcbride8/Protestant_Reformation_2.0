@@ -14,6 +14,10 @@
       "type": "string",
       "description": "Member's email"
     },
+    "secondary_email": {
+      "type": "string",
+      "description": "Secondary email address"
+    },
     "phone": {
       "type": "string",
       "description": "Member's phone number"
@@ -47,7 +51,7 @@
       "items": {
         "type": "string"
       },
-      "description": "List of spiritual gifts (e.g. Teaching, Hospitality)"
+      "description": "List of spiritual gifts"
     },
     "interests": {
       "type": "array",
@@ -61,7 +65,7 @@
       "items": {
         "type": "string"
       },
-      "description": "Names of family members also attending (e.g. ['Sarah Rivera', 'Mia Rivera'])"
+      "description": "Names of family members also attending"
     },
     "family_unit_id": {
       "type": "string",
@@ -69,7 +73,23 @@
     },
     "baptized": {
       "type": "boolean",
-      "default": false
+      "default": false,
+      "description": "Has been baptized"
+    },
+    "followed_jesus": {
+      "type": "boolean",
+      "default": false,
+      "description": "Has made a decision to follow Jesus"
+    },
+    "confirmed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Has been confirmed / completed membership class"
+    },
+    "serving": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is actively serving / volunteering"
     },
     "notes": {
       "type": "string",

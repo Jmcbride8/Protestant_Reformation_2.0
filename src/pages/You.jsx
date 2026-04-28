@@ -109,11 +109,6 @@ export default function You() {
                 {myProfile?.phone && (
                   <p className="font-body text-sm text-muted-foreground">{myProfile.phone}</p>
                 )}
-                {myProfile?.spiritual_gifts?.length > 0 && (
-                  <p className="font-body text-xs text-muted-foreground mt-1">
-                    <span className="text-foreground/60">Gifts:</span> {myProfile.spiritual_gifts.join(', ')}
-                  </p>
-                )}
                 {myProfile?.interests?.length > 0 && (
                   <p className="font-body text-xs text-muted-foreground">
                     <span className="text-foreground/60">Interests:</span> {myProfile.interests.join(', ')}

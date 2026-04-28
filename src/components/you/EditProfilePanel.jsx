@@ -4,8 +4,51 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Camera, Loader2, Check, X } from 'lucide-react';
+import { Camera, Loader2, Check, X, Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+
+// Simple tag input for family members
+function FamilyMembersInput({ values = [], onChange }) {
+  const [input, setInput] = useState('');
+  const add = () => {
+    const trimmed = input.trim();
+    if (trimmed && !values.includes(trimmed)) onChange([...values, trimmed]);
+    setInput('');
+  };
+  return (
+    <div>
+      <div className="flex flex-wrap gap-1 mb-2">
+        {values.map(v => (
+          <span key={v} className="inline-flex items-center gap-1 bg-secondary text-secondary-foreground font-body text-xs px-2 py-0.5 rounded-full">
+            {v}
+            <button type="button" onClick={() => onChange(values.filter(x => x !== v))}>
+              <X className="w-3 h-3" />
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <Input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add(); } }}
+          placeholder="Add name and press Enter…"
+          className="font-body text-sm flex-1"
+        />
+        <Button type="button" variant="outline" size="sm" onClick={add}>
+          <Plus className="w-3 h-3" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+const MILESTONES = [
+  { key: 'followed_jesus', label: 'Followed Jesus' },
+  { key: 'baptized', label: 'Baptized' },
+  { key: 'confirmed', label: 'Membership Class / Confirmed' },
+  { key: 'serving', label: 'Actively Serving' },
+];
 
 export default function EditProfilePanel({ profile, user, onClose }) {
   const queryClient = useQueryClient();
@@ -13,26 +56,31 @@ export default function EditProfilePanel({ profile, user, onClose }) {
   const fileInputRef = useRef(null);
 
   const [form, setForm] = useState({
+    full_name: profile?.full_name || user?.full_name || '',
+    email: profile?.email || user?.email || '',
+    secondary_email: profile?.secondary_email || '',
     phone: profile?.phone || '',
-    spiritual_gifts: profile?.spiritual_gifts?.join(', ') || '',
-    interests: profile?.interests?.join(', ') || '',
     photo_url: profile?.photo_url || '',
+    family_members: profile?.family_members || [],
+    followed_jesus: profile?.followed_jesus || false,
+    baptized: profile?.baptized || false,
+    confirmed: profile?.confirmed || false,
+    serving: profile?.serving || false,
+    interests: profile?.interests?.join(', ') || '',
   });
   const [photoPreview, setPhotoPreview] = useState(profile?.photo_url || null);
   const [uploading, setUploading] = useState(false);
+
+  const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
-    // Local preview immediately
     setPhotoPreview(URL.createObjectURL(file));
-    try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      setForm(f => ({ ...f, photo_url: file_url }));
-    } finally {
-      setUploading(false);
-    }
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    set('photo_url', file_url);
+    setUploading(false);
   };
 
   const saveMutation = useMutation({
@@ -40,12 +88,7 @@ export default function EditProfilePanel({ profile, user, onClose }) {
       if (profile?.id) {
         return base44.entities.MemberProfile.update(profile.id, data);
       } else {
-        // Create a new profile linked by email
-        return base44.entities.MemberProfile.create({
-          full_name: user.full_name,
-          email: user.email,
-          ...data,
-        });
+        return base44.entities.MemberProfile.create({ ...data, email: user.email });
       }
     },
     onSuccess: () => {
@@ -57,19 +100,22 @@ export default function EditProfilePanel({ profile, user, onClose }) {
 
   const handleSave = () => {
     saveMutation.mutate({
+      full_name: form.full_name,
+      email: form.email,
+      secondary_email: form.secondary_email,
       phone: form.phone,
       photo_url: form.photo_url,
-      spiritual_gifts: form.spiritual_gifts
-        ? form.spiritual_gifts.split(',').map(s => s.trim()).filter(Boolean)
-        : [],
-      interests: form.interests
-        ? form.interests.split(',').map(s => s.trim()).filter(Boolean)
-        : [],
+      family_members: form.family_members,
+      followed_jesus: form.followed_jesus,
+      baptized: form.baptized,
+      confirmed: form.confirmed,
+      serving: form.serving,
+      interests: form.interests ? form.interests.split(',').map(s => s.trim()).filter(Boolean) : [],
     });
   };
 
   return (
-    <div className="bg-card border border-border/60 rounded-2xl p-6 mt-4 space-y-5">
+    <div className="bg-card border border-border/60 rounded-2xl p-6 mt-4 space-y-6">
 
       {/* Photo Upload */}
       <div className="flex items-center gap-5">
@@ -78,7 +124,7 @@ export default function EditProfilePanel({ profile, user, onClose }) {
             {photoPreview ? (
               <img src={photoPreview} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <Camera className="w-7 h-7 text-primary/40" />
+              <Camera className="w-8 h-8 text-primary/40" />
             )}
           </div>
           <button
@@ -102,33 +148,64 @@ export default function EditProfilePanel({ profile, user, onClose }) {
         </div>
       </div>
 
-      {/* Contact Info */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <Label className="font-body text-xs text-muted-foreground">Phone</Label>
-          <Input
-            className="font-body text-sm"
-            placeholder="e.g. 805-555-0101"
-            value={form.phone}
-            onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-          />
+      {/* Basic Info */}
+      <div>
+        <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Contact Info</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <Label className="font-body text-xs text-muted-foreground">Full Name</Label>
+            <Input className="font-body text-sm" value={form.full_name} onChange={e => set('full_name', e.target.value)} />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="font-body text-xs text-muted-foreground">Email</Label>
+            <Input className="font-body text-sm" type="email" value={form.email} onChange={e => set('email', e.target.value)} />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="font-body text-xs text-muted-foreground">Secondary Email</Label>
+            <Input className="font-body text-sm" type="email" placeholder="Optional" value={form.secondary_email} onChange={e => set('secondary_email', e.target.value)} />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="font-body text-xs text-muted-foreground">Phone</Label>
+            <Input className="font-body text-sm" placeholder="e.g. 805-555-0101" value={form.phone} onChange={e => set('phone', e.target.value)} />
+          </div>
         </div>
-        <div className="space-y-1.5">
-          <Label className="font-body text-xs text-muted-foreground">Spiritual Gifts <span className="text-muted-foreground/60">(comma separated)</span></Label>
-          <Input
-            className="font-body text-sm"
-            placeholder="e.g. Teaching, Hospitality"
-            value={form.spiritual_gifts}
-            onChange={e => setForm(f => ({ ...f, spiritual_gifts: e.target.value }))}
-          />
+      </div>
+
+      {/* Family Members */}
+      <div>
+        <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Family Members</p>
+        <FamilyMembersInput values={form.family_members} onChange={v => set('family_members', v)} />
+        <p className="font-body text-xs text-muted-foreground mt-1">Other household members who also attend Hope Church.</p>
+      </div>
+
+      {/* Life Milestones */}
+      <div>
+        <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Life Milestones</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {MILESTONES.map(m => (
+            <label key={m.key} className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={form[m.key]}
+                onChange={e => set(m.key, e.target.checked)}
+                className="w-4 h-4 accent-primary"
+              />
+              <span className="font-body text-sm text-foreground group-hover:text-primary transition-colors">{m.label}</span>
+            </label>
+          ))}
         </div>
-        <div className="space-y-1.5 sm:col-span-2">
+      </div>
+
+      {/* Interests */}
+      <div>
+        <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Interests</p>
+        <div className="space-y-1.5">
           <Label className="font-body text-xs text-muted-foreground">Interests <span className="text-muted-foreground/60">(comma separated)</span></Label>
           <Input
             className="font-body text-sm"
             placeholder="e.g. Hiking, Coffee, Photography"
             value={form.interests}
-            onChange={e => setForm(f => ({ ...f, interests: e.target.value }))}
+            onChange={e => set('interests', e.target.value)}
           />
         </div>
       </div>
