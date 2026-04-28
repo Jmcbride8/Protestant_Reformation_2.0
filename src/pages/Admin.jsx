@@ -26,6 +26,7 @@ import MemberDirectory from '../components/admin/MemberDirectory';
 import AddSermonForm from '../components/sermons/AddSermonForm';
 import MemoriesManager from '../components/admin/MemoriesManager';
 import EditSermonModal from '../components/sermons/EditSermonModal';
+import DonationMonthlyChart from '../components/admin/DonationMonthlyChart';
 import { toast } from "sonner";
 import { useMutation } from '@tanstack/react-query';
 
@@ -525,7 +526,10 @@ export default function Admin() {
 
           {/* Donations Tab */}
           <TabsContent value="donations">
-            <div className="space-y-4">
+            <div className="space-y-6">
+              <DonationMonthlyChart donations={filteredDonations} />
+
+              <div className="space-y-4">
               <div className="flex gap-4">
                 <div>
                   <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>
@@ -586,8 +590,9 @@ export default function Admin() {
                   <p className="font-body text-xs text-muted-foreground mt-2">{filteredDonations.length} donation{filteredDonations.length !== 1 ? 's' : ''}</p>
                 </div>
               )}
-            </div>
-          </TabsContent>
+              </div>
+              </div>
+              </TabsContent>
 
           {/* Budget Tab */}
           <TabsContent value="budget" className="space-y-10">
