@@ -4,17 +4,17 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { User, Users, Heart, Clock, CheckCircle2, XCircle, DollarSign, Calendar } from 'lucide-react';
-import { format } from 'date-fns';
+import { User, Pencil } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ProfileCard from '@/components/you/ProfileCard';
 import MyGroupSection from '@/components/you/MyGroupSection';
 import DonationHistory from '@/components/you/DonationHistory';
 import PendingRequestsPanel from '@/components/you/PendingRequestsPanel';
+import EditProfilePanel from '@/components/you/EditProfilePanel';
 
 export default function You() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     base44.auth.me().then(me => {
@@ -92,34 +92,61 @@ export default function You() {
       {/* Hero */}
       <section className="py-16 bg-secondary/30 border-b border-border/40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            {/* Avatar */}
-            <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-accent/30 flex items-center justify-center shrink-0 overflow-hidden">
-              {myProfile?.photo_url ? (
-                <img src={myProfile.photo_url} alt={user.full_name} className="w-full h-full object-cover" />
-              ) : (
-                <User className="w-9 h-9 text-primary/50" />
-              )}
-            </div>
-            <div>
-              <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-1">Your Profile</p>
-              <h1 className="font-heading text-4xl sm:text-5xl text-primary">{user.full_name}</h1>
-              <p className="font-body text-sm text-muted-foreground mt-1">{user.email}</p>
-              <div className="flex items-center gap-3 mt-2 flex-wrap">
-                {myProfile?.role && (
-                  <span className="font-body text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
-                    {myProfile.role}
-                  </span>
-                )}
-                {isAdmin && (
-                  <Link to="/admin">
-                    <Button size="sm" variant="outline" className="font-body text-xs">
-                      Admin Dashboard →
-                    </Button>
-                  </Link>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              {/* Avatar */}
+              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-accent/30 flex items-center justify-center shrink-0 overflow-hidden">
+                {myProfile?.photo_url ? (
+                  <img src={myProfile.photo_url} alt={user.full_name} className="w-full h-full object-cover" />
+                ) : (
+                  <User className="w-9 h-9 text-primary/50" />
                 )}
               </div>
+              <div className="flex-1">
+                <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-1">Your Profile</p>
+                <h1 className="font-heading text-4xl sm:text-5xl text-primary">{user.full_name}</h1>
+                <p className="font-body text-sm text-muted-foreground mt-1">{user.email}</p>
+                {myProfile?.phone && (
+                  <p className="font-body text-sm text-muted-foreground">{myProfile.phone}</p>
+                )}
+                {myProfile?.spiritual_gifts?.length > 0 && (
+                  <p className="font-body text-xs text-muted-foreground mt-1">
+                    <span className="text-foreground/60">Gifts:</span> {myProfile.spiritual_gifts.join(', ')}
+                  </p>
+                )}
+                {myProfile?.interests?.length > 0 && (
+                  <p className="font-body text-xs text-muted-foreground">
+                    <span className="text-foreground/60">Interests:</span> {myProfile.interests.join(', ')}
+                  </p>
+                )}
+                <div className="flex items-center gap-3 mt-3 flex-wrap">
+                  {myProfile?.role && (
+                    <span className="font-body text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
+                      {myProfile.role}
+                    </span>
+                  )}
+                  <Button size="sm" variant="outline" className="font-body text-xs" onClick={() => setEditing(e => !e)}>
+                    <Pencil className="w-3 h-3 mr-1" /> {editing ? 'Cancel Edit' : 'Edit Profile'}
+                  </Button>
+                  {isAdmin && (
+                    <Link to="/admin">
+                      <Button size="sm" variant="outline" className="font-body text-xs">
+                        Admin Dashboard →
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </div>
             </div>
+
+            {/* Edit Panel */}
+            {editing && (
+              <EditProfilePanel
+                profile={myProfile}
+                user={user}
+                onClose={() => setEditing(false)}
+              />
+            )}
           </motion.div>
         </div>
       </section>
