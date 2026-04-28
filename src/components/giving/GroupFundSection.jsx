@@ -79,18 +79,20 @@ function GiveToGroupForm({ group, user, onSuccess }) {
       }}
       className="space-y-4"
     >
-      <h3 className="font-heading text-xl text-primary">Give to {group.name}</h3>
-      <div className="space-y-2">
-         <Label className="font-body text-sm">Amount ($)</Label>
-         <Input type="number" min="1" required className="font-body" placeholder="50" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
+      <h3 className="font-heading text-lg text-primary mb-4">Give to {group.name}</h3>
+       <div className="space-y-3">
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Amount ($)</Label>
+            <Input type="number" min="1" required className="font-body" placeholder="50" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Note (optional)</Label>
+            <Input className="font-body" placeholder="What's this gift for?" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+          </div>
        </div>
-       <div className="space-y-2">
-        <Label className="font-body text-sm">Note (optional)</Label>
-        <Input className="font-body" placeholder="What's this gift for?" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
-      </div>
-      <Button type="submit" disabled={mutation.isPending} className="w-full font-body bg-primary hover:bg-primary/90" size="lg">
-        Give Now
-      </Button>
+       <Button type="submit" disabled={mutation.isPending} className="w-full font-body" size="lg">
+         Give Now
+       </Button>
     </form>
   );
 }
@@ -123,22 +125,22 @@ function LogExpenseForm({ group, onSuccess }) {
        }}
        className="space-y-4"
      >
-       <h4 className="font-heading text-base text-primary">Log an Expense</h4>
-       <div className="grid grid-cols-3 gap-3">
-         <div className="space-y-1">
-           <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
-           <Input type="number" min="1" required className="font-body text-sm" placeholder="e.g. 75" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
+       <h3 className="font-heading text-lg text-primary mb-4">Log an Expense</h3>
+       <div className="space-y-3">
+         <div className="space-y-2">
+           <Label className="font-body text-sm">Amount ($)</Label>
+           <Input type="number" min="1" required className="font-body" placeholder="75" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
          </div>
-         <div className="space-y-1">
-           <Label className="font-body text-xs text-muted-foreground">Date</Label>
-           <Input type="date" required className="font-body text-sm" value={form.transaction_date} onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))} />
+         <div className="space-y-2">
+           <Label className="font-body text-sm">Date</Label>
+           <Input type="date" required className="font-body" value={form.transaction_date} onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))} />
          </div>
-         <div className="space-y-1">
-           <Label className="font-body text-xs text-muted-foreground">Description</Label>
-           <Input required className="font-body text-sm" placeholder="e.g. Event supplies" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+         <div className="space-y-2">
+           <Label className="font-body text-sm">Description</Label>
+           <Input required className="font-body" placeholder="e.g. Event supplies" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
          </div>
        </div>
-       <Button type="submit" disabled={mutation.isPending} size="sm" variant="outline" className="font-body text-xs w-full">
+       <Button type="submit" disabled={mutation.isPending} size="lg" className="w-full font-body">
          Log Expense
        </Button>
      </form>
