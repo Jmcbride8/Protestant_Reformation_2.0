@@ -25,6 +25,7 @@ import Milestones from './pages/Milestones';
 import Carpool from './pages/Carpool';
 import Vision from './pages/Vision';
 import Memories from './pages/Memories';
+import You from './pages/You';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
         <Route path="/milestones" element={<FeatureRoute featureKey="page_milestones"><Milestones /></FeatureRoute>} />
         <Route path="/carpool" element={<FeatureRoute featureKey="page_carpool"><Carpool /></FeatureRoute>} />
         <Route path="/memories" element={<FeatureRoute featureKey="page_memories"><Memories /></FeatureRoute>} />
+        <Route path="/you" element={<MemberRoute><You /></MemberRoute>} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

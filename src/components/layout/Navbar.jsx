@@ -34,7 +34,7 @@ export default function Navbar() {
   const location = useLocation();
   const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories'];
+  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
@@ -210,6 +210,16 @@ export default function Navbar() {
 
             {user ? (
               <div className="flex items-center gap-3">
+                <Link
+                  to="/you"
+                  className={`font-body text-sm tracking-wide transition-colors ${
+                    useWhiteNav
+                      ? location.pathname === '/you' ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  You
+                </Link>
                 {(user.role === 'admin' || user.role === 'staff') && (
                   <Link to="/admin">
                     <Button variant="outline" size="sm" className={`font-body text-xs ${useWhiteNav ? 'text-white border-white/60 hover:bg-white/10 hover:text-white' : ''}`}>
@@ -321,6 +331,13 @@ export default function Navbar() {
                 <div className="border-t pt-4 mt-2">
                    {user ? (
                      <div className="flex flex-col gap-3">
+                       <Link
+                         to="/you"
+                         onClick={() => setOpen(false)}
+                         className={`font-body text-lg tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                       >
+                         You
+                       </Link>
                        {(user.role === 'admin' || user.role === 'staff') && (
                          <Link to="/admin" onClick={() => setOpen(false)}>
                            <Button variant="outline" className="w-full font-body">Admin Dashboard</Button>

@@ -1,0 +1,44 @@
+{
+  "name": "GroupMembershipRequest",
+  "type": "object",
+  "properties": {
+    "group_id": {
+      "type": "string",
+      "description": "Reference to CommunityGroup.id"
+    },
+    "group_name": {
+      "type": "string",
+      "description": "Cached group name for display"
+    },
+    "member_profile_id": {
+      "type": "string",
+      "description": "Reference to MemberProfile.id of the applicant"
+    },
+    "requester_user_id": {
+      "type": "string",
+      "description": "Base44 User.id of the applicant"
+    },
+    "requester_name": {
+      "type": "string",
+      "description": "Cached full name of the applicant"
+    },
+    "requester_email": {
+      "type": "string",
+      "description": "Cached email of the applicant"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending",
+      "description": "Status of the membership request"
+    }
+  },
+  "required": [
+    "group_id",
+    "requester_user_id"
+  ]
+}

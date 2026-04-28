@@ -10,6 +10,10 @@
       "type": "string",
       "description": "Email of the donor"
     },
+    "donor_user_id": {
+      "type": "string",
+      "description": "Base44 User.id of the donor if they are a logged-in member"
+    },
     "amount": {
       "type": "number",
       "description": "Donation amount in dollars"

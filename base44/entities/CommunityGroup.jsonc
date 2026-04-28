@@ -34,6 +34,10 @@
       "type": "string",
       "description": "URL of the leader's photo"
     },
+    "owner_user_id": {
+      "type": "string",
+      "description": "Base44 User.id of the member who administrates this group"
+    },
     "sort_order": {
       "type": "number",
       "description": "Display order"
