@@ -210,7 +210,7 @@ export default function Admin() {
         </div>
 
         {/* Section selector */}
-        <div className="flex gap-2 mb-6 p-1 bg-secondary rounded-xl w-fit">
+        <div className="flex gap-2 mb-6 p-1 bg-secondary rounded-xl w-fit -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
           {sidebarSections.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
@@ -228,7 +228,7 @@ export default function Admin() {
         </div>
 
           {/* Content */}
-          <div className="min-w-0">
+          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
