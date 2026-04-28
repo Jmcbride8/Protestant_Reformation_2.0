@@ -6,56 +6,48 @@ import EditableImage from '@/components/admin/EditableImage';
 const pillars = [
   {
     icon: Heart,
-    num: '01',
-    title: "FAITH",
+    title: "Faith",
     subtitle: "Something to believe in",
     description: "Not a set of rules — a relationship. We ask hard questions, sit with doubt, and find something worth anchoring to.",
     verse: "\"Love the Lord your God with all your heart and with all your soul and with all your mind.\" — Matthew 22:37",
   },
   {
     icon: Users,
-    num: '02',
-    title: "FAMILY",
+    title: "Family",
     subtitle: "The most important structure God ever made",
-    description: "Family is the foundation God designed for human flourishing. For those without one, the church exists to be that family — where no one sits alone, no one walks through hard seasons unaccompanied.",
+    description: "Family is the foundation God designed for human flourishing — the place where love is first learned and life is most fully lived. For those without one, or far from their own, the church exists to be that family. A place where no one sits alone, no one walks through hard seasons unaccompanied, and everyone has a table to come home to.",
     verse: "\"God sets the lonely in families.\" — Psalm 68:6",
   },
   {
     icon: HandHeart,
-    num: '03',
-    title: "FRIENDSHIPS",
+    title: "Friendships",
     subtitle: "People who actually show up",
-    description: "In a world of screens and scrolling, real connection has never been harder — or more needed. The kind of friends who know your name, notice when you're gone, and speak truth into your life.",
+    description: "In a world of screens and scrolling, real connection has never been harder — or more needed. The kind of friends who know your name, notice when you're gone, and speak truth into your life. We weren't made to do this alone.",
     verse: "\"As iron sharpens iron, so one person sharpens another.\" — Proverbs 27:17",
   }
 ];
 
 export default function PillarsSection({ images, isAdmin }) {
   return (
-    <section className="py-32 bg-background relative">
-      <div className="absolute inset-0 grid-overlay opacity-50" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
+    <section className="py-24 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24"
+          className="text-center mb-20"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-px bg-accent" />
-            <span className="font-mono text-xs tracking-[0.4em] uppercase text-accent">Core Pillars</span>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-1">Our Foundation</p>
+          <div className="flex items-center justify-center gap-8 mb-2">
+            <h2 className="font-heading text-4xl sm:text-5xl text-primary">Three Pillars of Hope</h2>
           </div>
-          <h2 className="font-heading text-5xl sm:text-6xl text-foreground mb-6 tracking-tight">THREE PILLARS<br />OF HOPE</h2>
-          <div className="h-px w-full bg-white/5 mb-6" />
-          <p className="font-mono text-sm text-foreground/30 max-w-xl leading-relaxed">
-            // "Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself." — Matthew 22:37–39
-          </p>
+          <blockquote className="font-heading text-xl italic text-primary/70 max-w-2xl mx-auto leading-relaxed mb-6">
+            "Love the Lord your God with all your heart and with all your soul and with all your mind. This is the first and greatest commandment. And the second is like it: Love your neighbor as yourself."
+            <span className="block font-body text-sm not-italic text-accent mt-2">— Matthew 22:37–39</span>
+          </blockquote>
         </motion.div>
 
-        {/* Pillars */}
-        <div className="space-y-0">
+        <div className="space-y-24">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             const isReversed = index % 2 !== 0;
@@ -65,47 +57,32 @@ export default function PillarsSection({ images, isAdmin }) {
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 border-t border-white/8`}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${isReversed ? 'lg:direction-rtl' : ''}`}
               >
-                {/* Image side */}
-                <div className={`relative overflow-hidden aspect-[16/10] lg:aspect-auto min-h-[320px] ${isReversed ? 'lg:order-2' : ''}`}>
+                <div className={`${isReversed ? 'lg:order-2' : ''}`}>
                   <EditableImage
                     imageKey={`pillar_${pillar.title.toLowerCase()}`}
                     src={images[index]}
                     alt={pillar.title}
-                    className="absolute inset-0 w-full h-full object-cover grayscale opacity-60"
+                    className="w-full h-full object-cover"
                     isAdmin={isAdmin}
-                    wrapperClassName="absolute inset-0 group/editimg"
+                    wrapperClassName="relative overflow-hidden rounded-2xl aspect-[4/3] group/editimg"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                  {/* Number overlay */}
-                  <div className="absolute bottom-6 left-6 font-mono text-7xl font-bold text-white/5 leading-none select-none">
-                    {pillar.num}
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
                 </div>
-
-                {/* Text side */}
-                <div className={`relative p-10 lg:p-16 flex flex-col justify-center bg-card border-l border-white/5 ${isReversed ? 'lg:order-1 border-r border-l-0' : ''}`}>
-                  {/* Number + icon */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="font-mono text-4xl text-accent/20 font-bold">{pillar.num}</span>
-                    <div className="w-px h-8 bg-white/10" />
-                    <div className="p-2 border border-accent/20 text-accent">
-                      <Icon className="w-5 h-5" />
-                    </div>
+                <div className={`${isReversed ? 'lg:order-1' : ''} space-y-6`}>
+                  <div className="inline-flex items-center gap-3 bg-secondary/60 rounded-full px-4 py-2">
+                    <Icon className="w-5 h-5 text-accent" />
+                    <span className="font-body text-sm tracking-wide text-primary font-medium">{pillar.subtitle}</span>
                   </div>
-
-                  <p className="font-mono text-xs tracking-[0.3em] uppercase text-accent mb-3">{pillar.subtitle}</p>
-                  <h3 className="font-heading text-4xl text-foreground mb-6 tracking-tight">{pillar.title}</h3>
-                  <p className="font-body text-foreground/50 leading-relaxed mb-8">
+                  <h3 className="font-heading text-4xl text-primary">{pillar.title}</h3>
+                  <p className="font-body text-muted-foreground leading-relaxed text-lg">
                     {pillar.description}
                   </p>
-                  <div className="border-l-2 border-accent pl-4">
-                    <p className="font-mono text-xs text-foreground/40 leading-relaxed italic">
-                      {pillar.verse}
-                    </p>
-                  </div>
+                  <blockquote className="border-l-2 border-accent pl-4 italic font-heading text-primary/70">
+                    {pillar.verse}
+                  </blockquote>
                 </div>
               </motion.div>
             );

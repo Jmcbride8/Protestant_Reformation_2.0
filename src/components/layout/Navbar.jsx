@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ChevronDown, ArrowRight } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useFeatures } from '@/lib/FeatureContext';
 import { isPreviewingAsGuest } from './MemberPreviewBanner';
@@ -19,35 +20,41 @@ const churchLinksAll = [
 ];
 
 const communityLinksAll = [
-  { label: 'Groups', sub: 'Do life together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
+  { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
   { label: 'Care & Support', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
-  { label: 'Memories', sub: 'Photos & videos', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
+  { label: 'Memories', sub: 'Photos & videos from our year', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
   { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time', pageKey: 'page_volunteer' },
   { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially', pageKey: 'page_giving' },
 ];
+
+
 
 export default function Navbar() {
   const location = useLocation();
   const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
+  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you'];
+  const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
   const [churchOpen, setChurchOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
+
   const [meOpen, setMeOpen] = useState(false);
-
   const meRef = useRef(null);
-  const churchRef = useRef(null);
-  const communityRef = useRef(null);
-
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
   const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
+
+  const churchRef = useRef(null);
+  const communityRef = useRef(null);
+
 
   useEffect(() => {
     const handleClick = (e) => {
       if (churchRef.current && !churchRef.current.contains(e.target)) setChurchOpen(false);
       if (communityRef.current && !communityRef.current.contains(e.target)) setCommunityOpen(false);
+
       if (meRef.current && !meRef.current.contains(e.target)) setMeOpen(false);
     };
     document.addEventListener('mousedown', handleClick);
@@ -61,63 +68,33 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isPreviewingAsGuest()) { setUser(null); return; }
+    if (isPreviewingAsGuest()) {
+      setUser(null); // Explicitly clear user so member-only nav items are hidden
+      return;
+    }
     base44.auth.isAuthenticated().then(async (authed) => {
-      if (authed) { const me = await base44.auth.me(); setUser(me); }
+      if (authed) {
+        const me = await base44.auth.me();
+        setUser(me);
+      }
     });
   }, [location.pathname]);
 
-  const navBase = scrolled
-    ? 'bg-background/95 backdrop-blur-md border-b border-white/5'
-    : 'bg-transparent border-b border-transparent';
-
-  const linkClass = (active) =>
-    `font-mono text-xs tracking-[0.2em] uppercase transition-colors ${
-      active ? 'text-accent' : 'text-foreground/50 hover:text-foreground'
-    }`;
-
-  const DropdownMenu = ({ links, label, isOpen, setIsOpen, refEl, activeCheck }) => (
-    <div className="relative" ref={refEl}>
-      <button
-        onClick={() => setIsOpen(v => !v)}
-        className={`flex items-center gap-1.5 ${linkClass(activeCheck)}`}
-      >
-        {label}
-        <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      {isOpen && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-52 bg-background border border-white/10 shadow-2xl shadow-black/60 z-50">
-          {/* accent top border */}
-          <div className="h-px w-full bg-accent" />
-          {links.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`flex flex-col px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 group ${location.pathname === link.path ? 'bg-white/5' : ''}`}
-            >
-              <span className="font-mono text-xs text-foreground group-hover:text-accent transition-colors">{link.label}</span>
-              <span className="font-body text-xs text-foreground/30 mt-0.5">{link.sub}</span>
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBase}`}>
-      {/* Accent line top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-accent/80 via-accent/30 to-transparent" />
-
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled || !useWhiteNav ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img
-              src="https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
-              alt="Hope Santa Barbara"
-              className="h-12 w-auto brightness-0 invert"
+            <img 
+              src={
+                useWhiteNav
+                  ? "https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
+                  : "https://media.base44.com/images/public/user_68598e69bed8319e5429445e/a32da92c7_image.png"
+              }
+              alt="Hope Santa Barbara" 
+              className="h-14 w-auto"
             />
           </Link>
 
@@ -127,118 +104,174 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={linkClass(location.pathname === link.path)}
+                className={`font-body text-sm tracking-wide transition-colors ${
+                  useWhiteNav
+                    ? location.pathname === link.path ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                    : location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                }`}
               >
                 {link.label}
               </Link>
             ))}
 
+            {/* Church dropdown — always visible */}
             {churchLinks.length > 0 && (
-              <DropdownMenu
-                links={churchLinks}
-                label="Church"
-                isOpen={churchOpen}
-                setIsOpen={setChurchOpen}
-                refEl={churchRef}
-                activeCheck={churchLinks.some(l => l.path === location.pathname)}
-              />
+              <div className="relative" ref={churchRef}>
+                <button
+                  onClick={() => setChurchOpen(v => !v)}
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                    useWhiteNav
+                      ? churchLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  Church
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {churchOpen && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                    {churchLinks.map(link => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setChurchOpen(false)}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
+                      >
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
 
+            {/* Community dropdown — members only */}
             {user && (
-              <DropdownMenu
-                links={communityLinks}
-                label="Community"
-                isOpen={communityOpen}
-                setIsOpen={setCommunityOpen}
-                refEl={communityRef}
-                activeCheck={communityLinks.some(l => l.path === location.pathname)}
-              />
+              <div className="relative" ref={communityRef}>
+                <button
+                  onClick={() => setCommunityOpen(v => !v)}
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                    useWhiteNav
+                      ? communityLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  Community
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${communityOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {communityOpen && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                    {communityLinks.map(link => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setCommunityOpen(false)}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
+                      >
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
+
+
 
             {user ? (
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
                 {/* Me dropdown */}
                 <div className="relative" ref={meRef}>
                   <button
                     onClick={() => setMeOpen(v => !v)}
-                    className={`flex items-center gap-1.5 ${linkClass(['/you', '/admin'].includes(location.pathname))}`}
+                    className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                      useWhiteNav
+                        ? ['/you', '/admin'].includes(location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                        : ['/you', '/admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                    }`}
                   >
                     Me
-                    <ChevronDown className={`w-3 h-3 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {meOpen && (
-                    <div className="absolute top-full right-0 mt-4 w-48 bg-background border border-white/10 shadow-2xl shadow-black/60 z-50">
-                      <div className="h-px w-full bg-accent" />
+                    <div className="absolute top-full right-0 mt-3 w-48 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
                       <Link
                         to="/you"
                         onClick={() => setMeOpen(false)}
-                        className={`flex flex-col px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 group ${location.pathname === '/you' ? 'bg-white/5' : ''}`}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/you' ? 'bg-secondary/40' : ''}`}
                       >
-                        <span className="font-mono text-xs text-foreground group-hover:text-accent transition-colors">Profile</span>
-                        <span className="font-body text-xs text-foreground/30 mt-0.5">Your info & settings</span>
+                        <span className="font-body text-sm font-medium text-foreground">Profile</span>
+                        <span className="font-body text-xs text-muted-foreground">Your info & settings</span>
                       </Link>
                       {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
                         <Link
                           to="/admin"
                           onClick={() => setMeOpen(false)}
-                          className={`flex flex-col px-4 py-3 hover:bg-white/5 transition-colors group ${location.pathname === '/admin' ? 'bg-white/5' : ''}`}
+                          className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors ${location.pathname === '/admin' ? 'bg-secondary/40' : ''}`}
                         >
-                          <span className="font-mono text-xs text-foreground group-hover:text-accent transition-colors">Admin Dashboard</span>
-                          <span className="font-body text-xs text-foreground/30 mt-0.5">Manage the church</span>
+                          <span className="font-body text-sm font-medium text-foreground">Admin Dashboard</span>
+                          <span className="font-body text-xs text-muted-foreground">Manage the church</span>
                         </Link>
                       )}
                     </div>
                   )}
                 </div>
-                <button
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className={`font-body text-xs ${useWhiteNav ? 'text-white hover:bg-white/10 hover:text-white' : ''}`}
                   onClick={() => base44.auth.logout()}
-                  className="font-mono text-xs tracking-widest uppercase text-foreground/30 hover:text-foreground transition-colors"
                 >
                   Sign Out
-                </button>
+                </Button>
               </div>
             ) : (
-              <button
+              <Button 
+                size="sm" 
+                className={`font-body text-xs ${useWhiteNav ? 'bg-white/20 text-white hover:bg-white/30 border border-white/40' : 'bg-primary hover:bg-primary/90'}`}
                 onClick={() => base44.auth.redirectToLogin()}
-                className="flex items-center gap-2 border border-accent/40 text-accent px-5 py-2.5 font-mono text-xs tracking-widest uppercase hover:bg-accent/10 hover:border-accent transition-all group"
               >
                 Member Login
-                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </Button>
             )}
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile nav */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <button className="p-3 text-foreground/60 hover:text-foreground transition-colors">
-                <Menu className="h-6 w-6" />
-              </button>
+              <Button variant="ghost" size="icon" className={`h-16 w-16 ${useWhiteNav ? 'text-white hover:bg-white/20' : 'text-primary hover:bg-secondary'}`} style={{ minWidth: '4rem', minHeight: '4rem' }}>
+                <Menu strokeWidth={2.5} className="h-12 w-12" />
+              </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 bg-background border-l border-white/10 p-0">
-              <div className="h-px w-full bg-accent" />
-              <div className="flex flex-col gap-0 mt-0 p-6">
+            <SheetContent side="right" className="w-72">
+              <div className="flex flex-col gap-6 mt-8">
                 {filteredNavLinks.map(link => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setOpen(false)}
-                    className={`py-4 border-b border-white/5 font-mono text-xs tracking-widest uppercase ${location.pathname === link.path ? 'text-accent' : 'text-foreground/50'}`}
+                    className={`font-body text-lg tracking-wide ${
+                      location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                    }`}
                   >
                     {link.label}
                   </Link>
                 ))}
-
+                {/* Church submenu in mobile — always visible */}
                 {churchLinks.length > 0 && (
-                  <div className="py-4 border-b border-white/5">
-                    <p className="font-mono text-xs tracking-[0.3em] uppercase text-accent mb-3">Church</p>
-                    <div className="flex flex-col gap-3 pl-2">
+                  <div>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Church</p>
+                    <div className="flex flex-col gap-4 pl-2">
                       {churchLinks.map(link => (
                         <Link
                           key={link.path}
                           to={link.path}
                           onClick={() => setOpen(false)}
-                          className={`font-mono text-xs tracking-widest uppercase ${location.pathname === link.path ? 'text-accent' : 'text-foreground/40'}`}
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                          }`}
                         >
                           {link.label}
                         </Link>
@@ -246,17 +279,19 @@ export default function Navbar() {
                     </div>
                   </div>
                 )}
-
+                {/* Community submenu in mobile — members only */}
                 {user && (
-                  <div className="py-4 border-b border-white/5">
-                    <p className="font-mono text-xs tracking-[0.3em] uppercase text-accent mb-3">Community</p>
-                    <div className="flex flex-col gap-3 pl-2">
+                  <div>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Community</p>
+                    <div className="flex flex-col gap-4 pl-2">
                       {communityLinks.map(link => (
                         <Link
                           key={link.path}
                           to={link.path}
                           onClick={() => setOpen(false)}
-                          className={`font-mono text-xs tracking-widest uppercase ${location.pathname === link.path ? 'text-accent' : 'text-foreground/40'}`}
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                          }`}
                         >
                           {link.label}
                         </Link>
@@ -265,27 +300,39 @@ export default function Navbar() {
                   </div>
                 )}
 
-                <div className="pt-6">
-                  {user ? (
-                    <div className="flex flex-col gap-4">
-                      <p className="font-mono text-xs tracking-[0.3em] uppercase text-accent">Me</p>
-                      <div className="flex flex-col gap-3 pl-2">
-                        <Link to="/you" onClick={() => setOpen(false)} className={`font-mono text-xs tracking-widest uppercase ${location.pathname === '/you' ? 'text-accent' : 'text-foreground/40'}`}>Profile</Link>
-                        {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
-                          <Link to="/admin" onClick={() => setOpen(false)} className={`font-mono text-xs tracking-widest uppercase ${location.pathname === '/admin' ? 'text-accent' : 'text-foreground/40'}`}>Admin Dashboard</Link>
-                        )}
-                      </div>
-                      <button onClick={() => base44.auth.logout()} className="mt-2 text-left font-mono text-xs tracking-widest uppercase text-foreground/30 hover:text-foreground transition-colors">
+                <div className="border-t pt-4 mt-2">
+                   {user ? (
+                     <div className="flex flex-col gap-3">
+                       <p className="font-body text-xs tracking-[0.2em] uppercase text-accent">Me</p>
+                       <div className="flex flex-col gap-4 pl-2">
+                         <Link
+                           to="/you"
+                           onClick={() => setOpen(false)}
+                           className={`font-body text-base tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                         >
+                           Profile
+                         </Link>
+                         {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                           <Link
+                             to="/admin"
+                             onClick={() => setOpen(false)}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                           >
+                             Admin Dashboard
+                           </Link>
+                         )}
+                       </div>
+                      <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
                         Sign Out
-                      </button>
+                      </Button>
                     </div>
                   ) : (
-                    <button
+                    <Button 
+                      className="w-full font-body bg-primary"
                       onClick={() => base44.auth.redirectToLogin()}
-                      className="w-full flex items-center justify-center gap-2 border border-accent text-accent px-6 py-3 font-mono text-xs tracking-widest uppercase hover:bg-accent/10 transition-all"
                     >
-                      Member Login <ArrowRight className="w-3 h-3" />
-                    </button>
+                      Member Login
+                    </Button>
                   )}
                 </div>
               </div>
