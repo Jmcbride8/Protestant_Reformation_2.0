@@ -66,7 +66,7 @@ export default function EditProfilePanel({ profile, user, onClose }) {
     baptized: profile?.baptized || false,
     confirmed: profile?.confirmed || false,
     serving: profile?.serving || false,
-    interests: profile?.interests?.join(', ') || '',
+    interests: profile?.interests || [],
   });
   const [photoPreview, setPhotoPreview] = useState(profile?.photo_url || null);
   const [uploading, setUploading] = useState(false);
@@ -110,7 +110,7 @@ export default function EditProfilePanel({ profile, user, onClose }) {
       baptized: form.baptized,
       confirmed: form.confirmed,
       serving: form.serving,
-      interests: form.interests ? form.interests.split(',').map(s => s.trim()).filter(Boolean) : [],
+      interests: profile?.interests || [],
     });
   };
 
@@ -193,20 +193,6 @@ export default function EditProfilePanel({ profile, user, onClose }) {
               <span className="font-body text-sm text-foreground group-hover:text-primary transition-colors">{m.label}</span>
             </label>
           ))}
-        </div>
-      </div>
-
-      {/* Interests */}
-      <div>
-        <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Interests</p>
-        <div className="space-y-1.5">
-          <Label className="font-body text-xs text-muted-foreground">Interests <span className="text-muted-foreground/60">(comma separated)</span></Label>
-          <Input
-            className="font-body text-sm"
-            placeholder="e.g. Hiking, Coffee, Photography"
-            value={form.interests}
-            onChange={e => set('interests', e.target.value)}
-          />
         </div>
       </div>
 
