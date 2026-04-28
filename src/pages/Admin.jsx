@@ -27,6 +27,7 @@ import AddSermonForm from '../components/sermons/AddSermonForm';
 import MemoriesManager from '../components/admin/MemoriesManager';
 import EditSermonModal from '../components/sermons/EditSermonModal';
 import DonationMonthlyChart from '../components/admin/DonationMonthlyChart';
+import DonationKPIs from '../components/admin/DonationKPIs';
 import { toast } from "sonner";
 import { useMutation } from '@tanstack/react-query';
 
@@ -527,6 +528,7 @@ export default function Admin() {
           {/* Donations Tab */}
           <TabsContent value="donations">
             <div className="space-y-6">
+              <DonationKPIs donations={filteredDonations} />
               <DonationMonthlyChart donations={filteredDonations} />
 
               <div className="space-y-4">
