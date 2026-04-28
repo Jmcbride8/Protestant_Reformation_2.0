@@ -220,13 +220,6 @@ export default function Navbar() {
                 >
                   You
                 </Link>
-                {(user.role === 'admin' || user.role === 'staff') && (
-                  <Link to="/admin">
-                    <Button variant="outline" size="sm" className={`font-body text-xs ${useWhiteNav ? 'text-white border-white/60 hover:bg-white/10 hover:text-white' : ''}`}>
-                      Admin
-                    </Button>
-                  </Link>
-                )}
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -338,11 +331,7 @@ export default function Navbar() {
                        >
                          You
                        </Link>
-                       {(user.role === 'admin' || user.role === 'staff') && (
-                         <Link to="/admin" onClick={() => setOpen(false)}>
-                           <Button variant="outline" className="w-full font-body">Admin Dashboard</Button>
-                         </Link>
-                       )}
+                       
                       <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
                         Sign Out
                       </Button>

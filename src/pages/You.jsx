@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { User, Users, Heart, Clock, CheckCircle2, XCircle, DollarSign, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 import ProfileCard from '@/components/you/ProfileCard';
 import MyGroupSection from '@/components/you/MyGroupSection';
 import DonationHistory from '@/components/you/DonationHistory';
@@ -86,6 +87,7 @@ export default function You() {
   const isAdmin = user.role === 'admin' || user.role === 'staff';
 
   return (
+
     <div className="pt-20 min-h-screen bg-background">
       {/* Hero */}
       <section className="py-16 bg-secondary/30 border-b border-border/40">
@@ -103,11 +105,20 @@ export default function You() {
               <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-1">Your Profile</p>
               <h1 className="font-heading text-4xl sm:text-5xl text-primary">{user.full_name}</h1>
               <p className="font-body text-sm text-muted-foreground mt-1">{user.email}</p>
-              {myProfile?.role && (
-                <span className="inline-block mt-2 font-body text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
-                  {myProfile.role}
-                </span>
-              )}
+              <div className="flex items-center gap-3 mt-2 flex-wrap">
+                {myProfile?.role && (
+                  <span className="font-body text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
+                    {myProfile.role}
+                  </span>
+                )}
+                {isAdmin && (
+                  <Link to="/admin">
+                    <Button size="sm" variant="outline" className="font-body text-xs">
+                      Admin Dashboard →
+                    </Button>
+                  </Link>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
