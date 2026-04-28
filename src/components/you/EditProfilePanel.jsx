@@ -74,7 +74,7 @@ export default function EditProfilePanel({ profile, user, onClose }) {
       {/* Photo Upload */}
       <div className="flex items-center gap-5">
         <div className="relative group">
-          <div className="w-20 h-20 rounded-full overflow-hidden bg-primary/10 border-2 border-accent/30 flex items-center justify-center shrink-0">
+          <div className="w-32 h-32 rounded-full overflow-hidden bg-primary/10 border-4 border-accent/40 flex items-center justify-center shrink-0 shadow-lg">
             {photoPreview ? (
               <img src={photoPreview} alt="Profile" className="w-full h-full object-cover" />
             ) : (

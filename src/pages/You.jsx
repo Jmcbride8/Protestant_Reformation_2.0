@@ -95,11 +95,11 @@ export default function You() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
               {/* Avatar */}
-              <div className="w-20 h-20 rounded-full bg-primary/10 border-2 border-accent/30 flex items-center justify-center shrink-0 overflow-hidden">
+              <div className="w-32 h-32 rounded-full bg-primary/10 border-4 border-accent/40 flex items-center justify-center shrink-0 overflow-hidden shadow-lg">
                 {myProfile?.photo_url ? (
                   <img src={myProfile.photo_url} alt={user.full_name} className="w-full h-full object-cover" />
                 ) : (
-                  <User className="w-9 h-9 text-primary/50" />
+                  <User className="w-14 h-14 text-primary/50" />
                 )}
               </div>
               <div className="flex-1">
