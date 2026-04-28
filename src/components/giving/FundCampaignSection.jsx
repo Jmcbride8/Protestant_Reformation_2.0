@@ -10,10 +10,11 @@ import { toast } from "sonner";
 import { useQuery } from '@tanstack/react-query';
 
 function FundCard({ fund }) {
-  const [amount, setAmount] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+   const [amount, setAmount] = useState('');
+   const [name, setName] = useState('');
+   const [email, setEmail] = useState('');
+   const [frequency, setFrequency] = useState('one_time');
+   const [submitted, setSubmitted] = useState(false);
 
   // Fetch total donated to this fund
   const { data: donations = [] } = useQuery({
@@ -32,6 +33,8 @@ function FundCard({ fund }) {
       amount: parseFloat(amount),
       fund: fund.slug,
       donation_date: new Date().toISOString().split('T')[0],
+      is_recurring: frequency !== 'one_time',
+      notes: frequency !== 'one_time' ? `Recurring: ${frequency}` : '',
     });
     setSubmitted(true);
     toast.success("Thank you for your generous pledge!");
@@ -111,7 +114,7 @@ function FundCard({ fund }) {
                 <p className="font-body text-muted-foreground">
                   Your generous pledge has been recorded. We'll be in touch with details.
                 </p>
-                <Button className="mt-6 font-body" onClick={() => { setSubmitted(false); setAmount(''); setName(''); setEmail(''); }}>
+                <Button className="mt-6 font-body" onClick={() => { setSubmitted(false); setAmount(''); setName(''); setEmail(''); setFrequency('one_time'); }}>
                   Give Again
                 </Button>
               </motion.div>
@@ -133,19 +136,29 @@ function FundCard({ fund }) {
                   <Label className="font-body text-sm">Pledge Amount ($)</Label>
                   <Input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="500" min="1" required className="font-body" />
                 </div>
-                <div className="flex gap-2 flex-wrap">
-                  {[50, 100, 250, 500, 1000].map(val => (
-                    <Button
-                      key={val}
-                      type="button"
-                      variant={amount === String(val) ? "default" : "outline"}
-                      size="sm"
-                      className="font-body text-xs"
-                      onClick={() => setAmount(String(val))}
-                    >
-                      ${val}
-                    </Button>
-                  ))}
+                <div className="space-y-2">
+                  <Label className="font-body text-sm">Frequency</Label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { value: 'one_time', label: 'One-Time' },
+                      { value: 'weekly', label: 'Weekly' },
+                      { value: 'monthly', label: 'Monthly' },
+                      { value: 'annually', label: 'Annually' },
+                    ].map(({ value, label }) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setFrequency(value)}
+                        className={`font-body text-sm py-2 px-3 rounded-lg border transition-colors ${
+                          frequency === value
+                            ? 'bg-primary text-primary-foreground border-primary'
+                            : 'bg-background border-border hover:bg-secondary'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <Button type="submit" className="w-full font-body tracking-wide bg-primary hover:bg-primary/90" size="lg">
                   Submit Pledge
