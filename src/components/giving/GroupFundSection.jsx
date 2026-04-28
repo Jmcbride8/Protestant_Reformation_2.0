@@ -81,17 +81,10 @@ function GiveToGroupForm({ group, user, onSuccess }) {
     >
       <h3 className="font-heading text-xl text-primary">Give to {group.name}</h3>
       <div className="space-y-2">
-        <Label className="font-body text-sm">Amount ($)</Label>
-        <Input type="number" min="1" required className="font-body" placeholder="50" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
-      </div>
-      <div className="flex gap-2 flex-wrap">
-        {[10, 25, 50, 100].map(v => (
-          <Button key={v} type="button" size="sm" variant={form.amount === String(v) ? 'default' : 'outline'} className="font-body text-xs" onClick={() => setForm(f => ({ ...f, amount: String(v) }))}>
-            ${v}
-          </Button>
-        ))}
-      </div>
-      <div className="space-y-2">
+         <Label className="font-body text-sm">Amount ($)</Label>
+         <Input type="number" min="1" required className="font-body" placeholder="50" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
+       </div>
+       <div className="space-y-2">
         <Label className="font-body text-sm">Note (optional)</Label>
         <Input className="font-body" placeholder="What's this gift for?" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
       </div>
@@ -103,50 +96,54 @@ function GiveToGroupForm({ group, user, onSuccess }) {
 }
 
 function LogExpenseForm({ group, onSuccess }) {
-  const [form, setForm] = useState({ amount: '', description: '' });
-  const queryClient = useQueryClient();
+   const [form, setForm] = useState({ amount: '', description: '', transaction_date: new Date().toISOString().split('T')[0] });
+   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: (data) => base44.entities.GroupFundTransaction.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['groupFundTx', group.id] });
-      setForm({ amount: '', description: '' });
-      toast.success('Expense logged.');
-    },
-  });
+   const mutation = useMutation({
+     mutationFn: (data) => base44.entities.GroupFundTransaction.create(data),
+     onSuccess: () => {
+       queryClient.invalidateQueries({ queryKey: ['groupFundTx', group.id] });
+       setForm({ amount: '', description: '', transaction_date: new Date().toISOString().split('T')[0] });
+       toast.success('Expense logged.');
+     },
+   });
 
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        mutation.mutate({
-          group_id: group.id,
-          group_name: group.name,
-          type: 'spent',
-          amount: parseFloat(form.amount),
-          description: form.description,
-          transaction_date: new Date().toISOString().split('T')[0],
-        });
-      }}
-      className="space-y-4 pt-4 border-t border-border/50 mt-4"
-    >
-      <h4 className="font-heading text-base text-primary">Log an Expense</h4>
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1">
-          <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
-          <Input type="number" min="1" required className="font-body text-sm" placeholder="e.g. 75" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
-        </div>
-        <div className="space-y-1">
-          <Label className="font-body text-xs text-muted-foreground">Description</Label>
-          <Input required className="font-body text-sm" placeholder="e.g. Event supplies" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
-        </div>
-      </div>
-      <Button type="submit" disabled={mutation.isPending} size="sm" variant="outline" className="font-body text-xs w-full">
-        Log Expense
-      </Button>
-    </form>
-  );
-}
+   return (
+     <form
+       onSubmit={(e) => {
+         e.preventDefault();
+         mutation.mutate({
+           group_id: group.id,
+           group_name: group.name,
+           type: 'spent',
+           amount: parseFloat(form.amount),
+           description: form.description,
+           transaction_date: form.transaction_date,
+         });
+       }}
+       className="space-y-4 pt-4 border-t border-border/50 mt-4"
+     >
+       <h4 className="font-heading text-base text-primary">Log an Expense</h4>
+       <div className="grid grid-cols-3 gap-3">
+         <div className="space-y-1">
+           <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
+           <Input type="number" min="1" required className="font-body text-sm" placeholder="e.g. 75" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
+         </div>
+         <div className="space-y-1">
+           <Label className="font-body text-xs text-muted-foreground">Date</Label>
+           <Input type="date" required className="font-body text-sm" value={form.transaction_date} onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))} />
+         </div>
+         <div className="space-y-1">
+           <Label className="font-body text-xs text-muted-foreground">Description</Label>
+           <Input required className="font-body text-sm" placeholder="e.g. Event supplies" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+         </div>
+       </div>
+       <Button type="submit" disabled={mutation.isPending} size="sm" variant="outline" className="font-body text-xs w-full">
+         Log Expense
+       </Button>
+     </form>
+   );
+ }
 
 function TransactionList({ transactions }) {
   if (transactions.length === 0) {
