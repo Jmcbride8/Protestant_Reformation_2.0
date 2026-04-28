@@ -23,12 +23,11 @@ const communityLinksAll = [
   { label: 'Groups', sub: 'Do life Together', path: '/groups', featureKey: 'link_community_groups', pageKey: 'page_groups' },
   { label: 'Care & Support', sub: 'Community support board', path: '/community-support', featureKey: 'link_give_to_each_other', pageKey: 'page_community_support' },
   { label: 'Memories', sub: 'Photos & videos from our year', path: '/memories', featureKey: 'link_community_memories', pageKey: 'page_memories' },
-];
-
-const giveLinksAll = [
   { label: 'Give Time', sub: 'Volunteer & serve', path: '/volunteer', featureKey: 'link_give_time', pageKey: 'page_volunteer' },
   { label: 'Give Financially', sub: 'Support our mission', path: '/giving', featureKey: 'link_give_financially', pageKey: 'page_giving' },
 ];
+
+
 
 export default function Navbar() {
   const location = useLocation();
@@ -40,22 +39,22 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [churchOpen, setChurchOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
-  const [giveOpen, setGiveOpen] = useState(false);
+
   const [meOpen, setMeOpen] = useState(false);
   const meRef = useRef(null);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
   const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
-  const giveLinks = giveLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
+
   const churchRef = useRef(null);
   const communityRef = useRef(null);
-  const giveRef = useRef(null);
+
 
   useEffect(() => {
     const handleClick = (e) => {
       if (churchRef.current && !churchRef.current.contains(e.target)) setChurchOpen(false);
       if (communityRef.current && !communityRef.current.contains(e.target)) setCommunityOpen(false);
-      if (giveRef.current && !giveRef.current.contains(e.target)) setGiveOpen(false);
+
       if (meRef.current && !meRef.current.contains(e.target)) setMeOpen(false);
     };
     document.addEventListener('mousedown', handleClick);
@@ -179,37 +178,7 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Give dropdown — members only */}
-            {user && (
-              <div className="relative" ref={giveRef}>
-                <button
-                  onClick={() => setGiveOpen(v => !v)}
-                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
-                    useWhiteNav
-                      ? giveLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                      : giveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
-                  }`}
-                >
-                  Give
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${giveOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {giveOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
-                    {giveLinks.map(link => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        onClick={() => setGiveOpen(false)}
-                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
-                      >
-                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
-                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+
 
             {user ? (
               <div className="flex items-center gap-3">
@@ -330,26 +299,7 @@ export default function Navbar() {
                     </div>
                   </div>
                 )}
-                {/* Give submenu in mobile — members only */}
-                {user && (
-                  <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Give</p>
-                    <div className="flex flex-col gap-4 pl-2">
-                      {giveLinks.map(link => (
-                        <Link
-                          key={link.path}
-                          to={link.path}
-                          onClick={() => setOpen(false)}
-                          className={`font-body text-base tracking-wide ${
-                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
+
                 <div className="border-t pt-4 mt-2">
                    {user ? (
                      <div className="flex flex-col gap-3">
