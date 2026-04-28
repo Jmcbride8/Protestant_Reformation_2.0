@@ -38,9 +38,9 @@ function PoolBalance({ transactions }) {
 }
 
 function GiveToGroupForm({ group, user, onSuccess }) {
-  const [form, setForm] = useState({ amount: '', description: '' });
-  const [submitted, setSubmitted] = useState(false);
-  const queryClient = useQueryClient();
+   const [form, setForm] = useState({ amount: '', description: '', frequency: 'one_time' });
+   const [submitted, setSubmitted] = useState(false);
+   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (data) => base44.entities.GroupFundTransaction.create(data),
@@ -57,7 +57,7 @@ function GiveToGroupForm({ group, user, onSuccess }) {
         <CheckCircle className="w-14 h-14 text-accent mx-auto mb-3" />
         <h3 className="font-heading text-2xl text-primary mb-1">Thank You!</h3>
         <p className="font-body text-muted-foreground text-sm">Your gift to {group.name} has been recorded.</p>
-        <Button className="mt-5 font-body" onClick={() => { setSubmitted(false); setForm({ amount: '', description: '' }); }}>Give Again</Button>
+        <Button className="mt-5 font-body" onClick={() => { setSubmitted(false); setForm({ amount: '', description: '', frequency: 'one_time' }); }}>Give Again</Button>
       </motion.div>
     );
   }
@@ -88,6 +88,30 @@ function GiveToGroupForm({ group, user, onSuccess }) {
           <div className="space-y-2">
             <Label className="font-body text-sm">Note (optional)</Label>
             <Input className="font-body" placeholder="What's this gift for?" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Frequency</Label>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { value: 'one_time', label: 'One-Time' },
+                { value: 'weekly', label: 'Weekly' },
+                { value: 'monthly', label: 'Monthly' },
+                { value: 'annually', label: 'Annually' },
+              ].map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setForm(f => ({ ...f, frequency: value }))}
+                  className={`font-body text-sm py-2 px-3 rounded-lg border transition-colors ${
+                    form.frequency === value
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-background border-border hover:bg-secondary'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
        </div>
        <Button type="submit" disabled={mutation.isPending} className="w-full font-body" size="lg">
