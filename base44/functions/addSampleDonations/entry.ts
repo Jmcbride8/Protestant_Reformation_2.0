@@ -14,22 +14,24 @@ Deno.serve(async (req) => {
     const donations = [];
     
     for (let i = 0; i < 18; i++) {
+      // Create fresh date for each month
       const date = new Date();
       date.setMonth(date.getMonth() - (17 - i));
-      date.setDate(Math.floor(Math.random() * 28) + 1);
       
-      const dateStr = date.toISOString().split('T')[0];
-      
-      // Add 2-4 donations per month
-      const donationsPerMonth = Math.floor(Math.random() * 3) + 2;
+      // Add 3-6 donations randomly spread throughout the month
+      const donationsPerMonth = Math.floor(Math.random() * 4) + 3;
       for (let j = 0; j < donationsPerMonth; j++) {
+        const dayOfMonth = Math.floor(Math.random() * 28) + 1;
+        const donationDate = new Date(date.getFullYear(), date.getMonth(), dayOfMonth);
+        const dateStr = donationDate.toISOString().split('T')[0];
+        
         donations.push({
-          donor_name: `Donor ${Math.floor(Math.random() * 100) + 1}`,
-          donor_email: `donor${Math.floor(Math.random() * 100) + 1}@example.com`,
-          amount: Math.floor(Math.random() * 4000) + 100,
+          donor_name: `Donor ${Math.floor(Math.random() * 500) + 1}`,
+          donor_email: `donor${Math.floor(Math.random() * 500) + 1}@example.com`,
+          amount: Math.floor(Math.random() * 5000) + 50,
           fund: funds[Math.floor(Math.random() * funds.length)],
           donation_date: dateStr,
-          is_recurring: Math.random() > 0.7,
+          is_recurring: Math.random() > 0.8,
           notes: 'Sample donation'
         });
       }
