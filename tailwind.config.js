@@ -7,7 +7,6 @@ module.exports = {
       fontFamily: {
         heading: ['var(--font-heading)'],
         body: ['var(--font-body)'],
-        ui: ['var(--font-ui)'],
       },
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -74,16 +73,11 @@ module.exports = {
   			'accordion-up': {
   				from: { height: 'var(--radix-accordion-content-height)' },
   				to: { height: '0' }
-  			},
-        'flicker': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.85' },
-        }
+  			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out',
-        'flicker': 'flicker 3s ease-in-out infinite',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		}
   	}
   },

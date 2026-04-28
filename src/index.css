@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,82 +6,77 @@
 
 @layer base {
   :root {
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'Crimson Text', serif;
-    --font-ui: 'Inter', sans-serif;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
 
-    /* Deep stone parchment background */
-    --background: 34 18% 94%;
-    --foreground: 15 25% 12%;
-    --card: 34 16% 97%;
-    --card-foreground: 15 25% 12%;
-    --popover: 34 16% 97%;
-    --popover-foreground: 15 25% 12%;
-
-    /* Crusader crimson-navy primary */
-    --primary: 0 65% 22%;
-    --primary-foreground: 40 30% 96%;
-
-    --secondary: 34 20% 88%;
-    --secondary-foreground: 15 25% 18%;
-    --muted: 34 15% 90%;
-    --muted-foreground: 15 15% 42%;
-
-    /* Aged gold accent */
-    --accent: 42 72% 40%;
-    --accent-foreground: 15 25% 10%;
-
-    --destructive: 0 72% 45%;
+    --background: 40 20% 98%;
+    --foreground: 224 52% 23%;
+    --card: 40 20% 99%;
+    --card-foreground: 224 52% 23%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 52% 23%;
+    --primary: 224 52% 23%;
+    --primary-foreground: 40 20% 98%;
+    --secondary: 224 30% 94%;
+    --secondary-foreground: 224 52% 23%;
+    --muted: 40 15% 95%;
+    --muted-foreground: 224 15% 45%;
+    --accent: 38 45% 60%;
+    --accent-foreground: 224 52% 15%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 34 18% 80%;
-    --input: 34 18% 80%;
-    --ring: 0 65% 22%;
-
-    --chart-1: 0 65% 22%;
-    --chart-2: 42 72% 40%;
-    --chart-3: 210 40% 28%;
-    --chart-4: 42 60% 60%;
-    --chart-5: 0 40% 50%;
-    --radius: 0.375rem;
-
-    --sidebar-background: 34 18% 94%;
-    --sidebar-foreground: 15 25% 12%;
-    --sidebar-primary: 0 65% 22%;
-    --sidebar-primary-foreground: 40 30% 96%;
-    --sidebar-accent: 34 20% 88%;
-    --sidebar-accent-foreground: 15 25% 18%;
-    --sidebar-border: 34 18% 80%;
-    --sidebar-ring: 0 65% 22%;
+    --border: 224 20% 88%;
+    --input: 224 20% 88%;
+    --ring: 224 52% 23%;
+    --chart-1: 224 52% 23%;
+    --chart-2: 38 45% 60%;
+    --chart-3: 224 30% 50%;
+    --chart-4: 38 60% 75%;
+    --chart-5: 224 20% 70%;
+    --radius: 0.5rem;
+    --sidebar-background: 40 20% 98%;
+    --sidebar-foreground: 224 52% 23%;
+    --sidebar-primary: 224 52% 23%;
+    --sidebar-primary-foreground: 40 20% 98%;
+    --sidebar-accent: 224 30% 94%;
+    --sidebar-accent-foreground: 224 52% 23%;
+    --sidebar-border: 224 20% 88%;
+    --sidebar-ring: 224 52% 23%;
   }
 
   .dark {
-    --background: 15 30% 6%;
-    --foreground: 40 25% 92%;
-    --card: 15 28% 9%;
-    --card-foreground: 40 25% 92%;
-    --popover: 15 28% 9%;
-    --popover-foreground: 40 25% 92%;
-    --primary: 0 60% 55%;
-    --primary-foreground: 15 30% 6%;
-    --secondary: 15 20% 16%;
-    --secondary-foreground: 40 25% 88%;
-    --muted: 15 20% 14%;
-    --muted-foreground: 40 15% 55%;
-    --accent: 42 70% 52%;
-    --accent-foreground: 15 30% 6%;
+    --background: 224 40% 8%;
+    --foreground: 40 20% 95%;
+    --card: 224 40% 10%;
+    --card-foreground: 40 20% 95%;
+    --popover: 224 40% 10%;
+    --popover-foreground: 40 20% 95%;
+    --primary: 40 20% 95%;
+    --primary-foreground: 224 52% 23%;
+    --secondary: 224 30% 18%;
+    --secondary-foreground: 40 20% 95%;
+    --muted: 224 30% 15%;
+    --muted-foreground: 224 15% 60%;
+    --accent: 38 45% 60%;
+    --accent-foreground: 40 20% 95%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 15 20% 16%;
-    --input: 15 20% 16%;
-    --ring: 0 60% 55%;
-    --sidebar-background: 15 30% 6%;
-    --sidebar-foreground: 40 25% 92%;
-    --sidebar-primary: 0 60% 55%;
-    --sidebar-primary-foreground: 15 30% 6%;
-    --sidebar-accent: 15 20% 16%;
-    --sidebar-accent-foreground: 40 25% 88%;
-    --sidebar-border: 15 20% 16%;
-    --sidebar-ring: 0 60% 55%;
+    --border: 224 30% 18%;
+    --input: 224 30% 18%;
+    --ring: 40 20% 95%;
+    --chart-1: 224 52% 50%;
+    --chart-2: 38 45% 60%;
+    --chart-3: 224 30% 60%;
+    --chart-4: 38 60% 75%;
+    --chart-5: 224 20% 70%;
+    --sidebar-background: 224 40% 8%;
+    --sidebar-foreground: 40 20% 95%;
+    --sidebar-primary: 40 20% 95%;
+    --sidebar-primary-foreground: 224 52% 23%;
+    --sidebar-accent: 224 30% 18%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 224 30% 18%;
+    --sidebar-ring: 40 20% 95%;
   }
 }
 
@@ -91,32 +86,5 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-body);
   }
-}
-
-/* Crusader ornamental divider */
-.crusader-divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.crusader-divider::before,
-.crusader-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, hsl(var(--accent) / 0.6), transparent);
-}
-
-/* Parchment texture overlay on sections */
-.parchment {
-  background-image: 
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-}
-
-/* Gothic border ornament */
-.gothic-border {
-  border: 1px solid hsl(var(--accent) / 0.35);
-  box-shadow: inset 0 0 0 3px hsl(var(--accent) / 0.08), 0 4px 24px hsl(var(--primary) / 0.08);
 }

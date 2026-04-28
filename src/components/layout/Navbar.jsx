@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ChevronDown, Cross } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useFeatures } from '@/lib/FeatureContext';
 import { isPreviewingAsGuest } from './MemberPreviewBanner';
@@ -81,11 +81,9 @@ export default function Navbar() {
   }, [location.pathname]);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled || !useWhiteNav
-        ? 'backdrop-blur-md shadow-lg border-b'
-        : 'bg-transparent'
-    }`} style={scrolled || !useWhiteNav ? { background: 'rgba(26,10,8,0.97)', borderColor: 'rgba(200,146,42,0.2)' } : {}}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled || !useWhiteNav ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
@@ -106,10 +104,10 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
+                className={`font-body text-sm tracking-wide transition-colors ${
                   useWhiteNav
-                    ? location.pathname === link.path ? 'text-[#c8922a] font-semibold' : 'text-white/80 hover:text-[#c8922a]'
-                    : location.pathname === link.path ? 'text-[#c8922a] font-semibold' : 'text-white/70 hover:text-[#c8922a]'
+                    ? location.pathname === link.path ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                    : location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                 }`}
               >
                 {link.label}
@@ -121,27 +119,26 @@ export default function Navbar() {
               <div className="relative" ref={churchRef}>
                 <button
                   onClick={() => setChurchOpen(v => !v)}
-                  className={`flex items-center gap-1 font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
                     useWhiteNav
-                      ? churchLinks.some(l => l.path === location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/80 hover:text-[#c8922a]'
-                      : churchLinks.some(l => l.path === location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/70 hover:text-[#c8922a]'
+                      ? churchLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
                   Church
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {churchOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 overflow-hidden z-50 rounded border" style={{ background: 'rgba(26,10,8,0.98)', borderColor: 'rgba(200,146,42,0.25)', boxShadow: '0 16px 48px rgba(0,0,0,0.6)' }}>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
                     {churchLinks.map(link => (
                       <Link
                         key={link.path}
                         to={link.path}
                         onClick={() => setChurchOpen(false)}
-                        className={`flex flex-col px-4 py-3 transition-colors border-b last:border-0 ${location.pathname === link.path ? 'bg-[#c8922a]/10' : 'hover:bg-white/5'}`}
-                        style={{ borderColor: 'rgba(200,146,42,0.12)' }}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
                       >
-                        <span className="font-ui text-xs tracking-wider uppercase text-white/90">{link.label}</span>
-                        <span className="font-body text-sm text-white/40 mt-0.5">{link.sub}</span>
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
                       </Link>
                     ))}
                   </div>
@@ -154,27 +151,26 @@ export default function Navbar() {
               <div className="relative" ref={communityRef}>
                 <button
                   onClick={() => setCommunityOpen(v => !v)}
-                  className={`flex items-center gap-1 font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
                     useWhiteNav
-                      ? communityLinks.some(l => l.path === location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/80 hover:text-[#c8922a]'
-                      : communityLinks.some(l => l.path === location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/70 hover:text-[#c8922a]'
+                      ? communityLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : communityLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
                   Community
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${communityOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {communityOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 overflow-hidden z-50 rounded border" style={{ background: 'rgba(26,10,8,0.98)', borderColor: 'rgba(200,146,42,0.25)', boxShadow: '0 16px 48px rgba(0,0,0,0.6)' }}>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
                     {communityLinks.map(link => (
                       <Link
                         key={link.path}
                         to={link.path}
                         onClick={() => setCommunityOpen(false)}
-                        className={`flex flex-col px-4 py-3 transition-colors border-b last:border-0 ${location.pathname === link.path ? 'bg-[#c8922a]/10' : 'hover:bg-white/5'}`}
-                        style={{ borderColor: 'rgba(200,146,42,0.12)' }}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
                       >
-                        <span className="font-ui text-xs tracking-wider uppercase text-white/90">{link.label}</span>
-                        <span className="font-body text-sm text-white/40 mt-0.5">{link.sub}</span>
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
                       </Link>
                     ))}
                   </div>
@@ -190,34 +186,33 @@ export default function Navbar() {
                 <div className="relative" ref={meRef}>
                   <button
                     onClick={() => setMeOpen(v => !v)}
-                    className={`flex items-center gap-1 font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
+                    className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
                       useWhiteNav
-                        ? ['/you', '/admin'].includes(location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/80 hover:text-[#c8922a]'
-                        : ['/you', '/admin'].includes(location.pathname) ? 'text-[#c8922a] font-semibold' : 'text-white/70 hover:text-[#c8922a]'
+                        ? ['/you', '/admin'].includes(location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                        : ['/you', '/admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                     }`}
                   >
                     Me
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {meOpen && (
-                    <div className="absolute top-full right-0 mt-3 w-48 overflow-hidden z-50 rounded border" style={{ background: 'rgba(26,10,8,0.98)', borderColor: 'rgba(200,146,42,0.25)', boxShadow: '0 16px 48px rgba(0,0,0,0.6)' }}>
+                    <div className="absolute top-full right-0 mt-3 w-48 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
                       <Link
                         to="/you"
                         onClick={() => setMeOpen(false)}
-                        className={`flex flex-col px-4 py-3 transition-colors border-b ${location.pathname === '/you' ? 'bg-[#c8922a]/10' : 'hover:bg-white/5'}`}
-                        style={{ borderColor: 'rgba(200,146,42,0.12)' }}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/you' ? 'bg-secondary/40' : ''}`}
                       >
-                        <span className="font-ui text-xs tracking-wider uppercase text-white/90">Profile</span>
-                        <span className="font-body text-sm text-white/40 mt-0.5">Your info & settings</span>
+                        <span className="font-body text-sm font-medium text-foreground">Profile</span>
+                        <span className="font-body text-xs text-muted-foreground">Your info & settings</span>
                       </Link>
                       {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
                         <Link
                           to="/admin"
                           onClick={() => setMeOpen(false)}
-                          className={`flex flex-col px-4 py-3 transition-colors ${location.pathname === '/admin' ? 'bg-[#c8922a]/10' : 'hover:bg-white/5'}`}
+                          className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors ${location.pathname === '/admin' ? 'bg-secondary/40' : ''}`}
                         >
-                          <span className="font-ui text-xs tracking-wider uppercase text-white/90">Admin Dashboard</span>
-                          <span className="font-body text-sm text-white/40 mt-0.5">Manage the church</span>
+                          <span className="font-body text-sm font-medium text-foreground">Admin Dashboard</span>
+                          <span className="font-body text-xs text-muted-foreground">Manage the church</span>
                         </Link>
                       )}
                     </div>
@@ -226,7 +221,7 @@ export default function Navbar() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="font-ui text-xs tracking-widest uppercase text-white/50 hover:text-white/80 hover:bg-white/5"
+                  className={`font-body text-xs ${useWhiteNav ? 'text-white hover:bg-white/10 hover:text-white' : ''}`}
                   onClick={() => base44.auth.logout()}
                 >
                   Sign Out
@@ -235,8 +230,7 @@ export default function Navbar() {
             ) : (
               <Button 
                 size="sm" 
-                className="font-ui text-xs tracking-widest uppercase px-5 border hover:opacity-90 transition-all"
-                style={{ background: '#c8922a', color: '#1a0a08', borderColor: '#c8922a' }}
+                className={`font-body text-xs ${useWhiteNav ? 'bg-white/20 text-white hover:bg-white/30 border border-white/40' : 'bg-primary hover:bg-primary/90'}`}
                 onClick={() => base44.auth.redirectToLogin()}
               >
                 Member Login
@@ -247,36 +241,36 @@ export default function Navbar() {
           {/* Mobile nav */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="h-16 w-16 text-white hover:bg-white/10" style={{ minWidth: '4rem', minHeight: '4rem' }}>
+              <Button variant="ghost" size="icon" className={`h-16 w-16 ${useWhiteNav ? 'text-white hover:bg-white/20' : 'text-primary hover:bg-secondary'}`} style={{ minWidth: '4rem', minHeight: '4rem' }}>
                 <Menu strokeWidth={2.5} className="h-12 w-12" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 border-l" style={{ background: '#1a0a08', borderColor: 'rgba(200,146,42,0.2)' }}>
+            <SheetContent side="right" className="w-72">
               <div className="flex flex-col gap-6 mt-8">
                 {filteredNavLinks.map(link => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setOpen(false)}
-                    className={`font-ui text-xs tracking-[0.25em] uppercase transition-colors ${
-                      location.pathname === link.path ? 'text-[#c8922a]' : 'text-white/60 hover:text-white'
+                    className={`font-body text-lg tracking-wide ${
+                      location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
                     }`}
                   >
                     {link.label}
                   </Link>
                 ))}
-                {/* Church submenu in mobile */}
+                {/* Church submenu in mobile — always visible */}
                 {churchLinks.length > 0 && (
                   <div>
-                    <p className="font-ui text-xs tracking-[0.3em] uppercase text-[#c8922a]/60 mb-3">Church</p>
-                    <div className="flex flex-col gap-4 pl-2 border-l border-[#c8922a]/20">
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Church</p>
+                    <div className="flex flex-col gap-4 pl-2">
                       {churchLinks.map(link => (
                         <Link
                           key={link.path}
                           to={link.path}
                           onClick={() => setOpen(false)}
-                          className={`font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
-                            location.pathname === link.path ? 'text-[#c8922a]' : 'text-white/60 hover:text-white'
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
                           }`}
                         >
                           {link.label}
@@ -285,18 +279,18 @@ export default function Navbar() {
                     </div>
                   </div>
                 )}
-                {/* Community submenu — members only */}
+                {/* Community submenu in mobile — members only */}
                 {user && (
                   <div>
-                    <p className="font-ui text-xs tracking-[0.3em] uppercase text-[#c8922a]/60 mb-3">Community</p>
-                    <div className="flex flex-col gap-4 pl-2 border-l border-[#c8922a]/20">
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Community</p>
+                    <div className="flex flex-col gap-4 pl-2">
                       {communityLinks.map(link => (
                         <Link
                           key={link.path}
                           to={link.path}
                           onClick={() => setOpen(false)}
-                          className={`font-ui text-xs tracking-[0.2em] uppercase transition-colors ${
-                            location.pathname === link.path ? 'text-[#c8922a]' : 'text-white/60 hover:text-white'
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
                           }`}
                         >
                           {link.label}
@@ -306,15 +300,15 @@ export default function Navbar() {
                   </div>
                 )}
 
-                <div className="pt-4 mt-2" style={{ borderTop: '1px solid rgba(200,146,42,0.15)' }}>
+                <div className="border-t pt-4 mt-2">
                    {user ? (
                      <div className="flex flex-col gap-3">
-                       <p className="font-ui text-xs tracking-[0.3em] uppercase text-[#c8922a]/60">Me</p>
-                       <div className="flex flex-col gap-4 pl-2 border-l border-[#c8922a]/20">
+                       <p className="font-body text-xs tracking-[0.2em] uppercase text-accent">Me</p>
+                       <div className="flex flex-col gap-4 pl-2">
                          <Link
                            to="/you"
                            onClick={() => setOpen(false)}
-                           className={`font-ui text-xs tracking-[0.2em] uppercase transition-colors ${location.pathname === '/you' ? 'text-[#c8922a]' : 'text-white/60 hover:text-white'}`}
+                           className={`font-body text-base tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
                          >
                            Profile
                          </Link>
@@ -322,20 +316,19 @@ export default function Navbar() {
                            <Link
                              to="/admin"
                              onClick={() => setOpen(false)}
-                             className={`font-ui text-xs tracking-[0.2em] uppercase transition-colors ${location.pathname === '/admin' ? 'text-[#c8922a]' : 'text-white/60 hover:text-white'}`}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
                            >
                              Admin Dashboard
                            </Link>
                          )}
                        </div>
-                      <Button variant="ghost" className="font-ui text-xs tracking-widest uppercase text-white/40 hover:text-white/70 mt-2" onClick={() => base44.auth.logout()}>
+                      <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
                         Sign Out
                       </Button>
                     </div>
                   ) : (
                     <Button 
-                      className="w-full font-ui text-xs tracking-widest uppercase border"
-                      style={{ background: '#c8922a', color: '#1a0a08', borderColor: '#c8922a' }}
+                      className="w-full font-body bg-primary"
                       onClick={() => base44.auth.redirectToLogin()}
                     >
                       Member Login
