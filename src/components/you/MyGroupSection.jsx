@@ -37,7 +37,7 @@ export default function MyGroupSection({ myProfile, myRequests, user }) {
   const { data: groupMembers = [] } = useQuery({
     queryKey: ['groupMembers', myGroup?.id],
     queryFn: () => base44.entities.MemberProfile.filter({ small_group_id: myGroup.id }),
-    enabled: isLeader && !!myGroup?.id,
+    enabled: !!isLeader && !!myGroup?.id,
   });
 
   return (
