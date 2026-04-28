@@ -18,7 +18,7 @@ export default function Milestones() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Life Moments</p>
             <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
-              Sacred <span className="italic">Milestones</span>
+              Life <span className="italic">Milestones</span>
             </h1>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               From your first public declaration of faith to your final farewell, Hope Church is here to walk alongside you through life's most important moments.
