@@ -12,7 +12,6 @@ const EMPTY_FUND = {
   name: '',
   slug: '',
   description: '',
-  goal: '',
   is_active: true,
   itemization: [],
   sort_order: 0,
@@ -128,10 +127,6 @@ function FundForm({ initial, onSave, onCancel, isSaving }) {
           <Input className="font-body text-sm" value={form.description} onChange={e => set('description', e.target.value)} placeholder="Short description shown to donors" />
         </div>
         <div className="space-y-1.5">
-          <Label className="font-body text-xs text-muted-foreground">Annual Goal ($)</Label>
-          <Input className="font-body text-sm" type="number" value={form.goal} onChange={e => set('goal', parseFloat(e.target.value) || '')} placeholder="e.g. 500000" />
-        </div>
-        <div className="space-y-1.5">
           <Label className="font-body text-xs text-muted-foreground">Status</Label>
           <div className="flex items-center gap-3 mt-2">
             <input type="checkbox" id="fund_active" checked={form.is_active} onChange={e => set('is_active', e.target.checked)} className="w-4 h-4 accent-primary" />
@@ -146,7 +141,7 @@ function FundForm({ initial, onSave, onCancel, isSaving }) {
         <Button variant="ghost" size="sm" className="font-body text-xs" onClick={onCancel}>
           <X className="w-3.5 h-3.5 mr-1" /> Cancel
         </Button>
-        <Button size="sm" className="font-body text-xs bg-primary" onClick={() => onSave(form)} disabled={isSaving || !form.name || !form.slug}>
+        <Button size="sm" className="font-body text-xs bg-primary" onClick={() => onSave({ ...form, goal: (form.itemization || []).reduce((s, i) => s + parseFloat(i.amount || 0), 0) })} disabled={isSaving || !form.name || !form.slug}>
           <Check className="w-3.5 h-3.5 mr-1" /> Save Fund
         </Button>
       </div>
@@ -234,7 +229,7 @@ export default function FundsManager() {
                         : <Badge variant="secondary" className="font-body text-xs">Inactive</Badge>}
                     </div>
                     {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
-                    {fund.goal && <p className="font-body text-xs text-accent mt-0.5">Goal: ${parseFloat(fund.goal).toLocaleString()}</p>}
+                    {fund.itemization?.length > 0 && <p className="font-body text-xs text-accent mt-0.5">Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</p>}
                   </div>
                   <div className="flex items-center gap-1 ml-3 shrink-0">
                     {fund.itemization?.length > 0 && (
