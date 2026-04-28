@@ -53,6 +53,14 @@
       "type": "boolean",
       "default": false,
       "description": "Hide the poster's name from other members"
+    },
+    "group_id": {
+      "type": "string",
+      "description": "Reference to CommunityGroup this post belongs to"
+    },
+    "group_name": {
+      "type": "string",
+      "description": "Cached name of the group for display"
     }
   },
   "required": [
