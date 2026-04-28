@@ -1,0 +1,49 @@
+{
+  "name": "GroupFundTransaction",
+  "type": "object",
+  "properties": {
+    "group_id": {
+      "type": "string",
+      "description": "Reference to CommunityGroup.id"
+    },
+    "group_name": {
+      "type": "string",
+      "description": "Cached group name for display"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "given",
+        "received",
+        "spent"
+      ],
+      "description": "given = member gave to group pool; received = external gift received; spent = leader logged an expense"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Dollar amount (always positive)"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this transaction was for"
+    },
+    "member_name": {
+      "type": "string",
+      "description": "Name of the giver/spender"
+    },
+    "member_email": {
+      "type": "string",
+      "description": "Email of the giver/spender"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the transaction"
+    }
+  },
+  "required": [
+    "group_id",
+    "type",
+    "amount"
+  ]
+}
