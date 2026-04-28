@@ -232,7 +232,7 @@ export default function Admin() {
         </div>
 
           {/* Content */}
-          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-10">
+          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-0">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
