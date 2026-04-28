@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, CheckCircle2, XCircle, User } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { format } from 'date-fns';
+import GiveToGroupMemberModal from '@/components/giving/GiveToGroupMemberModal';
 
-export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isAdmin }) {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
+export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isAdmin, myProfile, user }) {
+   const [giveTarget, setGiveTarget] = useState(null);
+   const queryClient = useQueryClient();
+   const { toast } = useToast();
+
+   // Fetch group members for leaders (for giving section)
+   const { data: groupMembers = [] } = useQuery({
+     queryKey: ['groupMembersForGiving', ownedGroups],
+     queryFn: async () => {
+       const allMembers = [];
+       for (const group of ownedGroups) {
+         const members = await base44.entities.MemberProfile.filter({ small_group_id: group.id });
+         allMembers.push(...members.map(m => ({ ...m, group_id: group.id, group_name: group.name })));
+       }
+       return allMembers;
+     },
+     enabled: ownedGroups.length > 0,
+   });
 
   const updateRequest = useMutation({
     mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
@@ -79,8 +95,41 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
               </div>
             </div>
           ))}
-        </div>
-      )}
-    </motion.section>
-  );
-}
+          </div>
+          )}
+
+          {/* Give from Church Fund - shown if user owns groups and has members */}
+          {ownedGroups.length > 0 && groupMembers.length > 0 && (
+          <div className="bg-card border border-border/50 rounded-2xl p-6 mt-6">
+          <p className="font-body text-xs tracking-[0.18em] uppercase text-accent mb-3">Give from Church Fund</p>
+          <div className="flex flex-wrap gap-2">
+            {groupMembers.map(member => (
+              <button
+                key={member.id}
+                onClick={() => setGiveTarget(member)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background hover:bg-secondary hover:border-accent transition-colors font-body text-sm"
+              >
+                {member.photo_url ? (
+                  <img src={member.photo_url} alt={member.full_name} className="w-5 h-5 rounded-full object-cover" />
+                ) : (
+                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-semibold text-primary">{member.full_name?.[0]}</div>
+                )}
+                {member.full_name}
+              </button>
+            ))}
+          </div>
+          <p className="font-body text-xs text-muted-foreground mt-2">Select a member to record a church fund gift on their behalf.</p>
+          </div>
+          )}
+
+          {giveTarget && (
+          <GiveToGroupMemberModal
+          member={giveTarget}
+          group={ownedGroups.find(g => g.id === giveTarget.group_id)}
+          user={user}
+          onClose={() => setGiveTarget(null)}
+          />
+          )}
+          </motion.section>
+          );
+          }

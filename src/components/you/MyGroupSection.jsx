@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Clock, CheckCircle2, AlertCircle, HandCoins } from 'lucide-react';
+import { Users, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import GiveToGroupMemberModal from '@/components/giving/GiveToGroupMemberModal';
 
 export default function MyGroupSection({ myProfile, myRequests, user }) {
-  const [giveTarget, setGiveTarget] = useState(null);
-  const approvedRequest = myRequests.find(r => r.status === 'approved');
+   const approvedRequest = myRequests.find(r => r.status === 'approved');
   const pendingRequest = myRequests.find(r => r.status === 'pending');
   const rejectedRequest = myRequests.find(r => r.status === 'rejected');
 
@@ -80,29 +78,7 @@ export default function MyGroupSection({ myProfile, myRequests, user }) {
               <p className="font-body text-xs text-muted-foreground">Led by <span className="text-foreground font-medium">{myGroup.leader_name}</span></p>
             </div>
 
-            {/* Leader-only: Give to a member */}
-            {isLeader && groupMembers.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-border/40">
-                <p className="font-body text-xs tracking-[0.18em] uppercase text-accent mb-3">Give from Church Fund</p>
-                <div className="flex flex-wrap gap-2">
-                  {groupMembers.map(member => (
-                    <button
-                      key={member.id}
-                      onClick={() => setGiveTarget(member)}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/60 bg-background hover:bg-secondary hover:border-accent transition-colors font-body text-sm"
-                    >
-                      {member.photo_url ? (
-                        <img src={member.photo_url} alt={member.full_name} className="w-5 h-5 rounded-full object-cover" />
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-semibold text-primary">{member.full_name?.[0]}</div>
-                      )}
-                      {member.full_name}
-                    </button>
-                  ))}
-                </div>
-                <p className="font-body text-xs text-muted-foreground mt-2">Select a member to record a church fund gift on their behalf.</p>
-              </div>
-            )}
+
           </div>
         </div>
       ) : pendingRequest ? (
@@ -141,14 +117,7 @@ export default function MyGroupSection({ myProfile, myRequests, user }) {
         </div>
       )}
 
-      {giveTarget && (
-        <GiveToGroupMemberModal
-          member={giveTarget}
-          group={myGroup}
-          user={user}
-          onClose={() => setGiveTarget(null)}
-        />
-      )}
+
     </motion.section>
   );
 }

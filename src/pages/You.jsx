@@ -157,13 +157,15 @@ export default function You() {
         />
 
         {/* --- SECTION 2: PENDING REQUESTS (if I own a group) --- */}
-        {(myOwnedGroups.length > 0 || isAdmin) && (
-          <PendingRequestsPanel
-            ownedGroups={myOwnedGroups}
-            pendingRequests={pendingRequests}
-            isAdmin={isAdmin}
-          />
-        )}
+         {(myOwnedGroups.length > 0 || isAdmin) && (
+           <PendingRequestsPanel
+             ownedGroups={myOwnedGroups}
+             pendingRequests={pendingRequests}
+             isAdmin={isAdmin}
+             myProfile={myProfile}
+             user={user}
+           />
+         )}
 
         {/* --- SECTION 3: DONATION HISTORY --- */}
         <DonationHistory donations={myDonations} />
