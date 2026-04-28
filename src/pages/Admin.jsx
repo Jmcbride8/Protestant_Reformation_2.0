@@ -209,32 +209,29 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Section selector divider */}
-        <div className="bg-card border-y border-border/50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4 mb-8">
-          <div className="flex gap-2 p-1 bg-secondary rounded-lg w-fit">
-            {sidebarSections.map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => setAdminSection(key)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-md font-body font-medium text-sm transition-all ${
-                  adminSection === key
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                {label}
-              </button>
-            ))}
-          </div>
+        {/* Section selector */}
+        <div className="flex gap-2 mb-6 p-1 bg-secondary rounded-xl w-fit -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+          {sidebarSections.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setAdminSection(key)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-body font-semibold text-sm transition-all ${
+                adminSection === key
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
         </div>
 
           {/* Content */}
-          <div className="min-w-0">
+          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
-        <div className="bg-card border border-border/50 rounded-lg p-6 space-y-6">
         <Tabs defaultValue="sermons" className="space-y-6">
           <TabsList className="bg-secondary font-body flex-wrap h-auto">
             <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
@@ -335,19 +332,15 @@ export default function Admin() {
           </TabsContent>
 
           </Tabs>
-        </div>
         )}
 
         {/* Actions Section */}
         {adminSection === 'actions' && (
-          <div className="bg-card border border-border/50 rounded-lg p-6">
-            <StaffKanban />
-          </div>
+          <StaffKanban />
         )}
 
         {/* Configuration Section */}
         {adminSection === 'config' && (
-        <div className="bg-card border border-border/50 rounded-lg p-6 space-y-6">
         <Tabs defaultValue="church_info" className="space-y-6">
           <TabsList className="bg-secondary font-body flex-wrap h-auto">
             <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
@@ -362,12 +355,10 @@ export default function Admin() {
             <FeatureTogglesManager />
           </TabsContent>
         </Tabs>
-        </div>
         )}
 
         {/* Church Administration Section */}
         {adminSection === 'church' && (
-        <div className="bg-card border border-border/50 rounded-lg p-6 space-y-6">
         <Tabs defaultValue="volunteers" className="space-y-6">
           <TabsList className="bg-secondary font-body flex-wrap h-auto">
             <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
@@ -598,7 +589,6 @@ export default function Admin() {
             <BudgetManager />
           </TabsContent>
         </Tabs>
-        </div>
         )}
 
         </div>{/* end content */}
