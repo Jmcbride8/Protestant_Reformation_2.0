@@ -9,7 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { HandCoins, CheckCircle } from 'lucide-react';
 import BudgetChart from '../components/giving/BudgetChart';
 import FundingProgress from '../components/giving/FundingProgress';
-import CapitalCampaign from '../components/giving/CapitalCampaign';
+import FundCampaignSection from '../components/giving/FundCampaignSection';
 import { toast } from "sonner";
 import { useQuery } from '@tanstack/react-query';
 
@@ -202,22 +202,8 @@ export default function Giving() {
         </div>
       </section>
 
-      {/* Capital Campaign */}
-      {isEnabled('giving_capital_campaign') && (
-      <section className="py-24 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Capital Campaign</p>
-            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Renewing Our Home</h2>
-            <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Built in the 1950s, our church has served Santa Barbara for generations. 
-              Help us preserve and renew this sacred space for generations to come.
-            </p>
-          </div>
-          <CapitalCampaign />
-        </div>
-      </section>
-      )}
+      {/* Dynamic Fund Campaigns */}
+      <FundCampaignSection />
     </div>
   );
 }

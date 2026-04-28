@@ -15,7 +15,6 @@ import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
 import FundsManager from '../components/admin/FundsManager';
 import StaffKanban from '../components/admin/StaffKanban';
-import CapitalCampaignManager from '../components/admin/CapitalCampaignManager';
 import BeliefsManager from '../components/admin/BeliefsManager';
 import GroupsManager from '../components/admin/GroupsManager';
 import ScheduleManager from '../components/admin/ScheduleManager';
@@ -594,7 +593,6 @@ export default function Admin() {
           <TabsContent value="budget" className="space-y-10">
             <FundsManager />
             <GivingManager />
-            <CapitalCampaignManager />
             <BudgetManager />
           </TabsContent>
         </Tabs>
