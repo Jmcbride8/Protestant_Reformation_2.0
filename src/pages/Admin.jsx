@@ -212,7 +212,7 @@ export default function Admin() {
         </div>
 
         {/* Section selector */}
-        <div className="mb-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-secondary/30 border-b-2 border-border shadow-sm">
+        <div className="mb-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-secondary/30 border-b-2 border-border shadow-sm">
           <div className="flex flex-wrap gap-2">
             {sidebarSections.map(({ key, label, icon: Icon }) => (
               <button
@@ -232,21 +232,21 @@ export default function Admin() {
         </div>
 
           {/* Content */}
-          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-10">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
         <Tabs defaultValue="sermons" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
-            <TabsTrigger value="sermons" className="gap-2"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
-            <TabsTrigger value="schedule" className="gap-2"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
-            <TabsTrigger value="milestones" className="gap-2"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
-            <TabsTrigger value="groups" className="gap-2"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
-            <TabsTrigger value="beliefs" className="gap-2"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
-            <TabsTrigger value="events" className="gap-2"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
-            <TabsTrigger value="carousel" className="gap-2"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
-            <TabsTrigger value="memories" className="gap-2"><Users className="w-4 h-4" /> Memories</TabsTrigger>
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
+            <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
+            <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
+            <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
+            <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
+            <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
+            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
           </div>
 
@@ -348,10 +348,10 @@ export default function Admin() {
         {/* Configuration Section */}
         {adminSection === 'config' && (
         <Tabs defaultValue="church_info" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
-            <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
-            <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
+            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
             </TabsList>
             </div>
 
@@ -368,12 +368,12 @@ export default function Admin() {
         {/* Church Administration Section */}
         {adminSection === 'church' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-secondary/30 border-b-2 border-border shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
-            <TabsTrigger value="volunteers" className="gap-2"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
-            <TabsTrigger value="contacts" className="gap-2"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
-            <TabsTrigger value="directory" className="gap-2"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
-            <TabsTrigger value="membership" className="gap-2">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
+            <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
+            <TabsTrigger value="directory" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
+            <TabsTrigger value="membership" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground">
               <UserCheck className="w-4 h-4" /> Membership
               {memberships.filter(m => m.status === 'pending').length > 0 && (
                 <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
@@ -381,8 +381,8 @@ export default function Admin() {
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="donations" className="gap-2"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
-            <TabsTrigger value="budget" className="gap-2"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
+            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
             </TabsList>
             </div>
 
