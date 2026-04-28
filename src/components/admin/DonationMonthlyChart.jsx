@@ -22,8 +22,8 @@ export default function DonationMonthlyChart({ donations }) {
   // Group by month
   const monthMap = {};
   donations.forEach(d => {
-    if (!d.created_date) return;
-    const key = format(new Date(d.created_date), 'MMM yyyy');
+    if (!d.donation_date) return;
+    const key = format(new Date(d.donation_date + 'T00:00:00'), 'MMM yyyy');
     monthMap[key] = (monthMap[key] || 0) + (d.amount || 0);
   });
 
