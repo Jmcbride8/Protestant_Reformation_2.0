@@ -60,7 +60,7 @@ export default function Schedule() {
       </section>
 
       {/* Weekly Recurring Schedule */}
-      <section className="py-16 bg-primary/90 text-primary-foreground">
+      <section className="py-16 bg-secondary/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -68,8 +68,8 @@ export default function Schedule() {
             viewport={{ once: true }}
             className="mb-8"
           >
-            <p className="font-body text-xs tracking-[0.3em] uppercase text-primary-foreground/50 mb-2">Every Week</p>
-            <h2 className="font-heading text-3xl text-primary-foreground">Regular Gatherings</h2>
+            <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-2">Every Week</p>
+            <h2 className="font-heading text-3xl text-primary">Regular Gatherings</h2>
           </motion.div>
           <div className="space-y-4">
             {scheduleItems.filter(item => item.is_active !== false).map((item, index) => {
@@ -81,16 +81,16 @@ export default function Schedule() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-6 p-6 rounded-xl bg-primary-foreground/5 border border-primary-foreground/10"
+                  className="flex items-center gap-6 p-6 rounded-xl bg-card border border-border/60 shadow-sm"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-primary-foreground/10 flex items-center justify-center shrink-0">
-                    {Icon && <Icon className="w-6 h-6" />}
+                  <div className="w-12 h-12 rounded-lg bg-accent/15 flex items-center justify-center shrink-0">
+                    {Icon && <Icon className="w-6 h-6 text-accent" />}
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-heading text-lg">{item.event}</h4>
-                    <p className="font-body text-sm text-primary-foreground/60">{item.day}</p>
+                    <h4 className="font-heading text-lg text-primary">{item.event}</h4>
+                    <p className="font-body text-sm text-muted-foreground">{item.day}</p>
                   </div>
-                  <div className="flex items-center gap-2 text-primary-foreground/70">
+                  <div className="flex items-center gap-2 text-muted-foreground">
                     <Clock className="w-4 h-4" />
                     <span className="font-body text-sm">{item.time}</span>
                   </div>
@@ -98,10 +98,7 @@ export default function Schedule() {
               );
             })}
           </div>
-          <div className="text-center mt-12 flex items-center justify-center gap-2 text-primary-foreground/60">
-            <MapPin className="w-4 h-4" />
-            <span className="font-body text-sm">123 Hope Street, Santa Barbara, CA 93101</span>
-          </div>
+
         </div>
       </section>
     </div>
