@@ -210,21 +210,23 @@ export default function Admin() {
         </div>
 
         {/* Section selector */}
-        <div className="flex gap-2 mb-6 p-1 bg-secondary rounded-xl w-fit -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-          {sidebarSections.map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              onClick={() => setAdminSection(key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-body font-semibold text-sm transition-all ${
-                adminSection === key
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {label}
-            </button>
-          ))}
+        <div className="mb-8 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-gradient-to-b from-secondary to-background border-b-2 border-border/30">
+          <div className="flex flex-wrap gap-3">
+            {sidebarSections.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                onClick={() => setAdminSection(key)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-body font-semibold text-sm transition-all whitespace-nowrap ${
+                  adminSection === key
+                    ? 'bg-primary text-primary-foreground shadow-md'
+                    : 'bg-card text-muted-foreground border border-border/50 hover:bg-accent/5 hover:text-foreground hover:border-border'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
           {/* Content */}
