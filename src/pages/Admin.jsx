@@ -190,8 +190,6 @@ export default function Admin() {
     { key: 'groups', label: 'Community Groups', icon: UsersRound },
     { key: 'finances', label: 'Finances', icon: HandCoins },
     { key: 'staff', label: 'Staff & Operations', icon: Kanban },
-    { key: 'church_info', label: 'Church Info', icon: Church },
-    { key: 'features', label: 'Feature Toggles', icon: ToggleLeft },
   ];
 
   return (
@@ -248,6 +246,8 @@ export default function Admin() {
             <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
             <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
+            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
+            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
             </TabsList>
           </div>
 
@@ -615,27 +615,6 @@ export default function Admin() {
             <StaffKanban />
           </div>
         )}
-
-        {/* Church Info Section */}
-        {adminSection === 'church_info' && (
-          <div className="pt-8">
-            <ChurchInfoManager />
-          </div>
-        )}
-
-        {/* Feature Toggles Section */}
-        {adminSection === 'features' && (
-          <div className="pt-8">
-            <FeatureTogglesManager />
-          </div>
-        )}
-
-          {/* Groups Section */}
-          {adminSection === 'groups' && (
-          <div className="pt-8">
-            <GroupsManager />
-          </div>
-          )}
 
         </div>{/* end content */}
         </div>
