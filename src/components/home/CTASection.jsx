@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
@@ -10,6 +11,7 @@ export default function CTASection() {
   const info = useChurchInfo();
   const [showMemberModal, setShowMemberModal] = useState(false);
   return (
+    <>
     <section className="py-24 bg-primary text-primary-foreground">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -48,7 +50,12 @@ export default function CTASection() {
           </div>
         </motion.div>
       </div>
-      {showMemberModal && <BecomeMemberModal onClose={() => setShowMemberModal(false)} />}
     </section>
+    {showMemberModal && createPortal(
+      <BecomeMemberModal onClose={() => setShowMemberModal(false)} />,
+      document.body
+    )}
+    </>
+  
   );
 }

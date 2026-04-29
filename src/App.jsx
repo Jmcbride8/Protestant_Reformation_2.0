@@ -28,6 +28,7 @@ import Memories from './pages/Memories';
 import You from './pages/You';
 import GroupAdmin from './pages/GroupAdmin';
 import Church from './pages/About';
+import Membership from './pages/Membership';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -63,6 +64,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<Church />} />
+        <Route path="/membership" element={<Membership />} />
         <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}

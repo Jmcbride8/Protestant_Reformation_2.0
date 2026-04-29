@@ -13,8 +13,7 @@ const navLinks = [
 
 const aboutLinksAll = [
   { label: 'Church', sub: 'Who we are & what we believe', path: '/about' },
-  { label: 'Vision', sub: 'Our relational philosophy', path: '/vision' },
-  { label: 'Contact', sub: 'Get in touch', path: '/contact' },
+  { label: 'Membership', sub: 'Join the Hope Church family', path: '/membership' },
 ];
 
 const churchLinksAll = [
