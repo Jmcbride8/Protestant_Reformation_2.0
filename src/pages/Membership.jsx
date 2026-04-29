@@ -119,6 +119,84 @@ export default function Membership() {
         </div>
       </section>
 
+      {/* Built for Community */}
+      <section className="py-24 bg-secondary/20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">The Science of Belonging</p>
+            <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">
+              We Were Made for <span className="italic">Each Other</span>
+            </h2>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              This isn't just a spiritual conviction — it's wired into our biology. Humans are not meant to go it alone. 
+              The research is clear: people who are embedded in a committed community live longer, happier, and more meaningful lives.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                stat: '33%',
+                label: 'Lower mortality risk',
+                source: 'PLOS Medicine, 2010',
+                description: 'A meta-analysis of 148 studies found that people with strong social relationships had a 50% greater likelihood of survival — comparable to quitting smoking.',
+              },
+              {
+                stat: '80+',
+                label: 'Years of data',
+                source: 'Harvard Study of Adult Development',
+                description: 'The longest-running study on human happiness concluded that close relationships — not wealth, fame, or achievement — are what keep people happy and healthy throughout their lives.',
+              },
+              {
+                stat: '7 yrs',
+                label: 'Longer life expectancy',
+                source: 'American Journal of Public Health',
+                description: 'Regular attendance at religious services is associated with living 7 years longer on average — driven largely by the social connection, sense of purpose, and community support they provide.',
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-card border border-border/50 rounded-2xl p-8 text-center"
+              >
+                <p className="font-heading text-5xl text-accent mb-2">{item.stat}</p>
+                <p className="font-body font-semibold text-primary text-lg mb-1">{item.label}</p>
+                <p className="font-body text-xs text-muted-foreground mb-4 italic">{item.source}</p>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-3xl mx-auto text-center">
+            <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
+              "The most important thing in the world is not what you do, but who you do it with."
+            </p>
+            <p className="font-body text-sm text-primary-foreground/70">— Dr. Robert Waldinger, Director, Harvard Study of Adult Development</p>
+          </div>
+
+          <div className="mt-16 max-w-3xl mx-auto">
+            <h3 className="font-heading text-3xl text-primary mb-4 text-center">The Best Platform for Generosity</h3>
+            <p className="font-body text-muted-foreground leading-relaxed mb-4 text-center">
+              The local church is one of the most powerful and accountable vehicles for community impact that exists. 
+              Unlike faceless institutions, church puts generosity in the hands of people who actually know their neighbors — 
+              who see the need, who show up, and who stick around.
+            </p>
+            <p className="font-body text-muted-foreground leading-relaxed text-center">
+              Membership is how you go from spectator to participant. It's where you stop waiting for someone else 
+              to fix things, and start being the community you wish existed.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 bg-primary text-primary-foreground text-center">
         <div className="max-w-2xl mx-auto px-4">
