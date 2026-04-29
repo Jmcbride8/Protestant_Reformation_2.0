@@ -84,9 +84,12 @@ export default function GroupsManager() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pt-6">
       <div className="flex items-center justify-between">
-        <h3 className="font-heading text-xl text-primary">Community Groups</h3>
+        <div>
+          <h3 className="font-heading text-xl text-primary">Community Groups</h3>
+          <p className="font-body text-sm text-muted-foreground mt-1">Create and manage your community groups.</p>
+        </div>
         {!showForm && (
           <Button size="sm" className="font-body text-xs gap-2" onClick={() => setShowForm(true)}>
             <Plus className="w-4 h-4" /> Add Group
