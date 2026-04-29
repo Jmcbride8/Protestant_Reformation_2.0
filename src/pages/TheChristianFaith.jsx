@@ -75,7 +75,7 @@ function UniquenessSection() {
       desc: "Because God is infinitely good, sin against Him (and against those made in His image) is infinitely serious. It's not just breaking rules—it's transgressing against infinite goodness, which makes the weight of sin incalculable."
     },
     {
-      title: "And we cannot bridge the gap ourselves",
+      title: "Which we compound with ignorance and arrogance trying to fix it ourselves",
       desc: "Unlike other religions that call you to fix yourself through effort or discipline, Christianity teaches that finite beings cannot right an infinite wrong against a perfectly good God. To try is arrogance. You cannot earn your way back to Him."
     },
     {
