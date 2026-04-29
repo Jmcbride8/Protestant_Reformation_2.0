@@ -20,7 +20,7 @@ export default function CTASection() {
           </h2>
           <p className="font-body text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto leading-relaxed">
             You don't need to have it all figured out. You don't need to dress a certain way. 
-            You just need to show up and see if God does too.
+            Just show up and see if God does too.
           </p>
           
           <div className="flex flex-wrap justify-center gap-8 mb-10">
