@@ -477,10 +477,11 @@ function AboutHero() {
 export default function About() {
   const [showMemberModal, setShowMemberModal] = useState(false);
 
-  const { data: members = [] } = useQuery({
+  const { data: allMembers = [] } = useQuery({
     queryKey: ['teamMembers'],
     queryFn: () => base44.entities.MemberProfile.filter({ is_directory_visible: true }),
   });
+  const members = allMembers.filter(m => m.role === 'Pastor' || m.role === 'Staff');
 
   const { data: beliefs = [] } = useQuery({
     queryKey: ['beliefs'],
