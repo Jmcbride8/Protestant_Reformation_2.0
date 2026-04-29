@@ -78,8 +78,7 @@ export default function Membership() {
             <div>
               <h2 className="font-heading text-4xl text-primary mb-6">What Does Membership Mean?</h2>
               <p className="font-body text-muted-foreground leading-relaxed mb-6">
-                At Hope Church, membership isn't about filling a seat — it's about covenant. 
-                When you become a member, you're saying: <em>"I'm not just passing through. I'm here. And I'm yours."</em>
+                At Hope Church, membership is about family — showing up for each other, building something together, and doing life side by side. It's how you stop being a visitor and start belonging to something real.
               </p>
               <p className="font-body text-muted-foreground leading-relaxed mb-8">
                 We believe the local church is God's primary means of growing people and reaching the world. 
