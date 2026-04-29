@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ import { BookOpen, Cross, Heart, Globe, Users, Zap, Star, Flame, Shield } from '
 import { toast } from "sonner";
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
 import { useChurchInfo } from '@/hooks/useChurchInfo';
+import EditableImage from '@/components/admin/EditableImage';
 
 const ICON_MAP = { BookOpen, Cross, Heart, Globe, Users, Zap, Star, Flame, Shield };
 
@@ -191,7 +192,7 @@ function VisionPillarCard({ item, i }) {
   );
 }
 
-function VisionSection() {
+function VisionSection({ isAdmin }) {
   return (
     <section className="py-28 bg-background">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -236,13 +237,16 @@ function VisionSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Physical Hub */}
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="rounded-2xl border border-border/50 overflow-hidden bg-card">
-              <div className="relative h-56 overflow-hidden">
-                <img
+              <div className="relative h-56 overflow-hidden group/editimg">
+                <EditableImage
+                  imageKey="about_physical_hub"
                   src="https://images.unsplash.com/photo-1560840067-ddcaeb7831d2?w=800&q=80"
                   alt="Hope Church building"
                   className="w-full h-full object-cover"
+                  isAdmin={isAdmin}
+                  wrapperClassName="relative w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-5">
                   <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 01</span>
                   <h4 className="font-heading text-2xl text-white mt-0.5">A Physical Hub</h4>
@@ -262,13 +266,16 @@ function VisionSection() {
 
             {/* Digital Hub */}
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="rounded-2xl border border-border/50 overflow-hidden bg-card">
-              <div className="relative h-56 overflow-hidden">
-                <img
+              <div className="relative h-56 overflow-hidden group/editimg">
+                <EditableImage
+                  imageKey="about_digital_hub"
                   src="https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
                   alt="Hope Church digital platform"
                   className="w-full h-full object-cover object-top"
+                  isAdmin={isAdmin}
+                  wrapperClassName="relative w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-5">
                   <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 02</span>
                   <h4 className="font-heading text-2xl text-white mt-0.5">A Digital Hub</h4>
@@ -599,6 +606,13 @@ function AboutHero() {
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function Church() {
   const [showMemberModal, setShowMemberModal] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    base44.auth.me().then(u => {
+      if (u && ['admin', 'staff', 'pastor'].includes(u.role?.toLowerCase())) setIsAdmin(true);
+    }).catch(() => {});
+  }, []);
 
   const { data: allMembers = [] } = useQuery({
     queryKey: ['teamMembers'],
@@ -616,7 +630,7 @@ export default function Church() {
       {showMemberModal && <BecomeMemberModal onClose={() => setShowMemberModal(false)} />}
       <AboutHero />
       <LeadershipSection members={members} />
-      <VisionSection />
+      <VisionSection isAdmin={isAdmin} />
       <BeliefsSection beliefs={beliefs} />
       <StorySection />
       <MembershipSection onOpenModal={() => setShowMemberModal(true)} />
