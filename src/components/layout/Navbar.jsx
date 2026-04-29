@@ -14,6 +14,7 @@ const navLinks = [
 const aboutLinksAll = [
   { label: 'Hope Church', sub: 'Who we are & what we believe', path: '/about' },
   { label: 'Membership', sub: 'Join the Hope Church family', path: '/membership' },
+  { label: 'The Christian Faith', sub: 'History, beliefs & denominations', path: '/the-christian-faith' },
 ];
 
 const churchLinksAll = [
@@ -41,7 +42,7 @@ export default function Navbar() {
   const location = useLocation();
   const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin', '/church-admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you', '/group-admin', '/membership', '/about'];
+  const lightPages = ['/admin', '/church-admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you', '/group-admin', '/membership', '/about', '/the-christian-faith'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
