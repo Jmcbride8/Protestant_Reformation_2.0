@@ -316,7 +316,29 @@ export default function Admin() {
             <BeliefsManager />
           </TabsContent>
 
+          {/* Carousel Tab */}
+          <TabsContent value="carousel">
+            <CarouselMembersManager />
+          </TabsContent>
+
+          {/* Church Info Tab */}
+          <TabsContent value="church_info">
+            <ChurchInfoManager />
+          </TabsContent>
+
+          {/* Features Tab */}
+          <TabsContent value="features">
+            <FeatureTogglesManager />
+          </TabsContent>
+
           </Tabs>
+        )}
+
+        {/* Community Groups Section */}
+        {adminSection === 'groups' && (
+          <div className="space-y-6">
+            <GroupsManager />
+          </div>
         )}
 
         {/* People & Community Section */}
