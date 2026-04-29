@@ -80,6 +80,7 @@ function GiveToGroupForm({ group, user, onSuccess }) {
       className="flex flex-col h-full"
     >
       <h3 className="font-heading text-lg text-primary mb-4">Give to {group.name}</h3>
+      <p className="font-body text-xs text-muted-foreground mb-4">Enter an amount below to record your contribution to the group pool.</p>
        <div className="space-y-3 flex-1">
           <div className="space-y-2">
             <Label className="font-body text-sm">Amount ($)</Label>
