@@ -34,7 +34,7 @@ export default function Navbar() {
   const location = useLocation();
   const { isEnabled } = useFeatures();
   const [scrolled, setScrolled] = useState(false);
-  const lightPages = ['/admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you'];
+  const lightPages = ['/admin', '/church-admin', '/sermons', '/groups', '/services', '/schedule', '/milestones', '/volunteer', '/giving', '/contact', '/community-support', '/carpool', '/vision', '/memories', '/you', '/group-admin'];
   const useWhiteNav = !scrolled && !lightPages.includes(location.pathname);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
@@ -188,10 +188,10 @@ export default function Navbar() {
                   <button
                     onClick={() => setMeOpen(v => !v)}
                     className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
-                      useWhiteNav
-                        ? ['/you', '/admin'].includes(location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                        : ['/you', '/admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
-                    }`}
+                        useWhiteNav
+                          ? ['/you', '/admin', '/church-admin', '/group-admin'].includes(location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                          : ['/you', '/admin', '/church-admin', '/group-admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                      }`}
                   >
                     Me
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
@@ -199,23 +199,31 @@ export default function Navbar() {
                   {meOpen && (
                     <div className="absolute top-full right-0 mt-3 w-48 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
                       <Link
-                        to="/you"
-                        onClick={() => setMeOpen(false)}
-                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/you' ? 'bg-secondary/40' : ''}`}
-                      >
-                        <span className="font-body text-sm font-medium text-foreground">Profile</span>
-                        <span className="font-body text-xs text-muted-foreground">Your info & settings</span>
-                      </Link>
-                      {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
-                        <Link
-                          to="/admin"
-                          onClick={() => setMeOpen(false)}
-                          className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors ${location.pathname === '/admin' ? 'bg-secondary/40' : ''}`}
-                        >
-                          <span className="font-body text-sm font-medium text-foreground">Admin Dashboard</span>
-                          <span className="font-body text-xs text-muted-foreground">Manage the church</span>
-                        </Link>
-                      )}
+                         to="/you"
+                         onClick={() => setMeOpen(false)}
+                         className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/you' ? 'bg-secondary/40' : ''}`}
+                       >
+                         <span className="font-body text-sm font-medium text-foreground">Profile</span>
+                         <span className="font-body text-xs text-muted-foreground">Your info & settings</span>
+                       </Link>
+                       <Link
+                         to="/group-admin"
+                         onClick={() => setMeOpen(false)}
+                         className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 ${location.pathname === '/group-admin' ? 'bg-secondary/40' : ''}`}
+                       >
+                         <span className="font-body text-sm font-medium text-foreground">Group Admin</span>
+                         <span className="font-body text-xs text-muted-foreground">Manage your groups</span>
+                       </Link>
+                       {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                         <Link
+                           to="/church-admin"
+                           onClick={() => setMeOpen(false)}
+                           className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors ${location.pathname === '/church-admin' ? 'bg-secondary/40' : ''}`}
+                         >
+                           <span className="font-body text-sm font-medium text-foreground">Church Admin</span>
+                           <span className="font-body text-xs text-muted-foreground">Manage the church</span>
+                         </Link>
+                       )}
                     </div>
                   )}
                 </div>
@@ -313,13 +321,20 @@ export default function Navbar() {
                          >
                            Profile
                          </Link>
+                         <Link
+                           to="/group-admin"
+                           onClick={() => setOpen(false)}
+                           className={`font-body text-base tracking-wide ${location.pathname === '/group-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                         >
+                           Group Admin
+                         </Link>
                          {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
                            <Link
-                             to="/admin"
+                             to="/church-admin"
                              onClick={() => setOpen(false)}
-                             className={`font-body text-base tracking-wide ${location.pathname === '/admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/church-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
                            >
-                             Admin Dashboard
+                             Church Admin
                            </Link>
                          )}
                        </div>
