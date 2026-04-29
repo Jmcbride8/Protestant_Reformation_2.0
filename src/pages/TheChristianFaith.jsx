@@ -46,8 +46,8 @@ function IntroSection() {
 
           <div className="relative h-80 rounded-2xl overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1516214104703-3e2c019b1519?w=1200&q=80"
-              alt="Stained glass window"
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80"
+              alt="Church interior"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
@@ -355,7 +355,7 @@ function HistorySection() {
   const eras = [
     {
       title: "Ancient Foundations: The Old Testament Story",
-      image: "https://images.unsplash.com/photo-1584399752748-ca37537684da?w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
       points: [
         "Long before Jesus, God made promises to a man named Abraham—that his family would become a blessing to the world.",
         "Moses led people out of slavery and received the Ten Commandments—God's moral guidance.",
@@ -366,7 +366,7 @@ function HistorySection() {
     },
     {
       title: "The Central Story: Jesus Arrives",
-      image: "https://images.unsplash.com/photo-1510551867776-95caa1c91b3d?w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80",
       points: [
         "Jesus was born in Bethlehem around 2,000 years ago. He lived a humble life—as a carpenter, then as a teacher.",
         "He taught about God's love, healed the sick, and challenged systems of power and religious hypocrisy.",
@@ -378,7 +378,7 @@ function HistorySection() {
     },
     {
       title: "The Early Church: Good News Spreads",
-      image: "https://images.unsplash.com/photo-1505048959348-3d7b4ef7e09a?w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80",
       points: [
         "After Jesus ascended to heaven, His followers gathered in Jerusalem. They were filled with courage and joy, despite danger.",
         "On the day of Pentecost, the Holy Spirit empowered them to speak boldly. About 3,000 people became followers that day.",
@@ -390,7 +390,7 @@ function HistorySection() {
     },
     {
       title: "Shaping the World: Key Moments in Christendom",
-      image: "https://images.unsplash.com/photo-1541339907198-e4f3a2b2c869?w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
       points: [
         "Constantine (300s): The Roman Emperor legalized Christianity. It went from persecuted minority to accepted faith.",
         "Medieval Period: The Church became deeply embedded in European culture. Some beautiful things happened (art, education, hospitals), and some troubling things too (corruption, misuse of power).",
@@ -402,7 +402,7 @@ function HistorySection() {
     },
     {
       title: "Christianity Today: A Global Movement",
-      image: "https://images.unsplash.com/photo-1529398636532-36a0c6f83589?w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200&q=80",
       points: [
         "Over 2.4 billion Christians worldwide—roughly 1/3 of humanity.",
         "Christianity is growing fastest in Africa, Asia, and Latin America.",
