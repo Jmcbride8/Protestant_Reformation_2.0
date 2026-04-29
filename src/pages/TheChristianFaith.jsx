@@ -564,7 +564,7 @@ function HistorySection({ isAdmin }) {
         >
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">A Tapestry of History</h2>
           <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Christianity's story spans 2,000 years and every continent. Here's how it unfolded.
+            Christianity is a real religion—rooted in real people, real places, and real lessons lived across millennia. These truths aren't abstract ideals; they're proven through centuries of consistency and persistence. Their potency has only been enhanced by their endurance.
           </p>
         </motion.div>
 
