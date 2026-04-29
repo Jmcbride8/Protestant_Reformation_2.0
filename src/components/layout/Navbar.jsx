@@ -157,38 +157,6 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Serve & Give dropdown — members only */}
-            {user && serveGiveLinks.length > 0 && (
-              <div className="relative" ref={serveGiveRef}>
-                <button
-                  onClick={() => setServeGiveOpen(v => !v)}
-                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
-                    useWhiteNav
-                      ? serveGiveLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
-                      : serveGiveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
-                  }`}
-                >
-                  Serve & Give
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${serveGiveOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {serveGiveOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
-                    {serveGiveLinks.map(link => (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        onClick={() => setServeGiveOpen(false)}
-                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
-                      >
-                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
-                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
             {/* Community dropdown — members only */}
             {user && (
               <div className="relative" ref={communityRef}>
@@ -221,7 +189,37 @@ export default function Navbar() {
               </div>
             )}
 
-
+            {/* Serve & Give dropdown — members only */}
+            {user && serveGiveLinks.length > 0 && (
+              <div className="relative" ref={serveGiveRef}>
+                <button
+                  onClick={() => setServeGiveOpen(v => !v)}
+                  className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                    useWhiteNav
+                      ? serveGiveLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                      : serveGiveLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  Serve & Give
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${serveGiveOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {serveGiveOpen && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                    {serveGiveLinks.map(link => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setServeGiveOpen(false)}
+                        className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
+                      >
+                        <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                        <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {user ? (
               <div className="flex items-center gap-3">
@@ -338,19 +336,19 @@ export default function Navbar() {
                     )}
                   </div>
                 )}
-                {/* Serve & Give submenu in mobile — members only, collapsible */}
-                {user && serveGiveLinks.length > 0 && (
+                {/* Community submenu in mobile — members only, collapsible */}
+                {user && (
                   <div>
                     <button
-                      onClick={() => setMobileServeGiveOpen(v => !v)}
+                      onClick={() => setMobileCommunityOpen(v => !v)}
                       className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
                     >
-                      Serve & Give
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileServeGiveOpen ? 'rotate-180' : ''}`} />
+                      People
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileCommunityOpen ? 'rotate-180' : ''}`} />
                     </button>
-                    {mobileServeGiveOpen && (
+                    {mobileCommunityOpen && (
                       <div className="flex flex-col gap-4 pl-2 mt-3">
-                        {serveGiveLinks.map(link => (
+                        {communityLinks.map(link => (
                           <Link
                             key={link.path}
                             to={link.path}
@@ -366,19 +364,20 @@ export default function Navbar() {
                     )}
                   </div>
                 )}
-                {/* Community submenu in mobile — members only, collapsible */}
-                {user && (
+
+                {/* Serve & Give submenu in mobile — members only, collapsible */}
+                {user && serveGiveLinks.length > 0 && (
                   <div>
                     <button
-                      onClick={() => setMobileCommunityOpen(v => !v)}
+                      onClick={() => setMobileServeGiveOpen(v => !v)}
                       className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
                     >
-                      People
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileCommunityOpen ? 'rotate-180' : ''}`} />
+                      Serve & Give
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileServeGiveOpen ? 'rotate-180' : ''}`} />
                     </button>
-                    {mobileCommunityOpen && (
+                    {mobileServeGiveOpen && (
                       <div className="flex flex-col gap-4 pl-2 mt-3">
-                        {communityLinks.map(link => (
+                        {serveGiveLinks.map(link => (
                           <Link
                             key={link.path}
                             to={link.path}
