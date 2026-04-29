@@ -67,20 +67,28 @@ function IntroSection({ isAdmin }) {
 function UniquenessSection() {
   const points = [
     {
-      title: "It's Rooted in a Relationship, Not Rules",
-      desc: "Christianity starts with the belief that God wants a personal connection with you. It's not about earning points or following a perfect moral checklist—it's about being known and loved by the creator of the universe."
+      title: "God is Infinitely Good & We Bear His Image",
+      desc: "God is infinitely good and created us in His image. This isn't just a philosophical idea—it means we reflect God's character. Every person carries infinite worth because they reflect an infinite God."
     },
     {
-      title: "Grace, Not Transaction",
-      desc: "A core idea: you can't earn your way into God's good graces. This stands in stark contrast to many belief systems that demand you perform well enough. Christianity says you're loved and accepted as you are, and then you grow from that place of security."
+      title: "Every Sin is Infinitely Serious",
+      desc: "Because God is infinitely good, sin against Him (and against those made in His image) is infinitely serious. It's not just breaking rules—it's transgressing against infinite goodness, which makes the weight of sin incalculable."
     },
     {
-      title: "God Became Human",
-      desc: "Christians believe that God didn't stay distant—He entered human history as Jesus, experienced pain, lived a real life, and showed us what love and sacrifice look like. That's remarkably personal and vulnerable."
+      title: "We Cannot Bridge the Gap Ourselves",
+      desc: "Unlike other religions that call you to fix yourself through effort or discipline, Christianity teaches that finite beings cannot right an infinite wrong against a perfectly good God. To try is arrogance. You cannot earn your way back to Him."
     },
     {
-      title: "Community is Central",
-      desc: "Faith isn't meant to be private. Christians gather, support one another, celebrate together, and carry each other's burdens. The church is meant to be a family—not a building, but a living community."
+      title: "God Bridged the Unbridgeable Gap",
+      desc: "Here's where Christianity is radically different: God Himself came and died to bridge the infinite gap we could never bridge. Through Jesus, God absorbed the full weight of our infinite transgression and made reconciliation possible."
+    },
+    {
+      title: "Forgiveness Through Humility, Not Achievement",
+      desc: "We receive forgiveness not by performing or earning it, but by humbly acknowledging we could never bridge the gap ourselves and accepting God's free gift. It requires honest confession of our gravity and complete dependence on His mercy."
+    },
+    {
+      title: "Living in Grateful Response",
+      desc: "Once forgiven, Christians live differently—not to earn salvation, but to demonstrate gratitude. A life transformed by grace becomes a living thank you to God. Service, love, and growth flow from having received something we never deserved."
     },
   ];
 
