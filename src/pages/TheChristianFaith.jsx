@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
+import EditableImage from '@/components/admin/EditableImage';
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
@@ -24,7 +26,7 @@ function Hero() {
 }
 
 // ─── What is Christianity ────────────────────────────────────────────────────
-function IntroSection() {
+function IntroSection({ isAdmin }) {
   return (
     <section className="py-28 bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,11 +46,14 @@ function IntroSection() {
             </p>
           </div>
 
-          <div className="relative h-80 rounded-2xl overflow-hidden">
-            <img
+          <div className="relative h-80 rounded-2xl overflow-hidden group/editimg">
+            <EditableImage
+              imageKey="faith_intro"
               src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80"
               alt="Church interior"
               className="w-full h-full object-cover"
+              isAdmin={isAdmin}
+              wrapperClassName="relative w-full h-full"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
           </div>
@@ -349,7 +354,7 @@ function CultSection() {
 }
 
 // ─── Historical Timeline ────────────────────────────────────────────────────
-function HistorySection() {
+function HistorySection({ isAdmin }) {
   const [activeEra, setActiveEra] = useState(0);
 
   const eras = [
@@ -460,11 +465,14 @@ function HistorySection() {
               <h3 className="font-heading text-2xl sm:text-3xl text-primary mb-4">{eras[activeEra].title}</h3>
             </div>
 
-            <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden">
-              <img
+            <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden group/editimg">
+              <EditableImage
+                imageKey={`faith_era_${activeEra}`}
                 src={eras[activeEra].image}
                 alt={eras[activeEra].title}
                 className="w-full h-full object-cover"
+                isAdmin={true}
+                wrapperClassName="relative w-full h-full"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
             </div>
@@ -516,15 +524,23 @@ function ClosingSection() {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function TheChristianFaith() {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    base44.auth.me().then(u => {
+      if (u && ['admin', 'staff', 'pastor'].includes(u.role?.toLowerCase())) setIsAdmin(true);
+    }).catch(() => {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Hero />
-      <IntroSection />
+      <IntroSection isAdmin={isAdmin} />
       <UniquenessSection />
       <CoreBeliefsSection />
       <DenominationsSection />
       <CultSection />
-      <HistorySection />
+      <HistorySection isAdmin={isAdmin} />
       <ClosingSection />
     </div>
   );
