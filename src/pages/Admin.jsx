@@ -240,13 +240,13 @@ export default function Admin() {
         <Tabs defaultValue="sermons" className="space-y-6">
           <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
-            <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
-            <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
-            <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
-            <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
-            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
-            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Users className="w-4 h-4" /> Memories</TabsTrigger>
+            <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
+            <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
+            <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
+            <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
+            <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
+            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
           </div>
 
@@ -347,8 +347,8 @@ export default function Admin() {
         <Tabs defaultValue="church_info" className="space-y-6">
           <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
-            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
+            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
+            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
             </TabsList>
             </div>
 
@@ -367,10 +367,10 @@ export default function Admin() {
         <Tabs defaultValue="volunteers" className="space-y-6">
           <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none gap-3 [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
-            <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
-            <TabsTrigger value="directory" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
-            <TabsTrigger value="membership" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3">
+            <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
+            <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
+            <TabsTrigger value="directory" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
+            <TabsTrigger value="membership" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground">
               <UserCheck className="w-4 h-4" /> Membership
               {memberships.filter(m => m.status === 'pending').length > 0 && (
                 <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
@@ -378,8 +378,8 @@ export default function Admin() {
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
-            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
+            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
             </TabsList>
             </div>
 
