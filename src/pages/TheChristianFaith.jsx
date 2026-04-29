@@ -90,6 +90,10 @@ function UniquenessSection() {
       title: "Living in Grateful Response",
       desc: "Once forgiven, Christians live differently—not to earn salvation, but to demonstrate gratitude. A life transformed by grace becomes a living thank you to God. Service, love, and growth flow from having received something we never deserved."
     },
+    {
+      title: "The Only Honest Path of Righteousness",
+      desc: "Because our good works flow from gratitude for salvation—not attempts to earn it—Christianity offers the only truly honest path of righteousness. We're freed from transactional love and empowered to live sacrificially and volitionally. The church body, family, and society become places where we aspire to live out these ideals together, even when we fall short."
+    },
   ];
 
   return (
