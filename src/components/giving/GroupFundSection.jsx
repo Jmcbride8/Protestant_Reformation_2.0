@@ -18,7 +18,7 @@ const TYPE_CONFIG = {
 
 function PoolBalance({ transactions }) {
   const received = transactions.filter(t => t.type === 'given' || t.type === 'received').reduce((s, t) => s + (t.amount || 0), 0);
-  const spent    = transactions.filter(t => t.type === 'spent').reduce((s, t) => s + (t.amount || 0), 0);
+  const spent    = transactions.filter(t => t.type === 'spent' && t.status !== 'pending').reduce((s, t) => s + (t.amount || 0), 0);
   const balance  = received - spent;
 
   return (
@@ -187,11 +187,12 @@ function LogExpenseForm({ group, onSuccess }) {
   }
 
 function TransactionList({ transactions }) {
-  if (transactions.length === 0) {
+  const approved = transactions.filter(t => t.status !== 'pending');
+  if (approved.length === 0) {
     return <p className="font-body text-sm text-muted-foreground text-center py-6">No transactions yet.</p>;
   }
 
-  const sorted = [...transactions].sort((a, b) => new Date(b.transaction_date || b.created_date) - new Date(a.transaction_date || a.created_date));
+  const sorted = [...approved].sort((a, b) => new Date(b.transaction_date || b.created_date) - new Date(a.transaction_date || a.created_date));
 
   return (
     <div className="divide-y divide-border/40">
