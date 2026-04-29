@@ -199,7 +199,7 @@ export default function Admin() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3">
             <ShieldCheck className="w-7 h-7 text-primary" />
-            <h1 className="font-heading text-3xl text-primary">Admin Console</h1>
+            <h1 className="font-heading text-3xl text-primary">Church Admin Console</h1>
           </div>
           <div className="flex gap-2 flex-wrap">
             <Button variant="outline" onClick={handlePreviewAsGuest} size="sm" className="font-body gap-2 border-muted-foreground text-muted-foreground hover:bg-muted">
@@ -211,9 +211,11 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Section selector */}
-        <div className="mb-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-6 bg-secondary/30 border-b-2 border-border shadow-sm">
-          <div className="flex flex-wrap gap-2">
+        </div>{/* close max-w-7xl for header */}
+
+        {/* Section selector — full bleed */}
+        <div className="mb-0 py-6 bg-secondary/30 border-b-2 border-border shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-2">
             {sidebarSections.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
@@ -221,7 +223,7 @@ export default function Admin() {
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-lg font-body font-semibold text-sm transition-all whitespace-nowrap ${
                   adminSection === key
                     ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'bg-muted text-muted-foreground hover:bg-muted hover:text-foreground'
+                    : 'bg-secondary/30 text-muted-foreground hover:bg-secondary hover:text-foreground'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -231,8 +233,10 @@ export default function Admin() {
           </div>
         </div>
 
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
           {/* Content */}
-          <div className="min-w-0 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 mt-0">
+          <div className="min-w-0">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
