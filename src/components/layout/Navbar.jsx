@@ -17,7 +17,7 @@ const churchLinksAll = [
   { label: 'Programs', sub: 'Something for every season', path: '/services', featureKey: 'link_community_care', pageKey: 'page_services' },
   { label: 'Schedule', sub: 'When we gather', path: '/schedule', featureKey: 'link_community_schedule', pageKey: 'page_schedule' },
   { label: 'Milestones', sub: 'Life\'s sacred moments', path: '/milestones', featureKey: 'link_community_milestones', pageKey: 'page_milestones' },
-  { label: 'Contact', sub: 'Get in touch with us', path: '/contact', featureKey: null, pageKey: null },
+
 ];
 
 const communityLinksAll = [
