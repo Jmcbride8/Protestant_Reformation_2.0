@@ -102,9 +102,20 @@ function UniquenessSection() {
           className="text-center mb-16"
         >
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">Why Christianity is Different</h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             If you're unfamiliar with Christianity, here are some key ideas that set it apart.
           </p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="bg-accent/10 border border-accent/30 rounded-xl p-6 max-w-2xl mx-auto mb-4"
+          >
+            <p className="font-body italic text-muted-foreground text-base leading-relaxed">
+              "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+            </p>
+            <p className="font-body text-xs text-accent font-medium mt-3">— John 3:16</p>
+          </motion.div>
         </motion.div>
 
         <div className="space-y-4">
