@@ -336,9 +336,17 @@ export default function Admin() {
 
         {/* Community Groups Section */}
         {adminSection === 'groups' && (
-          <div className="space-y-6">
-            <GroupsManager />
+        <Tabs defaultValue="groups" className="space-y-6">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+              <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
+            </TabsList>
           </div>
+
+          <TabsContent value="groups">
+            <GroupsManager />
+          </TabsContent>
+        </Tabs>
         )}
 
         {/* People & Community Section */}
