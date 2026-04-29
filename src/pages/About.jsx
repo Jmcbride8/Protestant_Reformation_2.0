@@ -163,7 +163,7 @@ function VisionSection() {
           {[
             { heading: 'Know & Be Known', body: 'We believe every person deserves to be truly seen. Not as a face in a crowd, but as someone with a name, a story, and a place at the table.' },
             { heading: 'Rooted in Scripture', body: 'Everything we do flows from our love for the Word. We study it, preach it, and try to live it — humbly and honestly, week after week.' },
-            { heading: 'Open to All', body: 'Whether you've followed Jesus for decades or you're curious for the first time — you're welcome here exactly as you are.' },
+            { heading: 'Open to All', body: "Whether you've followed Jesus for decades or you're curious for the first time — you're welcome here exactly as you are." },
           ].map((item, i) => (
             <motion.div
               key={i}
