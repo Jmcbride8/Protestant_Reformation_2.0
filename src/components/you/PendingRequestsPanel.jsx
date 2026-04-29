@@ -4,14 +4,13 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, CheckCircle2, XCircle, User, DollarSign } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { format } from 'date-fns';
 import GiveToGroupMemberModal from '@/components/giving/GiveToGroupMemberModal';
 
 export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isAdmin, myProfile, user }) {
    const [giveTarget, setGiveTarget] = useState(null);
    const queryClient = useQueryClient();
-   const { toast } = useToast();
 
    // Fetch group members for leaders (for giving section)
      const { data: groupMembers = [] } = useQuery({
@@ -47,7 +46,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
      onSuccess: (_, { status }) => {
        queryClient.invalidateQueries({ queryKey: ['pendingRequestsForMyGroups'] });
-       toast({ title: status === 'approved' ? 'Request approved!' : 'Request rejected.', duration: 3000 });
+       toast(status === 'approved' ? 'Request approved!' : 'Request rejected.');
      },
    });
 
@@ -56,7 +55,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
        queryClient.invalidateQueries({ queryKey: ['groupFundTx'] });
-       toast({ title: 'Expense approved!', duration: 3000 });
+       toast.success('Expense approved!');
      },
    });
 
@@ -64,7 +63,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'rejected' }),
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
-       toast({ title: 'Expense rejected.', duration: 3000 });
+       toast.error('Expense rejected.');
      },
    });
 
