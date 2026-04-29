@@ -11,7 +11,6 @@ import { startMemberPreview, startGuestPreview } from '../components/layout/Memb
 import { useNavigate } from 'react-router-dom';
 import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import ChurchInfoManager from '../components/admin/ChurchInfoManager';
-import BudgetManager from '../components/admin/BudgetManager';
 import GivingManager from '../components/admin/GivingManager';
 import FundsManager from '../components/admin/FundsManager';
 import StaffKanban from '../components/admin/StaffKanban';
@@ -595,10 +594,9 @@ export default function Admin() {
           </TabsContent>
 
           {/* Budget Tab */}
-          <TabsContent value="budget" className="space-y-10">
-             <FundsManager />
+          <TabsContent value="budget">
              <GivingManager />
-             <BudgetManager />
+             <FundsManager />
           </TabsContent>
          </Tabs>
          )}
