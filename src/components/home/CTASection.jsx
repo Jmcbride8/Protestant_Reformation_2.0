@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { MapPin, Clock } from 'lucide-react';
 import { useChurchInfo } from '@/hooks/useChurchInfo';
+import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
 
 export default function CTASection() {
   const info = useChurchInfo();
+  const [showMemberModal, setShowMemberModal] = useState(false);
   return (
     <section className="py-24 bg-primary text-primary-foreground">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -40,14 +42,13 @@ export default function CTASection() {
                 Plan Your Visit
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 font-body tracking-wide">
-                Become a Member
-              </Button>
-            </Link>
+            <Button size="lg" variant="outline" onClick={() => setShowMemberModal(true)} className="border-white/30 text-white hover:bg-white/10 font-body tracking-wide">
+              Become a Member
+            </Button>
           </div>
         </motion.div>
       </div>
+      {showMemberModal && <BecomeMemberModal onClose={() => setShowMemberModal(false)} />}
     </section>
   );
 }
