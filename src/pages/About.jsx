@@ -110,9 +110,6 @@ function TeamCarousel({ members }) {
 }
 
 function LeadershipSection({ members }) {
-  const pastors = members.filter(m => m.role === 'Pastor');
-  const staff = members.filter(m => m.role === 'Staff' || m.role === 'Admin');
-
   return (
     <section className="py-28 bg-primary relative overflow-hidden">
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
@@ -126,19 +123,7 @@ function LeadershipSection({ members }) {
             Real people with open doors. We'd love to get to know you.
           </p>
         </motion.div>
-        {pastors.length > 0 && (
-          <div className="mb-20">
-            <p className="font-body text-xs tracking-[0.25em] uppercase text-white/40 font-semibold text-center mb-12">Pastoral Team</p>
-            <TeamCarousel members={pastors} />
-          </div>
-        )}
-        {staff.length > 0 && (
-          <div>
-            {pastors.length > 0 && <div className="w-16 h-px bg-white/20 mx-auto mb-16" />}
-            <p className="font-body text-xs tracking-[0.25em] uppercase text-white/40 font-semibold text-center mb-12">Staff</p>
-            <TeamCarousel members={staff} />
-          </div>
-        )}
+        {members.length > 0 && <TeamCarousel members={members} />}
       </div>
     </section>
   );
