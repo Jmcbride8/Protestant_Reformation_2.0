@@ -9,6 +9,7 @@ import { isPreviewingAsGuest } from './MemberPreviewBanner';
 
 const navLinks = [
   { label: 'Home', path: '/' },
+  { label: 'About', path: '/about' },
 ];
 
 const churchLinksAll = [

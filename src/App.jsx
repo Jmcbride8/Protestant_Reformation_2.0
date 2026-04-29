@@ -26,6 +26,7 @@ import Carpool from './pages/Carpool';
 import Vision from './pages/Vision';
 import Memories from './pages/Memories';
 import You from './pages/You';
+import About from './pages/About';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -60,6 +61,7 @@ const AuthenticatedApp = () => {
       <Route element={<PageLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}
