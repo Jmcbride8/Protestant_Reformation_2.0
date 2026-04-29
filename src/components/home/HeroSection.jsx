@@ -60,10 +60,11 @@ export default function HeroSection({ heroImage, isAdmin }) {
 
       {/* Scroll down indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
+        <p className="font-body text-sm text-white/60">Scroll down</p>
         <ChevronDown className="w-6 h-6 text-white/60" />
       </motion.div>
 
