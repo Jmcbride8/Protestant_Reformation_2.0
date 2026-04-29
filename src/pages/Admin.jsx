@@ -185,11 +185,11 @@ export default function Admin() {
 
 
   const sidebarSections = [
-    { key: 'website', label: 'Website', icon: Tv2 },
-    { key: 'church', label: 'Church', icon: Users },
-    { key: 'groups', label: 'Groups', icon: UsersRound },
-    { key: 'actions', label: 'Staff', icon: Kanban },
-    { key: 'config', label: 'Settings', icon: ToggleLeft },
+    { key: 'website', label: 'Website Content', icon: Tv2 },
+    { key: 'people', label: 'People & Community', icon: Users },
+    { key: 'groups', label: 'Community Groups', icon: UsersRound },
+    { key: 'finances', label: 'Finances', icon: HandCoins },
+    { key: 'staff', label: 'Staff & Operations', icon: Kanban },
   ];
 
   return (
@@ -245,8 +245,6 @@ export default function Admin() {
             <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
-            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
-            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
           </div>
 
@@ -322,48 +320,11 @@ export default function Admin() {
             <EventsManager />
           </TabsContent>
 
-          {/* Carousel Tab */}
-          <TabsContent value="carousel">
-            <CarouselMembersManager />
-          </TabsContent>
-
-          {/* Memories Tab */}
-          <TabsContent value="memories">
-            <MemoriesManager />
-          </TabsContent>
-
           </Tabs>
         )}
 
-        {/* Actions Section */}
-        {adminSection === 'actions' && (
-          <div className="pt-8">
-            <StaffKanban />
-          </div>
-        )}
-
-        {/* Configuration Section */}
-        {adminSection === 'config' && (
-        <Tabs defaultValue="church_info" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
-            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
-            </TabsList>
-            </div>
-
-          <TabsContent value="church_info">
-            <ChurchInfoManager />
-          </TabsContent>
-
-          <TabsContent value="features">
-            <FeatureTogglesManager />
-          </TabsContent>
-        </Tabs>
-        )}
-
-        {/* Church Administration Section */}
-        {adminSection === 'church' && (
+        {/* People & Community Section */}
+        {adminSection === 'people' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
           <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none gap-3 [&_[role=tablist]]:bg-transparent">
@@ -378,8 +339,8 @@ export default function Admin() {
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
-            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
+            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
             </div>
 
@@ -465,8 +426,6 @@ export default function Admin() {
             </div>
           </TabsContent>
 
-
-
           {/* Member Directory Tab */}
           <TabsContent value="directory">
             <MemberDirectory />
@@ -517,6 +476,28 @@ export default function Admin() {
               )}
             </div>
           </TabsContent>
+
+          {/* Carousel Tab */}
+          <TabsContent value="carousel">
+            <CarouselMembersManager />
+          </TabsContent>
+
+          {/* Memories Tab */}
+          <TabsContent value="memories">
+            <MemoriesManager />
+          </TabsContent>
+        </Tabs>
+        )}
+
+        {/* Finances Section */}
+        {adminSection === 'finances' && (
+        <Tabs defaultValue="donations" className="space-y-6">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
+            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+            </TabsList>
+            </div>
 
           {/* Donations Tab */}
           <TabsContent value="donations">
@@ -620,16 +601,49 @@ export default function Admin() {
               )}
               </div>
               </div>
-              </TabsContent>
+          </TabsContent>
 
           {/* Budget Tab */}
           <TabsContent value="budget" className="space-y-10">
-            <FundsManager />
-            <GivingManager />
-            <BudgetManager />
+             <FundsManager />
+             <GivingManager />
+             <BudgetManager />
           </TabsContent>
-          </Tabs>
-          )}
+         </Tabs>
+         )}
+
+        {/* Staff & Operations Section */}
+        {adminSection === 'staff' && (
+        <Tabs defaultValue="staff_kanban" className="space-y-6">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+            <TabsTrigger value="staff_kanban" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Kanban className="w-4 h-4" /> Staff Management</TabsTrigger>
+            <TabsTrigger value="settings" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Settings</TabsTrigger>
+            </TabsList>
+            </div>
+
+          <TabsContent value="staff_kanban">
+            <StaffKanban />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <Tabs defaultValue="church_info" className="space-y-6">
+              <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
+                <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
+                <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="church_info">
+                <ChurchInfoManager />
+              </TabsContent>
+
+              <TabsContent value="features">
+                <FeatureTogglesManager />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+         </Tabs>
+        )}
 
           {/* Groups Section */}
           {adminSection === 'groups' && (
