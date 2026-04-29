@@ -353,6 +353,11 @@ function BeliefsSection({ beliefs }) {
           <p className="font-body text-muted-foreground leading-relaxed max-w-2xl mx-auto">
             We hold to the historic Christian faith. These convictions aren't walls to keep people out — they're anchors that hold us steady and unite us in truth and love.
           </p>
+          <Link to="/the-christian-faith" className="mt-4 inline-block">
+            <Button variant="link" className="font-body text-accent">
+              Learn about the Christian faith <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
         </motion.div>
         <div className="space-y-3">
           {beliefs.map((belief, index) => (
