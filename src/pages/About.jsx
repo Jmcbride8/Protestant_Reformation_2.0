@@ -129,37 +129,74 @@ function LeadershipSection({ members }) {
 }
 
 // ─── Section 2: Vision ───────────────────────────────────────────────────────
+const visionPillars = [
+  {
+    heading: 'People Before Programs',
+    body: 'Jesus never ran a program — He sat with people. He ate with them, knew their names, and entered their pain. That is our model. Every ministry at Hope exists to connect people to each other, not to fill a calendar.',
+  },
+  {
+    heading: 'Counter-Cultural Community',
+    body: 'Society has drifted toward radical individualism. Family, friendship, and neighborhood have been replaced by screens and isolation. The Church was designed to be the antidote — a place where people are woven together by covenant love, not convenience.',
+  },
+  {
+    heading: 'Known by Name',
+    body: 'We refuse to be a place where you can attend for years without anyone knowing your name. Every person who walks through our doors carries a story worth knowing. We build structures that make that possible at every size.',
+  },
+  {
+    heading: 'Mutual Belonging',
+    body: 'Biblical community isn\'t one-directional. It\'s a web of mutual care — bearing one another\'s burdens, celebrating one another\'s joys, and showing up when it\'s hard. Membership here is a covenant, not a transaction.',
+  },
+  {
+    heading: 'Rooted in Scripture',
+    body: 'Our relational vision isn\'t a social experiment — it flows from the Word. The early church devoted themselves to fellowship (Acts 2:42). We take that seriously, letting Scripture shape how we structure our common life.',
+  },
+  {
+    heading: 'The Most Relational Church',
+    body: 'We want to be the most relationally rich church in Santa Barbara — not the largest, not the most impressive, but the one where people are most deeply known and loved. That is our north star.',
+  },
+];
+
 function VisionSection() {
   return (
     <section className="py-28 bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-          <SectionLabel label="Vision" />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
+          <SectionLabel label="Our Vision" />
           <h2 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
-            Relationships First. <span className="italic">Always.</span>
+            The Most <span className="italic">Relational</span> Church
           </h2>
-          <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-            A vision for a church that moves beyond broadcasting information to cultivating genuine, lasting human connection — at any scale.
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-          {[
-            { heading: 'Know & Be Known', body: 'We believe every person deserves to be truly seen. Not as a face in a crowd, but as someone with a name, a story, and a place at the table.' },
-            { heading: 'Rooted in Scripture', body: 'Everything we do flows from our love for the Word. We study it, preach it, and try to live it — humbly and honestly, week after week.' },
-            { heading: 'Open to All', body: "Whether you've followed Jesus for decades or you're curious for the first time — you're welcome here exactly as you are." },
-          ].map((item, i) => (
+        {/* Vision Statement Block */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-primary rounded-3xl px-10 py-12 mb-16 text-center relative overflow-hidden"
+        >
+          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, hsl(38 45% 60%) 0%, transparent 50%)' }} />
+          <p className="font-heading text-2xl sm:text-3xl text-white leading-relaxed relative z-10 max-w-3xl mx-auto">
+            "We live in an age that has atomized to the individual — where family, community, and deep relationships are no longer the default. The Church is called to be something radically different: a family in Christ that no algorithm can replicate."
+          </p>
+          <div className="mt-6 w-12 h-0.5 bg-accent mx-auto" />
+        </motion.div>
+
+        {/* Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {visionPillars.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-secondary/40 rounded-2xl p-8 border border-border/40"
+              transition={{ delay: i * 0.07 }}
+              className="flex gap-5 p-6 bg-secondary/30 rounded-2xl border border-border/40"
             >
-              <div className="w-2 h-2 rounded-full bg-accent mb-6" />
-              <h3 className="font-heading text-xl text-primary mb-3">{item.heading}</h3>
-              <p className="font-body text-muted-foreground text-sm leading-relaxed">{item.body}</p>
+              <div className="w-1 rounded-full bg-accent shrink-0 self-stretch" />
+              <div>
+                <h3 className="font-heading text-lg text-primary mb-2">{item.heading}</h3>
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">{item.body}</p>
+              </div>
             </motion.div>
           ))}
         </div>
