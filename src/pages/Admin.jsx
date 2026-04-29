@@ -190,6 +190,8 @@ export default function Admin() {
     { key: 'groups', label: 'Community Groups', icon: UsersRound },
     { key: 'finances', label: 'Finances', icon: HandCoins },
     { key: 'staff', label: 'Staff & Operations', icon: Kanban },
+    { key: 'church_info', label: 'Church Info', icon: Church },
+    { key: 'features', label: 'Feature Toggles', icon: ToggleLeft },
   ];
 
   return (
@@ -245,6 +247,7 @@ export default function Admin() {
             <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
             </TabsList>
           </div>
 
@@ -339,7 +342,6 @@ export default function Admin() {
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
             <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
             </TabsList>
             </div>
@@ -477,11 +479,6 @@ export default function Admin() {
             </div>
           </TabsContent>
 
-          {/* Carousel Tab */}
-          <TabsContent value="carousel">
-            <CarouselMembersManager />
-          </TabsContent>
-
           {/* Memories Tab */}
           <TabsContent value="memories">
             <MemoriesManager />
@@ -614,35 +611,23 @@ export default function Admin() {
 
         {/* Staff & Operations Section */}
         {adminSection === 'staff' && (
-        <Tabs defaultValue="staff_kanban" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="staff_kanban" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Kanban className="w-4 h-4" /> Staff Management</TabsTrigger>
-            <TabsTrigger value="settings" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Settings</TabsTrigger>
-            </TabsList>
-            </div>
-
-          <TabsContent value="staff_kanban">
+          <div className="pt-8">
             <StaffKanban />
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="settings">
-            <Tabs defaultValue="church_info" className="space-y-6">
-              <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none">
-                <TabsTrigger value="church_info" className="gap-2"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
-                <TabsTrigger value="features" className="gap-2"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
-              </TabsList>
+        {/* Church Info Section */}
+        {adminSection === 'church_info' && (
+          <div className="pt-8">
+            <ChurchInfoManager />
+          </div>
+        )}
 
-              <TabsContent value="church_info">
-                <ChurchInfoManager />
-              </TabsContent>
-
-              <TabsContent value="features">
-                <FeatureTogglesManager />
-              </TabsContent>
-            </Tabs>
-          </TabsContent>
-         </Tabs>
+        {/* Feature Toggles Section */}
+        {adminSection === 'features' && (
+          <div className="pt-8">
+            <FeatureTogglesManager />
+          </div>
         )}
 
           {/* Groups Section */}
