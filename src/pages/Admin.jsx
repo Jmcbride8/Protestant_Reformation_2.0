@@ -187,6 +187,7 @@ export default function Admin() {
   const sidebarSections = [
     { key: 'website', label: 'Website', icon: Tv2 },
     { key: 'church', label: 'Church', icon: Users },
+    { key: 'groups', label: 'Groups', icon: UsersRound },
     { key: 'actions', label: 'Staff', icon: Kanban },
     { key: 'config', label: 'Settings', icon: ToggleLeft },
   ];
@@ -379,7 +380,6 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
-            <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             </TabsList>
             </div>
 
@@ -628,12 +628,14 @@ export default function Admin() {
             <GivingManager />
             <BudgetManager />
           </TabsContent>
-
-          {/* Groups Tab */}
-          <TabsContent value="groups">
-            <GroupsManager />
-          </TabsContent>
           </Tabs>
+          )}
+
+          {/* Groups Section */}
+          {adminSection === 'groups' && (
+          <div className="pt-8">
+            <GroupsManager />
+          </div>
           )}
 
         </div>{/* end content */}
