@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PendingRequestsPanel from '@/components/you/PendingRequestsPanel';
+import GroupFundSection from '@/components/giving/GroupFundSection';
 
 export default function GroupAdmin() {
   const [user, setUser] = useState(null);
@@ -49,11 +49,6 @@ export default function GroupAdmin() {
     return (
       <div className="pt-20 min-h-screen bg-background">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <Link to="/you">
-            <Button variant="outline" size="sm" className="mb-6 font-body">
-              <ArrowLeft className="w-3 h-3 mr-2" /> Back to Profile
-            </Button>
-          </Link>
           <div className="text-center py-12">
             <p className="font-body text-muted-foreground mb-4">You don't lead any groups.</p>
             <Link to="/you">
@@ -68,19 +63,13 @@ export default function GroupAdmin() {
   return (
     <div className="pt-20 min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link to="/you">
-          <Button variant="outline" size="sm" className="mb-6 font-body">
-            <ArrowLeft className="w-3 h-3 mr-2" /> Back to Profile
-          </Button>
-        </Link>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="font-heading text-4xl text-primary mb-2">Group Admin</h1>
-          <p className="font-body text-muted-foreground">Manage membership requests and expenses for your groups.</p>
+          <h1 className="font-heading text-4xl text-primary mb-2">Group Admin Console</h1>
+          <p className="font-body text-muted-foreground">Manage membership requests and finances for your groups.</p>
         </motion.div>
 
         <PendingRequestsPanel
@@ -90,6 +79,13 @@ export default function GroupAdmin() {
           user={user}
         />
       </div>
+
+      {/* Group Finances — one section per owned group */}
+      {myOwnedGroups.map(group => (
+        <div key={group.id} className="border-t border-border/40 mt-4">
+          <GroupFundSection group={group} user={user} />
+        </div>
+      ))}
     </div>
   );
 }
