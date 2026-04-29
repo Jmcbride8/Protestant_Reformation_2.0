@@ -63,14 +63,14 @@ const AuthenticatedApp = () => {
         <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}
-        <Route path="/services" element={<FeatureRoute featureKey="page_services"><Services /></FeatureRoute>} />
+        <Route path="/services" element={<FeatureRoute featureKey="page_services" isPublic><Services /></FeatureRoute>} />
         <Route path="/giving" element={<FeatureRoute featureKey="page_giving"><Giving /></FeatureRoute>} />
         <Route path="/volunteer" element={<FeatureRoute featureKey="page_volunteer"><Volunteer /></FeatureRoute>} />
         <Route path="/admin" element={<MemberRoute><Admin /></MemberRoute>} />
         <Route path="/community-support" element={<FeatureRoute featureKey="page_community_support"><CommunitySupport /></FeatureRoute>} />
         <Route path="/groups" element={<FeatureRoute featureKey="page_groups"><Groups /></FeatureRoute>} />
-        <Route path="/schedule" element={<FeatureRoute featureKey="page_schedule"><Schedule /></FeatureRoute>} />
-        <Route path="/milestones" element={<FeatureRoute featureKey="page_milestones"><Milestones /></FeatureRoute>} />
+        <Route path="/schedule" element={<FeatureRoute featureKey="page_schedule" isPublic><Schedule /></FeatureRoute>} />
+        <Route path="/milestones" element={<FeatureRoute featureKey="page_milestones" isPublic><Milestones /></FeatureRoute>} />
         <Route path="/carpool" element={<FeatureRoute featureKey="page_carpool"><Carpool /></FeatureRoute>} />
         <Route path="/memories" element={<FeatureRoute featureKey="page_memories"><Memories /></FeatureRoute>} />
         <Route path="/you" element={<MemberRoute><You /></MemberRoute>} />
