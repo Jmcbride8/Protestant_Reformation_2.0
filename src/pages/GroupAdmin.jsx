@@ -68,7 +68,7 @@ export default function GroupAdmin() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
       <div className="mb-8">
         <h1 className="font-heading text-4xl text-primary mb-1">Group Admin Console</h1>
         <p className="font-body text-muted-foreground text-sm">Manage your group, finances, and settings.</p>
