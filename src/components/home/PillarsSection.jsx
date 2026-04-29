@@ -7,7 +7,7 @@ const pillars = [
   {
     icon: Heart,
     title: "Faith",
-    subtitle: "Something to believe in",
+    subtitle: "Jesus Christ is Lord and Savior",
     description: "Not a set of rules — a relationship. We ask hard questions, sit with doubt, and find something worth anchoring to.",
     verse: "\"Love the Lord your God with all your heart and with all your soul and with all your mind.\" — Matthew 22:37",
   },
