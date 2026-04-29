@@ -316,32 +316,38 @@ function DenominationsSection() {
     {
       name: "Pentecostal/Charismatic",
       emphasis: "The Emotional & Expressive Experience",
-      desc: "These traditions emphasize a vibrant, personal experience of God's presence. Worship is often joyful, expressive, and interactive. They believe in the active work of the Holy Spirit today, including healing and spiritual gifts."
+      desc: "These traditions emphasize a vibrant, personal experience of God's presence. Worship is often joyful, expressive, and interactive. They believe in the active work of the Holy Spirit today, including healing and spiritual gifts.",
+      appeals: "Artists, musicians, dancers, healers, those who experience God through emotion and movement"
     },
     {
       name: "Catholic",
       emphasis: "Tradition, Ritual & Community Heritage",
-      desc: "Catholicism values rich liturgical traditions, sacraments (sacred practices), and centuries of church teaching. There's beauty in repetition and ritual that connects believers to history. The church hierarchy and Mary's role are also important."
+      desc: "Catholicism values rich liturgical traditions, sacraments (sacred practices), and centuries of church teaching. There's beauty in repetition and ritual that connects believers to history. The church hierarchy and Mary's role are also important.",
+      appeals: "Artists, historians, those drawn to beauty, tradition, and sacred aesthetics"
     },
     {
       name: "Protestant (Many Varieties)",
       emphasis: "Scripture & Personal Faith",
-      desc: "Born from the Reformation, Protestants emphasize the Bible as the primary authority and the importance of a personal relationship with God. This includes Baptists, Methodists, Presbyterians, Evangelicals, and others—each with unique flavors."
+      desc: "Born from the Reformation, Protestants emphasize the Bible as the primary authority and the importance of a personal relationship with God. This includes Baptists, Methodists, Presbyterians, Evangelicals, and others—each with unique flavors.",
+      appeals: "Individualists, reformers, those who value personal conviction and Scripture study"
     },
     {
       name: "Orthodox Christian",
       emphasis: "Ancient Tradition & Mystery",
-      desc: "With roots in Eastern Christianity, Orthodox traditions emphasize the mystical and transcendent aspects of faith. Icons, liturgy, and unbroken historical continuity with the early church are cherished."
+      desc: "With roots in Eastern Christianity, Orthodox traditions emphasize the mystical and transcendent aspects of faith. Icons, liturgy, and unbroken historical continuity with the early church are cherished.",
+      appeals: "Contemplatives, mystics, those drawn to mystery, apophatic theology, and ancient wisdom"
     },
     {
       name: "Reformed/Calvinist",
       emphasis: "God's Sovereignty & Intellectual Engagement",
-      desc: "These traditions emphasize God's ultimate control and authority. They tend to value deep theological reflection and careful study of Scripture alongside personal faith."
+      desc: "These traditions emphasize God's ultimate control and authority. They tend to value deep theological reflection and careful study of Scripture alongside personal faith.",
+      appeals: "Intellectuals, philosophers, theologians, those who engage faith through rigorous thinking"
     },
     {
       name: "Evangelical",
       emphasis: "Conversion & Active Discipleship",
-      desc: "Evangelicals focus on a personal decision to follow Jesus ('born again') and actively sharing that faith with others. They emphasize the centrality of Jesus' death and resurrection and the authority of the Bible."
+      desc: "Evangelicals focus on a personal decision to follow Jesus ('born again') and actively sharing that faith with others. They emphasize the centrality of Jesus' death and resurrection and the authority of the Bible.",
+      appeals: "Activists, missionaries, those energized by direct action and relational evangelism"
     },
   ];
 
@@ -374,6 +380,7 @@ function DenominationsSection() {
                 <h3 className="font-heading text-lg text-primary">{denom.name}</h3>
                 <p className="font-body text-sm text-accent font-medium mt-1">{denom.emphasis}</p>
                 <p className="font-body text-muted-foreground leading-relaxed mt-3">{denom.desc}</p>
+                <p className="font-body text-xs text-muted-foreground/70 mt-4 pt-4 border-t border-border/30 italic">Appeals to: {denom.appeals}</p>
               </div>
             </motion.div>
           ))}
