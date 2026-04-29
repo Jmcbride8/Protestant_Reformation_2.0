@@ -187,7 +187,7 @@ export default function Admin() {
   const sidebarSections = [
     { key: 'website', label: 'Website', icon: Tv2 },
     { key: 'church', label: 'Church', icon: Users },
-    { key: 'actions', label: 'Actions', icon: Kanban },
+    { key: 'actions', label: 'Staff', icon: Kanban },
     { key: 'config', label: 'Settings', icon: ToggleLeft },
   ];
 
@@ -242,7 +242,6 @@ export default function Admin() {
             <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
             <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
             <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
-            <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
             <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
             <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
@@ -308,17 +307,12 @@ export default function Admin() {
           </TabsContent>
 
           {/* Milestones Tab */}
-          <TabsContent value="milestones">
-            <MilestonesManager />
-          </TabsContent>
+           <TabsContent value="milestones">
+             <MilestonesManager />
+           </TabsContent>
 
-          {/* Groups Tab */}
-          <TabsContent value="groups">
-            <GroupsManager />
-          </TabsContent>
-
-          {/* Beliefs Tab */}
-          <TabsContent value="beliefs">
+           {/* Beliefs Tab */}
+           <TabsContent value="beliefs">
             <BeliefsManager />
           </TabsContent>
 
@@ -385,6 +379,7 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
+            <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground data-[state=active]:py-3"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             </TabsList>
             </div>
 
@@ -633,8 +628,13 @@ export default function Admin() {
             <GivingManager />
             <BudgetManager />
           </TabsContent>
-        </Tabs>
-        )}
+
+          {/* Groups Tab */}
+          <TabsContent value="groups">
+            <GroupsManager />
+          </TabsContent>
+          </Tabs>
+          )}
 
         </div>{/* end content */}
         </div>

@@ -149,7 +149,7 @@ export default function GroupsManager() {
               <Textarea value={form.leader_bio} onChange={e => setForm(f => ({ ...f, leader_bio: e.target.value }))} rows={2} />
             </div>
             <div className="sm:col-span-2 space-y-1">
-              <Label className="font-body text-xs">Leader Photo</Label>
+              <Label className="font-body text-xs">Group Photo</Label>
               <Input type="file" accept="image/*" onChange={handlePhotoUpload} disabled={uploading} />
               {uploading && <p className="font-body text-xs text-muted-foreground">Uploading...</p>}
               {form.leader_photo_url && (
