@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, CheckCircle2, XCircle, User } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, XCircle, User, DollarSign } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { format } from 'date-fns';
 import GiveToGroupMemberModal from '@/components/giving/GiveToGroupMemberModal';
@@ -14,26 +14,55 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
    const { toast } = useToast();
 
    // Fetch group members for leaders (for giving section)
-   const { data: groupMembers = [] } = useQuery({
-     queryKey: ['groupMembersForGiving', ownedGroups],
-     queryFn: async () => {
-       const allMembers = [];
-       for (const group of ownedGroups) {
-         const members = await base44.entities.MemberProfile.filter({ small_group_id: group.id });
-         allMembers.push(...members.map(m => ({ ...m, group_id: group.id, group_name: group.name })));
-       }
-       return allMembers;
-     },
-     enabled: ownedGroups.length > 0,
-   });
+     const { data: groupMembers = [] } = useQuery({
+       queryKey: ['groupMembersForGiving', ownedGroups],
+       queryFn: async () => {
+         const allMembers = [];
+         for (const group of ownedGroups) {
+           const members = await base44.entities.MemberProfile.filter({ small_group_id: group.id });
+           allMembers.push(...members.map(m => ({ ...m, group_id: group.id, group_name: group.name })));
+         }
+         return allMembers;
+       },
+       enabled: ownedGroups.length > 0,
+     });
+
+     // Fetch pending expense requests for owned groups
+     const { data: pendingExpenses = [] } = useQuery({
+       queryKey: ['pendingExpensesForMyGroups', ownedGroups.map(g => g.id)],
+       queryFn: async () => {
+         const all = await Promise.all(
+           ownedGroups.map(g => base44.entities.GroupFundTransaction.filter({ group_id: g.id, status: 'pending', type: 'spent' }))
+         );
+         return all.flat();
+       },
+       enabled: ownedGroups.length > 0,
+     });
 
   const updateRequest = useMutation({
-    mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
-    onSuccess: (_, { status }) => {
-      queryClient.invalidateQueries({ queryKey: ['pendingRequestsForMyGroups'] });
-      toast({ title: status === 'approved' ? 'Request approved!' : 'Request rejected.' });
-    },
-  });
+     mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
+     onSuccess: (_, { status }) => {
+       queryClient.invalidateQueries({ queryKey: ['pendingRequestsForMyGroups'] });
+       toast({ title: status === 'approved' ? 'Request approved!' : 'Request rejected.' });
+     },
+   });
+
+   const approveExpense = useMutation({
+     mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'approved' }),
+     onSuccess: () => {
+       queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
+       queryClient.invalidateQueries({ queryKey: ['groupFundTx'] });
+       toast({ title: 'Expense approved!' });
+     },
+   });
+
+   const rejectExpense = useMutation({
+     mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'rejected' }),
+     onSuccess: () => {
+       queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
+       toast({ title: 'Expense rejected.' });
+     },
+   });
 
   const groupName = (groupId) => {
     const g = ownedGroups.find(g => g.id === groupId);
@@ -53,13 +82,14 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
         </h2>
       </div>
 
+      {/* MEMBERSHIP REQUESTS */}
       {pendingRequests.length === 0 ? (
         <div className="bg-secondary/30 border border-dashed border-border rounded-2xl p-6 text-center">
           <CheckCircle2 className="w-8 h-8 text-muted-foreground/30 mx-auto mb-2" />
           <p className="font-body text-sm text-muted-foreground">No pending membership requests.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 mb-8">
           {pendingRequests.map(req => (
             <div key={req.id} className="bg-card border border-border/50 rounded-xl px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -96,6 +126,53 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
             </div>
           ))}
           </div>
+          )}
+
+          {/* EXPENSE REQUESTS */}
+          {pendingExpenses.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <DollarSign className="w-5 h-5 text-accent" />
+                <h3 className="font-heading text-lg text-primary">Pending Expense Approvals</h3>
+              </div>
+              <div className="space-y-3">
+                {pendingExpenses.map(expense => (
+                  <div key={expense.id} className="bg-card border border-border/50 rounded-xl px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-destructive/10 flex items-center justify-center shrink-0">
+                        <DollarSign className="w-4 h-4 text-destructive" />
+                      </div>
+                      <div>
+                        <p className="font-body text-sm font-medium text-foreground">{expense.description}</p>
+                        <p className="font-body text-xs text-muted-foreground">
+                          <span className="font-medium">${(expense.amount || 0).toLocaleString()}</span> · {expense.group_name}
+                          {expense.transaction_date && <span> · {format(new Date(expense.transaction_date), 'MMM d')}</span>}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-xs border-destructive/30 text-destructive hover:bg-destructive/5"
+                        onClick={() => rejectExpense.mutate({ id: expense.id })}
+                        disabled={rejectExpense.isPending}
+                      >
+                        <XCircle className="w-3.5 h-3.5 mr-1" /> Reject
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="text-xs bg-primary"
+                        onClick={() => approveExpense.mutate({ id: expense.id })}
+                        disabled={approveExpense.isPending}
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Approve
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Give from Church Fund - shown if user owns groups and has members */}
