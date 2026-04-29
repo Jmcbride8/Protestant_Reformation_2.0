@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import EditableText from './EditableText';
 
 export default function FrancisChanChallenge({ isAdmin }) {
-  const [youtubeId, setYoutubeId] = useState('P5GD9ftscFQ');
+  const [youtubeId, setYoutubeId] = useState('8Gv1_92JS20');
   const [editingVideo, setEditingVideo] = useState(false);
-  const [videoInput, setVideoInput] = useState('P5GD9ftscFQ');
+  const [videoInput, setVideoInput] = useState('8Gv1_92JS20');
 
   useEffect(() => {
     const saved = localStorage.getItem('francis_youtube_id');
@@ -18,9 +18,12 @@ export default function FrancisChanChallenge({ isAdmin }) {
   }, []);
 
   const handleSaveVideo = () => {
-    const id = videoInput.includes('youtube.com') 
-      ? new URL(videoInput).searchParams.get('v') 
-      : videoInput;
+    let id = videoInput;
+    if (videoInput.includes('youtube.com')) {
+      id = new URL(videoInput).searchParams.get('v');
+    } else if (videoInput.includes('shorts/')) {
+      id = videoInput.split('shorts/')[1]?.split('?')[0];
+    }
     if (id) {
       localStorage.setItem('francis_youtube_id', id);
       setYoutubeId(id);
