@@ -8,7 +8,6 @@ import { User, Pencil } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import MyGroupSection from '@/components/you/MyGroupSection';
 import DonationHistory from '@/components/you/DonationHistory';
-import PendingRequestsPanel from '@/components/you/PendingRequestsPanel';
 import EditProfilePanel from '@/components/you/EditProfilePanel';
 
 export default function You() {
@@ -43,18 +42,6 @@ export default function You() {
     queryKey: ['myOwnedGroups', user?.id],
     queryFn: () => base44.entities.CommunityGroup.filter({ owner_user_id: user.id }),
     enabled: !!user?.id,
-  });
-
-  // Pending requests for my owned groups
-  const { data: pendingRequests = [] } = useQuery({
-    queryKey: ['pendingRequestsForMyGroups', myOwnedGroups.map(g => g.id)],
-    queryFn: async () => {
-      const all = await Promise.all(
-        myOwnedGroups.map(g => base44.entities.GroupMembershipRequest.filter({ group_id: g.id, status: 'pending' }))
-      );
-      return all.flat();
-    },
-    enabled: myOwnedGroups.length > 0,
   });
 
   // My donations
@@ -124,9 +111,9 @@ export default function You() {
                     <Pencil className="w-3 h-3 mr-1" /> {editing ? 'Cancel Edit' : 'Edit Profile'}
                   </Button>
                   {isAdmin && (
-                    <Link to="/admin">
+                    <Link to="/church-admin">
                       <Button size="sm" variant="outline" className="font-body text-xs">
-                        Admin Dashboard →
+                        Church Admin →
                       </Button>
                     </Link>
                   )}
@@ -150,24 +137,13 @@ export default function You() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
 
         {/* --- SECTION 1: MY GROUP --- */}
-        <MyGroupSection
-          myProfile={myProfile}
-          myRequests={myRequests}
-          user={user}
-        />
+         <MyGroupSection
+           myProfile={myProfile}
+           myRequests={myRequests}
+           user={user}
+         />
 
-        {/* --- SECTION 2: PENDING REQUESTS (if I own a group) --- */}
-         {(myOwnedGroups.length > 0 || isAdmin) && (
-           <PendingRequestsPanel
-             ownedGroups={myOwnedGroups}
-             pendingRequests={pendingRequests}
-             isAdmin={isAdmin}
-             myProfile={myProfile}
-             user={user}
-           />
-         )}
-
-        {/* --- SECTION 3: DONATION HISTORY --- */}
+         {/* --- SECTION 2: DONATION HISTORY --- */}
         <DonationHistory donations={myDonations} />
       </div>
     </div>

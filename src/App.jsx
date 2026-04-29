@@ -26,6 +26,7 @@ import Carpool from './pages/Carpool';
 import Vision from './pages/Vision';
 import Memories from './pages/Memories';
 import You from './pages/You';
+import GroupAdmin from './pages/GroupAdmin';
 import About from './pages/About';
 
 const AuthenticatedApp = () => {
@@ -76,6 +77,7 @@ const AuthenticatedApp = () => {
         <Route path="/carpool" element={<FeatureRoute featureKey="page_carpool"><Carpool /></FeatureRoute>} />
         <Route path="/memories" element={<FeatureRoute featureKey="page_memories"><Memories /></FeatureRoute>} />
         <Route path="/you" element={<MemberRoute><You /></MemberRoute>} />
+        <Route path="/group-admin" element={<MemberRoute><GroupAdmin /></MemberRoute>} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
