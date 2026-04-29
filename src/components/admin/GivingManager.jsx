@@ -133,7 +133,7 @@ export default function GivingManager() {
           <p className="font-body text-sm text-muted-foreground">Update the goal and contributions-to-date shown on the Giving page.</p>
         </div>
 
-      <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5">
+        <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-2">
             <Label className="font-body text-sm">Annual Goal ($)</Label>
@@ -193,6 +193,7 @@ export default function GivingManager() {
           <Save className="w-4 h-4" />
           {saving ? 'Saving...' : 'Save Changes'}
         </Button>
+        </div>
       </div>
 
       {/* Budget Allocations */}
