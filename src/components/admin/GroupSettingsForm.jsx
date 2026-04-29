@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Save } from 'lucide-react';
 
@@ -18,6 +19,13 @@ export default function GroupSettingsForm({ group }) {
     leader_name: '',
     leader_title: '',
     leader_bio: '',
+  });
+
+  // Fetch group members (MemberProfile records with matching small_group_id)
+  const { data: members = [] } = useQuery({
+    queryKey: ['groupMembers', group?.id],
+    queryFn: () => group?.id ? base44.entities.MemberProfile.filter({ small_group_id: group.id }, '-full_name', 100) : [],
+    enabled: !!group?.id,
   });
 
   useEffect(() => {
@@ -77,7 +85,22 @@ export default function GroupSettingsForm({ group }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="font-body text-sm">Leader Name</Label>
-            <Input className="font-body" value={form.leader_name} onChange={e => setForm(f => ({ ...f, leader_name: e.target.value }))} />
+            {members.length > 0 ? (
+              <Select value={form.leader_name} onValueChange={value => setForm(f => ({ ...f, leader_name: value }))}>
+                <SelectTrigger className="font-body">
+                  <SelectValue placeholder="Select a member" />
+                </SelectTrigger>
+                <SelectContent>
+                  {members.map(member => (
+                    <SelectItem key={member.id} value={member.full_name}>
+                      {member.full_name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <Input className="font-body" value={form.leader_name} onChange={e => setForm(f => ({ ...f, leader_name: e.target.value }))} placeholder="No members in group" />
+            )}
           </div>
           <div className="space-y-2">
             <Label className="font-body text-sm">Leader Title</Label>
