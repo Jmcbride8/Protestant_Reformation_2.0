@@ -122,7 +122,7 @@ function GiveToGroupForm({ group, user, onSuccess }) {
   );
 }
 
-function LogExpenseForm({ group, onSuccess }) {
+function LogExpenseForm({ group, user, onSuccess }) {
     const [form, setForm] = useState({ amount: '', description: '', transaction_date: new Date().toISOString().split('T')[0] });
     const [submitted, setSubmitted] = useState(false);
     const queryClient = useQueryClient();
@@ -158,6 +158,8 @@ function LogExpenseForm({ group, onSuccess }) {
             type: 'spent',
             amount: parseFloat(form.amount),
             description: form.description,
+            member_name: user?.full_name || '',
+            member_email: user?.email || '',
             transaction_date: form.transaction_date,
             status: 'pending',
           });
@@ -208,6 +210,7 @@ function TransactionList({ transactions }) {
               <p className="font-body text-xs text-muted-foreground">
                 {tx.member_name && `${tx.member_name} · `}
                 {tx.transaction_date ? format(new Date(tx.transaction_date), 'MMM d, yyyy') : ''}
+                {tx.type === 'spent' && tx.approved_by && ` · Approved by ${tx.approved_by}`}
               </p>
             </div>
             <span className={`font-heading text-base shrink-0 ${cfg.color}`}>
@@ -255,7 +258,7 @@ export default function GroupFundSection({ group, user }) {
          {/* Log expense form (leader only) */}
          {isLeader && (
            <div className="bg-card border border-border/50 rounded-2xl p-8 flex flex-col">
-             <LogExpenseForm group={group} />
+             <LogExpenseForm group={group} user={user} />
            </div>
          )}
        </div>

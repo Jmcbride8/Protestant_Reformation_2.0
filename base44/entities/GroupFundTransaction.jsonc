@@ -49,6 +49,10 @@
       ],
       "default": "approved",
       "description": "Approval status for spent transactions (pending = awaiting leader approval)"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Name of the leader who approved the expense"
     }
   },
   "required": [

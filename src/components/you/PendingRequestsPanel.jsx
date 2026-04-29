@@ -51,7 +51,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
    });
 
    const approveExpense = useMutation({
-     mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'approved' }),
+     mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'approved', approved_by: user?.full_name || user?.email || 'Leader' }),
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
        queryClient.invalidateQueries({ queryKey: ['groupFundTx'] });
