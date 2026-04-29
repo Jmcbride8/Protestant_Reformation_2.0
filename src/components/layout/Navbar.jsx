@@ -42,6 +42,9 @@ export default function Navbar() {
   const [communityOpen, setCommunityOpen] = useState(false);
 
   const [meOpen, setMeOpen] = useState(false);
+  const [mobileChurchOpen, setMobileChurchOpen] = useState(false);
+  const [mobileCommunityOpen, setMobileCommunityOpen] = useState(false);
+  const [mobileMeOpen, setMobileMeOpen] = useState(false);
   const meRef = useRef(null);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
   const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
@@ -268,88 +271,112 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                {/* Church submenu in mobile — always visible */}
+                {/* Church submenu in mobile — collapsible */}
                 {churchLinks.length > 0 && (
                   <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Ministries</p>
-                    <div className="flex flex-col gap-4 pl-2">
-                      {churchLinks.map(link => (
-                        <Link
-                          key={link.path}
-                          to={link.path}
-                          onClick={() => setOpen(false)}
-                          className={`font-body text-base tracking-wide ${
-                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </div>
+                    <button
+                      onClick={() => setMobileChurchOpen(v => !v)}
+                      className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
+                    >
+                      Ministries
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileChurchOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileChurchOpen && (
+                      <div className="flex flex-col gap-4 pl-2 mt-3">
+                        {churchLinks.map(link => (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => setOpen(false)}
+                            className={`font-body text-base tracking-wide ${
+                              location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
-                {/* Community submenu in mobile — members only */}
+                {/* Community submenu in mobile — members only, collapsible */}
                 {user && (
                   <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">People</p>
-                    <div className="flex flex-col gap-4 pl-2">
-                      {communityLinks.map(link => (
-                        <Link
-                          key={link.path}
-                          to={link.path}
-                          onClick={() => setOpen(false)}
-                          className={`font-body text-base tracking-wide ${
-                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </div>
+                    <button
+                      onClick={() => setMobileCommunityOpen(v => !v)}
+                      className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
+                    >
+                      People
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileCommunityOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileCommunityOpen && (
+                      <div className="flex flex-col gap-4 pl-2 mt-3">
+                        {communityLinks.map(link => (
+                          <Link
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => setOpen(false)}
+                            className={`font-body text-base tracking-wide ${
+                              location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
 
                 <div className="border-t pt-4 mt-2">
                    {user ? (
                      <div className="flex flex-col gap-3">
-                       <p className="font-body text-xs tracking-[0.2em] uppercase text-accent">Me</p>
-                       <div className="flex flex-col gap-4 pl-2">
-                         <Link
-                           to="/you"
-                           onClick={() => setOpen(false)}
-                           className={`font-body text-base tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
-                         >
-                           Profile
-                         </Link>
-                         <Link
-                           to="/group-admin"
-                           onClick={() => setOpen(false)}
-                           className={`font-body text-base tracking-wide ${location.pathname === '/group-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
-                         >
-                           Group Admin
-                         </Link>
-                         {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                       <button
+                         onClick={() => setMobileMeOpen(v => !v)}
+                         className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
+                       >
+                         Me
+                         <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileMeOpen ? 'rotate-180' : ''}`} />
+                       </button>
+                       {mobileMeOpen && (
+                         <div className="flex flex-col gap-4 pl-2">
                            <Link
-                             to="/church-admin"
+                             to="/you"
                              onClick={() => setOpen(false)}
-                             className={`font-body text-base tracking-wide ${location.pathname === '/church-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/you' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
                            >
-                             Church Admin
+                             Profile
                            </Link>
-                         )}
-                       </div>
-                      <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
-                        Sign Out
-                      </Button>
-                    </div>
-                  ) : (
-                    <Button 
-                      className="w-full font-body bg-primary"
-                      onClick={() => base44.auth.redirectToLogin()}
-                    >
-                      Member Login
-                    </Button>
-                  )}
+                           <Link
+                             to="/group-admin"
+                             onClick={() => setOpen(false)}
+                             className={`font-body text-base tracking-wide ${location.pathname === '/group-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                           >
+                             Group Admin
+                           </Link>
+                           {['admin', 'staff', 'pastor'].includes(user.role?.toLowerCase()) && (
+                             <Link
+                               to="/church-admin"
+                               onClick={() => setOpen(false)}
+                               className={`font-body text-base tracking-wide ${location.pathname === '/church-admin' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                             >
+                               Church Admin
+                             </Link>
+                           )}
+                         </div>
+                       )}
+                       <Button variant="ghost" className="font-body" onClick={() => base44.auth.logout()}>
+                         Sign Out
+                       </Button>
+                     </div>
+                   ) : (
+                     <Button 
+                       className="w-full font-body bg-primary"
+                       onClick={() => base44.auth.redirectToLogin()}
+                     >
+                       Member Login
+                     </Button>
+                   )}
                 </div>
               </div>
             </SheetContent>
