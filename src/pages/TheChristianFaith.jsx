@@ -107,18 +107,26 @@ function UniquenessSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-4">
           {points.map((point, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card border border-border/50 rounded-2xl p-6"
+              transition={{ delay: i * 0.08 }}
+              className="flex gap-6 items-start"
             >
-              <h3 className="font-heading text-xl text-primary mb-3">{point.title}</h3>
-              <p className="font-body text-muted-foreground leading-relaxed">{point.desc}</p>
+              <div className="flex flex-col items-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
+                  {i + 1}
+                </div>
+                {i < points.length - 1 && <div className="w-0.5 h-16 bg-border/60 mt-2" />}
+              </div>
+              <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
+                <h3 className="font-heading text-lg text-primary mb-2">{point.title}</h3>
+                <p className="font-body text-muted-foreground leading-relaxed text-sm">{point.desc}</p>
+              </div>
             </motion.div>
           ))}
         </div>
