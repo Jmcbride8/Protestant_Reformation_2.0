@@ -156,6 +156,41 @@ const visionPillars = [
   },
 ];
 
+function VisionPillarCard({ item, i }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.07 }}
+      className={`rounded-2xl border transition-colors ${open ? 'border-accent/40 bg-accent/5' : 'border-border/40 bg-secondary/30'}`}
+    >
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="w-full flex items-center gap-5 p-6 text-left"
+      >
+        <div className="w-1 rounded-full bg-accent shrink-0 self-stretch min-h-[1.5rem]" />
+        <h3 className="font-heading text-lg text-primary flex-1">{item.heading}</h3>
+        <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <p className="font-body text-muted-foreground text-sm leading-relaxed px-6 pb-6 pl-12">{item.body}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 function VisionSection() {
   return (
     <section className="py-28 bg-background">
@@ -181,31 +216,83 @@ function VisionSection() {
           <div className="mt-6 w-12 h-0.5 bg-accent mx-auto" />
         </motion.div>
 
-        {/* Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Pillars — collapsible */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
           {visionPillars.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.07 }}
-              className="flex gap-5 p-6 bg-secondary/30 rounded-2xl border border-border/40"
-            >
-              <div className="w-1 rounded-full bg-accent shrink-0 self-stretch" />
-              <div>
-                <h3 className="font-heading text-lg text-primary mb-2">{item.heading}</h3>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">{item.body}</p>
-              </div>
-            </motion.div>
+            <VisionPillarCard key={i} item={item} i={i} />
           ))}
         </div>
+
+        {/* Two Relational Platforms */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+          <div className="text-center mb-10">
+            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Infrastructure</p>
+            <h3 className="font-heading text-3xl sm:text-4xl text-primary mb-4">Two Relational Platforms</h3>
+            <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Community doesn't happen by accident. It needs places — physical and digital — designed to make belonging easy.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Physical Hub */}
+            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="rounded-2xl border border-border/50 overflow-hidden bg-card">
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1560840067-ddcaeb7831d2?w=800&q=80"
+                  alt="Hope Church building"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+                <div className="absolute bottom-4 left-5">
+                  <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 01</span>
+                  <h4 className="font-heading text-2xl text-white mt-0.5">A Physical Hub</h4>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                  A church building that is respectful, peaceful, fun, warm and inviting — a physical manifestation of our desire to have a place to call home. Raise children, meet friends, host barbecues, and live life together under one roof.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {['Warm & Welcoming', 'Family-Friendly', 'A Place Called Home'].map(tag => (
+                    <span key={tag} className="font-body text-xs bg-secondary text-primary px-3 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Digital Hub */}
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="rounded-2xl border border-border/50 overflow-hidden bg-card">
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src="https://media.base44.com/images/public/69e6c4f50b822603e6dbc272/9955edb85_ChatGPTImageApr20202608_31_25PM.png"
+                  alt="Hope Church digital platform"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+                <div className="absolute bottom-4 left-5">
+                  <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 02</span>
+                  <h4 className="font-heading text-2xl text-white mt-0.5">A Digital Hub</h4>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                  Not just a website — a relational platform. Enabling care, connection, and community in the same way a church building does, but online: the connective glue that keeps the family alive 7 days a week, not just Sunday.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {['Always On', 'Care & Connection', 'Community 24/7'].map(tag => (
+                    <span key={tag} className="font-body text-xs bg-secondary text-primary px-3 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="text-center"
         >
           <Link to="/vision">
             <Button variant="outline" className="font-body gap-2">
