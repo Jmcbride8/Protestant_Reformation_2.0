@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, ChevronDown } from 'lucide-react';
 import EditableImage from '@/components/admin/EditableImage';
 
 export default function HeroSection({ heroImage, isAdmin }) {
@@ -57,6 +57,15 @@ export default function HeroSection({ heroImage, isAdmin }) {
           </div>
         </motion.div>
       </div>
+
+      {/* Scroll down indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <ChevronDown className="w-6 h-6 text-white/60" />
+      </motion.div>
 
       <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
         <DialogContent className="max-w-3xl p-0 overflow-hidden bg-black border-0">
