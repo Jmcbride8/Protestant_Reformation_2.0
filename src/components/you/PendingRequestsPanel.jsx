@@ -47,7 +47,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
      onSuccess: (_, { status }) => {
        queryClient.invalidateQueries({ queryKey: ['pendingRequestsForMyGroups'] });
-       toast({ title: status === 'approved' ? 'Request approved!' : 'Request rejected.' });
+       toast({ title: status === 'approved' ? 'Request approved!' : 'Request rejected.', duration: 3000 });
      },
    });
 
@@ -56,7 +56,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
        queryClient.invalidateQueries({ queryKey: ['groupFundTx'] });
-       toast({ title: 'Expense approved!' });
+       toast({ title: 'Expense approved!', duration: 3000 });
      },
    });
 
@@ -64,7 +64,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      mutationFn: ({ id }) => base44.entities.GroupFundTransaction.update(id, { status: 'rejected' }),
      onSuccess: () => {
        queryClient.invalidateQueries({ queryKey: ['pendingExpensesForMyGroups'] });
-       toast({ title: 'Expense rejected.' });
+       toast({ title: 'Expense rejected.', duration: 3000 });
      },
    });
 
