@@ -12,7 +12,7 @@ const navLinks = [
 ];
 
 const aboutLinksAll = [
-  { label: 'Church', sub: 'Who we are & what we believe', path: '/about' },
+  { label: 'Hope Church', sub: 'Who we are & what we believe', path: '/about' },
   { label: 'Membership', sub: 'Join the Hope Church family', path: '/membership' },
 ];
 
