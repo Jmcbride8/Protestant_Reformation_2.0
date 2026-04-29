@@ -510,7 +510,7 @@ function AboutHero() {
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────
-export default function About() {
+export default function Church() {
   const [showMemberModal, setShowMemberModal] = useState(false);
 
   const { data: allMembers = [] } = useQuery({

@@ -9,7 +9,12 @@ import { isPreviewingAsGuest } from './MemberPreviewBanner';
 
 const navLinks = [
   { label: 'Home', path: '/' },
-  { label: 'About', path: '/about' },
+];
+
+const aboutLinksAll = [
+  { label: 'Church', sub: 'Who we are & what we believe', path: '/about' },
+  { label: 'Vision', sub: 'Our relational philosophy', path: '/vision' },
+  { label: 'Contact', sub: 'Get in touch', path: '/contact' },
 ];
 
 const churchLinksAll = [
@@ -50,12 +55,16 @@ export default function Navbar() {
   const [mobileMeOpen, setMobileMeOpen] = useState(false);
   const meRef = useRef(null);
   const filteredNavLinks = navLinks.filter(l => !l.featureKey || isEnabled(l.featureKey));
+  const aboutLinks = aboutLinksAll;
   const churchLinks = churchLinksAll.filter(l => (!l.featureKey || isEnabled(l.featureKey)) && (!l.pageKey || isEnabled(l.pageKey)));
   const communityLinks = communityLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
   const serveGiveLinks = serveGiveLinksAll.filter(l => isEnabled(l.featureKey) && isEnabled(l.pageKey));
 
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [serveGiveOpen, setServeGiveOpen] = useState(false);
   const [mobileServeGiveOpen, setMobileServeGiveOpen] = useState(false);
+  const aboutRef = useRef(null);
   const churchRef = useRef(null);
   const communityRef = useRef(null);
   const serveGiveRef = useRef(null);
@@ -63,6 +72,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleClick = (e) => {
+      if (aboutRef.current && !aboutRef.current.contains(e.target)) setAboutOpen(false);
       if (churchRef.current && !churchRef.current.contains(e.target)) setChurchOpen(false);
       if (communityRef.current && !communityRef.current.contains(e.target)) setCommunityOpen(false);
       if (serveGiveRef.current && !serveGiveRef.current.contains(e.target)) setServeGiveOpen(false);
@@ -124,6 +134,36 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* About dropdown — always visible */}
+            <div className="relative" ref={aboutRef}>
+              <button
+                onClick={() => setAboutOpen(v => !v)}
+                className={`flex items-center gap-1 font-body text-sm tracking-wide transition-colors ${
+                  useWhiteNav
+                    ? aboutLinks.some(l => l.path === location.pathname) ? 'text-white font-semibold' : 'text-white/80 hover:text-white'
+                    : aboutLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
+                }`}
+              >
+                About
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${aboutOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {aboutOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 bg-card border border-border/60 rounded-xl shadow-xl overflow-hidden z-50">
+                  {aboutLinks.map(link => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      onClick={() => setAboutOpen(false)}
+                      className={`flex flex-col px-4 py-3 hover:bg-secondary/60 transition-colors border-b border-border/40 last:border-0 ${location.pathname === link.path ? 'bg-secondary/40' : ''}`}
+                    >
+                      <span className="font-body text-sm font-medium text-foreground">{link.label}</span>
+                      <span className="font-body text-xs text-muted-foreground">{link.sub}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Church dropdown — always visible */}
             {churchLinks.length > 0 && (
@@ -308,6 +348,32 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {/* About submenu in mobile — collapsible */}
+                <div>
+                  <button
+                    onClick={() => setMobileAboutOpen(v => !v)}
+                    className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
+                  >
+                    About
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileAboutOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {mobileAboutOpen && (
+                    <div className="flex flex-col gap-4 pl-2 mt-3">
+                      {aboutLinks.map(link => (
+                        <Link
+                          key={link.path}
+                          to={link.path}
+                          onClick={() => setOpen(false)}
+                          className={`font-body text-base tracking-wide ${
+                            location.pathname === link.path ? 'text-primary font-semibold' : 'text-muted-foreground'
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 {/* Church submenu in mobile — collapsible */}
                 {churchLinks.length > 0 && (
                   <div>

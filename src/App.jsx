@@ -27,7 +27,7 @@ import Vision from './pages/Vision';
 import Memories from './pages/Memories';
 import You from './pages/You';
 import GroupAdmin from './pages/GroupAdmin';
-import About from './pages/About';
+import Church from './pages/About';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -62,7 +62,7 @@ const AuthenticatedApp = () => {
       <Route element={<PageLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<Church />} />
         <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
         {/* Member-only routes */}
