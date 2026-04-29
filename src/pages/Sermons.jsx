@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Tv2 } from 'lucide-react';
 import SermonCard from '../components/sermons/SermonCard';
-import BeliefsSection from '../components/sermons/BeliefsSection';
 
 export default function Sermons() {
   const [search, setSearch] = useState('');
@@ -45,11 +44,10 @@ export default function Sermons() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">The Word</p>
             <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
-              Sermons & <span className="italic">Beliefs</span>
+              Sermon <span className="italic">Archive</span>
             </h1>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Watch past services, explore our sermon archive, and discover the core convictions 
-              that shape everything we do at Hope Church Santa Barbara.
+              Watch past services and explore messages from Hope Church Santa Barbara.
             </p>
           </motion.div>
         </div>
@@ -134,8 +132,6 @@ export default function Sermons() {
         </div>
       </section>
 
-      {/* Beliefs */}
-      <BeliefsSection />
     </div>
   );
 }
