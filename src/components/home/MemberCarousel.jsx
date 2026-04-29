@@ -90,7 +90,7 @@ export default function MemberCarousel({ isAdmin }) {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real People Keeping it Real</p>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real Moments & Real Memories</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Who You'll Meet</h2>
           {/* Identity Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto mt-10 mb-14">
