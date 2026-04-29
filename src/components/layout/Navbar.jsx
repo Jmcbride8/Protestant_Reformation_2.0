@@ -136,7 +136,7 @@ export default function Navbar() {
                       : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
-                  Ministries
+                  Programming
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {churchOpen && (
@@ -235,7 +235,7 @@ export default function Navbar() {
                           : ['/you', '/admin', '/church-admin', '/group-admin'].includes(location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                       }`}
                   >
-                    Me
+                    Personal
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform ${meOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {meOpen && (
@@ -317,7 +317,7 @@ export default function Navbar() {
                       onClick={() => setMobileChurchOpen(v => !v)}
                       className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
                     >
-                      Ministries
+                      Programming
                       <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileChurchOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {mobileChurchOpen && (
@@ -402,7 +402,7 @@ export default function Navbar() {
                          onClick={() => setMobileMeOpen(v => !v)}
                          className="flex items-center justify-between w-full font-body text-xs tracking-[0.2em] uppercase text-accent"
                        >
-                         Me
+                         Personal
                          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${mobileMeOpen ? 'rotate-180' : ''}`} />
                        </button>
                        {mobileMeOpen && (
