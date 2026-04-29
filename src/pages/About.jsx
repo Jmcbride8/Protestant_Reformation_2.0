@@ -227,11 +227,7 @@ function VisionSection({ isAdmin }) {
         {/* Two Relational Platforms */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <div className="text-center mb-10">
-            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Infrastructure</p>
-            <h3 className="font-heading text-3xl sm:text-4xl text-primary mb-4">Two Relational Platforms</h3>
-            <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Community doesn't happen by accident. It needs places — physical and digital — designed to make belonging easy.
-            </p>
+            <h3 className="font-heading text-3xl sm:text-4xl text-primary mb-4">Our Relational Infrastructure</h3>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
