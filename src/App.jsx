@@ -78,6 +78,7 @@ const AuthenticatedApp = () => {
         <Route path="/memories" element={<FeatureRoute featureKey="page_memories"><Memories /></FeatureRoute>} />
         <Route path="/you" element={<MemberRoute><You /></MemberRoute>} />
         <Route path="/group-admin" element={<MemberRoute><GroupAdmin /></MemberRoute>} />
+        <Route path="/church-admin" element={<MemberRoute><Admin /></MemberRoute>} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
