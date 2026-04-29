@@ -244,7 +244,6 @@ export default function Admin() {
             <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
             <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
             <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
-            <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
             <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
             <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
             <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
@@ -316,11 +315,6 @@ export default function Admin() {
            {/* Beliefs Tab */}
            <TabsContent value="beliefs">
             <BeliefsManager />
-          </TabsContent>
-
-          {/* Events Tab */}
-          <TabsContent value="events">
-            <EventsManager />
           </TabsContent>
 
           </Tabs>
@@ -611,9 +605,24 @@ export default function Admin() {
 
         {/* Staff & Operations Section */}
         {adminSection === 'staff' && (
-          <div className="pt-8">
-            <StaffKanban />
+        <Tabs defaultValue="kanban" className="space-y-6">
+          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
+              <TabsTrigger value="kanban" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Kanban className="w-4 h-4" /> Action Items</TabsTrigger>
+              <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
+            </TabsList>
           </div>
+
+          {/* Kanban Tab */}
+          <TabsContent value="kanban">
+            <StaffKanban />
+          </TabsContent>
+
+          {/* Events Tab */}
+          <TabsContent value="events">
+            <EventsManager />
+          </TabsContent>
+        </Tabs>
         )}
 
         </div>{/* end content */}
