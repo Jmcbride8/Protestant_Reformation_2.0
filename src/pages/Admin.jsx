@@ -3,7 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from 'date-fns';
 import { Trash2, Users, Mail, Calendar, HandCoins, ShieldCheck, Tv2, UserCheck, PieChart, Pencil, BookOpen, UsersRound, Heart, ToggleLeft, Church, Eye, Kanban } from 'lucide-react';
@@ -47,6 +46,10 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [editingSermon, setEditingSermon] = useState(null);
   const [adminSection, setAdminSection] = useState('website');
+  const [websiteTab, setWebsiteTab] = useState('sermons');
+  const [peopleTab, setPeopleTab] = useState('volunteers');
+  const [financesTab, setFinancesTab] = useState('donations');
+  const [staffTab, setStaffTab] = useState('kanban');
   const [donationFilters, setDonationFilters] = useState({ year: '', fund: '', donor: '' });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -233,428 +236,304 @@ export default function Admin() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-
-          {/* Content */}
-          <div className="min-w-0 -mt-10">
-
-        {/* Website Administration Section */}
+        {/* Website Administration Section — tab bar full bleed */}
+        {/* Website sub-tab bar — full bleed */}
         {adminSection === 'website' && (
-        <Tabs defaultValue="sermons" className="space-y-6">
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
-            <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
-            <TabsTrigger value="milestones" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Heart className="w-4 h-4" /> Milestones</TabsTrigger>
-            <TabsTrigger value="beliefs" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><BookOpen className="w-4 h-4" /> Beliefs</TabsTrigger>
-            <TabsTrigger value="carousel" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Who You'll Meet</TabsTrigger>
-            <TabsTrigger value="church_info" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Church className="w-4 h-4" /> Church Info</TabsTrigger>
-            <TabsTrigger value="features" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><ToggleLeft className="w-4 h-4" /> Feature Toggles</TabsTrigger>
-            </TabsList>
-          </div>
-
-          {/* Sermons Tab */}
-          <TabsContent value="sermons" className="space-y-8">
-            <AddSermonForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminSermons'] })} />
-            
-            <div>
-              <h3 className="font-heading text-xl text-primary mb-4">All Sermons</h3>
-              <div className="space-y-3">
-                {sermons.map(sermon => (
-                  <div key={sermon.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-heading text-base text-primary">{sermon.title}</h4>
-                        {sermon.is_featured && <Badge className="bg-accent/20 text-accent font-body text-xs">Featured</Badge>}
-                      </div>
-                      <p className="font-body text-xs text-muted-foreground">
-                        By {sermon.speaker} • {format(new Date(sermon.date + 'T00:00:00'), 'MMM d, yyyy')}
-                      </p>
-                      {sermon.series && (
-                        <p className="font-body text-xs text-muted-foreground mt-1">Series: {sermon.series}</p>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      <Button variant="ghost" size="icon" onClick={() => setEditingSermon(sermon)}>
-                        <Pencil className="w-4 h-4 text-primary" />
-                      </Button>
-                      <Button variant="ghost" size="icon" onClick={async () => {
-                        await base44.entities.Sermon.delete(sermon.id);
-                        queryClient.invalidateQueries({ queryKey: ['adminSermons'] });
-                        toast.success("Sermon deleted");
-                      }}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                {sermons.length === 0 && (
-                  <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>
-                )}
-              </div>
+          <div className="py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-1">
+              {[
+                { v: 'sermons', icon: <Tv2 className="w-4 h-4" />, label: 'Sermons' },
+                { v: 'schedule', icon: <Calendar className="w-4 h-4" />, label: 'Schedule' },
+                { v: 'milestones', icon: <Heart className="w-4 h-4" />, label: 'Milestones' },
+                { v: 'beliefs', icon: <BookOpen className="w-4 h-4" />, label: 'Beliefs' },
+                { v: 'carousel', icon: <Users className="w-4 h-4" />, label: "Who You'll Meet" },
+                { v: 'church_info', icon: <Church className="w-4 h-4" />, label: 'Church Info' },
+                { v: 'features', icon: <ToggleLeft className="w-4 h-4" />, label: 'Feature Toggles' },
+              ].map(({ v, icon, label }) => (
+                <button key={v} onClick={() => setWebsiteTab(v)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded font-body text-sm font-medium transition-colors whitespace-nowrap ${websiteTab === v ? 'bg-white/20 text-white' : 'text-primary-foreground/60 hover:text-primary-foreground'}`}>
+                  {icon} {label}
+                </button>
+              ))}
             </div>
-            {editingSermon && (
-              <EditSermonModal 
-                sermon={editingSermon} 
-                onClose={() => setEditingSermon(null)}
-                onSuccess={() => {
-                  queryClient.invalidateQueries({ queryKey: ['adminSermons'] });
-                  setEditingSermon(null);
-                }}
-              />
-            )}
-          </TabsContent>
-
-          {/* Schedule Tab */}
-          <TabsContent value="schedule">
-            <ScheduleManager />
-          </TabsContent>
-
-          {/* Milestones Tab */}
-           <TabsContent value="milestones">
-             <MilestonesManager />
-           </TabsContent>
-
-           {/* Beliefs Tab */}
-           <TabsContent value="beliefs">
-            <BeliefsManager />
-          </TabsContent>
-
-          {/* Carousel Tab */}
-          <TabsContent value="carousel">
-            <CarouselMembersManager />
-          </TabsContent>
-
-          {/* Church Info Tab */}
-          <TabsContent value="church_info">
-            <ChurchInfoManager />
-          </TabsContent>
-
-          {/* Features Tab */}
-          <TabsContent value="features">
-            <FeatureTogglesManager />
-          </TabsContent>
-
-          </Tabs>
-        )}
-
-        {/* Community Groups Section */}
-        {adminSection === 'groups' && (
-        <Tabs defaultValue="groups" className="space-y-6">
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-              <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
-            </TabsList>
           </div>
-
-          <TabsContent value="groups">
-            <GroupsManager />
-          </TabsContent>
-        </Tabs>
         )}
 
-        {/* People & Community Section */}
+        {/* People sub-tab bar — full bleed */}
         {adminSection === 'people' && (
-        <Tabs defaultValue="volunteers" className="space-y-6">
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none gap-3 [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
-            <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
-            <TabsTrigger value="directory" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Member Directory</TabsTrigger>
-            <TabsTrigger value="membership" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground">
-              <UserCheck className="w-4 h-4" /> Membership
-              {memberships.filter(m => m.status === 'pending').length > 0 && (
-                <span className="ml-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                  {memberships.filter(m => m.status === 'pending').length}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="memories" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Users className="w-4 h-4" /> Memories</TabsTrigger>
-            </TabsList>
-            </div>
-
-          {/* Volunteers Tab */}
-          <TabsContent value="volunteers" className="space-y-8">
-            <AddNeedForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminNeeds'] })} />
-            
-            <div>
-              <h3 className="font-heading text-xl text-primary mb-4">All Volunteer Needs</h3>
-              <div className="space-y-3">
-                {needs.map(need => {
-                  const needSignups = signups.filter(s => s.volunteer_need_id === need.id);
-                  return (
-                    <div key={need.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h4 className="font-heading text-base text-primary">{need.title}</h4>
-                          <Badge variant="secondary" className="font-body text-xs">{need.status}</Badge>
-                        </div>
-                        <p className="font-body text-xs text-muted-foreground">
-                          {format(new Date(need.date + 'T00:00:00'), 'MMM d, yyyy')} • {need.slots_filled || 0}/{need.slots_needed} filled
-                        </p>
-                        {needSignups.length > 0 && (
-                          <div className="flex items-center gap-1 mt-1">
-                            <Users className="w-3 h-3 text-muted-foreground" />
-                            <span className="font-body text-xs text-muted-foreground">
-                              {needSignups.map(s => s.volunteer_name).join(', ')}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <Button variant="ghost" size="icon" onClick={() => handleDeleteNeed(need.id)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
-                    </div>
-                  );
-                })}
-                {needs.length === 0 && (
-                  <p className="font-body text-muted-foreground text-center py-8">No volunteer needs created yet.</p>
-                )}
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Contacts Tab */}
-          <TabsContent value="contacts" className="space-y-8">
-            <div className="space-y-3">
-              {contacts.map(contact => (
-                <div key={contact.id} className="p-4 bg-card rounded-lg border border-border/50">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <h4 className="font-heading text-base text-primary">{contact.name}</h4>
-                      <p className="font-body text-xs text-muted-foreground">{contact.email} • {contact.phone}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge className={`font-body text-xs ${statusColors[contact.status] || ''}`}>
-                        {contact.status}
-                      </Badge>
-                      <Badge variant="outline" className="font-body text-xs">
-                        {serviceLabels[contact.service_type] || contact.service_type}
-                      </Badge>
-                    </div>
-                  </div>
-                  <p className="font-body text-sm text-muted-foreground mb-3">{contact.message}</p>
-                  <div className="flex gap-2">
-                    {['new', 'in_progress', 'resolved'].map(status => (
-                      <Button 
-                        key={status} 
-                        variant={contact.status === status ? "default" : "outline"}
-                        size="sm" 
-                        className="font-body text-xs capitalize"
-                        onClick={() => handleUpdateContactStatus(contact.id, status)}
-                      >
-                        {status.replace('_', ' ')}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+          <div className="py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-1">
+              {[
+                { v: 'volunteers', icon: <Calendar className="w-4 h-4" />, label: 'Volunteer Needs' },
+                { v: 'contacts', icon: <Mail className="w-4 h-4" />, label: 'Contacts' },
+                { v: 'directory', icon: <Users className="w-4 h-4" />, label: 'Member Directory' },
+                { v: 'membership', icon: <UserCheck className="w-4 h-4" />, label: 'Membership', badge: memberships.filter(m => m.status === 'pending').length },
+                { v: 'memories', icon: <Users className="w-4 h-4" />, label: 'Memories' },
+              ].map(({ v, icon, label, badge }) => (
+                <button key={v} onClick={() => setPeopleTab(v)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded font-body text-sm font-medium transition-colors whitespace-nowrap ${peopleTab === v ? 'bg-white/20 text-white' : 'text-primary-foreground/60 hover:text-primary-foreground'}`}>
+                  {icon} {label}
+                  {badge > 0 && <span className="bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">{badge}</span>}
+                </button>
               ))}
-              {contacts.length === 0 && (
-                <p className="font-body text-muted-foreground text-center py-8">No contact requests yet.</p>
-              )}
             </div>
-          </TabsContent>
-
-          {/* Member Directory Tab */}
-          <TabsContent value="directory">
-            <MemberDirectory />
-          </TabsContent>
-
-          {/* Membership Tab */}
-          <TabsContent value="membership">
-            <div className="space-y-3">
-              {memberships.filter(m => m.status !== 'approved').map(app => (
-                <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h4 className="font-heading text-base text-primary">{app.full_name}</h4>
-                      <p className="font-body text-xs text-muted-foreground">
-                        {app.email}{app.phone ? ` • ${app.phone}` : ''}
-                        {app.how_long_attending ? ` • Attending ${app.how_long_attending}` : ''}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${membershipStatusColors[app.status]}`}>
-                        {app.status}
-                      </span>
-                      {app.baptized && (
-                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Baptized</span>
-                      )}
-                    </div>
-                  </div>
-                  <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">
-                    "{app.testimony}"
-                  </p>
-                  <div className="flex flex-wrap gap-2 items-center">
-                    {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
-                      <Button
-                        key={status}
-                        variant={app.status === status ? "default" : "outline"}
-                        size="sm"
-                        className="font-body text-xs capitalize"
-                        onClick={() => handleUpdateMembershipStatus(app, status)}
-                      >
-                        {status}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              {memberships.filter(m => m.status !== 'approved').length === 0 && (
-                <p className="font-body text-muted-foreground text-center py-8">No pending applications.</p>
-              )}
-            </div>
-          </TabsContent>
-
-          {/* Memories Tab */}
-          <TabsContent value="memories">
-            <MemoriesManager />
-          </TabsContent>
-        </Tabs>
+          </div>
         )}
 
-        {/* Finances Section */}
-        {adminSection === 'finances' && (
-        <Tabs defaultValue="donations" className="space-y-6">
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-            <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
-            <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
-            </TabsList>
+        {/* Groups sub-tab bar — full bleed */}
+        {adminSection === 'groups' && (
+          <div className="py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-1">
+              <button className="flex items-center gap-2 px-4 py-2 rounded font-body text-sm font-medium bg-white/20 text-white whitespace-nowrap">
+                <UsersRound className="w-4 h-4" /> Groups
+              </button>
             </div>
+          </div>
+        )}
 
-          {/* Donations Tab */}
-          <TabsContent value="donations">
-            <div className="space-y-6">
-              <DonationKPIs donations={filteredDonations} />
-              <DonationMonthlyChart donations={filteredDonations} />
+        {/* Finances sub-tab bar — full bleed */}
+        {adminSection === 'finances' && (
+          <div className="py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-1">
+              {[
+                { v: 'donations', icon: <HandCoins className="w-4 h-4" />, label: 'Donations' },
+                { v: 'budget', icon: <PieChart className="w-4 h-4" />, label: 'Budget' },
+              ].map(({ v, icon, label }) => (
+                <button key={v} onClick={() => setFinancesTab(v)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded font-body text-sm font-medium transition-colors whitespace-nowrap ${financesTab === v ? 'bg-white/20 text-white' : 'text-primary-foreground/60 hover:text-primary-foreground'}`}>
+                  {icon} {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-              <div className="space-y-4">
-              <div className="flex gap-4 flex-wrap">
+        {/* Staff sub-tab bar — full bleed */}
+        {adminSection === 'staff' && (
+          <div className="py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-1">
+              {[
+                { v: 'kanban', icon: <Kanban className="w-4 h-4" />, label: 'Action Items' },
+                { v: 'events', icon: <Calendar className="w-4 h-4" />, label: 'Events' },
+              ].map(({ v, icon, label }) => (
+                <button key={v} onClick={() => setStaffTab(v)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded font-body text-sm font-medium transition-colors whitespace-nowrap ${staffTab === v ? 'bg-white/20 text-white' : 'text-primary-foreground/60 hover:text-primary-foreground'}`}>
+                  {icon} {label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="min-w-0">
+
+        {/* Website */}
+        {adminSection === 'website' && (
+          <div className="space-y-6">
+            {websiteTab === 'sermons' && (
+              <div className="space-y-8">
+                <AddSermonForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminSermons'] })} />
                 <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>
-                  <select 
-                    onChange={(e) => setDonationFilters(prev => ({ ...prev, year: e.target.value }))} 
-                    value={donationFilters.year}
-                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background"
-                  >
-                    <option value="">All Years</option>
-                    {[...new Set(donations.map(d => new Date(d.created_date).getFullYear()))].sort((a,b) => b-a).map(year => (
-                      <option key={year} value={year}>{year}</option>
+                  <h3 className="font-heading text-xl text-primary mb-4">All Sermons</h3>
+                  <div className="space-y-3">
+                    {sermons.map(sermon => (
+                      <div key={sermon.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className="font-heading text-base text-primary">{sermon.title}</h4>
+                            {sermon.is_featured && <Badge className="bg-accent/20 text-accent font-body text-xs">Featured</Badge>}
+                          </div>
+                          <p className="font-body text-xs text-muted-foreground">By {sermon.speaker} • {format(new Date(sermon.date + 'T00:00:00'), 'MMM d, yyyy')}</p>
+                          {sermon.series && <p className="font-body text-xs text-muted-foreground mt-1">Series: {sermon.series}</p>}
+                        </div>
+                        <div className="flex gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => setEditingSermon(sermon)}><Pencil className="w-4 h-4 text-primary" /></Button>
+                          <Button variant="ghost" size="icon" onClick={async () => { await base44.entities.Sermon.delete(sermon.id); queryClient.invalidateQueries({ queryKey: ['adminSermons'] }); toast.success("Sermon deleted"); }}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                        </div>
+                      </div>
                     ))}
-                  </select>
+                    {sermons.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No sermons added yet.</p>}
+                  </div>
                 </div>
+                {editingSermon && <EditSermonModal sermon={editingSermon} onClose={() => setEditingSermon(null)} onSuccess={() => { queryClient.invalidateQueries({ queryKey: ['adminSermons'] }); setEditingSermon(null); }} />}
+              </div>
+            )}
+            {websiteTab === 'schedule' && <ScheduleManager />}
+            {websiteTab === 'milestones' && <MilestonesManager />}
+            {websiteTab === 'beliefs' && <BeliefsManager />}
+            {websiteTab === 'carousel' && <CarouselMembersManager />}
+            {websiteTab === 'church_info' && <ChurchInfoManager />}
+            {websiteTab === 'features' && <FeatureTogglesManager />}
+          </div>
+        )}
+
+        {/* Groups */}
+        {adminSection === 'groups' && <GroupsManager />}
+
+        {/* People */}
+        {adminSection === 'people' && (
+          <div className="space-y-6">
+            {peopleTab === 'volunteers' && (
+              <div className="space-y-8">
+                <AddNeedForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ['adminNeeds'] })} />
                 <div>
-                  <label className="font-body text-sm text-muted-foreground block mb-1">Fund</label>
-                  <select 
-                    onChange={(e) => setDonationFilters(prev => ({ ...prev, fund: e.target.value }))} 
-                    value={donationFilters.fund}
-                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background"
-                  >
-                    <option value="">All Funds</option>
-                    {['general', 'building_campaign', 'missions', 'youth', 'community_meals'].map(fund => (
-                      <option key={fund} value={fund}>{fund.replace('_', ' ')}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex-1 min-w-[200px]">
-                  <label className="font-body text-sm text-muted-foreground block mb-1">Donor Name</label>
-                  <input 
-                    type="text"
-                    onChange={(e) => setDonationFilters(prev => ({ ...prev, donor: e.target.value }))} 
-                    value={donationFilters.donor}
-                    placeholder="Search donor..."
-                    className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background w-full"
-                  />
+                  <h3 className="font-heading text-xl text-primary mb-4">All Volunteer Needs</h3>
+                  <div className="space-y-3">
+                    {needs.map(need => {
+                      const needSignups = signups.filter(s => s.volunteer_need_id === need.id);
+                      return (
+                        <div key={need.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="font-heading text-base text-primary">{need.title}</h4>
+                              <Badge variant="secondary" className="font-body text-xs">{need.status}</Badge>
+                            </div>
+                            <p className="font-body text-xs text-muted-foreground">{format(new Date(need.date + 'T00:00:00'), 'MMM d, yyyy')} • {need.slots_filled || 0}/{need.slots_needed} filled</p>
+                            {needSignups.length > 0 && (
+                              <div className="flex items-center gap-1 mt-1">
+                                <Users className="w-3 h-3 text-muted-foreground" />
+                                <span className="font-body text-xs text-muted-foreground">{needSignups.map(s => s.volunteer_name).join(', ')}</span>
+                              </div>
+                            )}
+                          </div>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteNeed(need.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                        </div>
+                      );
+                    })}
+                    {needs.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No volunteer needs created yet.</p>}
+                  </div>
                 </div>
               </div>
-
+            )}
+            {peopleTab === 'contacts' && (
               <div className="space-y-3">
-                {filteredDonations.map(donation => (
-                  <div key={donation.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
-                    <div>
-                      <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
-                      <p className="font-body text-xs text-muted-foreground">
-                        {donation.donor_email} • {format(new Date(donation.donation_date + 'T00:00:00'), 'MMM d, yyyy')}
-                      </p>
+                {contacts.map(contact => (
+                  <div key={contact.id} className="p-4 bg-card rounded-lg border border-border/50">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="font-heading text-base text-primary">{contact.name}</h4>
+                        <p className="font-body text-xs text-muted-foreground">{contact.email} • {contact.phone}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge className={`font-body text-xs ${statusColors[contact.status] || ''}`}>{contact.status}</Badge>
+                        <Badge variant="outline" className="font-body text-xs">{serviceLabels[contact.service_type] || contact.service_type}</Badge>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
-                      <Badge variant="secondary" className="font-body text-xs capitalize">
-                        {donation.fund?.replace('_', ' ')}
-                      </Badge>
+                    <p className="font-body text-sm text-muted-foreground mb-3">{contact.message}</p>
+                    <div className="flex gap-2">
+                      {['new', 'in_progress', 'resolved'].map(status => (
+                        <Button key={status} variant={contact.status === status ? "default" : "outline"} size="sm" className="font-body text-xs capitalize" onClick={() => handleUpdateContactStatus(contact.id, status)}>{status.replace('_', ' ')}</Button>
+                      ))}
                     </div>
                   </div>
                 ))}
-                {filteredDonations.length === 0 && (
-                  <p className="font-body text-muted-foreground text-center py-8">No donations matching filters.</p>
-                )}
+                {contacts.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No contact requests yet.</p>}
               </div>
-
-              {filteredDonations.length > 0 && (
-                <div className="mt-6 p-4 bg-secondary rounded-lg border border-border/50">
-                  <div className="flex justify-between items-center">
-                    <span className="font-heading text-lg text-primary">Total Donations</span>
-                    <span className="font-heading text-2xl text-primary">${filteredDonations.reduce((sum, d) => sum + (d.amount || 0), 0).toLocaleString()}</span>
+            )}
+            {peopleTab === 'directory' && <MemberDirectory />}
+            {peopleTab === 'membership' && (
+              <div className="space-y-3">
+                {memberships.filter(m => m.status !== 'approved').map(app => (
+                  <div key={app.id} className="p-5 bg-card rounded-lg border border-border/50">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="font-heading text-base text-primary">{app.full_name}</h4>
+                        <p className="font-body text-xs text-muted-foreground">{app.email}{app.phone ? ` • ${app.phone}` : ''}{app.how_long_attending ? ` • Attending ${app.how_long_attending}` : ''}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${membershipStatusColors[app.status]}`}>{app.status}</span>
+                        {app.baptized && <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Baptized</span>}
+                      </div>
+                    </div>
+                    <p className="font-body text-sm text-muted-foreground mb-4 leading-relaxed border-l-2 border-border pl-3 italic">"{app.testimony}"</p>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      {['pending', 'approved', 'waitlisted', 'declined'].map(status => (
+                        <Button key={status} variant={app.status === status ? "default" : "outline"} size="sm" className="font-body text-xs capitalize" onClick={() => handleUpdateMembershipStatus(app, status)}>{status}</Button>
+                      ))}
+                    </div>
                   </div>
-                  <p className="font-body text-xs text-muted-foreground mt-2">{filteredDonations.length} donation{filteredDonations.length !== 1 ? 's' : ''}</p>
-                </div>
-              )}
-
-              {filteredDonations.length > 0 && (
-                <div className="bg-card border border-border/50 rounded-2xl p-5">
-                  <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">Donations by Donor</p>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <Treemap
-                      data={filteredDonations.reduce((acc, d) => {
-                        const existing = acc.find(item => item.name === d.donor_name);
-                        if (existing) {
-                          existing.value += d.amount || 0;
-                        } else {
-                          acc.push({ name: d.donor_name, value: d.amount || 0 });
-                        }
-                        return acc;
-                      }, []).sort((a, b) => b.value - a.value)}
-                      dataKey="value"
-                      stroke="#fff"
-                      fill="hsl(var(--primary))"
-                    >
-                    </Treemap>
-                  </ResponsiveContainer>
-                </div>
-              )}
+                ))}
+                {memberships.filter(m => m.status !== 'approved').length === 0 && <p className="font-body text-muted-foreground text-center py-8">No pending applications.</p>}
               </div>
-              </div>
-          </TabsContent>
-
-          {/* Budget Tab */}
-          <TabsContent value="budget">
-             <GivingManager />
-             <FundsManager />
-          </TabsContent>
-         </Tabs>
-         )}
-
-        {/* Staff & Operations Section */}
-        {adminSection === 'staff' && (
-        <Tabs defaultValue="kanban" className="space-y-6">
-          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
-            <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
-              <TabsTrigger value="kanban" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Kanban className="w-4 h-4" /> Action Items</TabsTrigger>
-              <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
-            </TabsList>
+            )}
+            {peopleTab === 'memories' && <MemoriesManager />}
           </div>
+        )}
 
-          {/* Kanban Tab */}
-          <TabsContent value="kanban">
-            <StaffKanban />
-          </TabsContent>
+        {/* Finances */}
+        {adminSection === 'finances' && (
+          <div className="space-y-6">
+            {financesTab === 'donations' && (
+              <div className="space-y-6">
+                <DonationKPIs donations={filteredDonations} />
+                <DonationMonthlyChart donations={filteredDonations} />
+                <div className="space-y-4">
+                  <div className="flex gap-4 flex-wrap">
+                    <div>
+                      <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>
+                      <select onChange={(e) => setDonationFilters(prev => ({ ...prev, year: e.target.value }))} value={donationFilters.year} className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background">
+                        <option value="">All Years</option>
+                        {[...new Set(donations.map(d => new Date(d.created_date).getFullYear()))].sort((a,b) => b-a).map(year => <option key={year} value={year}>{year}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="font-body text-sm text-muted-foreground block mb-1">Fund</label>
+                      <select onChange={(e) => setDonationFilters(prev => ({ ...prev, fund: e.target.value }))} value={donationFilters.fund} className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background">
+                        <option value="">All Funds</option>
+                        {['general', 'building_campaign', 'missions', 'youth', 'community_meals'].map(fund => <option key={fund} value={fund}>{fund.replace('_', ' ')}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex-1 min-w-[200px]">
+                      <label className="font-body text-sm text-muted-foreground block mb-1">Donor Name</label>
+                      <input type="text" onChange={(e) => setDonationFilters(prev => ({ ...prev, donor: e.target.value }))} value={donationFilters.donor} placeholder="Search donor..." className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background w-full" />
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {filteredDonations.map(donation => (
+                      <div key={donation.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
+                        <div>
+                          <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
+                          <p className="font-body text-xs text-muted-foreground">{donation.donor_email} • {format(new Date(donation.donation_date + 'T00:00:00'), 'MMM d, yyyy')}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
+                          <Badge variant="secondary" className="font-body text-xs capitalize">{donation.fund?.replace('_', ' ')}</Badge>
+                        </div>
+                      </div>
+                    ))}
+                    {filteredDonations.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No donations matching filters.</p>}
+                  </div>
+                  {filteredDonations.length > 0 && (
+                    <div className="mt-6 p-4 bg-secondary rounded-lg border border-border/50">
+                      <div className="flex justify-between items-center">
+                        <span className="font-heading text-lg text-primary">Total Donations</span>
+                        <span className="font-heading text-2xl text-primary">${filteredDonations.reduce((sum, d) => sum + (d.amount || 0), 0).toLocaleString()}</span>
+                      </div>
+                      <p className="font-body text-xs text-muted-foreground mt-2">{filteredDonations.length} donation{filteredDonations.length !== 1 ? 's' : ''}</p>
+                    </div>
+                  )}
+                  {filteredDonations.length > 0 && (
+                    <div className="bg-card border border-border/50 rounded-2xl p-5">
+                      <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">Donations by Donor</p>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <Treemap data={filteredDonations.reduce((acc, d) => { const existing = acc.find(item => item.name === d.donor_name); if (existing) { existing.value += d.amount || 0; } else { acc.push({ name: d.donor_name, value: d.amount || 0 }); } return acc; }, []).sort((a, b) => b.value - a.value)} dataKey="value" stroke="#fff" fill="hsl(var(--primary))" />
+                      </ResponsiveContainer>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {financesTab === 'budget' && <><GivingManager /><FundsManager /></>}
+          </div>
+        )}
 
-          {/* Events Tab */}
-          <TabsContent value="events">
-            <EventsManager />
-          </TabsContent>
-        </Tabs>
+        {/* Staff */}
+        {adminSection === 'staff' && (
+          <div className="space-y-6">
+            {staffTab === 'kanban' && <StaffKanban />}
+            {staffTab === 'events' && <EventsManager />}
+          </div>
         )}
 
         </div>{/* end content */}
