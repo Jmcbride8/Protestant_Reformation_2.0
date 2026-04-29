@@ -66,8 +66,8 @@ function TeamCarousel({ members }) {
     <div>
       <div className="hidden sm:flex items-center justify-center gap-4">
         {members.length > visibleCount && (
-          <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
-            <ChevronLeft className="w-5 h-5 text-white" />
+          <button onClick={prev} className="w-10 h-10 rounded-full bg-border hover:bg-border/80 flex items-center justify-center transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 text-primary" />
           </button>
         )}
         <div className="flex gap-8 justify-center">
@@ -78,30 +78,30 @@ function TeamCarousel({ members }) {
           ))}
         </div>
         {members.length > visibleCount && (
-          <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
-            <ChevronRight className="w-5 h-5 text-white" />
+          <button onClick={next} className="w-10 h-10 rounded-full bg-border hover:bg-border/80 flex items-center justify-center transition-colors shrink-0">
+            <ChevronRight className="w-5 h-5 text-primary" />
           </button>
         )}
       </div>
       <div className="sm:hidden flex items-center justify-center gap-4">
         {members.length > 1 && (
-          <button onClick={prev} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
-            <ChevronLeft className="w-5 h-5 text-white" />
+          <button onClick={prev} className="w-10 h-10 rounded-full bg-border hover:bg-border/80 flex items-center justify-center transition-colors shrink-0">
+            <ChevronLeft className="w-5 h-5 text-primary" />
           </button>
         )}
         <motion.div key={members[index].id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
           <TeamMemberCard member={members[index]} />
         </motion.div>
         {members.length > 1 && (
-          <button onClick={next} className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors shrink-0">
-            <ChevronRight className="w-5 h-5 text-white" />
+          <button onClick={next} className="w-10 h-10 rounded-full bg-border hover:bg-border/80 flex items-center justify-center transition-colors shrink-0">
+            <ChevronRight className="w-5 h-5 text-primary" />
           </button>
         )}
       </div>
       {members.length > 1 && (
         <div className="flex justify-center gap-2 mt-6">
           {members.map((_, i) => (
-            <button key={i} onClick={() => setIndex(i)} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-5 bg-accent' : 'w-1.5 bg-white/30'}`} />
+            <button key={i} onClick={() => setIndex(i)} className={`h-1.5 rounded-full transition-all ${i === index ? 'w-5 bg-accent' : 'w-1.5 bg-border'}`} />
           ))}
         </div>
       )}
@@ -111,15 +111,14 @@ function TeamCarousel({ members }) {
 
 function LeadershipSection({ members }) {
   return (
-    <section className="py-28 bg-primary relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+    <section className="py-28 bg-secondary/40 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-white/50 mb-4">Leadership</p>
-          <h2 className="font-heading text-5xl sm:text-6xl text-white mb-6">
-            Meet the <span className="italic text-accent">Team</span>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-4">Leadership</p>
+          <h2 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
+            Meet the <span className="italic">Team</span>
           </h2>
-          <p className="font-body text-lg text-white/60 max-w-xl mx-auto">
+          <p className="font-body text-lg text-muted-foreground max-w-xl mx-auto">
             Real people with open doors. We'd love to get to know you.
           </p>
         </motion.div>
@@ -296,9 +295,9 @@ function StorySection() {
 function MembershipSection({ onOpenModal }) {
   const steps = [
     { num: '01', title: 'Attend a Service', body: 'Come as you are. You don\'t need to believe anything specific yet — just show up.' },
-    { num: '02', title: 'Meet the Team', body: 'Have coffee or a meal with our pastors. Ask us anything. No pressure, no sales pitch.' },
+    { num: '02', title: 'Follow Jesus', body: 'Faith isn\'t a prerequisite — it\'s an invitation. We walk with you wherever you are on that journey.' },
     { num: '03', title: 'Apply for Membership', body: 'When you\'re ready, fill out a short application. We review every one personally.' },
-    { num: '04', title: 'Welcome Home', body: 'Join a community that will know your name, celebrate your milestones, and walk with you.' },
+    { num: '04', title: 'Be More Than a Number', body: 'You\'re not joining a crowd — you\'re becoming family. People who know your name, show up for you, and do life together.' },
   ];
 
   return (
