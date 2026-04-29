@@ -126,7 +126,7 @@ export default function Navbar() {
                       : churchLinks.some(l => l.path === location.pathname) ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
-                  Programs
+                  Ministries
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform ${churchOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {churchOpen && (
@@ -271,7 +271,7 @@ export default function Navbar() {
                 {/* Church submenu in mobile — always visible */}
                 {churchLinks.length > 0 && (
                   <div>
-                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Programs</p>
+                    <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-3">Ministries</p>
                     <div className="flex flex-col gap-4 pl-2">
                       {churchLinks.map(link => (
                         <Link
