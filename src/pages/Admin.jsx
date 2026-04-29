@@ -236,12 +236,12 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
           {/* Content */}
-          <div className="min-w-0">
+          <div className="min-w-0 -mt-10">
 
         {/* Website Administration Section */}
         {adminSection === 'website' && (
         <Tabs defaultValue="sermons" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
             <TabsTrigger value="sermons" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Tv2 className="w-4 h-4" /> Sermons</TabsTrigger>
             <TabsTrigger value="schedule" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Schedule</TabsTrigger>
@@ -341,7 +341,7 @@ export default function Admin() {
         {/* Community Groups Section */}
         {adminSection === 'groups' && (
         <Tabs defaultValue="groups" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
               <TabsTrigger value="groups" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><UsersRound className="w-4 h-4" /> Groups</TabsTrigger>
             </TabsList>
@@ -356,7 +356,7 @@ export default function Admin() {
         {/* People & Community Section */}
         {adminSection === 'people' && (
         <Tabs defaultValue="volunteers" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none gap-3 [&_[role=tablist]]:bg-transparent">
             <TabsTrigger value="volunteers" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Volunteer Needs</TabsTrigger>
             <TabsTrigger value="contacts" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Mail className="w-4 h-4" /> Contacts</TabsTrigger>
@@ -516,7 +516,7 @@ export default function Admin() {
         {/* Finances Section */}
         {adminSection === 'finances' && (
         <Tabs defaultValue="donations" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
             <TabsTrigger value="donations" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><HandCoins className="w-4 h-4" /> Donations</TabsTrigger>
             <TabsTrigger value="budget" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><PieChart className="w-4 h-4" /> Budget</TabsTrigger>
@@ -638,7 +638,7 @@ export default function Admin() {
         {/* Staff & Operations Section */}
         {adminSection === 'staff' && (
         <Tabs defaultValue="kanban" className="space-y-6">
-          <div className="mb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
+          <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-3 bg-primary text-primary-foreground border-b-2 border-primary/80 shadow-sm">
             <TabsList className="bg-transparent font-body flex-wrap h-auto rounded-none [&_[role=tablist]]:bg-transparent">
               <TabsTrigger value="kanban" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Kanban className="w-4 h-4" /> Action Items</TabsTrigger>
               <TabsTrigger value="events" className="gap-2 text-primary-foreground data-[state=inactive]:text-primary-foreground/60 hover:text-primary-foreground"><Calendar className="w-4 h-4" /> Events</TabsTrigger>
