@@ -16,7 +16,7 @@ export default function CTASection() {
           viewport={{ once: true }}
         >
           <h2 className="font-heading text-4xl sm:text-5xl mb-6 italic">
-            Come As You Are
+            Meet God, Build Family, Make Friends
           </h2>
           <p className="font-body text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto leading-relaxed">
             You don't need to have it all figured out. You don't need to dress a certain way. 
