@@ -502,7 +502,7 @@ function AboutHero() {
           Who We Are
         </motion.h1>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-          A church in Santa Barbara built on the conviction that every person deserves to know and be known. This is our story, our team, and our heart.
+          A place where people find hope and help in Jesus Christ, and family and friendship with each other.
         </motion.p>
       </div>
     </section>
