@@ -232,7 +232,7 @@ export default function GroupFundSection({ group, user }) {
   });
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="w-full">
       {/* Header */}
       <div className="flex items-center gap-3 mb-10">
         <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
