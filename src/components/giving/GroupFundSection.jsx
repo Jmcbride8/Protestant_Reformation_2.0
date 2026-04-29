@@ -77,10 +77,10 @@ function GiveToGroupForm({ group, user, onSuccess }) {
           transaction_date: new Date().toISOString().split('T')[0],
         });
       }}
-      className="space-y-4"
+      className="flex flex-col h-full"
     >
       <h3 className="font-heading text-lg text-primary mb-4">Give to {group.name}</h3>
-       <div className="space-y-3">
+       <div className="space-y-3 flex-1">
           <div className="space-y-2">
             <Label className="font-body text-sm">Amount ($)</Label>
             <Input type="number" min="1" required className="font-body" placeholder="50" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
@@ -114,7 +114,7 @@ function GiveToGroupForm({ group, user, onSuccess }) {
             </div>
           </div>
        </div>
-       <Button type="submit" disabled={mutation.isPending} className="w-full font-body" size="lg">
+       <Button type="submit" disabled={mutation.isPending} className="w-full font-body mt-6" size="lg">
          Give Now
        </Button>
     </form>
@@ -161,11 +161,11 @@ function LogExpenseForm({ group, onSuccess }) {
             status: 'pending',
           });
         }}
-        className="space-y-4"
+        className="flex flex-col h-full"
       >
         <h3 className="font-heading text-lg text-primary mb-4">Log an Expense</h3>
         <p className="font-body text-xs text-muted-foreground mb-4">Expenses require group leader approval before executing.</p>
-        <div className="space-y-3">
+        <div className="space-y-3 flex-1">
           <div className="space-y-2">
             <Label className="font-body text-sm">Amount ($)</Label>
             <Input type="number" min="1" required className="font-body" placeholder="75" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} />
@@ -179,7 +179,7 @@ function LogExpenseForm({ group, onSuccess }) {
             <Input required className="font-body" placeholder="e.g. Event supplies" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
           </div>
         </div>
-        <Button type="submit" disabled={mutation.isPending} size="lg" className="w-full font-body">
+        <Button type="submit" disabled={mutation.isPending} size="lg" className="w-full font-body mt-6">
           Submit for Approval
         </Button>
       </form>
@@ -245,15 +245,15 @@ export default function GroupFundSection({ group, user }) {
 
       <GroupFundTrendChart transactions={transactions} />
 
-      <div className={`grid gap-12 mt-12 ${isLeader ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
+      <div className={`grid gap-12 mt-12 ${isLeader ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'} items-stretch`}>
          {/* Give form */}
-         <div className="bg-card border border-border/50 rounded-2xl p-8">
+         <div className="bg-card border border-border/50 rounded-2xl p-8 flex flex-col">
            <GiveToGroupForm group={group} user={user} />
          </div>
 
          {/* Log expense form (leader only) */}
          {isLeader && (
-           <div className="bg-card border border-border/50 rounded-2xl p-8">
+           <div className="bg-card border border-border/50 rounded-2xl p-8 flex flex-col">
              <LogExpenseForm group={group} />
            </div>
          )}
