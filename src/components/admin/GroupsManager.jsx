@@ -33,8 +33,6 @@ export default function GroupsManager() {
      queryFn: () => base44.entities.MemberProfile.list('-joined_date', 100),
    });
 
-   const staffAndPastors = members.filter(m => ['Staff', 'Pastor'].includes(m.role));
-
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -123,25 +121,24 @@ export default function GroupsManager() {
             <div className="space-y-1">
               <Label className="font-body text-xs">Leader Name *</Label>
               <Select value={form.leader_name} onValueChange={name => {
-                const member = staffAndPastors.find(m => m.full_name === name);
+                const member = members.find(m => m.full_name === name);
                 setForm(f => ({ ...f, leader_name: name, leader_title: member?.role || '' }));
               }}>
                 <SelectTrigger className="font-body text-sm">
-                  <SelectValue placeholder="Select a staff member or pastor" />
+                  <SelectValue placeholder="Select a member" />
                 </SelectTrigger>
                 <SelectContent className="max-h-48">
-                  {staffAndPastors.length > 0 ? (
-                    staffAndPastors.map(member => (
+                  {members.length > 0 ? (
+                    members.map(member => (
                       <SelectItem key={member.id} value={member.full_name} className="font-body">
                         {member.full_name} ({member.role})
                       </SelectItem>
                     ))
                   ) : (
-                    <div className="p-2 text-xs text-muted-foreground text-center">No staff or pastors found</div>
+                    <div className="p-2 text-xs text-muted-foreground text-center">No members found</div>
                   )}
                 </SelectContent>
               </Select>
-              <p className="font-body text-xs text-muted-foreground mt-1">Or manually enter a name above</p>
             </div>
             <div className="space-y-1">
               <Label className="font-body text-xs">Leader Title</Label>
