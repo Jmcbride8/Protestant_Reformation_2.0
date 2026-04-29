@@ -52,7 +52,7 @@ export default function GroupFundTrendChart({ transactions }) {
         <BarChart data={monthlyData}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
-          <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+          <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} tickFormatter={(value) => value >= 1000 ? `$${(value / 1000).toFixed(1)}k` : `$${value}`} />
           <Tooltip
             contentStyle={{
               backgroundColor: 'hsl(var(--card))',
@@ -65,7 +65,7 @@ export default function GroupFundTrendChart({ transactions }) {
           <Legend />
           <Bar
             dataKey="income"
-            fill="hsl(var(--chart-2))"
+            fill="hsl(var(--primary))"
             name="Income"
             radius={[6, 6, 0, 0]}
           />
