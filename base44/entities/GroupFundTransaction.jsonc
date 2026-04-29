@@ -39,6 +39,16 @@
       "type": "string",
       "format": "date",
       "description": "Date of the transaction"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "approved",
+      "description": "Approval status for spent transactions (pending = awaiting leader approval)"
     }
   },
   "required": [

@@ -32,7 +32,11 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
        queryKey: ['pendingExpensesForMyGroups', ownedGroups.map(g => g.id)],
        queryFn: async () => {
          const all = await Promise.all(
-           ownedGroups.map(g => base44.entities.GroupFundTransaction.filter({ group_id: g.id, status: 'pending', type: 'spent' }))
+           ownedGroups.map(g => 
+             base44.entities.GroupFundTransaction.list().then(txs => 
+               txs.filter(tx => tx.group_id === g.id && tx.status === 'pending' && tx.type === 'spent')
+             )
+           )
          );
          return all.flat();
        },
