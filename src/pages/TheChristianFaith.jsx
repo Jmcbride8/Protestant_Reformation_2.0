@@ -123,27 +123,123 @@ function UniquenessSection() {
         </motion.div>
 
         <div className="space-y-4">
-          {points.map((point, i) => (
+          {/* The Bad News */}
+          <div className="mb-8">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-4 ml-20">The Bad News</p>
+            {points.slice(0, 3).map((point, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="flex gap-6 items-start mb-4"
+              >
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
+                    {i + 1}
+                  </div>
+                  {i < 2 && <div className="w-0.5 h-16 bg-border/60 mt-2" />}
+                </div>
+                <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
+                  <h3 className="font-heading text-lg text-primary mb-2">{point.title}</h3>
+                  <p className="font-body text-muted-foreground leading-relaxed text-sm">{point.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* The Good News */}
+          <div className="mb-8">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-4 ml-20">The Good News</p>
+            {points.slice(3, 5).map((point, i) => (
+              <motion.div
+                key={i + 3}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="flex gap-6 items-start mb-4"
+              >
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
+                    {i + 4}
+                  </div>
+                  {i < 1 && <div className="w-0.5 h-16 bg-border/60 mt-2" />}
+                </div>
+                <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
+                  <h3 className="font-heading text-lg text-primary mb-2">{point.title}</h3>
+                  <p className="font-body text-muted-foreground leading-relaxed text-sm">{point.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Thankfulness not Penance */}
+          <div className="mb-8">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-4 ml-20">Thankfulness not Penance</p>
             <motion.div
-              key={i}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              transition={{ delay: 0.4 }}
               className="flex gap-6 items-start"
             >
               <div className="flex flex-col items-center shrink-0">
                 <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
-                  {i + 1}
+                  6
                 </div>
-                {i < points.length - 1 && <div className="w-0.5 h-16 bg-border/60 mt-2" />}
+                <div className="w-0.5 h-16 bg-border/60 mt-2" />
               </div>
               <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
-                <h3 className="font-heading text-lg text-primary mb-2">{point.title}</h3>
-                <p className="font-body text-muted-foreground leading-relaxed text-sm">{point.desc}</p>
+                <h3 className="font-heading text-lg text-primary mb-2">{points[5].title}</h3>
+                <p className="font-body text-muted-foreground leading-relaxed text-sm">{points[5].desc}</p>
               </div>
             </motion.div>
-          ))}
+          </div>
+
+          {/* Paying it Forward */}
+          <div>
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-4 ml-20">Paying it Forward</p>
+            {points.slice(6).map((point, i) => (
+              <motion.div
+                key={i + 6}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="flex gap-6 items-start mb-4"
+              >
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
+                    {i + 7}
+                  </div>
+                  {i < 1 && <div className="w-0.5 h-16 bg-border/60 mt-2" />}
+                </div>
+                <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
+                  <h3 className="font-heading text-lg text-primary mb-2">{point.title}</h3>
+                  <p className="font-body text-muted-foreground leading-relaxed text-sm">{point.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.16 }}
+              className="flex gap-6 items-start"
+            >
+              <div className="flex flex-col items-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-heading font-bold text-sm">
+                  8
+                </div>
+              </div>
+              <div className="flex-1 bg-card border border-border/50 rounded-2xl p-6 pt-5">
+                <h3 className="font-heading text-lg text-primary mb-2">We are called to forgive and heal as we were healed</h3>
+                <p className="font-body text-muted-foreground leading-relaxed text-sm">Because we have been forgiven of infinite wrongs, we are commissioned to forgive others and heal the world as God healed us. Our purpose becomes an echo of His grace—extending mercy, pursuing justice, and mending what sin has broken.</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
