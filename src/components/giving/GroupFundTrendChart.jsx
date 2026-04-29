@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { format, startOfMonth, eachMonthOfInterval, endOfMonth, parseISO } from 'date-fns';
 
 export default function GroupFundTrendChart({ transactions }) {
@@ -49,10 +49,10 @@ export default function GroupFundTrendChart({ transactions }) {
     <div className="bg-card border border-border/50 rounded-2xl p-8">
       <h3 className="font-heading text-xl text-primary mb-6">Trend Over Time</h3>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={monthlyData}>
+        <BarChart data={monthlyData}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
-          <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} />
+          <YAxis stroke="hsl(var(--muted-foreground))" style={{ fontSize: '12px' }} tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
           <Tooltip
             contentStyle={{
               backgroundColor: 'hsl(var(--card))',
@@ -63,25 +63,19 @@ export default function GroupFundTrendChart({ transactions }) {
             labelStyle={{ color: 'hsl(var(--foreground))' }}
           />
           <Legend />
-          <Line
-            type="monotone"
+          <Bar
             dataKey="income"
-            stroke="hsl(var(--chart-2))"
-            strokeWidth={2}
-            dot={{ fill: 'hsl(var(--chart-2))', r: 4 }}
-            activeDot={{ r: 6 }}
+            fill="hsl(var(--chart-2))"
             name="Income"
+            radius={[6, 6, 0, 0]}
           />
-          <Line
-            type="monotone"
+          <Bar
             dataKey="expenses"
-            stroke="hsl(var(--destructive))"
-            strokeWidth={2}
-            dot={{ fill: 'hsl(var(--destructive))', r: 4 }}
-            activeDot={{ r: 6 }}
+            fill="hsl(var(--destructive))"
             name="Expenses"
+            radius={[6, 6, 0, 0]}
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
