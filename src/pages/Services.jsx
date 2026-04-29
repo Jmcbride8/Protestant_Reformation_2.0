@@ -121,7 +121,7 @@ export default function Services() {
       <section className="py-20 bg-secondary/30">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Care & Support</p>
+            <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">WE KEEP IT REAL</p>
             <h1 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
               We're Here for <span className="italic">Every Season</span>
             </h1>
