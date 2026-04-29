@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2, Pencil, Plus, X, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -16,16 +17,23 @@ const emptyForm = {
 };
 
 export default function GroupsManager() {
-  const queryClient = useQueryClient();
-  const [form, setForm] = useState(emptyForm);
-  const [editingId, setEditingId] = useState(null);
-  const [showForm, setShowForm] = useState(false);
-  const [uploading, setUploading] = useState(false);
+   const queryClient = useQueryClient();
+   const [form, setForm] = useState(emptyForm);
+   const [editingId, setEditingId] = useState(null);
+   const [showForm, setShowForm] = useState(false);
+   const [uploading, setUploading] = useState(false);
 
-  const { data: groups = [] } = useQuery({
-    queryKey: ['adminGroups'],
-    queryFn: () => base44.entities.CommunityGroup.list('sort_order', 50),
-  });
+   const { data: groups = [] } = useQuery({
+     queryKey: ['adminGroups'],
+     queryFn: () => base44.entities.CommunityGroup.list('sort_order', 50),
+   });
+
+   const { data: members = [] } = useQuery({
+     queryKey: ['memberProfiles'],
+     queryFn: () => base44.entities.MemberProfile.list('-joined_date', 100),
+   });
+
+   const staffAndPastors = members.filter(m => ['Staff', 'Pastor'].includes(m.role));
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
@@ -114,7 +122,26 @@ export default function GroupsManager() {
             </div>
             <div className="space-y-1">
               <Label className="font-body text-xs">Leader Name *</Label>
-              <Input value={form.leader_name} onChange={e => setForm(f => ({ ...f, leader_name: e.target.value }))} required />
+              <Select value={form.leader_name} onValueChange={name => {
+                const member = staffAndPastors.find(m => m.full_name === name);
+                setForm(f => ({ ...f, leader_name: name, leader_title: member?.role || '' }));
+              }}>
+                <SelectTrigger className="font-body text-sm">
+                  <SelectValue placeholder="Select a staff member or pastor" />
+                </SelectTrigger>
+                <SelectContent className="max-h-48">
+                  {staffAndPastors.length > 0 ? (
+                    staffAndPastors.map(member => (
+                      <SelectItem key={member.id} value={member.full_name} className="font-body">
+                        {member.full_name} ({member.role})
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <div className="p-2 text-xs text-muted-foreground text-center">No staff or pastors found</div>
+                  )}
+                </SelectContent>
+              </Select>
+              <p className="font-body text-xs text-muted-foreground mt-1">Or manually enter a name above</p>
             </div>
             <div className="space-y-1">
               <Label className="font-body text-xs">Leader Title</Label>
