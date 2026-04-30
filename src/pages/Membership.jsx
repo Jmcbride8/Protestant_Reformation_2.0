@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus, ChevronLeft, ChevronRight, ChevronDown, Sparkles, Hand, Target } from 'lucide-react';
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
 
 const quotes = [
@@ -192,36 +192,88 @@ export default function Membership() {
 
 
 
-          <div className="mt-16 max-w-3xl mx-auto">
-            <h3 className="font-heading text-3xl text-primary mb-4 text-center">The Best Platform for Generosity</h3>
-            <p className="font-body text-muted-foreground leading-relaxed mb-4 text-center">
-              The local church is one of the most powerful and accountable vehicles for community impact that exists. 
-              Unlike faceless institutions, church puts generosity in the hands of people who actually know their neighbors — 
-              who see the need, who show up, and who stick around.
-            </p>
-            <p className="font-body text-muted-foreground leading-relaxed text-center">
-              Membership is how you go from spectator to participant. It's where you stop waiting for someone else 
-              to fix things, and start being the community you wish existed.
-            </p>
-          </div>
+
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-primary text-primary-foreground text-center">
-        <div className="max-w-2xl mx-auto px-4">
-          <h2 className="font-heading text-4xl sm:text-5xl mb-4 italic">Ready to Take the Step?</h2>
-          <p className="font-body text-primary-foreground/80 mb-8 leading-relaxed">
-            Submit your application and our pastoral team will be in touch to walk you through the next steps.
-          </p>
-          <Button
-            size="lg"
-            onClick={() => setShowModal(true)}
-            className="bg-white text-primary hover:bg-white/90 font-body tracking-wide gap-2"
+      {/* Generosity Platform */}
+      <section className="py-32 bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(38 45% 60%) 0%, transparent 50%), radial-gradient(circle at 80% 80%, hsl(38 45% 60%) 0%, transparent 40%)' }} />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            <UserPlus className="w-5 h-5" />
-            Become a Member
-          </Button>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="w-5 h-5 text-accent" />
+              <p className="font-body text-sm tracking-[0.3em] uppercase text-accent">Impact That Matters</p>
+              <Sparkles className="w-5 h-5 text-accent" />
+            </div>
+            <h2 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
+              The Best Platform for <span className="italic">Generosity</span>
+            </h2>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              The local church is one of the most powerful and accountable vehicles for community impact. 
+              We put generosity in the hands of people who actually know their neighbors.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {[
+              { icon: Target, title: 'See the Need', desc: 'Direct relationships with real people in real need' },
+              { icon: Hand, title: 'Show Up', desc: 'Your generosity flows through trusted hands' },
+              { icon: Heart, title: 'Stick Around', desc: 'We\'re here for the long-term transformation' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-card rounded-2xl border border-border/50 p-8 text-center"
+              >
+                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="font-heading text-xl text-primary mb-2">{item.title}</h3>
+                <p className="font-body text-sm text-muted-foreground">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-primary rounded-3xl px-12 py-12 text-center max-w-3xl mx-auto relative overflow-hidden"
+          >
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, hsl(38 45% 60%) 0%, transparent 50%)' }} />
+            <p className="font-body text-lg text-primary-foreground/90 leading-relaxed relative z-10">
+              Membership is how you go from <span className="font-semibold">spectator to participant</span>. It's where you stop waiting for someone else to fix things, and start being the community you wish existed.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 bg-primary text-primary-foreground text-center">
+        <div className="max-w-2xl mx-auto px-4">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="font-heading text-4xl sm:text-5xl mb-4 italic">Ready to Take the Step?</h2>
+            <p className="font-body text-primary-foreground/80 mb-8 leading-relaxed">
+              Submit your application and our pastoral team will be in touch to walk you through the next steps.
+            </p>
+            <Button
+              size="lg"
+              onClick={() => setShowModal(true)}
+              className="bg-white text-primary hover:bg-white/90 font-body tracking-wide gap-2"
+            >
+              <UserPlus className="w-5 h-5" />
+              Become a Member
+            </Button>
+          </motion.div>
         </div>
       </section>
     </div>
