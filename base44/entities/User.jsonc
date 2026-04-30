@@ -6,10 +6,11 @@
       "type": "string",
       "enum": [
         "admin",
-        "member"
+        "member",
+        "guest"
       ],
-      "default": "member",
-      "description": "User role - admin for church staff, member for congregants"
+      "default": "guest",
+      "description": "User role - admin for church staff, member for approved congregants, guest for pending/unapproved users"
     },
     "phone": {
       "type": "string"
@@ -18,5 +19,6 @@
       "type": "string",
       "format": "date"
     }
-  }
+  },
+  "required": []
 }

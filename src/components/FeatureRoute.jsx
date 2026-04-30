@@ -9,6 +9,7 @@ import { LogIn } from 'lucide-react';
 export default function FeatureRoute({ children, featureKey, isPublic = false }) {
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
+  const [isPendingApproval, setIsPendingApproval] = useState(false);
   const { isEnabled, loaded } = useFeatures();
   const navigate = useNavigate();
   const guestPreview = isPreviewingAsGuest();
@@ -22,7 +23,12 @@ export default function FeatureRoute({ children, featureKey, isPublic = false })
       if (!authed) {
         base44.auth.redirectToLogin(window.location.href);
       } else {
-        setIsAuthed(true);
+        const me = await base44.auth.me();
+        if (me?.role === 'guest') {
+          setIsPendingApproval(true);
+        } else {
+          setIsAuthed(true);
+        }
       }
       setAuthChecked(true);
     });
@@ -37,6 +43,26 @@ export default function FeatureRoute({ children, featureKey, isPublic = false })
 
   // Public routes: always show content
   if (isPublic) return children;
+
+  // Pending approval: show waiting screen
+  if (isPendingApproval) {
+    return (
+      <div className="min-h-screen flex items-center justify-center pt-20">
+        <div className="text-center max-w-sm mx-auto px-4">
+          <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mx-auto mb-4">
+            <LogIn className="w-8 h-8 text-muted-foreground/60" />
+          </div>
+          <h2 className="font-heading text-2xl text-primary mb-2">Membership Pending</h2>
+          <p className="font-body text-muted-foreground mb-4 leading-relaxed">
+            Your account is awaiting approval from our pastoral team. You'll have full access once your membership application is reviewed.
+          </p>
+          <p className="font-body text-xs text-muted-foreground italic">
+            Haven't applied yet? Visit the <a href="/membership" className="underline text-accent">Membership page</a> to submit your application.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Guest preview: show sign-in wall
   if (guestPreview) {

@@ -158,6 +158,11 @@ export default function Admin() {
   const handleUpdateMembershipStatus = async (app, status) => {
     await base44.entities.MembershipRequest.update(app.id, { status });
     if (status === 'approved') {
+      // Promote the user's platform role to 'member' so they gain access to member-only pages
+      const matchingUsers = await base44.entities.User.filter({ email: app.email });
+      if (matchingUsers?.length > 0) {
+        await base44.entities.User.update(matchingUsers[0].id, { role: 'member' });
+      }
       // Check if a MemberProfile already exists for this application
       const existing = await base44.entities.MemberProfile.filter({ membership_request_id: app.id });
       if (!existing || existing.length === 0) {
@@ -175,7 +180,7 @@ export default function Admin() {
     }
     queryClient.invalidateQueries({ queryKey: ['adminMemberships'] });
     queryClient.invalidateQueries({ queryKey: ['memberProfiles'] });
-    toast.success(status === 'approved' ? 'Member approved and added to directory' : 'Status updated');
+    toast.success(status === 'approved' ? 'Member approved and granted access' : 'Status updated');
   };
 
   const membershipStatusColors = {
