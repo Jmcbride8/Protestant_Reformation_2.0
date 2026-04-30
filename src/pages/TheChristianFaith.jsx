@@ -292,9 +292,9 @@ function CoreBeliefsSection() {
     {
       icon: Flame,
       number: "VI",
-      title: "The Holy Spirit Lives in Believers",
-      desc: "God doesn't leave people alone after they begin following Jesus. The Holy Spirit—God's presence—lives in believers, guiding, comforting, and empowering them.",
-      verse: "\"The Spirit of God lives in you.\" — Romans 8:9",
+      title: "Saved by Grace, for Good Works",
+      desc: "Salvation isn't the finish line—it's the starting line. Christians are saved not by their good deeds, but for them. A life transformed by grace naturally overflows into love, service, and justice for others.",
+      verse: "\"Created in Christ Jesus to do good works.\" — Ephesians 2:10",
       dark: false,
     },
   ];
