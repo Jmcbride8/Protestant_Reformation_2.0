@@ -43,10 +43,24 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
      });
 
   const updateRequest = useMutation({
-     mutationFn: ({ id, status }) => base44.entities.GroupMembershipRequest.update(id, { status }),
+     mutationFn: async ({ id, status, req }) => {
+       await base44.entities.GroupMembershipRequest.update(id, { status });
+       if (status === 'approved' && req) {
+         // Also update the member's MemberProfile to assign them to the group
+         const profiles = await base44.entities.MemberProfile.filter({ email: req.requester_email });
+         if (profiles.length > 0) {
+           await base44.entities.MemberProfile.update(profiles[0].id, {
+             small_group_id: req.group_id,
+             small_group_name: req.group_name,
+           });
+         }
+       }
+     },
      onSuccess: (_, { status }) => {
        queryClient.invalidateQueries({ queryKey: ['pendingRequestsForMyGroups'] });
-       toast(status === 'approved' ? 'Request approved!' : 'Request rejected.');
+       queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+       queryClient.invalidateQueries({ queryKey: ['groupMembersForGiving'] });
+       toast(status === 'approved' ? 'Request approved — member added to group!' : 'Request rejected.');
      },
    });
 
@@ -112,7 +126,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
                   size="sm"
                   variant="outline"
                   className="text-xs border-destructive/30 text-destructive hover:bg-destructive/5"
-                  onClick={() => updateRequest.mutate({ id: req.id, status: 'rejected' })}
+                  onClick={() => updateRequest.mutate({ id: req.id, status: 'rejected', req })}
                   disabled={updateRequest.isPending}
                 >
                   <XCircle className="w-3.5 h-3.5 mr-1" /> Reject
@@ -120,7 +134,7 @@ export default function PendingRequestsPanel({ ownedGroups, pendingRequests, isA
                 <Button
                   size="sm"
                   className="text-xs bg-primary"
-                  onClick={() => updateRequest.mutate({ id: req.id, status: 'approved' })}
+                  onClick={() => updateRequest.mutate({ id: req.id, status: 'approved', req })}
                   disabled={updateRequest.isPending}
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Approve
