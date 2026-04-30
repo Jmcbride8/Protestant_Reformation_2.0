@@ -429,6 +429,7 @@ export default function GivingManager() {
           )}
         </div>
       </div>
+      </div>
 
       {/* Fundraising Funds */}
       <div>
