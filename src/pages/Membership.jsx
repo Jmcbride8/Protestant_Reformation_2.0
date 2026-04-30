@@ -201,7 +201,7 @@ export default function Membership() {
               The Best Platform for <span className="italic">Generosity</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              In a world turning to government, NGOs, and countless digital platforms for solutions, the local church remains uniquely positioned as the most transformative force for lasting change. We operate at ground level—rooted in neighborhoods, embedded in relationships. We're connected to a global communion of churches, learning from one another and providing mutual support. We know our community's deepest needs because we live in them. We stay when trends fade because we're built on conviction, not quarterly results. Your generosity flows through trusted hands, reaches real people, and contributes to change that lasts for generations.
+              In a world turning to government mandates, NGOs plagued by overhead and corruption, and digital platforms chasing metrics, the local church remains uniquely positioned as the most transformative force for lasting change. We operate through <span className="text-accent font-semibold">love, not force</span>—rooted in neighborhoods, embedded in relationships. We're connected to a global communion of churches, learning from one another and providing mutual support. We know our community's deepest needs because we live in them. We stay when trends fade because we're built on conviction, not quarterly results. Your generosity flows through trusted hands, reaches real people, and contributes to change that lasts for generations.
             </p>
           </motion.div>
 
