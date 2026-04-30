@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Heart, Users, AlertTriangle, Crown, Gift, Flame } from 'lucide-react';
 import { AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import EditableImage from '@/components/admin/EditableImage';
@@ -250,60 +250,104 @@ function UniquenessSection() {
 function CoreBeliefsSection() {
   const beliefs = [
     {
+      icon: Heart,
+      number: "I",
       title: "God Exists and Loves You",
-      desc: "Christians believe in one God who created everything and cares deeply about people. This isn't a distant, angry God—it's a God who pursues relationship."
+      desc: "Christians believe in one God who created everything and cares deeply about people. This isn't a distant, angry God—it's a God who pursues relationship.",
+      verse: "\"God is love.\" — 1 John 4:8",
+      dark: true,
     },
     {
+      icon: Users,
+      number: "II",
       title: "Humans Were Made in God's Image",
-      desc: "You matter. Your life has value and purpose because you reflect God's character. This is why Christians care about human dignity and worth."
+      desc: "You matter. Your life has value and purpose because you reflect God's character. This is why Christians care about human dignity and worth.",
+      verse: "\"So God created mankind in his own image.\" — Genesis 1:27",
+      dark: false,
     },
     {
+      icon: AlertTriangle,
+      number: "III",
       title: "We're All Broken and Need Help",
-      desc: "The Christian story acknowledges that something is wrong with the world and with us. We all struggle, make mistakes, and hurt others. This isn't shame—it's honesty."
+      desc: "The Christian story acknowledges that something is wrong with the world and with us. We all struggle, make mistakes, and hurt others. This isn't shame—it's honesty.",
+      verse: "\"All have sinned and fall short of the glory of God.\" — Romans 3:23",
+      dark: true,
     },
     {
+      icon: Crown,
+      number: "IV",
       title: "Jesus is God's Son and Our Rescuer",
-      desc: "Christians believe Jesus lived a perfect life, died to bridge the gap between God and humanity, and rose from the dead. Through Him, people find forgiveness and new life."
+      desc: "Christians believe Jesus lived a perfect life, died to bridge the gap between God and humanity, and rose from the dead. Through Him, people find forgiveness and new life.",
+      verse: "\"I am the way, the truth, and the life.\" — John 14:6",
+      dark: false,
     },
     {
+      icon: Gift,
+      number: "V",
       title: "Salvation is a Gift, Not Earned",
-      desc: "You can't work your way to God. Instead, Christianity offers grace—undeserved love. You receive it by faith, like accepting a gift someone offers."
+      desc: "You can't work your way to God. Instead, Christianity offers grace—undeserved love. You receive it by faith, like accepting a gift someone offers.",
+      verse: "\"By grace you have been saved, through faith.\" — Ephesians 2:8",
+      dark: true,
     },
     {
+      icon: Flame,
+      number: "VI",
       title: "The Holy Spirit Lives in Believers",
-      desc: "God doesn't leave people alone after they begin following Jesus. The Holy Spirit—God's presence—lives in believers, guiding, comforting, and empowering them."
+      desc: "God doesn't leave people alone after they begin following Jesus. The Holy Spirit—God's presence—lives in believers, guiding, comforting, and empowering them.",
+      verse: "\"The Spirit of God lives in you.\" — Romans 8:9",
+      dark: false,
     },
   ];
 
   return (
-    <section className="py-28 bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-28 bg-primary overflow-hidden">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">Core Beliefs of Christianity</h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-4">The Foundation</p>
+          <h2 className="font-heading text-4xl sm:text-6xl text-white mb-6">Core Beliefs of Christianity</h2>
+          <p className="font-body text-lg text-white/60 max-w-2xl mx-auto">
             Here are the foundational ideas that unite Christians around the world.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {beliefs.map((belief, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="bg-card border border-border/50 rounded-2xl p-6"
-            >
-              <h3 className="font-heading text-lg text-primary mb-2">{belief.title}</h3>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed">{belief.desc}</p>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 rounded-3xl overflow-hidden border border-white/10">
+          {beliefs.map((belief, i) => {
+            const Icon = belief.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.97 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07 }}
+                className={`relative p-8 sm:p-10 group ${belief.dark ? 'bg-primary' : 'bg-white/5'}`}
+              >
+                {/* Roman numeral watermark */}
+                <span className="absolute top-6 right-8 font-heading text-6xl font-bold text-white/5 select-none pointer-events-none">
+                  {belief.number}
+                </span>
+
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-2xl bg-accent/20 border border-accent/30 flex items-center justify-center mb-6 group-hover:bg-accent/30 transition-colors">
+                  <Icon className="w-6 h-6 text-accent" />
+                </div>
+
+                {/* Content */}
+                <h3 className="font-heading text-2xl text-white mb-3 leading-tight">{belief.title}</h3>
+                <p className="font-body text-white/65 leading-relaxed mb-6 text-sm">{belief.desc}</p>
+
+                {/* Verse */}
+                <div className="border-t border-white/10 pt-5">
+                  <p className="font-body text-xs text-accent/80 italic">{belief.verse}</p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
