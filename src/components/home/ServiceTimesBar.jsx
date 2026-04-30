@@ -7,7 +7,9 @@ export default function ServiceTimesBar() {
   const info = useChurchInfo();
 
   return (
-    <section className="py-16 bg-primary text-white">
+    <section className="bg-primary text-white">
+      <div className="h-1 bg-accent w-full" />
+      <div className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -71,6 +73,7 @@ export default function ServiceTimesBar() {
             )}
           </div>
         </motion.div>
+      </div>
       </div>
     </section>
   );
