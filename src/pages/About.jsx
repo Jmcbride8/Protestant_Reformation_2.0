@@ -428,7 +428,7 @@ function MembershipSection({ onOpenModal }) {
   const steps = [
     { num: '01', title: 'Attend a Service', body: 'Come as you are. You don\'t need to believe anything specific yet — just show up.' },
     { num: '02', title: 'Follow Jesus', body: 'Faith isn\'t a prerequisite — it\'s an invitation. We walk with you wherever you are on that journey.' },
-    { num: '03', title: 'Apply for Membership', body: 'When you\'re ready, fill out a short application. We review every one personally.' },
+    { num: '03', title: 'Become a Member', body: 'When you\'re ready, fill out a short application. We review every one personally.' },
     { num: '04', title: 'Be More Than a Number', body: 'Church isn\'t a place or program — it\'s your family in Christ. Build friendships, offer mutual support and do life together in the ways that matter.' },
   ];
 
@@ -470,7 +470,7 @@ function MembershipSection({ onOpenModal }) {
             className="font-body bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
           >
             <UserPlus className="w-5 h-5" />
-            Apply for Membership
+            Become a Member
           </Button>
         </div>
       </div>
