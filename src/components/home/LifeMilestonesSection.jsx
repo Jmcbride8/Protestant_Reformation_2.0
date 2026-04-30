@@ -115,14 +115,13 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="flex items-center gap-2 mb-3">
                 <UtensilsCrossed className="w-5 h-5 text-white/80" />
-                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Weekly Meals</span>
+                <span className="font-body text-xs tracking-[0.2em] uppercase text-white/70">Monthly Events</span>
               </div>
               <h3 className="font-heading text-3xl text-white mb-3">
-                Gather Around <br /><span className="italic">The Table</span>
+                Hope BBQ <br /><span className="italic">Hangouts</span>
               </h3>
-              <p className="font-body text-white font-semibold text-lg mb-1">$5 per person</p>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Santa Barbara is one of the wealthiest cities in America — and one of the loneliest for those left out. Jesus made a habit of sitting down with the hungry, the overlooked, and the uninvited. Every Wednesday, so do we.
+                Breaking bread together builds relationships. Every month, we gather for food, fun, and friendship — all ages and families welcome. From kids playing to adults connecting, these are the moments where community comes alive.
               </p>
               <Link to="/services">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
