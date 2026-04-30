@@ -25,7 +25,11 @@ const quotes = [
     text: "Above all, love each other deeply, because love covers over a multitude of sins. Offer hospitality to one another without grumbling.",
     ref: "1 Peter 4:8–9",
   },
-];
+  {
+    text: "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",
+    ref: "Colossians 3:15",
+  },
+  ];
 
 function QuoteGrid() {
   return (
