@@ -213,6 +213,11 @@ export default function GivingManager() {
     queryFn: () => base44.entities.FundSettings.filter({ slug: { $ne: FUND_KEY } }),
   });
 
+  const { data: donations = [] } = useQuery({
+    queryKey: ['adminDonations'],
+    queryFn: () => base44.entities.Donation.list('donation_date', 500),
+  });
+
   const [editingFundId, setEditingFundId] = useState(null);
   const [expandedFundId, setExpandedFundId] = useState(null);
   const [fundForm, setFundForm] = useState(EMPTY_FUND);
@@ -412,6 +417,12 @@ export default function GivingManager() {
                       <Input className="font-body text-sm" value={fundForm.description} onChange={e => setFundForm(f => ({ ...f, description: e.target.value }))} />
                     </div>
                   </div>
+
+                  <ItemizationEditor 
+                    items={fundForm.itemization || []} 
+                    onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
+                  />
+
                   <div className="flex justify-end gap-2 pt-2">
                     <Button variant="ghost" size="sm" className="font-body text-xs" onClick={() => setEditingFundId(null)}>
                       <X className="w-3.5 h-3.5 mr-1" /> Cancel
@@ -433,7 +444,12 @@ export default function GivingManager() {
                           : <Badge variant="secondary" className="font-body text-xs">Inactive</Badge>}
                       </div>
                       {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
-                      {fund.itemization?.length > 0 && <p className="font-body text-xs text-accent mt-0.5">Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</p>}
+                      {fund.itemization?.length > 0 && (
+                        <div className="flex gap-4 font-body text-xs text-accent mt-0.5">
+                          <span>Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</span>
+                          <span>Raised: ${donations.filter(d => d.fund === fund.slug).reduce((s, d) => s + (d.amount || 0), 0).toLocaleString()}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex items-center gap-1 ml-3 shrink-0">
                       {fund.itemization?.length > 0 && (
