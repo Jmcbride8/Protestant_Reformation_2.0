@@ -264,6 +264,7 @@ export default function GivingManager() {
         </div>
 
         <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
+          <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-2">
             <Label className="font-body text-sm">Annual Goal ($)</Label>
@@ -319,10 +320,12 @@ export default function GivingManager() {
           </div>
         </div>
 
-        <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
-          <Save className="w-4 h-4" />
-          {saving ? 'Saving...' : 'Save Changes'}
-        </Button>
+          <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
+            <Save className="w-4 h-4" />
+            {saving ? 'Saving...' : 'Save Changes'}
+          </Button>
+          </div>
+        </div>
 
         {/* Budget Allocation Breakdown */}
         <div className="pt-6 border-t border-border/50 mt-6">
