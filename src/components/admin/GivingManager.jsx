@@ -498,6 +498,12 @@ export default function GivingManager() {
                       <Input className="font-body text-sm" value={fundForm.description} onChange={e => setFundForm(f => ({ ...f, description: e.target.value }))} />
                     </div>
                   </div>
+
+                  <ItemizationEditor 
+                    items={fundForm.itemization || []} 
+                    onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
+                  />
+
                   <div className="flex justify-end gap-2 pt-2">
                     <Button variant="ghost" size="sm" className="font-body text-xs" onClick={() => setEditingFundId(null)}>
                       <X className="w-3.5 h-3.5 mr-1" /> Cancel
