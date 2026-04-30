@@ -174,6 +174,7 @@ export default function GivingManager() {
     setSaving(false);
   };
 
+  const goal = record?.itemization?.reduce((s, i) => s + parseFloat(i.amount || 0), 0) || 0;
   const goalNum = parseFloat(goal) || 0;
   const currentNum = parseFloat(current) || 0;
   const pctRaised = goalNum > 0 ? Math.round((currentNum / goalNum) * 100) : 0;
