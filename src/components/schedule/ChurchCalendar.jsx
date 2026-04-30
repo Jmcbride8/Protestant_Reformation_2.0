@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ChevronLeft, ChevronRight, MapPin, Clock, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Clock, Users, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, addMonths, subMonths, isSameMonth, isSameDay, isToday } from 'date-fns';
 import RSVPModal from './RSVPModal';
 
@@ -28,7 +29,8 @@ const categoryDots = {
 
 export default function ChurchCalendar({ user }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDay, setSelectedDay] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [dayModalOpen, setDayModalOpen] = useState(false);
   const [rsvpEvent, setRsvpEvent] = useState(null);
 
   const { data: events = [], refetch } = useQuery({
@@ -59,7 +61,7 @@ export default function ChurchCalendar({ user }) {
   const getEventsForDay = (d) =>
     activeEvents.filter(e => e.date === format(d, 'yyyy-MM-dd'));
 
-  const selectedDayEvents = getEventsForDay(selectedDay);
+  const selectedDayEvents = selectedDay ? getEventsForDay(selectedDay) : [];
 
   const getRsvpCount = (eventId) =>
     rsvps.filter(r => r.event_id === eventId).reduce((sum, r) => sum + (r.guest_count || 1), 0);
@@ -107,7 +109,7 @@ export default function ChurchCalendar({ user }) {
           return (
             <button
               key={i}
-              onClick={() => setSelectedDay(d)}
+              onClick={() => { setSelectedDay(d); if (getEventsForDay(d).length > 0) setDayModalOpen(true); }}
               className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
                 isSelected ? 'bg-primary-foreground/20 ring-2 ring-primary-foreground/40' :
                 'hover:bg-primary-foreground/10'
@@ -133,84 +135,86 @@ export default function ChurchCalendar({ user }) {
         })}
       </div>
 
-      {/* Selected Day Events */}
-      <div className="mt-4">
-        <p className="font-body text-sm text-primary-foreground/60 mb-3">
-          {format(selectedDay, 'EEEE, MMMM d')}
-        </p>
-        {selectedDayEvents.length === 0 ? (
-          <p className="font-body text-sm text-primary-foreground/40 italic">No events scheduled</p>
-        ) : (
-          <div className="space-y-3">
-            {selectedDayEvents.map(event => {
-              const rsvpCount = getRsvpCount(event.id);
-              const myRsvp = userRsvp(event.id);
-              return (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-primary-foreground/10 rounded-xl p-4 border border-primary-foreground/10"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <h4 className="font-heading text-base text-primary-foreground">{event.title}</h4>
-                        <Badge className={`font-body text-[10px] capitalize ${categoryColors[event.category]}`}>
-                          {event.category}
-                        </Badge>
-                        {event.is_rsvp_enabled && (
-                          <Badge className="font-body text-[10px] bg-accent/30 text-primary-foreground border border-accent/40">
-                            RSVP
-                          </Badge>
-                        )}
+      {/* Day Events Modal */}
+      <Dialog open={dayModalOpen} onOpenChange={setDayModalOpen}>
+        <DialogContent className="max-w-lg">
+          {selectedDay && (
+            <>
+              <div className="mb-4">
+                <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Events</p>
+                <h3 className="font-heading text-2xl text-primary">{format(selectedDay, 'EEEE, MMMM d')}</h3>
+              </div>
+              {selectedDayEvents.length === 0 ? (
+                <p className="font-body text-sm text-muted-foreground italic">No events scheduled for this day.</p>
+              ) : (
+                <div className="space-y-3">
+                  {selectedDayEvents.map(event => {
+                    const rsvpCount = getRsvpCount(event.id);
+                    const myRsvp = userRsvp(event.id);
+                    return (
+                      <div key={event.id} className="bg-secondary/40 rounded-xl p-4 border border-border/50">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                              <h4 className="font-heading text-base text-primary">{event.title}</h4>
+                              <Badge className={`font-body text-[10px] capitalize ${categoryColors[event.category]}`}>
+                                {event.category}
+                              </Badge>
+                              {event.is_rsvp_enabled && (
+                                <Badge className="font-body text-[10px] bg-accent/20 text-accent-foreground border border-accent/40">
+                                  RSVP
+                                </Badge>
+                              )}
+                            </div>
+                            {event.description && (
+                              <p className="font-body text-xs text-muted-foreground mb-2">{event.description}</p>
+                            )}
+                            <div className="flex flex-wrap gap-3 text-muted-foreground">
+                              {event.start_time && (
+                                <span className="flex items-center gap-1 font-body text-xs">
+                                  <Clock className="w-3 h-3" />
+                                  {event.start_time}{event.end_time ? ` – ${event.end_time}` : ''}
+                                </span>
+                              )}
+                              {event.location && (
+                                <span className="flex items-center gap-1 font-body text-xs">
+                                  <MapPin className="w-3 h-3" />
+                                  {event.location}
+                                </span>
+                              )}
+                              {event.is_rsvp_enabled && (
+                                <span className="flex items-center gap-1 font-body text-xs">
+                                  <Users className="w-3 h-3" />
+                                  {rsvpCount} attending{event.rsvp_limit ? ` / ${event.rsvp_limit} max` : ''}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          {event.is_rsvp_enabled && (
+                            <div className="shrink-0">
+                              {myRsvp ? (
+                                <span className="font-body text-xs text-emerald-600 font-medium">✓ Going</span>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  onClick={() => { setDayModalOpen(false); setRsvpEvent(event); }}
+                                  className="font-body text-xs bg-accent hover:bg-accent/90 text-white"
+                                >
+                                  RSVP
+                                </Button>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      {event.description && (
-                        <p className="font-body text-xs text-primary-foreground/60 mb-2">{event.description}</p>
-                      )}
-                      <div className="flex flex-wrap gap-3 text-primary-foreground/60">
-                        {event.start_time && (
-                          <span className="flex items-center gap-1 font-body text-xs">
-                            <Clock className="w-3 h-3" />
-                            {event.start_time}{event.end_time ? ` – ${event.end_time}` : ''}
-                          </span>
-                        )}
-                        {event.location && (
-                          <span className="flex items-center gap-1 font-body text-xs">
-                            <MapPin className="w-3 h-3" />
-                            {event.location}
-                          </span>
-                        )}
-                        {event.is_rsvp_enabled && (
-                          <span className="flex items-center gap-1 font-body text-xs">
-                            <Users className="w-3 h-3" />
-                            {rsvpCount} attending{event.rsvp_limit ? ` / ${event.rsvp_limit} max` : ''}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    {event.is_rsvp_enabled && (
-                      <div className="shrink-0">
-                        {myRsvp ? (
-                          <span className="font-body text-xs text-emerald-400 font-medium">✓ Going</span>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={() => setRsvpEvent(event)}
-                            className="font-body text-xs bg-accent hover:bg-accent/90 text-white"
-                          >
-                            RSVP
-                          </Button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {rsvpEvent && (
         <RSVPModal

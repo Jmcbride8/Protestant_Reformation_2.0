@@ -43,22 +43,6 @@ export default function Schedule() {
         </div>
       </section>
 
-      {/* Calendar Section */}
-      <section className="py-16 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-10"
-          >
-            <p className="font-body text-xs tracking-[0.3em] uppercase text-primary-foreground/50 mb-2">Upcoming</p>
-            <h2 className="font-heading text-3xl text-primary-foreground">Church Calendar</h2>
-          </motion.div>
-          <ChurchCalendar user={user} />
-        </div>
-      </section>
-
       {/* Weekly Recurring Schedule */}
       <section className="py-16 bg-secondary/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,7 +82,22 @@ export default function Schedule() {
               );
             })}
           </div>
+        </div>
+      </section>
 
+      {/* Calendar Section */}
+      <section className="py-16 bg-primary text-primary-foreground">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-10"
+          >
+            <p className="font-body text-xs tracking-[0.3em] uppercase text-primary-foreground/50 mb-2">Upcoming</p>
+            <h2 className="font-heading text-3xl text-primary-foreground">Church Calendar</h2>
+          </motion.div>
+          <ChurchCalendar user={user} />
         </div>
       </section>
     </div>
