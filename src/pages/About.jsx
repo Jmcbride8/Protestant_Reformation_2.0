@@ -217,7 +217,7 @@ function VisionSection({ isAdmin }) {
                   isAdmin={isAdmin}
                   wrapperClassName="relative w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/95 via-blue-600/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/95 via-blue-900/40 to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-5">
                   <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 01</span>
                   <h4 className="font-heading text-2xl text-white mt-0.5">A Physical Hub</h4>
@@ -246,7 +246,7 @@ function VisionSection({ isAdmin }) {
                   isAdmin={isAdmin}
                   wrapperClassName="relative w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/95 via-blue-600/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/95 via-blue-900/40 to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-5">
                   <span className="font-body text-xs tracking-[0.2em] uppercase text-accent/90">Platform 02</span>
                   <h4 className="font-heading text-2xl text-white mt-0.5">A Digital Hub</h4>
