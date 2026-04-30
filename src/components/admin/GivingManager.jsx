@@ -31,6 +31,7 @@ const EMPTY_ITEM = { label: '', amount: '', description: '' };
 
 function ItemizationEditor({ items = [], onChange }) {
   const [draft, setDraft] = useState(EMPTY_ITEM);
+  const [editingIdx, setEditingIdx] = useState(null);
 
   const addItem = () => {
     if (!draft.label || !draft.amount) return;
@@ -38,21 +39,78 @@ function ItemizationEditor({ items = [], onChange }) {
     setDraft(EMPTY_ITEM);
   };
 
+  const saveEdit = (idx) => {
+    if (!draft.label || !draft.amount) return;
+    const updated = [...items];
+    updated[idx] = { ...draft, amount: parseFloat(draft.amount) };
+    onChange(updated);
+    setEditingIdx(null);
+    setDraft(EMPTY_ITEM);
+  };
+
   const removeItem = (idx) => onChange(items.filter((_, i) => i !== idx));
+
+  const startEdit = (idx) => {
+    setEditingIdx(idx);
+    setDraft(items[idx]);
+  };
+
+  const cancelEdit = () => {
+    setEditingIdx(null);
+    setDraft(EMPTY_ITEM);
+  };
 
   return (
     <div className="space-y-3">
       <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Itemization Breakdown</p>
 
       {items.map((item, idx) => (
-        <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
-          <span className="flex-1 text-foreground">{item.label}</span>
-          <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
-          {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
-          <button onClick={() => removeItem(idx)} className="ml-2 text-destructive/70 hover:text-destructive">
-            <X className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        editingIdx === idx ? (
+          <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end bg-secondary/20 rounded-lg p-3">
+            <div>
+              <Label className="font-body text-xs text-muted-foreground">Line Item</Label>
+              <Input
+                className="font-body text-sm"
+                value={draft.label}
+                onChange={e => setDraft(d => ({ ...d, label: e.target.value }))}
+              />
+            </div>
+            <div>
+              <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
+              <Input
+                className="font-body text-sm"
+                type="number"
+                value={draft.amount}
+                onChange={e => setDraft(d => ({ ...d, amount: e.target.value }))}
+              />
+            </div>
+            <div>
+              <Label className="font-body text-xs text-muted-foreground">Note (optional)</Label>
+              <Input
+                className="font-body text-sm"
+                value={draft.description}
+                onChange={e => setDraft(d => ({ ...d, description: e.target.value }))}
+              />
+            </div>
+            <div className="sm:col-span-3 flex gap-2">
+              <Button size="sm" variant="outline" className="font-body text-xs flex-1" onClick={cancelEdit}>
+                Cancel
+              </Button>
+              <Button size="sm" className="font-body text-xs flex-1" onClick={() => saveEdit(idx)} disabled={!draft.label || !draft.amount}>
+                Save
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body cursor-pointer hover:bg-secondary/60 transition-colors" onClick={() => startEdit(idx)}>
+            <span className="flex-1 text-foreground">{item.label}</span>
+            <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
+            {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
+            <button onClick={(e) => { e.stopPropagation(); removeItem(idx); }} className="ml-2 text-destructive/70 hover:text-destructive">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )
       ))}
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
