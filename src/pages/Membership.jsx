@@ -23,8 +23,8 @@ const steps = [
 ];
 
 const benefits = [
-  'Be known by name, not just a face in the crowd',
-  'Have people who show up for you — and you for them',
+  'Get connected to get involved',
+  'Lets us know to plug you in',
   'Find your place to serve and contribute',
   'Be part of the conversation as we grow together',
   'Do life with people who genuinely care',
