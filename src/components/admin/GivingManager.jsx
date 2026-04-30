@@ -114,25 +114,27 @@ export default function GivingManager() {
 
   const record = settings[0] || null;
 
-  const [goal, setGoal] = useState('');
   const [current, setCurrent] = useState('');
+  const [itemization, setItemization] = useState([]);
   const [saving, setSaving] = useState(false);
   const [newRow, setNewRow] = useState({ name: '', percentage: '', color: PRESET_COLORS[0] });
   const [seeding, setSeeding] = useState(false);
 
   useEffect(() => {
     if (record) {
-      setGoal(String(record.goal));
       setCurrent(String(record.current));
+      setItemization(record.itemization || []);
     } else {
-      setGoal('250000');
       setCurrent('187000');
+      setItemization([]);
     }
   }, [record]);
 
+  const goalNum = itemization.reduce((sum, item) => sum + parseFloat(item.amount || 0), 0);
+
   const handleSave = async () => {
     setSaving(true);
-    const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund' };
+    const data = { key: FUND_KEY, goal: goalNum, current: parseFloat(current), label: 'Annual Fund', itemization };
     if (record) {
       await base44.entities.FundSettings.update(record.id, data);
     } else {
@@ -179,7 +181,6 @@ export default function GivingManager() {
     setSaving(false);
   };
 
-  const goalNum = parseFloat(goal) || 0;
   const currentNum = parseFloat(current) || 0;
   const pctRaised = goalNum > 0 ? Math.round((currentNum / goalNum) * 100) : 0;
 
@@ -259,30 +260,29 @@ export default function GivingManager() {
       <div>
         <div>
           <h3 className="font-heading text-xl text-primary mb-1">Annual Fund Settings</h3>
-          <p className="font-body text-sm text-muted-foreground">Update the goal and contributions-to-date shown on the Giving page.</p>
+          <p className="font-body text-sm text-muted-foreground">Set itemized budget line items; the annual goal is the sum of all items. Track contributions-to-date below.</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div className="space-y-2">
-            <Label className="font-body text-sm">Annual Goal ($)</Label>
-            <Input
-              type="number"
-              value={goal}
-              onChange={e => setGoal(e.target.value)}
-              placeholder="250000"
-              className="font-body"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label className="font-body text-sm">Contributions to Date ($)</Label>
-            <Input
-              type="number"
-              value={current}
-              onChange={e => setCurrent(e.target.value)}
-              placeholder="187000"
-              className="font-body"
-            />
+        <div className="space-y-2">
+          <Label className="font-body text-sm">Contributions to Date ($)</Label>
+          <Input
+            type="number"
+            value={current}
+            onChange={e => setCurrent(e.target.value)}
+            placeholder="187000"
+            className="font-body"
+          />
+        </div>
+
+        <div className="border-t border-border/50 pt-5">
+          <ItemizationEditor 
+            items={itemization} 
+            onChange={setItemization} 
+          />
+          <div className="mt-3 flex items-center justify-between p-3 bg-secondary/20 rounded-lg border border-border/30">
+            <span className="font-body text-sm font-semibold text-primary">Annual Goal Total:</span>
+            <span className="font-body text-lg font-bold text-primary">${goalNum.toLocaleString()}</span>
           </div>
         </div>
 
