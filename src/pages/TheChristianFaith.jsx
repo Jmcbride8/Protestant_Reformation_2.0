@@ -79,6 +79,26 @@ function IntroSection({ isAdmin }) {
   );
 }
 
+// ─── Kingdom Quote ───────────────────────────────────────────────────────────
+function KingdomQuote() {
+  return (
+    <section className="py-16 bg-primary">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <p className="font-heading text-2xl sm:text-3xl italic text-white leading-snug mb-4">
+            "The kingdom of heaven is like a mustard seed, which a man took and planted in his field. Though it is the smallest of all seeds, yet when it grows, it is the largest of garden plants and becomes a tree, so that the birds come and perch in its branches."
+          </p>
+          <p className="font-body text-sm text-accent font-medium">— Matthew 13:31–32, Jesus</p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Why Christianity is Different ───────────────────────────────────────────
 function UniquenessSection() {
   const points = [
@@ -736,6 +756,7 @@ export default function TheChristianFaith() {
     <div className="min-h-screen bg-background">
       <Hero />
       <IntroSection isAdmin={isAdmin} />
+      <KingdomQuote />
       <UniquenessSection />
       <CoreBeliefsSection />
       <DenominationsSection />
