@@ -206,7 +206,9 @@ export default function Giving() {
       {/* ── GROUP FUND TAB ── */}
       {activeTab === 'group' && showGroupTab && (
         <div className="bg-background min-h-[40vh]">
-          <GroupFundSection group={myGroup} user={user} />
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <GroupFundSection group={myGroup} user={user} />
+          </div>
         </div>
       )}
     </div>
