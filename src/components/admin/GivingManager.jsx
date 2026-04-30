@@ -326,7 +326,7 @@ export default function GivingManager() {
 
         {/* Budget Allocation Breakdown */}
         <div className="pt-6 border-t border-border/50 mt-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-4">
             <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Budget Allocation Breakdown</p>
             {allocations.length === 0 && (
               <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
@@ -335,84 +335,75 @@ export default function GivingManager() {
             )}
           </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: Visual Chart */}
-          <div className="flex flex-col items-center justify-center">
-            {allocations.length > 0 ? (
-              <div className="w-full h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={allocations}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={100}
-                      paddingAngle={2}
-                      dataKey="percentage"
-                    >
-                      {allocations.map((entry) => (
-                        <Cell key={`cell-${entry.id}`} fill={entry.color || '#2a3f6e'} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              <div className="h-80 flex items-center justify-center text-muted-foreground">No allocations yet</div>
-            )}
-            <div className={`mt-4 font-body text-sm font-semibold text-center ${allocValid ? 'text-green-600' : 'text-destructive'}`}>
-              Total: {allocTotal.toFixed(1)}% {allocValid ? '✓' : '(must be 100%)'}
-            </div>
-          </div>
-
-          {/* Right: Editor */}
-          <div className="space-y-3">
+        <div className="space-y-3">
             {allocations.map((item) => (
-              <div key={item.id} className="space-y-2 p-4 bg-card rounded-lg border border-border/50">
-                <div className="flex items-center gap-3">
+              <div key={item.id} className="flex items-center justify-between p-2.5 rounded-lg border border-border/40 hover:bg-secondary/30 transition-colors">
+                <div className="flex items-center gap-2.5 flex-1 min-w-0">
                   <input
                     type="color"
                     value={item.color?.startsWith('hsl') ? '#2a3f6e' : item.color || '#2a3f6e'}
                     onChange={(e) => handleUpdateAllocation(item.id, 'color', e.target.value)}
-                    className="w-6 h-6 rounded cursor-pointer border border-border flex-shrink-0"
+                    className="w-5 h-5 rounded cursor-pointer border border-border flex-shrink-0"
                   />
                   <input
-                    className="flex-1 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none pb-0.5 min-w-0"
+                    className="flex-1 font-body text-sm bg-transparent border-0 focus:ring-1 focus:ring-primary rounded px-1.5 outline-none min-w-0"
                     value={item.name}
                     onChange={(e) => handleUpdateAllocation(item.id, 'name', e.target.value)}
                   />
-                  <Button variant="ghost" size="icon" className="flex-shrink-0 h-8 w-8" onClick={() => handleDeleteAllocation(item.id)}>
-                    <Trash2 className="w-3.5 h-3.5 text-destructive" />
-                  </Button>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
                   <input
-                    type="range"
+                    type="number"
                     min="0"
                     max="100"
                     step="0.5"
-                    className="flex-1"
+                    className="w-14 font-body text-sm bg-transparent border-0 focus:ring-1 focus:ring-primary rounded px-1.5 outline-none text-right"
                     value={item.percentage}
                     onChange={(e) => handleUpdateAllocation(item.id, 'percentage', e.target.value)}
                   />
-                  <div className="flex items-center gap-1 w-16">
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      step="0.5"
-                      className="w-12 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none text-right pb-0.5"
-                      value={item.percentage}
-                      onChange={(e) => handleUpdateAllocation(item.id, 'percentage', e.target.value)}
-                    />
-                    <span className="font-body text-sm text-muted-foreground">%</span>
-                  </div>
+                  <span className="font-body text-xs text-muted-foreground">%</span>
+                  <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => handleDeleteAllocation(item.id)}>
+                    <Trash2 className="w-3 h-3 text-destructive" />
+                  </Button>
                 </div>
               </div>
             ))}
 
-            {allocations.length > 0 && (
+            {newRow.name && (
+              <div className="flex items-center justify-between p-2.5 rounded-lg border border-dashed border-border bg-secondary/20">
+                <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                  <input
+                    type="color"
+                    value={newRow.color || '#2a3f6e'}
+                    onChange={(e) => setNewRow(r => ({ ...r, color: e.target.value }))}
+                    className="w-5 h-5 rounded cursor-pointer border border-border flex-shrink-0"
+                  />
+                  <input
+                    className="flex-1 font-body text-sm bg-transparent border-0 focus:ring-1 focus:ring-primary rounded px-1.5 outline-none min-w-0"
+                    placeholder="Category name"
+                    value={newRow.name}
+                    onChange={(e) => setNewRow(r => ({ ...r, name: e.target.value }))}
+                  />
+                </div>
+                <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    className="w-14 font-body text-sm bg-transparent border-0 focus:ring-1 focus:ring-primary rounded px-1.5 outline-none text-right"
+                    value={newRow.percentage}
+                    onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
+                  />
+                  <span className="font-body text-xs text-muted-foreground">%</span>
+                  <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0" onClick={() => setNewRow({ name: '', color: '#2a3f6e', percentage: '' })}>
+                    <X className="w-3 h-3" />
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {allocations.length > 0 && !newRow.name && (
               <Button
                 variant="outline"
                 size="sm"
@@ -423,61 +414,11 @@ export default function GivingManager() {
               </Button>
             )}
 
-            {allocations.length === 0 && (
+            {allocations.length === 0 && !newRow.name && (
               <Button variant="outline" size="sm" className="font-body text-xs w-full" onClick={handleSeedDefaults} disabled={seeding}>
                 Load Defaults
               </Button>
             )}
-
-            {newRow.name && (
-              <div className="space-y-2 p-4 bg-secondary/30 rounded-lg border border-dashed border-border">
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={newRow.color || '#2a3f6e'}
-                    onChange={(e) => setNewRow(r => ({ ...r, color: e.target.value }))}
-                    className="w-6 h-6 rounded cursor-pointer border border-border flex-shrink-0"
-                  />
-                  <input
-                    className="flex-1 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none pb-0.5"
-                    placeholder="Category name"
-                    value={newRow.name}
-                    onChange={(e) => setNewRow(r => ({ ...r, name: e.target.value }))}
-                  />
-                  <Button variant="ghost" size="icon" className="flex-shrink-0 h-8 w-8" onClick={() => setNewRow({ name: '', color: '#2a3f6e', percentage: '' })}>
-                    <X className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="0.5"
-                    className="flex-1"
-                    value={newRow.percentage}
-                    onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
-                  />
-                  <div className="flex items-center gap-1 w-16">
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      step="0.5"
-                      className="w-12 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none text-right pb-0.5"
-                      value={newRow.percentage}
-                      onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
-                    />
-                    <span className="font-body text-sm text-muted-foreground">%</span>
-                  </div>
-                </div>
-                <Button size="sm" className="font-body gap-1 w-full" onClick={handleAddAllocation} disabled={saving || !newRow.name || !newRow.percentage}>
-                  <Check className="w-4 h-4" /> Add Category
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
 
           {!allocValid && allocations.length > 0 && (
             <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm font-body mt-6">
