@@ -323,7 +323,6 @@ export default function GivingManager() {
           <Save className="w-4 h-4" />
           {saving ? 'Saving...' : 'Save Changes'}
         </Button>
-        </div>
 
         {/* Budget Allocation Breakdown */}
         <div className="pt-6 border-t border-border/50 mt-6">
@@ -428,7 +427,6 @@ export default function GivingManager() {
             </div>
           )}
         </div>
-      </div>
       </div>
 
       {/* Fundraising Funds */}
