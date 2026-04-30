@@ -23,11 +23,11 @@ const steps = [
 ];
 
 const benefits = [
-  'Get connected to get involved',
-  'Lets us know to plug you in',
-  'Find your place to serve and contribute',
+  'Get connected to get involved (we\'re friendly, we promise)',
+  'Lets us know to plug you in — no more flying solo',
+  'Find your place to serve — yes, even you',
   'Be part of the conversation as we grow together',
-  'Do life with people who genuinely care',
+  'Do life with people who actually show up',
 ];
 
 export default function Membership() {
