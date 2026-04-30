@@ -225,17 +225,7 @@ export default function Membership() {
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-primary rounded-3xl px-12 py-12 text-center max-w-3xl mx-auto relative overflow-hidden"
-          >
-            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, hsl(38 45% 60%) 0%, transparent 50%)' }} />
-            <p className="font-body text-lg text-primary-foreground/90 leading-relaxed relative z-10">
-              Membership is how you go from <span className="font-semibold">spectator to participant</span>. It's where you stop waiting for someone else to fix things, and start being the community you wish existed.
-            </p>
-          </motion.div>
+
         </div>
       </section>
 
