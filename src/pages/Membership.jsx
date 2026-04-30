@@ -112,42 +112,40 @@ export default function Membership() {
 
       {/* What Membership Means */}
       <section className="py-24 bg-background">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <h2 className="font-heading text-4xl text-primary mb-6">What Does Membership Mean?</h2>
-              <p className="font-body text-muted-foreground leading-relaxed mb-8">
-                We believe the local church is God's primary means of growing people and reaching the world. 
-                Membership is how you plant yourself in that mission.
-              </p>
-              <div className="space-y-3">
-                {benefits.map((b, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                    <span className="font-body text-sm text-foreground">{b}</span>
-                  </div>
-                ))}
-              </div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <div>
+            <h2 className="font-heading text-4xl text-primary mb-6">What Does Membership Mean?</h2>
+            <p className="font-body text-muted-foreground leading-relaxed mb-8">
+              We believe the local church is God's primary means of growing people and reaching the world. 
+              Membership is how you plant yourself in that mission.
+            </p>
+            <div className="space-y-3">
+              {benefits.map((b, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                  <span className="font-body text-sm text-foreground">{b}</span>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div>
-              <h2 className="font-heading text-4xl text-primary mb-6">How It Works</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {steps.map((step, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-secondary/20 border border-border/50 rounded-2xl p-8"
-                  >
-                    <p className="font-heading text-4xl text-accent/40 mb-4">{step.num}</p>
-                    <h3 className="font-heading text-xl text-primary mb-2">{step.title}</h3>
-                    <p className="font-body text-muted-foreground text-sm leading-relaxed">{step.body}</p>
-                  </motion.div>
-                ))}
-              </div>
+          <div>
+            <h2 className="font-heading text-4xl text-primary mb-6">How It Works</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {steps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-secondary/20 border border-border/50 rounded-2xl p-8"
+                >
+                  <p className="font-heading text-4xl text-accent/40 mb-4">{step.num}</p>
+                  <h3 className="font-heading text-xl text-primary mb-2">{step.title}</h3>
+                  <p className="font-body text-muted-foreground text-sm leading-relaxed">{step.body}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
