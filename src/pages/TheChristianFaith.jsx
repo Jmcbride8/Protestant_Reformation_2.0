@@ -276,7 +276,7 @@ function CoreBeliefsSection() {
     {
       icon: Crown,
       number: "IV",
-      title: "Jesus is God's Son and Our Rescuer",
+      title: "Only Jesus Saves",
       desc: "Christians believe Jesus lived a perfect life, died to bridge the gap between God and humanity, and rose from the dead. Through Him, people find forgiveness and new life.",
       verse: "\"I am the way, the truth, and the life.\" — John 14:6",
       dark: false,
