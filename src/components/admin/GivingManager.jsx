@@ -318,108 +318,105 @@ export default function GivingManager() {
           </div>
         </div>
 
+        {/* Budget Allocations */}
+        <div className="border-t border-border/50 pt-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="font-heading text-sm text-primary">Budget Allocations</p>
+            {allocations.length === 0 && (
+              <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
+                Load Defaults
+              </Button>
+            )}
+          </div>
+
+          {!allocValid && allocations.length > 0 && (
+            <div className="flex items-center gap-2 p-2 bg-destructive/10 rounded text-destructive text-xs font-body">
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              Total is {allocTotal.toFixed(1)}% — must equal 100%.
+            </div>
+          )}
+
+          {/* Existing allocations */}
+          <div className="space-y-2">
+            {allocations.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 p-2 bg-secondary/40 rounded border border-border/30">
+                <input
+                  type="color"
+                  value={item.color?.startsWith('hsl') ? '#2a3f6e' : item.color || '#2a3f6e'}
+                  onChange={(e) => handleUpdateAllocation(item.id, 'color', e.target.value)}
+                  className="w-6 h-6 rounded cursor-pointer border border-border flex-shrink-0"
+                  title="Pick color"
+                />
+                <input
+                  className="flex-1 font-body text-xs bg-transparent border-b border-border/30 focus:border-primary outline-none pb-0.5 min-w-0"
+                  value={item.name}
+                  onChange={(e) => handleUpdateAllocation(item.id, 'name', e.target.value)}
+                />
+                <div className="flex items-center gap-0.5 flex-shrink-0">
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    className="w-12 font-body text-xs bg-transparent border-b border-border/30 focus:border-primary outline-none text-right pb-0.5"
+                    value={item.percentage}
+                    onChange={(e) => handleUpdateAllocation(item.id, 'percentage', e.target.value)}
+                  />
+                  <span className="font-body text-xs text-muted-foreground">%</span>
+                </div>
+                <Button variant="ghost" size="icon" className="flex-shrink-0 h-6 w-6" onClick={() => handleDeleteAllocation(item.id)}>
+                  <Trash2 className="w-3.5 h-3.5 text-destructive" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* Total */}
+          {allocations.length > 0 && (
+            <div className={`flex justify-end font-body text-xs font-semibold ${allocValid ? 'text-green-600' : 'text-destructive'}`}>
+              Total: {allocTotal.toFixed(1)}% {allocValid ? '✓' : '(must be 100%)'}
+            </div>
+          )}
+
+          {/* Add new allocation */}
+          <div className="pt-2 space-y-2 border-t border-border/30">
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-wider">Add Category</p>
+            <div className="flex items-center gap-2">
+              <input
+                type="color"
+                value={newRow.color?.startsWith('hsl') ? '#2a3f6e' : newRow.color || '#2a3f6e'}
+                onChange={(e) => setNewRow(r => ({ ...r, color: e.target.value }))}
+                className="w-6 h-6 rounded cursor-pointer border border-border flex-shrink-0"
+              />
+              <Input
+                placeholder="Category"
+                value={newRow.name}
+                onChange={(e) => setNewRow(r => ({ ...r, name: e.target.value }))}
+                className="font-body text-xs flex-1"
+              />
+              <div className="flex items-center gap-0.5 flex-shrink-0">
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  placeholder="0"
+                  value={newRow.percentage}
+                  onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
+                  className="font-body text-xs w-14 text-right"
+                />
+                <span className="font-body text-xs text-muted-foreground">%</span>
+              </div>
+              <Button size="sm" className="font-body gap-1 flex-shrink-0 h-8" onClick={handleAddAllocation} disabled={saving || !newRow.name || !newRow.percentage}>
+                <Plus className="w-3.5 h-3.5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
         <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
           <Save className="w-4 h-4" />
           {saving ? 'Saving...' : 'Save Changes'}
         </Button>
-        </div>
-      </div>
-
-      {/* Budget Allocations */}
-      <div>
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="font-heading text-xl text-primary">Budget Allocations</h3>
-            <p className="font-body text-sm text-muted-foreground">These percentages appear on the Giving page chart.</p>
-          </div>
-          {allocations.length === 0 && (
-            <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
-              Load Defaults
-            </Button>
-          )}
-        </div>
-
-        {!allocValid && allocations.length > 0 && (
-          <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm font-body mb-6">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
-            Total is {allocTotal.toFixed(1)}% — must equal 100% to display correctly on the chart.
-          </div>
-        )}
-
-        {/* Existing allocations */}
-        <div className="space-y-2 mb-6">
-          {allocations.map((item) => (
-            <div key={item.id} className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/50">
-              <input
-                type="color"
-                value={item.color?.startsWith('hsl') ? '#2a3f6e' : item.color || '#2a3f6e'}
-                onChange={(e) => handleUpdateAllocation(item.id, 'color', e.target.value)}
-                className="w-8 h-8 rounded cursor-pointer border border-border flex-shrink-0"
-                title="Pick color"
-              />
-              <input
-                className="flex-1 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none pb-0.5 min-w-0"
-                value={item.name}
-                onChange={(e) => handleUpdateAllocation(item.id, 'name', e.target.value)}
-              />
-              <div className="flex items-center gap-1 flex-shrink-0">
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.5"
-                  className="w-16 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none text-right pb-0.5"
-                  value={item.percentage}
-                  onChange={(e) => handleUpdateAllocation(item.id, 'percentage', e.target.value)}
-                />
-                <span className="font-body text-sm text-muted-foreground">%</span>
-              </div>
-              <Button variant="ghost" size="icon" className="flex-shrink-0" onClick={() => handleDeleteAllocation(item.id)}>
-                <Trash2 className="w-4 h-4 text-destructive" />
-              </Button>
-            </div>
-          ))}
-        </div>
-
-        {/* Total */}
-        {allocations.length > 0 && (
-          <div className={`flex justify-end font-body text-sm font-semibold mb-6 ${allocValid ? 'text-green-600' : 'text-destructive'}`}>
-            Total: {allocTotal.toFixed(1)}% {allocValid ? '✓' : '(must be 100%)'}
-          </div>
-        )}
-
-        {/* Add new allocation */}
-        <div className="p-4 bg-muted/30 rounded-lg border border-dashed border-border space-y-3">
-          <p className="font-body text-sm font-medium text-primary">Add Category</p>
-          <div className="flex items-center gap-3">
-            <input
-              type="color"
-              value={newRow.color?.startsWith('hsl') ? '#2a3f6e' : newRow.color || '#2a3f6e'}
-              onChange={(e) => setNewRow(r => ({ ...r, color: e.target.value }))}
-              className="w-8 h-8 rounded cursor-pointer border border-border flex-shrink-0"
-            />
-            <Input
-              placeholder="Category name"
-              value={newRow.name}
-              onChange={(e) => setNewRow(r => ({ ...r, name: e.target.value }))}
-              className="font-body text-sm flex-1"
-            />
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <Input
-                type="number"
-                min="0"
-                max="100"
-                placeholder="0"
-                value={newRow.percentage}
-                onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
-                className="font-body text-sm w-20 text-right"
-              />
-              <span className="font-body text-sm text-muted-foreground">%</span>
-            </div>
-            <Button size="sm" className="font-body gap-1 flex-shrink-0" onClick={handleAddAllocation} disabled={saving || !newRow.name || !newRow.percentage}>
-              <Plus className="w-4 h-4" /> Add
-            </Button>
-          </div>
         </div>
       </div>
 
