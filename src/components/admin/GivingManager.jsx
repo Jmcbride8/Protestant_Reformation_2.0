@@ -32,11 +32,17 @@ const EMPTY_ITEM = { label: '', amount: '', description: '' };
 function ItemizationEditor({ items = [], onChange }) {
   const [draft, setDraft] = useState(EMPTY_ITEM);
   const [editingIdx, setEditingIdx] = useState(null);
+  const [addingItem, setAddingItem] = useState(false);
 
-  const addItem = () => {
+  const addItem = async () => {
     if (!draft.label || !draft.amount) return;
-    onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
-    setDraft(EMPTY_ITEM);
+    setAddingItem(true);
+    try {
+      await onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
+      setDraft(EMPTY_ITEM);
+    } finally {
+      setAddingItem(false);
+    }
   };
 
   const saveEdit = (idx) => {
@@ -149,9 +155,9 @@ function ItemizationEditor({ items = [], onChange }) {
         size="sm"
         className="font-body text-xs"
         onClick={addItem}
-        disabled={!draft.label || !draft.amount}
+        disabled={!draft.label || !draft.amount || addingItem}
       >
-        <Plus className="w-3.5 h-3.5 mr-1" /> Add Line Item
+        <Plus className="w-3.5 h-3.5 mr-1" /> {addingItem ? 'Saving...' : 'Add Line Item'}
       </Button>
     </div>
   );
