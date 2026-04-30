@@ -39,10 +39,19 @@ function IntroSection({ isAdmin }) {
           <div>
             <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">What is Christianity?</h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              At its heart, Christianity isn't primarily a set of rules or a moral philosophy. It's a relationship. It begins with the belief that God loves people so much that He became human in the person of Jesus Christ, entered our world, and made a way for broken people to be restored and reconciled to Him.
+              It's a story. And like every great story, it begins at the beginning — with innocence. Humanity created in the image of an infinitely good God, placed in a world of beauty and goodness. Then a choice: to trust God, or to go our own way. We went our own way. And in doing so, we didn't just break a rule — we infected the world with evil. Every society, every culture, every era of human history carries the wound.
+            </p>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
+              But God didn't walk away. People began recording their encounters with Him — promises He made, promises He kept — compiled over centuries into what we call Scripture. A thread of hope running through the wreckage of history: God was coming. He was going to fix what we broke.
+            </p>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
+              And then He came. Not as a distant deity issuing commands, but as a person — Jesus Christ — God inhabiting flesh, crossing the cosmos to reach us. He called people to a higher way, healed the broken, challenged the corrupt, and died to absorb the full weight of human evil. Then He rose. And everything changed.
+            </p>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
+              His followers formed communities — not institutions, but families — committed to sharing love, teaching truth, and growing together. They spread across the earth, infecting the world not with violence or coercion, but with forgiveness, sacrifice, and light. It became the largest movement in human history.
             </p>
             <p className="font-body text-lg text-muted-foreground leading-relaxed">
-              For nearly 2,000 years, billions of people across every culture, continent, and walk of life have organized their lives around this central claim: that in Jesus, God showed us who He is and how much He cares.
+              At its core, Christianity is about transformation — from darkness to light. The sickest, most broken, most evil among us can find forgiveness and a genuine second chance. And that transformation becomes a lifetime commitment: to walk in the light, and to spread it.
             </p>
           </div>
 
