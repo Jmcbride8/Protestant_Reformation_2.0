@@ -529,7 +529,7 @@ function CultSection() {
           className="mt-12 bg-accent/10 border border-accent/30 rounded-2xl p-8"
         >
           <p className="font-body text-muted-foreground leading-relaxed">
-            <span className="font-heading text-primary">A Note on Genuine Faith:</span> People in these groups may genuinely believe they're following God. We're not suggesting they're evil—but their groups operate under a different structure and set of claims than historic Christianity. If you're curious about a group or concerned about a loved one, it's wise to ask questions, verify claims against Scripture, and check their openness to scrutiny.
+            <span className="font-heading text-primary">A Note on Genuine Faith:</span> Some people in these groups may genuinely believe they're following God, while some may be intentionally evil or malicious - but the road is narrow, and not everyone who claims to follow Christ actually is. If you're curious about a group or concerned about a loved one, it's wise to ask questions, verify claims against Scripture, and check their openness to scrutiny.
           </p>
         </motion.div>
       </div>
