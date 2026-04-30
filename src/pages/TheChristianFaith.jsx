@@ -18,7 +18,7 @@ function Hero() {
           The Christian Faith
         </motion.h1>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-          A first-principles exploration of humanity's search for God and what is true — tracing the story from ancient Scripture through two thousand years of living faith.
+          A first-principles exploration of humanity's search for God and what is true — tracing the story from the earliest pages of Scripture through four thousand years of living faith.
         </motion.p>
       </div>
     </section>
