@@ -45,7 +45,7 @@ function CyclingQuoteCard() {
   };
 
   return (
-    <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-3xl mx-auto text-center relative overflow-hidden">
+    <div className="bg-primary text-primary-foreground rounded-2xl p-8 max-w-4xl mx-auto text-center relative overflow-hidden" style={{ minHeight: '220px' }}>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={index}
