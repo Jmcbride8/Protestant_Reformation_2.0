@@ -73,20 +73,18 @@ export default function ChurchCalendar({ user }) {
     <div className="space-y-6">
       {/* Calendar Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-2xl text-primary-foreground">
+        <h2 className="font-heading text-2xl text-primary">
           {format(currentMonth, 'MMMM yyyy')}
         </h2>
         <div className="flex gap-2">
-          <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            className="text-primary-foreground hover:bg-primary-foreground/10">
+          <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
             <ChevronLeft className="w-5 h-5" />
           </Button>
           <Button variant="ghost" size="sm" onClick={() => { setCurrentMonth(new Date()); setSelectedDay(new Date()); }}
-            className="text-primary-foreground hover:bg-primary-foreground/10 font-body text-xs">
+            className="font-body text-xs">
             Today
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            className="text-primary-foreground hover:bg-primary-foreground/10">
+          <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
             <ChevronRight className="w-5 h-5" />
           </Button>
         </div>
@@ -95,7 +93,7 @@ export default function ChurchCalendar({ user }) {
       {/* Day headers */}
       <div className="grid grid-cols-7 gap-1">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-          <div key={d} className="text-center font-body text-xs text-primary-foreground/50 uppercase tracking-wider py-1">{d}</div>
+          <div key={d} className="text-center font-body text-xs text-muted-foreground uppercase tracking-wider py-1">{d}</div>
         ))}
       </div>
 
@@ -111,14 +109,14 @@ export default function ChurchCalendar({ user }) {
               key={i}
               onClick={() => { setSelectedDay(d); if (getEventsForDay(d).length > 0) setDayModalOpen(true); }}
               className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
-                isSelected ? 'bg-primary-foreground/20 ring-2 ring-primary-foreground/40' :
-                'hover:bg-primary-foreground/10'
+                isSelected ? 'bg-secondary ring-2 ring-border' :
+                'hover:bg-secondary/60'
               } ${!isCurrentMonth ? 'opacity-30' : ''}`}
             >
               <span className={`font-body text-sm block text-center mb-1 w-7 h-7 flex items-center justify-center rounded-full mx-auto ${
                 todayDay ? 'bg-accent text-white font-semibold' :
-                isSelected ? 'text-primary-foreground font-semibold' :
-                'text-primary-foreground/80'
+                isSelected ? 'text-primary font-semibold' :
+                'text-foreground/80'
               }`}>
                 {format(d, 'd')}
               </span>
@@ -157,14 +155,6 @@ export default function ChurchCalendar({ user }) {
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1 flex-wrap">
                               <h4 className="font-heading text-base text-primary">{event.title}</h4>
-                              <Badge className={`font-body text-[10px] capitalize ${categoryColors[event.category]}`}>
-                                {event.category}
-                              </Badge>
-                              {event.is_rsvp_enabled && (
-                                <Badge className="font-body text-[10px] bg-accent/20 text-accent-foreground border border-accent/40">
-                                  RSVP
-                                </Badge>
-                              )}
                             </div>
                             {event.description && (
                               <p className="font-body text-xs text-muted-foreground mb-2">{event.description}</p>
