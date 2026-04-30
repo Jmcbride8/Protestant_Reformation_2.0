@@ -168,9 +168,9 @@ export default function Membership() {
 
           <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-3xl mx-auto text-center">
             <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
-              "The most important thing in the world is not what you do, but who you do it with."
+              "Two are better than one, because they have a good return for their labor: If either of them falls down, one can help the other up."
             </p>
-            <p className="font-body text-sm text-primary-foreground/70">— Dr. Robert Waldinger, Director, Harvard Study of Adult Development</p>
+            <p className="font-body text-sm text-primary-foreground/70">— Ecclesiastes 4:9–10</p>
           </div>
 
           <div className="mt-16 max-w-3xl mx-auto">
