@@ -260,29 +260,27 @@ export default function GivingManager() {
       <div>
         <div>
           <h3 className="font-heading text-xl text-primary mb-1">Annual Fund Settings</h3>
-          <p className="font-body text-sm text-muted-foreground">Set itemized budget line items; the annual goal is the sum of all items. Track contributions-to-date below.</p>
+          <p className="font-body text-sm text-muted-foreground">Update the goal and contributions-to-date shown on the Giving page.</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
-        <div className="space-y-2">
-          <Label className="font-body text-sm">Contributions to Date ($)</Label>
-          <Input
-            type="number"
-            value={current}
-            onChange={e => setCurrent(e.target.value)}
-            placeholder="187000"
-            className="font-body"
-          />
-        </div>
-
-        <div className="border-t border-border/50 pt-5">
-          <ItemizationEditor 
-            items={itemization} 
-            onChange={setItemization} 
-          />
-          <div className="mt-3 flex items-center justify-between p-3 bg-secondary/20 rounded-lg border border-border/30">
-            <span className="font-body text-sm font-semibold text-primary">Annual Goal Total:</span>
-            <span className="font-body text-lg font-bold text-primary">${goalNum.toLocaleString()}</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Annual Goal ($)</Label>
+            <div className="flex h-9 w-full rounded-md border border-input bg-muted px-3 py-1 text-base shadow-sm items-center text-foreground font-semibold">
+              ${goalNum.toLocaleString()}
+            </div>
+            <p className="text-xs text-muted-foreground">Calculated from itemization below</p>
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Contributions to Date ($)</Label>
+            <Input
+              type="number"
+              value={current}
+              onChange={e => setCurrent(e.target.value)}
+              placeholder="187000"
+              className="font-body"
+            />
           </div>
         </div>
 
@@ -316,6 +314,14 @@ export default function GivingManager() {
               {isAhead ? `$${absDiff.toLocaleString()} ahead` : isBehind ? `$${absDiff.toLocaleString()} behind` : 'On track'}
             </span>
           </div>
+        </div>
+
+        {/* Annual Fund Itemization */}
+        <div className="border-t border-border/50 pt-5">
+          <ItemizationEditor 
+            items={itemization} 
+            onChange={setItemization} 
+          />
         </div>
 
         {/* Budget Allocations */}
