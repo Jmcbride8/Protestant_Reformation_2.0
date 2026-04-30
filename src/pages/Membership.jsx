@@ -198,10 +198,10 @@ export default function Membership() {
               <Sparkles className="w-5 h-5 text-accent" />
             </div>
             <h2 className="font-heading text-5xl sm:text-6xl text-primary mb-6">
-              The Best Platform for <span className="italic">Generosity</span>
+              The Best Platform for <span className="italic">Transformation</span>
             </h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Government fails. NGOs get corrupted. Platforms chase metrics. The church endures—operating through <span className="text-accent font-semibold">love, not force</span>. We're embedded in our neighborhoods, rooted in relationships, connected globally. We know real needs because we live alongside them. We stay committed because conviction matters more than quarterly results. Your generosity reaches real people and catalyzes change that lasts.
+              Government disenfranchises. NGOs get corrupted. Celebrities chase optics. The church catalyzes—operating through <span className="text-accent font-semibold">love, not force</span>. Inner transformation. Family healing. Communal restoration. Global redemption. See it, be it, <span className="text-accent font-semibold">become</span> the change.
             </p>
           </motion.div>
 
