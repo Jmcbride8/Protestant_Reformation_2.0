@@ -323,19 +323,17 @@ export default function GivingManager() {
           <Save className="w-4 h-4" />
           {saving ? 'Saving...' : 'Save Changes'}
         </Button>
-        </div>
-      </div>
 
-      {/* Budget Allocations - continues Annual Fund */}
-      <div className="pt-6 border-t border-border/50">
-        <div className="flex items-center justify-between mb-6">
-          <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Budget Allocation Breakdown</p>
-          {allocations.length === 0 && (
-            <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
-              Load Defaults
-            </Button>
-          )}
-        </div>
+        {/* Budget Allocation Breakdown */}
+        <div className="pt-6 border-t border-border/50 mt-6">
+          <div className="flex items-center justify-between mb-6">
+            <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Budget Allocation Breakdown</p>
+            {allocations.length === 0 && (
+              <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
+                Load Defaults
+              </Button>
+            )}
+          </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left: Visual Chart */}
@@ -481,12 +479,14 @@ export default function GivingManager() {
           </div>
         </div>
 
-        {!allocValid && allocations.length > 0 && (
-          <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm font-body mt-6">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
-            Total is {allocTotal.toFixed(1)}% — must equal 100% to display correctly on the chart.
-          </div>
-        )}
+          {!allocValid && allocations.length > 0 && (
+            <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm font-body mt-6">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              Total is {allocTotal.toFixed(1)}% — must equal 100% to display correctly on the chart.
+            </div>
+          )}
+        </div>
+        </div>
       </div>
 
       {/* Fundraising Funds */}
