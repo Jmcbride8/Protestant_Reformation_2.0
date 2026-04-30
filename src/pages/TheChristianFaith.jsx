@@ -17,8 +17,8 @@ function Hero() {
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="font-heading text-5xl md:text-7xl text-white mb-6 leading-tight">
           The Christian Faith
         </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-          A first-principles exploration of humanity's search for God and what is true — tracing the story from the earliest pages of Scripture through four thousand years of living faith.
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="font-heading text-xl sm:text-2xl italic text-white/80 max-w-2xl mx-auto leading-relaxed">
+          "My kingdom is not of this world." — John 18:36
         </motion.p>
       </div>
     </section>
