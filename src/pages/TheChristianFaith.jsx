@@ -756,7 +756,6 @@ export default function TheChristianFaith() {
     <div className="min-h-screen bg-background">
       <Hero />
       <IntroSection isAdmin={isAdmin} />
-      <KingdomQuote />
       <UniquenessSection />
       <CoreBeliefsSection />
       <DenominationsSection />
