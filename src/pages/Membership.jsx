@@ -203,42 +203,7 @@ export default function Membership() {
             <CyclingQuoteCard />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                stat: '33%',
-                label: 'Lower mortality risk',
-                source: 'PLOS Medicine, 2010',
-                description: 'A meta-analysis of 148 studies found that people with strong social relationships had a 50% greater likelihood of survival — comparable to quitting smoking.',
-              },
-              {
-                stat: '80+',
-                label: 'Years of data',
-                source: 'Harvard Study of Adult Development',
-                description: 'The longest-running study on human happiness concluded that close relationships — not wealth, fame, or achievement — are what keep people happy and healthy throughout their lives.',
-              },
-              {
-                stat: '7 yrs',
-                label: 'Longer life expectancy',
-                source: 'American Journal of Public Health',
-                description: 'Regular attendance at religious services is associated with living 7 years longer on average — driven largely by the social connection, sense of purpose, and community support they provide.',
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card border border-border/50 rounded-2xl p-8 text-center"
-              >
-                <p className="font-heading text-5xl text-accent mb-2">{item.stat}</p>
-                <p className="font-body font-semibold text-primary text-lg mb-1">{item.label}</p>
-                <p className="font-body text-xs text-muted-foreground mb-4 italic">{item.source}</p>
-                <p className="font-body text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
+
 
 
 
