@@ -325,13 +325,10 @@ export default function GivingManager() {
         </div>
       </div>
 
-      {/* Budget Allocations */}
-      <div>
+      {/* Budget Allocations - continues Annual Fund */}
+      <div className="pt-6 border-t border-border/50">
         <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="font-heading text-xl text-primary">Budget Allocations</h3>
-            <p className="font-body text-sm text-muted-foreground">These percentages appear on the Giving page chart.</p>
-          </div>
+          <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Budget Allocation Breakdown</p>
           {allocations.length === 0 && (
             <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
               Load Defaults
