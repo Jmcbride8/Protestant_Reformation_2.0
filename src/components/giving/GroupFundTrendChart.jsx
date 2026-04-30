@@ -65,7 +65,7 @@ export default function GroupFundTrendChart({ transactions }) {
           <Legend />
           <Bar
             dataKey="income"
-            fill="hsl(var(--primary))"
+            fill="hsl(var(--muted))"
             name="Income"
             radius={[6, 6, 0, 0]}
           />
