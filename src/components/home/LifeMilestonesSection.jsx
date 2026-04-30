@@ -121,7 +121,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
                 Hope BBQ <br /><span className="italic">Hangouts</span>
               </h3>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Breaking bread together builds relationships. Every month, we gather for food, fun, and friendship — all ages and families welcome. From kids playing to adults connecting, these are the moments where community comes alive.
+                Something sacred happens when we break bread together. Every month, we fire up the grill and gather the whole community — kids running wild, families connecting, strangers becoming friends. This is where real relationships are forged and belonging is born.
               </p>
               <Link to="/services">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
