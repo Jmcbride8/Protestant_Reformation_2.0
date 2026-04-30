@@ -121,7 +121,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
                 Hope BBQ <br /><span className="italic">Hangouts</span>
               </h3>
               <p className="font-body text-white/80 mb-4 max-w-md text-sm leading-relaxed">
-                Something sacred happens when we break bread together. Every month, we fire up the grill and gather the whole community — kids running wild, families connecting, strangers becoming friends. This is where real relationships are forged and belonging is born.
+                Every month, we fire up the grill and gather the whole community. Kids playing, families connecting, strangers becoming friends. Real relationships forged over food.
               </p>
               <Link to="/services">
                 <Button size="sm" className="bg-white text-primary hover:bg-white/90 font-body text-xs">
