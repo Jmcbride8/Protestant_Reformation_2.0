@@ -31,92 +31,28 @@ const EMPTY_ITEM = { label: '', amount: '', description: '' };
 
 function ItemizationEditor({ items = [], onChange }) {
   const [draft, setDraft] = useState(EMPTY_ITEM);
-  const [editingIdx, setEditingIdx] = useState(null);
-  const [addingItem, setAddingItem] = useState(false);
 
-  const addItem = async () => {
+  const addItem = () => {
     if (!draft.label || !draft.amount) return;
-    setAddingItem(true);
-    try {
-      await onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
-      setDraft(EMPTY_ITEM);
-    } finally {
-      setAddingItem(false);
-    }
-  };
-
-  const saveEdit = (idx) => {
-    if (!draft.label || !draft.amount) return;
-    const updated = [...items];
-    updated[idx] = { ...draft, amount: parseFloat(draft.amount) };
-    onChange(updated);
-    setEditingIdx(null);
+    onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
     setDraft(EMPTY_ITEM);
   };
 
   const removeItem = (idx) => onChange(items.filter((_, i) => i !== idx));
-
-  const startEdit = (idx) => {
-    setEditingIdx(idx);
-    setDraft(items[idx]);
-  };
-
-  const cancelEdit = () => {
-    setEditingIdx(null);
-    setDraft(EMPTY_ITEM);
-  };
 
   return (
     <div className="space-y-3">
       <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Itemization Breakdown</p>
 
       {items.map((item, idx) => (
-        editingIdx === idx ? (
-          <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end bg-secondary/20 rounded-lg p-3">
-            <div>
-              <Label className="font-body text-xs text-muted-foreground">Line Item</Label>
-              <Input
-                className="font-body text-sm"
-                value={draft.label}
-                onChange={e => setDraft(d => ({ ...d, label: e.target.value }))}
-              />
-            </div>
-            <div>
-              <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
-              <Input
-                className="font-body text-sm"
-                type="number"
-                value={draft.amount}
-                onChange={e => setDraft(d => ({ ...d, amount: e.target.value }))}
-              />
-            </div>
-            <div>
-              <Label className="font-body text-xs text-muted-foreground">Note (optional)</Label>
-              <Input
-                className="font-body text-sm"
-                value={draft.description}
-                onChange={e => setDraft(d => ({ ...d, description: e.target.value }))}
-              />
-            </div>
-            <div className="sm:col-span-3 flex gap-2">
-              <Button size="sm" variant="outline" className="font-body text-xs flex-1" onClick={cancelEdit}>
-                Cancel
-              </Button>
-              <Button size="sm" className="font-body text-xs flex-1" onClick={() => saveEdit(idx)} disabled={!draft.label || !draft.amount}>
-                Save
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body cursor-pointer hover:bg-secondary/60 transition-colors" onClick={() => startEdit(idx)}>
-            <span className="flex-1 text-foreground">{item.label}</span>
-            <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
-            {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
-            <button onClick={(e) => { e.stopPropagation(); removeItem(idx); }} className="ml-2 text-destructive/70 hover:text-destructive">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )
+        <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
+          <span className="flex-1 text-foreground">{item.label}</span>
+          <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
+          {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
+          <button onClick={() => removeItem(idx)} className="ml-2 text-destructive/70 hover:text-destructive">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
       ))}
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
@@ -155,9 +91,9 @@ function ItemizationEditor({ items = [], onChange }) {
         size="sm"
         className="font-body text-xs"
         onClick={addItem}
-        disabled={!draft.label || !draft.amount || addingItem}
+        disabled={!draft.label || !draft.amount}
       >
-        <Plus className="w-3.5 h-3.5 mr-1" /> {addingItem ? 'Saving...' : 'Add Line Item'}
+        <Plus className="w-3.5 h-3.5 mr-1" /> Add Line Item
       </Button>
     </div>
   );
@@ -178,6 +114,7 @@ export default function GivingManager() {
 
   const record = settings[0] || null;
 
+  const [goal, setGoal] = useState('');
   const [current, setCurrent] = useState('');
   const [saving, setSaving] = useState(false);
   const [newRow, setNewRow] = useState({ name: '', percentage: '', color: PRESET_COLORS[0] });
@@ -185,20 +122,24 @@ export default function GivingManager() {
 
   useEffect(() => {
     if (record) {
-      setCurrent(String(record.current || 0));
+      setGoal(String(record.goal));
+      setCurrent(String(record.current));
     } else {
-      setCurrent('0');
+      setGoal('250000');
+      setCurrent('187000');
     }
   }, [record]);
 
   const handleSave = async () => {
     setSaving(true);
-    const data = { current: parseFloat(current) || 0 };
+    const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund' };
     if (record) {
       await base44.entities.FundSettings.update(record.id, data);
+    } else {
+      await base44.entities.FundSettings.create(data);
     }
     queryClient.invalidateQueries({ queryKey: ['fundSettings'] });
-    toast.success("Contributions updated");
+    toast.success("Fund settings saved");
     setSaving(false);
   };
 
@@ -238,7 +179,6 @@ export default function GivingManager() {
     setSaving(false);
   };
 
-  const goal = record?.itemization?.reduce((s, i) => s + parseFloat(i.amount || 0), 0) || 0;
   const goalNum = parseFloat(goal) || 0;
   const currentNum = parseFloat(current) || 0;
   const pctRaised = goalNum > 0 ? Math.round((currentNum / goalNum) * 100) : 0;
@@ -275,11 +215,6 @@ export default function GivingManager() {
   const { data: funds = [] } = useQuery({
     queryKey: ['adminFunds'],
     queryFn: () => base44.entities.FundSettings.filter({ slug: { $ne: FUND_KEY } }),
-  });
-
-  const { data: donations = [] } = useQuery({
-    queryKey: ['adminDonations'],
-    queryFn: () => base44.entities.Donation.list('donation_date', 500),
   });
 
   const [editingFundId, setEditingFundId] = useState(null);
@@ -324,84 +259,169 @@ export default function GivingManager() {
       <div>
         <div>
           <h3 className="font-heading text-xl text-primary mb-1">Annual Fund Settings</h3>
-          <p className="font-body text-sm text-muted-foreground">Define budget line items. The total goal is the sum of all items.</p>
+          <p className="font-body text-sm text-muted-foreground">Update the goal and contributions-to-date shown on the Giving page.</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Annual Goal ($)</Label>
+            <Input
+              type="number"
+              value={goal}
+              onChange={e => setGoal(e.target.value)}
+              placeholder="250000"
+              className="font-body"
+            />
+          </div>
           <div className="space-y-2">
             <Label className="font-body text-sm">Contributions to Date ($)</Label>
             <Input
               type="number"
               value={current}
               onChange={e => setCurrent(e.target.value)}
-              placeholder="0"
+              placeholder="187000"
               className="font-body"
             />
           </div>
+        </div>
 
-          <ItemizationEditor 
-            items={record?.itemization || []} 
-            onChange={v => {
-              const updated = { ...record, itemization: v };
-              if (record?.id) {
-                base44.entities.FundSettings.update(record.id, { itemization: v });
-              } else {
-                base44.entities.FundSettings.create({ slug: FUND_KEY, name: 'Annual Fund', itemization: v, is_active: true });
-              }
-              queryClient.invalidateQueries({ queryKey: ['fundSettings'] });
-            }}
-          />
-
-          {record?.itemization && record.itemization.length > 0 && (
-            <div className="p-3 bg-secondary/20 rounded-lg border border-border/30">
-              <div className="flex justify-between font-body text-sm font-semibold">
-                <span>Annual Goal (Sum)</span>
-                <span className="text-primary">${record.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</span>
-              </div>
+        {/* Live preview */}
+        <div className="p-4 rounded-xl border border-border bg-secondary/30 space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">Live Preview</span>
+            <span className="font-body text-xs text-muted-foreground">{pctOfYear}% through {now.getFullYear()}</span>
+          </div>
+          <div className="relative h-3 bg-border rounded-full overflow-hidden">
+            <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/50 z-10" style={{ left: `${pctOfYear}%` }} />
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${Math.min(pctRaised, 100)}%`,
+                backgroundColor: isAhead ? 'hsl(142, 60%, 40%)' : isBehind ? 'hsl(0, 72%, 55%)' : 'hsl(38, 45%, 60%)'
+              }}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              {isAhead ? <TrendingUp className="w-4 h-4 text-green-600" /> : isBehind ? <TrendingDown className="w-4 h-4 text-red-500" /> : <Minus className="w-4 h-4 text-accent" />}
+              <span className={`font-body text-sm font-semibold ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
+                {pctRaised}% raised
+              </span>
+              <span className="font-body text-xs text-muted-foreground">
+                (${currentNum.toLocaleString()} of ${goalNum.toLocaleString()})
+              </span>
             </div>
-          )}
+            <span className={`font-body text-xs font-medium ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
+              {isAhead ? `$${absDiff.toLocaleString()} ahead` : isBehind ? `$${absDiff.toLocaleString()} behind` : 'On track'}
+            </span>
+          </div>
+        </div>
 
-          {record?.itemization && record.itemization.length > 0 && (
-            <div className="p-4 rounded-xl border border-border bg-secondary/30 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">Live Preview</span>
-                <span className="font-body text-xs text-muted-foreground">{pctOfYear}% through {now.getFullYear()}</span>
-              </div>
-              <div className="relative h-3 bg-border rounded-full overflow-hidden">
-                <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/50 z-10" style={{ left: `${pctOfYear}%` }} />
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{
-                    width: `${Math.min(pctRaised, 100)}%`,
-                    backgroundColor: isAhead ? 'hsl(142, 60%, 40%)' : isBehind ? 'hsl(0, 72%, 55%)' : 'hsl(38, 45%, 60%)'
-                  }}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  {isAhead ? <TrendingUp className="w-4 h-4 text-green-600" /> : isBehind ? <TrendingDown className="w-4 h-4 text-red-500" /> : <Minus className="w-4 h-4 text-accent" />}
-                  <span className={`font-body text-sm font-semibold ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
-                    {pctRaised}% raised
-                  </span>
-                  <span className="font-body text-xs text-muted-foreground">
-                    (${currentNum.toLocaleString()} of ${goalNum.toLocaleString()})
-                  </span>
-                </div>
-                <span className={`font-body text-xs font-medium ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
-                  {isAhead ? `$${absDiff.toLocaleString()} ahead` : isBehind ? `$${absDiff.toLocaleString()} behind` : 'On track'}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
-            <Save className="w-4 h-4" />
-            {saving ? 'Saving...' : 'Save Changes'}
-          </Button>
+        <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
+          <Save className="w-4 h-4" />
+          {saving ? 'Saving...' : 'Save Changes'}
+        </Button>
         </div>
       </div>
 
+      {/* Budget Allocations */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="font-heading text-xl text-primary">Budget Allocations</h3>
+            <p className="font-body text-sm text-muted-foreground">These percentages appear on the Giving page chart.</p>
+          </div>
+          {allocations.length === 0 && (
+            <Button variant="outline" size="sm" className="font-body text-xs" onClick={handleSeedDefaults} disabled={seeding}>
+              Load Defaults
+            </Button>
+          )}
+        </div>
 
+        {!allocValid && allocations.length > 0 && (
+          <div className="flex items-center gap-2 p-3 bg-destructive/10 rounded-lg text-destructive text-sm font-body mb-6">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            Total is {allocTotal.toFixed(1)}% — must equal 100% to display correctly on the chart.
+          </div>
+        )}
+
+        {/* Existing allocations */}
+        <div className="space-y-2 mb-6">
+          {allocations.map((item) => (
+            <div key={item.id} className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/50">
+              <input
+                type="color"
+                value={item.color?.startsWith('hsl') ? '#2a3f6e' : item.color || '#2a3f6e'}
+                onChange={(e) => handleUpdateAllocation(item.id, 'color', e.target.value)}
+                className="w-8 h-8 rounded cursor-pointer border border-border flex-shrink-0"
+                title="Pick color"
+              />
+              <input
+                className="flex-1 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none pb-0.5 min-w-0"
+                value={item.name}
+                onChange={(e) => handleUpdateAllocation(item.id, 'name', e.target.value)}
+              />
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.5"
+                  className="w-16 font-body text-sm bg-transparent border-b border-border/50 focus:border-primary outline-none text-right pb-0.5"
+                  value={item.percentage}
+                  onChange={(e) => handleUpdateAllocation(item.id, 'percentage', e.target.value)}
+                />
+                <span className="font-body text-sm text-muted-foreground">%</span>
+              </div>
+              <Button variant="ghost" size="icon" className="flex-shrink-0" onClick={() => handleDeleteAllocation(item.id)}>
+                <Trash2 className="w-4 h-4 text-destructive" />
+              </Button>
+            </div>
+          ))}
+        </div>
+
+        {/* Total */}
+        {allocations.length > 0 && (
+          <div className={`flex justify-end font-body text-sm font-semibold mb-6 ${allocValid ? 'text-green-600' : 'text-destructive'}`}>
+            Total: {allocTotal.toFixed(1)}% {allocValid ? '✓' : '(must be 100%)'}
+          </div>
+        )}
+
+        {/* Add new allocation */}
+        <div className="p-4 bg-muted/30 rounded-lg border border-dashed border-border space-y-3">
+          <p className="font-body text-sm font-medium text-primary">Add Category</p>
+          <div className="flex items-center gap-3">
+            <input
+              type="color"
+              value={newRow.color?.startsWith('hsl') ? '#2a3f6e' : newRow.color || '#2a3f6e'}
+              onChange={(e) => setNewRow(r => ({ ...r, color: e.target.value }))}
+              className="w-8 h-8 rounded cursor-pointer border border-border flex-shrink-0"
+            />
+            <Input
+              placeholder="Category name"
+              value={newRow.name}
+              onChange={(e) => setNewRow(r => ({ ...r, name: e.target.value }))}
+              className="font-body text-sm flex-1"
+            />
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <Input
+                type="number"
+                min="0"
+                max="100"
+                placeholder="0"
+                value={newRow.percentage}
+                onChange={(e) => setNewRow(r => ({ ...r, percentage: e.target.value }))}
+                className="font-body text-sm w-20 text-right"
+              />
+              <span className="font-body text-sm text-muted-foreground">%</span>
+            </div>
+            <Button size="sm" className="font-body gap-1 flex-shrink-0" onClick={handleAddAllocation} disabled={saving || !newRow.name || !newRow.percentage}>
+              <Plus className="w-4 h-4" /> Add
+            </Button>
+          </div>
+        </div>
+      </div>
 
       {/* Fundraising Funds */}
       <div>
@@ -481,12 +501,6 @@ export default function GivingManager() {
                       <Input className="font-body text-sm" value={fundForm.description} onChange={e => setFundForm(f => ({ ...f, description: e.target.value }))} />
                     </div>
                   </div>
-
-                  <ItemizationEditor 
-                    items={fundForm.itemization || []} 
-                    onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
-                  />
-
                   <div className="flex justify-end gap-2 pt-2">
                     <Button variant="ghost" size="sm" className="font-body text-xs" onClick={() => setEditingFundId(null)}>
                       <X className="w-3.5 h-3.5 mr-1" /> Cancel
@@ -508,12 +522,7 @@ export default function GivingManager() {
                           : <Badge variant="secondary" className="font-body text-xs">Inactive</Badge>}
                       </div>
                       {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
-                      {fund.itemization?.length > 0 && (
-                        <div className="flex gap-4 font-body text-xs text-accent mt-0.5">
-                          <span>Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</span>
-                          <span>Raised: ${donations.filter(d => d.fund === fund.slug).reduce((s, d) => s + (d.amount || 0), 0).toLocaleString()}</span>
-                        </div>
-                      )}
+                      {fund.itemization?.length > 0 && <p className="font-body text-xs text-accent mt-0.5">Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</p>}
                     </div>
                     <div className="flex items-center gap-1 ml-3 shrink-0">
                       {fund.itemization?.length > 0 && (
