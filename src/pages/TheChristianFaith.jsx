@@ -38,6 +38,21 @@ function IntroSection({ isAdmin }) {
         >
           <div>
             <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">What is Christianity?</h2>
+
+            <p className="font-body text-sm tracking-[0.2em] uppercase text-accent/60 mb-3">A Journey</p>
+
+            <div className="relative h-80 rounded-2xl overflow-hidden group/editimg mb-8">
+              <EditableImage
+                imageKey="faith_intro"
+                src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80"
+                alt="Church interior"
+                className="w-full h-full object-cover"
+                isAdmin={isAdmin}
+                wrapperClassName="relative w-full h-full"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+            </div>
+
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
               It's a journey. And every journey begins with a departure — a leaving of somewhere that is no longer home. Humanity was created in the image of an infinitely good God, placed in a world of beauty and belonging. Then a choice: to trust God, or to go our own way. We went our own way. And in doing so, we didn't just break a rule — we became exiles. Every restlessness, every longing, every sense that this world is not quite right carries the echo of that departure.
             </p>
@@ -70,17 +85,7 @@ function IntroSection({ isAdmin }) {
             </div>
           </div>
 
-          <div className="relative h-80 rounded-2xl overflow-hidden group/editimg">
-            <EditableImage
-              imageKey="faith_intro"
-              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80"
-              alt="Church interior"
-              className="w-full h-full object-cover"
-              isAdmin={isAdmin}
-              wrapperClassName="relative w-full h-full"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
-          </div>
+
         </motion.div>
       </div>
     </section>
