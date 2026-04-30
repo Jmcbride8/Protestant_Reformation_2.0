@@ -27,6 +27,78 @@ const DEFAULT_ALLOCATIONS = [
   { name: 'Building & Maintenance', percentage: 10, color: PRESET_COLORS[4], sort_order: 5 },
 ];
 
+const EMPTY_ITEM = { label: '', amount: '', description: '' };
+
+function ItemizationEditor({ items = [], onChange }) {
+  const [draft, setDraft] = useState(EMPTY_ITEM);
+
+  const addItem = () => {
+    if (!draft.label || !draft.amount) return;
+    onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
+    setDraft(EMPTY_ITEM);
+  };
+
+  const removeItem = (idx) => onChange(items.filter((_, i) => i !== idx));
+
+  return (
+    <div className="space-y-3">
+      <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Itemization Breakdown</p>
+
+      {items.map((item, idx) => (
+        <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
+          <span className="flex-1 text-foreground">{item.label}</span>
+          <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
+          {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
+          <button onClick={() => removeItem(idx)} className="ml-2 text-destructive/70 hover:text-destructive">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      ))}
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
+        <div>
+          <Label className="font-body text-xs text-muted-foreground">Line Item</Label>
+          <Input
+            className="font-body text-sm"
+            placeholder="e.g. Staff Salaries"
+            value={draft.label}
+            onChange={e => setDraft(d => ({ ...d, label: e.target.value }))}
+          />
+        </div>
+        <div>
+          <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
+          <Input
+            className="font-body text-sm"
+            type="number"
+            placeholder="e.g. 50000"
+            value={draft.amount}
+            onChange={e => setDraft(d => ({ ...d, amount: e.target.value }))}
+          />
+        </div>
+        <div>
+          <Label className="font-body text-xs text-muted-foreground">Note (optional)</Label>
+          <Input
+            className="font-body text-sm"
+            placeholder="e.g. includes benefits"
+            value={draft.description}
+            onChange={e => setDraft(d => ({ ...d, description: e.target.value }))}
+          />
+        </div>
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="font-body text-xs"
+        onClick={addItem}
+        disabled={!draft.label || !draft.amount}
+      >
+        <Plus className="w-3.5 h-3.5 mr-1" /> Add Line Item
+      </Button>
+    </div>
+  );
+}
+
 export default function GivingManager() {
   const queryClient = useQueryClient();
 
@@ -135,8 +207,6 @@ export default function GivingManager() {
     sort_order: 0,
   };
 
-  const EMPTY_ITEM = { label: '', amount: '', description: '' };
-
   function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '');
   }
@@ -181,12 +251,6 @@ export default function GivingManager() {
     if (!fundForm.slug || fundForm.slug === toSlug(fundForm.name)) {
       setFundForm(f => ({ ...f, slug: toSlug(name) }));
     }
-  };
-
-  const handleAddItemization = (draft, setDraft, items, setItems) => {
-    if (!draft.label || !draft.amount) return;
-    setItems([...items, { ...draft, amount: parseFloat(draft.amount) }]);
-    setDraft(EMPTY_ITEM);
   };
 
   return (
@@ -402,34 +466,10 @@ export default function GivingManager() {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Itemization Breakdown</p>
-              {fundForm.itemization?.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
-                  <span className="flex-1 text-foreground">{item.label}</span>
-                  <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
-                  {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
-                  <button onClick={() => setFundForm(f => ({ ...f, itemization: f.itemization.filter((_, i) => i !== idx) }))} className="ml-2 text-destructive/70 hover:text-destructive">
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              ))}
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
-                <div>
-                  <Label className="font-body text-xs text-muted-foreground">Line Item</Label>
-                  <Input className="font-body text-sm" placeholder="e.g. Materials" />
-                </div>
-                <div>
-                  <Label className="font-body text-xs text-muted-foreground">Amount ($)</Label>
-                  <Input className="font-body text-sm" type="number" placeholder="e.g. 50000" />
-                </div>
-                <div>
-                  <Label className="font-body text-xs text-muted-foreground">Note (optional)</Label>
-                  <Input className="font-body text-sm" placeholder="e.g. labor" />
-                </div>
-              </div>
-            </div>
+            <ItemizationEditor 
+              items={fundForm.itemization || []} 
+              onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
+            />
 
             <div className="flex justify-end gap-2 pt-2">
               <Button variant="ghost" size="sm" className="font-body text-xs" onClick={() => setEditingFundId(null)}>
