@@ -1,8 +1,87 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus } from 'lucide-react';
+import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus, ChevronLeft, ChevronRight } from 'lucide-react';
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
+
+const quotes = [
+  {
+    text: "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another — and all the more as you see the Day approaching.",
+    ref: "Hebrews 10:24–25",
+  },
+  {
+    text: "Two are better than one, because they have a good return for their labor: If either of them falls down, one can help the other up.",
+    ref: "Ecclesiastes 4:9–10",
+  },
+  {
+    text: "They devoted themselves to the apostles' teaching and to fellowship, to the breaking of bread and to prayer.",
+    ref: "Acts 2:42",
+  },
+  {
+    text: "Bear one another's burdens, and so fulfill the law of Christ.",
+    ref: "Galatians 6:2",
+  },
+  {
+    text: "Above all, love each other deeply, because love covers over a multitude of sins. Offer hospitality to one another without grumbling.",
+    ref: "1 Peter 4:8–9",
+  },
+];
+
+function CyclingQuoteCard() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setIndex(i => (i + 1) % quotes.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const go = (dir) => {
+    setDirection(dir);
+    setIndex(i => (i + dir + quotes.length) % quotes.length);
+  };
+
+  return (
+    <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-3xl mx-auto text-center relative overflow-hidden">
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.div
+          key={index}
+          custom={direction}
+          initial={{ opacity: 0, x: direction * 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: direction * -40 }}
+          transition={{ duration: 0.4 }}
+        >
+          <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
+            "{quotes[index].text}"
+          </p>
+          <p className="font-body text-sm text-primary-foreground/70">— {quotes[index].ref}</p>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="flex items-center justify-center gap-4 mt-8">
+        <button onClick={() => go(-1)} className="text-primary-foreground/50 hover:text-primary-foreground transition-colors">
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <div className="flex gap-1.5">
+          {quotes.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
+              className={`w-1.5 h-1.5 rounded-full transition-all ${i === index ? 'bg-primary-foreground w-4' : 'bg-primary-foreground/30'}`}
+            />
+          ))}
+        </div>
+        <button onClick={() => go(1)} className="text-primary-foreground/50 hover:text-primary-foreground transition-colors">
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 const steps = [
   {
@@ -121,12 +200,7 @@ export default function Membership() {
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
               God designed us for and called us to live in community — yes, even us introverts.
             </p>
-            <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-2xl mx-auto text-center">
-              <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
-                "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another — and all the more as you see the Day approaching."
-              </p>
-              <p className="font-body text-sm text-primary-foreground/70">— Hebrews 10:24–25</p>
-            </div>
+            <CyclingQuoteCard />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -166,12 +240,7 @@ export default function Membership() {
             ))}
           </div>
 
-          <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-3xl mx-auto text-center">
-            <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
-              "Two are better than one, because they have a good return for their labor: If either of them falls down, one can help the other up."
-            </p>
-            <p className="font-body text-sm text-primary-foreground/70">— Ecclesiastes 4:9–10</p>
-          </div>
+
 
           <div className="mt-16 max-w-3xl mx-auto">
             <h3 className="font-heading text-3xl text-primary mb-4 text-center">The Best Platform for Generosity</h3>
