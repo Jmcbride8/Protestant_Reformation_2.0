@@ -39,29 +39,30 @@ function IntroSection({ isAdmin }) {
           <div>
             <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">What is Christianity?</h2>
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              It's a story. And like every great story, it begins at the beginning — with innocence. Humanity created in the image of an infinitely good God, placed in a world of beauty and goodness. Then a choice: to trust God, or to go our own way. We went our own way. And in doing so, we didn't just break a rule — we infected the world with evil. Every society, every culture, every era of human history carries the wound.
+              It's a journey. And every journey begins with a departure — a leaving of somewhere that is no longer home. Humanity was created in the image of an infinitely good God, placed in a world of beauty and belonging. Then a choice: to trust God, or to go our own way. We went our own way. And in doing so, we didn't just break a rule — we became exiles. Every restlessness, every longing, every sense that this world is not quite right carries the echo of that departure.
             </p>
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              But God didn't walk away. People began recording their encounters with Him — promises He made, promises He kept — compiled over centuries into what we call Scripture. A thread of hope running through the wreckage of history: God was coming. He was going to fix what we broke.
+              But God didn't abandon the wanderers. People began recording their encounters with Him — promises He made, promises He kept — compiled over centuries into what we call Scripture. A thread of hope running through the long road of history: God was coming to meet us. He was going to make a way home.
             </p>
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              And then He came. Not as a distant deity issuing commands, but as a person — Jesus Christ — God inhabiting flesh, crossing the cosmos to reach us. He called people to a higher way, healed the broken, challenged the corrupt, and died to absorb the full weight of human evil. Then He rose. And everything changed.
+              And then He came. Not as a distant deity issuing directions, but as a fellow traveler — Jesus Christ — God inhabiting flesh, walking the road with us. He called people to follow Him, healed the broken along the way, challenged those who had made themselves comfortable with the wrong things, and died to clear the path that sin had blocked. Then He rose. And the destination came into view.
             </p>
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              His followers formed communities — not institutions, but families — committed to sharing love, teaching truth, and growing together. They spread across the earth, infecting the world not with violence or coercion, but with forgiveness, sacrifice, and light. It became the largest movement in human history.
+              His followers formed communities of travelers — not institutions, but fellow pilgrims — committed to making the journey together. They spread across the earth, not conquering but accompanying, carrying forgiveness, sacrifice, and light into every dark road they walked. It became the largest movement in human history.
             </p>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed">
-              At its core, Christianity is about transformation — from darkness to light. The sickest, most broken, most evil among us can find forgiveness and a genuine second chance. And that transformation becomes a lifetime commitment: to walk in the light, and to spread it.
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-6">
+              At its core, Christianity is about direction — turning around, and walking toward something better. The most lost among us can find their bearings and begin again. And that reorientation becomes a lifetime commitment: to keep moving toward the light, and to light the way for others.
             </p>
 
-            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mt-4">
+            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-4">
               <p className="font-heading text-xl sm:text-2xl italic text-primary leading-snug">
                 "We ain't what we oughta be. We ain't what we want to be. We ain't what we gonna be. But, thank God, we ain't what we was."
               </p>
               <p className="font-body text-xs text-accent font-medium mt-3">— Often attributed to Martin Luther King Jr.</p>
             </div>
 
-            <div className="bg-primary rounded-xl p-6 mt-4">
+            <p className="font-body text-sm tracking-[0.2em] uppercase text-accent/60 mb-3">The Destination</p>
+            <div className="bg-primary rounded-xl p-6">
               <p className="font-body text-white/80 leading-relaxed text-base italic mb-4">
                 "All these people were still living by faith when they died. They did not receive the things promised; they only saw them and welcomed them from a distance, admitting that they were foreigners and strangers on earth. People who say such things show that they are looking for a country of their own... they were longing for a better country — a heavenly one. Therefore God is not ashamed to be called their God, for he has prepared a city for them."
               </p>
