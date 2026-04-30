@@ -95,9 +95,10 @@ export default function Schedule() {
             className="mb-10"
           >
             <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-2">Upcoming</p>
-            <h2 className="font-heading text-3xl text-primary">Church Calendar</h2>
-          </motion.div>
-          <ChurchCalendar user={user} />
+             <h2 className="font-heading text-3xl text-primary">Church Calendar</h2>
+            </motion.div>
+            <p className="font-body text-xs text-muted-foreground text-center mb-6">Click a date to view events and RSVP</p>
+            <ChurchCalendar user={user} />
         </div>
       </section>
     </div>

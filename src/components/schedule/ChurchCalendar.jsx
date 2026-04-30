@@ -90,10 +90,7 @@ export default function ChurchCalendar({ user }) {
         </div>
       </div>
 
-      {/* Instruction text */}
-       <p className="font-body text-xs text-muted-foreground text-center">Click a date to view events and RSVP</p>
-
-       {/* Day headers */}
+      {/* Day headers */}
        <div className="grid grid-cols-7 gap-1">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
           <div key={d} className="text-center font-body text-xs text-muted-foreground uppercase tracking-wider py-1">{d}</div>
@@ -133,9 +130,9 @@ export default function ChurchCalendar({ user }) {
               }`}>
                 {format(d, 'd')}
               </span>
-              <div className="flex flex-wrap gap-0.5 justify-center">
+              <div className="flex flex-wrap gap-1 justify-center">
                 {dayEvents.slice(0, 3).map((e, idx) => (
-                  <span key={idx} className={`w-1.5 h-1.5 rounded-full ${categoryDots[e.category] || 'bg-muted-foreground'}`} />
+                  <span key={idx} className={`w-2.5 h-2.5 rounded-full ${categoryDots[e.category] || 'bg-muted-foreground'}`} />
                 ))}
                 {dayEvents.length > 3 && (
                   <span className="font-body text-[9px] text-primary-foreground/60">+{dayEvents.length - 3}</span>
