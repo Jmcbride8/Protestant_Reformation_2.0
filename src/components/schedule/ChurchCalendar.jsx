@@ -70,7 +70,7 @@ export default function ChurchCalendar({ user }) {
     user ? rsvps.find(r => r.event_id === eventId && r.member_email === user.email) : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       {/* Calendar Header */}
       <div className="flex items-center justify-between">
         <h2 className="font-heading text-2xl text-primary">
@@ -115,8 +115,8 @@ export default function ChurchCalendar({ user }) {
                    setSelectedDay(d);
                  }
                }}
-               onMouseEnter={() => { if (!isSelected && getEventsForDay(d).length > 0) setHoveredDay(d); }}
-               onMouseLeave={() => setHoveredDay(null)}
+               onMouseEnter={() => { if (!isSelected && dayEvents.length > 0) setHoveredDay(d); }}
+               onMouseLeave={() => { if (!isSelected) setHoveredDay(null); }}
                className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
                  isSelected ? 'bg-secondary ring-2 ring-border' :
                  isHovered ? 'bg-secondary/60' :
@@ -149,11 +149,9 @@ export default function ChurchCalendar({ user }) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="fixed bg-card border border-border/50 rounded-xl p-4 shadow-lg z-50 max-w-sm"
+          className="absolute bg-card border border-border/50 rounded-xl p-4 shadow-lg z-50 max-w-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
           style={{
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            pointerEvents: 'auto',
           }}
         >
           <div className="mb-3">
