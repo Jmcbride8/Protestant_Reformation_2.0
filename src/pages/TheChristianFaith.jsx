@@ -475,9 +475,15 @@ function CultSection() {
           className="text-center mb-16"
         >
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">What Christianity is Not: Understanding Cults</h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Not every group that claims to be Christian is part of historic Christianity. Here's how to recognize the difference—not to judge, but to understand.
+          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+            Not every group that claims to be Christian is part of historic Christianity. Here's how to recognize the difference.
           </p>
+          <div className="bg-accent/10 border border-accent/30 rounded-xl p-5 max-w-2xl mx-auto">
+            <p className="font-body italic text-muted-foreground text-base leading-relaxed">
+              "Watch out for false prophets. They come to you in sheep's clothing, but inwardly they are ferocious wolves. By their fruit you will recognize them."
+            </p>
+            <p className="font-body text-xs text-accent font-medium mt-3">— Matthew 7:15–16</p>
+          </div>
         </motion.div>
 
         <div className="space-y-3">
