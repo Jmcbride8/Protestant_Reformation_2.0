@@ -121,11 +121,11 @@ export default function Membership() {
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
               God designed us for and called us to live in community — yes, even us introverts.
             </p>
-            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 max-w-2xl mx-auto">
-              <p className="font-body italic text-muted-foreground text-base leading-relaxed">
+            <div className="bg-primary text-primary-foreground rounded-2xl p-10 max-w-2xl mx-auto text-center">
+              <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
                 "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another — and all the more as you see the Day approaching."
               </p>
-              <p className="font-body text-xs text-accent font-medium mt-3">— Hebrews 10:24–25</p>
+              <p className="font-body text-sm text-primary-foreground/70">— Hebrews 10:24–25</p>
             </div>
           </motion.div>
 
