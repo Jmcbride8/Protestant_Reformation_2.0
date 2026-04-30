@@ -132,7 +132,7 @@ export default function ChurchCalendar({ user }) {
               </span>
               <div className="flex flex-wrap gap-1 justify-center">
                 {dayEvents.slice(0, 3).map((e, idx) => (
-                  <span key={idx} className={`w-2.5 h-2.5 rounded-full ${categoryDots[e.category] || 'bg-muted-foreground'}`} />
+                  <span key={idx} className="w-2.5 h-2.5 rounded-full bg-accent" />
                 ))}
                 {dayEvents.length > 3 && (
                   <span className="font-body text-[9px] text-primary-foreground/60">+{dayEvents.length - 3}</span>
