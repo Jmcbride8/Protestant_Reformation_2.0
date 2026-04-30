@@ -295,55 +295,55 @@ function UniquenessSection() {
   );
 }
 
-// ─── Core Beliefs ───────────────────────────────────────────────────────────
-function CoreBeliefsSection() {
-  const beliefs = [
+// ─── Key Values ──────────────────────────────────────────────────────────────
+function KeyValuesSection() {
+  const values = [
     {
       icon: Heart,
       number: "I",
-      title: "God Exists and Loves You",
-      desc: "Christians believe in one God who created everything and cares deeply about people. This isn't a distant, angry God—it's a God who pursues relationship.",
-      verse: "\"God is love.\" — 1 John 4:8",
+      title: "Love Above All Else",
+      desc: "Jesus summed up all of Scripture in two commands: love God with all you are, and love your neighbor as yourself. For Christians, love isn't a feeling—it's the fundamental value that drives how we live, forgive, and treat others.",
+      verse: "\"Love the Lord your God... and love your neighbor as yourself.\" — Matthew 22:37–39",
       dark: true,
     },
     {
       icon: Users,
       number: "II",
-      title: "Humans Were Made in God's Image",
-      desc: "You matter. Your life has value and purpose because you reflect God's character. This is why Christians care about human dignity and worth.",
-      verse: "\"So God created mankind in his own image.\" — Genesis 1:27",
+      title: "Community Over Individualism",
+      desc: "Christians are called to live in community, not isolation. The church is a family—a body where different members use their gifts to serve one another. Nobody is meant to walk alone.",
+      verse: "\"As a body, though one, has many parts...\" — 1 Corinthians 12:12",
       dark: false,
     },
     {
       icon: AlertTriangle,
       number: "III",
-      title: "We're All Broken and Need Help",
-      desc: "The Christian story acknowledges that something is wrong with the world and with us. We all struggle, make mistakes, and hurt others. This isn't shame—it's honesty.",
-      verse: "\"All have sinned and fall short of the glory of God.\" — Romans 3:23",
+      title: "Honesty and Humility",
+      desc: "Christians believe in being honest about our failures and limitations. Humility isn't weakness—it's the strength to acknowledge we can't fix everything ourselves and need God and each other.",
+      verse: "\"Confess your sins to one another and pray for one another.\" — James 5:16",
       dark: true,
     },
     {
       icon: Crown,
       number: "IV",
-      title: "Only Jesus Saves",
-      desc: "Christians believe Jesus lived a perfect life, died to bridge the gap between God and humanity, and rose from the dead. Through Him, people find forgiveness and new life.",
-      verse: "\"I am the way, the truth, and the life.\" — John 14:6",
+      title: "Mercy and Forgiveness",
+      desc: "Because Christians have received unlimited forgiveness, we're called to extend it to others. Mercy isn't about condoning harm—it's about breaking cycles of hurt and choosing reconciliation.",
+      verse: "\"Forgive as the Lord forgave you.\" — Colossians 3:13",
       dark: false,
     },
     {
       icon: Gift,
       number: "V",
-      title: "Salvation is a Gift, Not Earned",
-      desc: "You can't work your way to God. Instead, Christianity offers grace—undeserved love. You receive it by faith, like accepting a gift someone offers.",
-      verse: "\"By grace you have been saved, through faith.\" — Ephesians 2:8",
+      title: "Justice and Advocacy",
+      desc: "Christians are called to speak up for the voiceless, care for the poor, and work toward justice. This isn't politics—it's following Jesus' example of standing with the marginalized and vulnerable.",
+      verse: "\"Defend the weak and the fatherless; uphold the cause of the poor.\" — Psalm 82:3",
       dark: true,
     },
     {
       icon: Flame,
       number: "VI",
-      title: "Saved by Grace, for Good Works",
-      desc: "Salvation isn't the finish line—it's the starting line. Christians are saved not by their good deeds, but for them. A life transformed by grace naturally overflows into love, service, and justice for others.",
-      verse: "\"Created in Christ Jesus to do good works.\" — Ephesians 2:10",
+      title: "Stewardship and Generosity",
+      desc: "Everything belongs to God, and we're caretakers of it. Christians are called to use their time, talents, and resources generously—not out of obligation, but as joyful expressions of gratitude.",
+      verse: "\"It is more blessed to give than to receive.\" — Acts 20:35",
       dark: false,
     },
   ];
@@ -357,16 +357,16 @@ function CoreBeliefsSection() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-4">The Foundation</p>
-          <h2 className="font-heading text-4xl sm:text-6xl text-white mb-6">Core Beliefs of Christianity</h2>
+          <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-4">How We Live</p>
+          <h2 className="font-heading text-4xl sm:text-6xl text-white mb-6">Key Values of Christianity</h2>
           <p className="font-body text-lg text-white/60 max-w-2xl mx-auto">
-            Here are the foundational ideas that unite Christians around the world.
+            Beyond doctrine, here's what Christians actually value and practice in daily life.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 rounded-3xl overflow-hidden border border-white/10">
-          {beliefs.map((belief, i) => {
-            const Icon = belief.icon;
+          {values.map((value, i) => {
+            const Icon = value.icon;
             return (
               <motion.div
                 key={i}
@@ -374,11 +374,11 @@ function CoreBeliefsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className={`relative p-8 sm:p-10 group ${belief.dark ? 'bg-primary' : 'bg-white/5'}`}
+                className={`relative p-8 sm:p-10 group ${value.dark ? 'bg-primary' : 'bg-white/5'}`}
               >
                 {/* Roman numeral watermark */}
                 <span className="absolute top-6 right-8 font-heading text-6xl font-bold text-white/5 select-none pointer-events-none">
-                  {belief.number}
+                  {value.number}
                 </span>
 
                 {/* Icon */}
@@ -387,12 +387,12 @@ function CoreBeliefsSection() {
                 </div>
 
                 {/* Content */}
-                <h3 className="font-heading text-2xl text-white mb-3 leading-tight">{belief.title}</h3>
-                <p className="font-body text-white/65 leading-relaxed mb-6 text-sm">{belief.desc}</p>
+                <h3 className="font-heading text-2xl text-white mb-3 leading-tight">{value.title}</h3>
+                <p className="font-body text-white/65 leading-relaxed mb-6 text-sm">{value.desc}</p>
 
                 {/* Verse */}
                 <div className="border-t border-white/10 pt-5">
-                  <p className="font-body text-xs text-accent/80 italic">{belief.verse}</p>
+                  <p className="font-body text-xs text-accent/80 italic">{value.verse}</p>
                 </div>
               </motion.div>
             );
@@ -770,7 +770,7 @@ export default function TheChristianFaith() {
       <Hero />
       <IntroSection isAdmin={isAdmin} />
       <UniquenessSection />
-      <CoreBeliefsSection />
+      <KeyValuesSection />
       <DenominationsSection />
       <CultSection />
       <HistorySection isAdmin={isAdmin} />
