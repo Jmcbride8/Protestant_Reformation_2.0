@@ -109,7 +109,7 @@ export default function LifeMilestonesSection({ weddingImage, mealImage, kidsIma
               alt="Community Meals"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               isAdmin={isAdmin}
-              wrapperClassName="aspect-[4/3] overflow-hidden relative group/editimg"
+              wrapperClassName="aspect-[3/4] overflow-hidden relative group/editimg"
             />
             <div className="absolute inset-0 bg-gradient-to-tr from-primary via-primary/80 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
