@@ -56,27 +56,27 @@ function IntroSection({ isAdmin }) {
             <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
               It's a journey. And every journey begins with a departure — a leaving of somewhere that is no longer home. Humanity was created in the image of an infinitely good God, placed in a world of beauty and belonging. Then a choice: to trust God, or to go our own way. We went our own way. And in doing so, we didn't just break a rule — we became exiles. Every restlessness, every longing, every sense that this world is not quite right carries the echo of that departure.
             </p>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-6">
               But God didn't abandon the wanderers. People began recording their encounters with Him — promises He made, promises He kept — compiled over centuries into what we call Scripture. A thread of hope running through the long road of history: God was coming to meet us. He was going to make a way home.
             </p>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              And then He came. Not as a distant deity issuing directions, but as a fellow traveler — Jesus Christ — God inhabiting flesh, walking the road with us. He called people to follow Him, healed the broken along the way, challenged those who had made themselves comfortable with the wrong things, and died to clear the path that sin had blocked. Then He rose. And the destination came into view.
-            </p>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
-              His followers formed communities of travelers — not institutions, but fellow pilgrims — committed to making the journey together. They spread across the earth, not conquering but accompanying, carrying forgiveness, sacrifice, and light into every dark road they walked. It became the largest movement in human history.
-            </p>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-6">
-              At its core, Christianity is about direction — turning around, and walking toward something better. The most lost among us can find their bearings and begin again. And that reorientation becomes a lifetime commitment: to keep moving toward the light, and to light the way for others.
-            </p>
 
-            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-4">
+            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-8">
               <p className="font-heading text-xl sm:text-2xl italic text-primary leading-snug">
                 "We ain't what we oughta be. We ain't what we want to be. We ain't what we gonna be. But, thank God, we ain't what we was."
               </p>
               <p className="font-body text-xs text-accent font-medium mt-3">— Often attributed to Martin Luther King Jr.</p>
             </div>
 
-            <p className="font-body text-sm tracking-[0.2em] uppercase text-accent/60 mb-3">The Destination</p>
+            <p className="font-body text-sm tracking-[0.2em] uppercase text-accent/60 mb-3">With a Person</p>
+
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-4">
+              And then He came. Not as a distant deity issuing directions, but as a fellow traveler — Jesus Christ — God inhabiting flesh, walking the road with us. He called people to follow Him, healed the broken along the way, challenged those who had made themselves comfortable with the wrong things, and died to clear the path that sin had blocked. Then He rose. And the destination came into view.
+            </p>
+            <p className="font-body text-lg text-muted-foreground leading-relaxed mb-6">
+              His followers formed communities of travelers — not institutions, but fellow pilgrims — committed to making the journey together. They spread across the earth, not conquering but accompanying, carrying forgiveness, sacrifice, and light into every dark road they walked. It became the largest movement in human history.
+            </p>
+
+            <p className="font-body text-sm tracking-[0.2em] uppercase text-accent/60 mb-3">To a Heavenly Kingdom</p>
             <div className="bg-primary rounded-xl p-6">
               <p className="font-body text-white/80 leading-relaxed text-base italic mb-4">
                 "All these people were still living by faith when they died. They did not receive the things promised; they only saw them and welcomed them from a distance, admitting that they were foreigners and strangers on earth. People who say such things show that they are looking for a country of their own... they were longing for a better country — a heavenly one. Therefore God is not ashamed to be called their God, for he has prepared a city for them."
