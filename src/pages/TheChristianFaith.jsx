@@ -60,6 +60,13 @@ function IntroSection({ isAdmin }) {
               </p>
               <p className="font-body text-xs text-accent font-medium mt-3">— Often attributed to Martin Luther King Jr.</p>
             </div>
+
+            <div className="bg-primary rounded-xl p-6 mt-4">
+              <p className="font-body text-white/80 leading-relaxed text-base italic mb-4">
+                "All these people were still living by faith when they died. They did not receive the things promised; they only saw them and welcomed them from a distance, admitting that they were foreigners and strangers on earth. People who say such things show that they are looking for a country of their own... they were longing for a better country — a heavenly one. Therefore God is not ashamed to be called their God, for he has prepared a city for them."
+              </p>
+              <p className="font-body text-xs text-accent font-medium">— Hebrews 11:13–16</p>
+            </div>
           </div>
 
           <div className="relative h-80 rounded-2xl overflow-hidden group/editimg">
