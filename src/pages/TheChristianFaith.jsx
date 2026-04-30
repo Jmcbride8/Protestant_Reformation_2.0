@@ -406,7 +406,7 @@ function DenominationsSection() {
         >
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">The Christian Family: Different Branches, One Root</h2>
           <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Christianity is wonderfully diverse. While all Christians share core beliefs about God and Jesus, different traditions emphasize different aspects of faith. None of these differences makes one "wrong"—they reflect the richness of how faith can be lived.
+            Christianity is wonderfully diverse. While all Christians share core beliefs about God and Jesus, different traditions emphasize or express different aspects of faith.
           </p>
         </motion.div>
 
