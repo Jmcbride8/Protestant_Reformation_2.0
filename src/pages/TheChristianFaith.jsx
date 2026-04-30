@@ -53,6 +53,13 @@ function IntroSection({ isAdmin }) {
             <p className="font-body text-lg text-muted-foreground leading-relaxed">
               At its core, Christianity is about transformation — from darkness to light. The sickest, most broken, most evil among us can find forgiveness and a genuine second chance. And that transformation becomes a lifetime commitment: to walk in the light, and to spread it.
             </p>
+
+            <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mt-4">
+              <p className="font-heading text-xl sm:text-2xl italic text-primary leading-snug">
+                "We ain't what we oughta be. We ain't what we want to be. We ain't what we gonna be. But, thank God, we ain't what we was."
+              </p>
+              <p className="font-body text-xs text-accent font-medium mt-3">— Often attributed to Martin Luther King Jr.</p>
+            </div>
           </div>
 
           <div className="relative h-80 rounded-2xl overflow-hidden group/editimg">
