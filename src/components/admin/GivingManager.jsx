@@ -114,7 +114,6 @@ export default function GivingManager() {
 
   const record = settings[0] || null;
 
-  const [goal, setGoal] = useState('');
   const [current, setCurrent] = useState('');
   const [saving, setSaving] = useState(false);
   const [newRow, setNewRow] = useState({ name: '', percentage: '', color: PRESET_COLORS[0] });
@@ -122,24 +121,20 @@ export default function GivingManager() {
 
   useEffect(() => {
     if (record) {
-      setGoal(String(record.goal));
-      setCurrent(String(record.current));
+      setCurrent(String(record.current || 0));
     } else {
-      setGoal('250000');
-      setCurrent('187000');
+      setCurrent('0');
     }
   }, [record]);
 
   const handleSave = async () => {
     setSaving(true);
-    const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund' };
+    const data = { current: parseFloat(current) || 0 };
     if (record) {
       await base44.entities.FundSettings.update(record.id, data);
-    } else {
-      await base44.entities.FundSettings.create(data);
     }
     queryClient.invalidateQueries({ queryKey: ['fundSettings'] });
-    toast.success("Fund settings saved");
+    toast.success("Contributions updated");
     setSaving(false);
   };
 
@@ -259,69 +254,80 @@ export default function GivingManager() {
       <div>
         <div>
           <h3 className="font-heading text-xl text-primary mb-1">Annual Fund Settings</h3>
-          <p className="font-body text-sm text-muted-foreground">Update the goal and contributions-to-date shown on the Giving page.</p>
+          <p className="font-body text-sm text-muted-foreground">Define budget line items. The total goal is the sum of all items.</p>
         </div>
 
         <div className="bg-card rounded-xl border border-border/50 p-6 space-y-5 mt-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div className="space-y-2">
-            <Label className="font-body text-sm">Annual Goal ($)</Label>
-            <Input
-              type="number"
-              value={goal}
-              onChange={e => setGoal(e.target.value)}
-              placeholder="250000"
-              className="font-body"
-            />
-          </div>
           <div className="space-y-2">
             <Label className="font-body text-sm">Contributions to Date ($)</Label>
             <Input
               type="number"
               value={current}
               onChange={e => setCurrent(e.target.value)}
-              placeholder="187000"
+              placeholder="0"
               className="font-body"
             />
           </div>
-        </div>
 
-        {/* Live preview */}
-        <div className="p-4 rounded-xl border border-border bg-secondary/30 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">Live Preview</span>
-            <span className="font-body text-xs text-muted-foreground">{pctOfYear}% through {now.getFullYear()}</span>
-          </div>
-          <div className="relative h-3 bg-border rounded-full overflow-hidden">
-            <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/50 z-10" style={{ left: `${pctOfYear}%` }} />
-            <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{
-                width: `${Math.min(pctRaised, 100)}%`,
-                backgroundColor: isAhead ? 'hsl(142, 60%, 40%)' : isBehind ? 'hsl(0, 72%, 55%)' : 'hsl(38, 45%, 60%)'
-              }}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              {isAhead ? <TrendingUp className="w-4 h-4 text-green-600" /> : isBehind ? <TrendingDown className="w-4 h-4 text-red-500" /> : <Minus className="w-4 h-4 text-accent" />}
-              <span className={`font-body text-sm font-semibold ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
-                {pctRaised}% raised
-              </span>
-              <span className="font-body text-xs text-muted-foreground">
-                (${currentNum.toLocaleString()} of ${goalNum.toLocaleString()})
-              </span>
+          <ItemizationEditor 
+            items={record?.itemization || []} 
+            onChange={v => {
+              const updated = { ...record, itemization: v };
+              if (record?.id) {
+                base44.entities.FundSettings.update(record.id, { itemization: v });
+              } else {
+                base44.entities.FundSettings.create({ slug: FUND_KEY, name: 'Annual Fund', itemization: v, is_active: true });
+              }
+              queryClient.invalidateQueries({ queryKey: ['fundSettings'] });
+            }}
+          />
+
+          {record?.itemization && record.itemization.length > 0 && (
+            <div className="p-3 bg-secondary/20 rounded-lg border border-border/30">
+              <div className="flex justify-between font-body text-sm font-semibold">
+                <span>Annual Goal (Sum)</span>
+                <span className="text-primary">${record.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</span>
+              </div>
             </div>
-            <span className={`font-body text-xs font-medium ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
-              {isAhead ? `$${absDiff.toLocaleString()} ahead` : isBehind ? `$${absDiff.toLocaleString()} behind` : 'On track'}
-            </span>
-          </div>
-        </div>
+          )}
 
-        <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
-          <Save className="w-4 h-4" />
-          {saving ? 'Saving...' : 'Save Changes'}
-        </Button>
+          {record?.itemization && record.itemization.length > 0 && (
+            <div className="p-4 rounded-xl border border-border bg-secondary/30 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">Live Preview</span>
+                <span className="font-body text-xs text-muted-foreground">{pctOfYear}% through {now.getFullYear()}</span>
+              </div>
+              <div className="relative h-3 bg-border rounded-full overflow-hidden">
+                <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/50 z-10" style={{ left: `${pctOfYear}%` }} />
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${Math.min(pctRaised, 100)}%`,
+                    backgroundColor: isAhead ? 'hsl(142, 60%, 40%)' : isBehind ? 'hsl(0, 72%, 55%)' : 'hsl(38, 45%, 60%)'
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  {isAhead ? <TrendingUp className="w-4 h-4 text-green-600" /> : isBehind ? <TrendingDown className="w-4 h-4 text-red-500" /> : <Minus className="w-4 h-4 text-accent" />}
+                  <span className={`font-body text-sm font-semibold ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
+                    {pctRaised}% raised
+                  </span>
+                  <span className="font-body text-xs text-muted-foreground">
+                    (${currentNum.toLocaleString()} of ${goalNum.toLocaleString()})
+                  </span>
+                </div>
+                <span className={`font-body text-xs font-medium ${isAhead ? 'text-green-600' : isBehind ? 'text-red-500' : 'text-accent'}`}>
+                  {isAhead ? `$${absDiff.toLocaleString()} ahead` : isBehind ? `$${absDiff.toLocaleString()} behind` : 'On track'}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <Button onClick={handleSave} disabled={saving} className="font-body gap-2">
+            <Save className="w-4 h-4" />
+            {saving ? 'Saving...' : 'Save Changes'}
+          </Button>
         </div>
       </div>
 
