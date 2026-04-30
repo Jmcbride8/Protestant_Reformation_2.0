@@ -291,18 +291,7 @@ function VisionSection({ isAdmin }) {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <Link to="/vision">
-            <Button variant="outline" className="font-body gap-2">
-              Read the Full Vision <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
-        </motion.div>
+
       </div>
     </section>
   );
