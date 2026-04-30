@@ -16,19 +16,9 @@ const steps = [
     description: 'Attend services, join a small group, and get to know the people of Hope Church.',
   },
   {
-    icon: BookOpen,
-    title: 'Attend a Membership Class',
-    description: 'We\'ll share our vision, values, and what it means to be part of this family.',
-  },
-  {
-    icon: Droplets,
-    title: 'Consider Baptism',
-    description: 'If you haven\'t been baptized, we encourage it as a public declaration of your faith.',
-  },
-  {
     icon: UserPlus,
-    title: 'Submit Your Application',
-    description: 'Our pastoral team will prayerfully review your application and reach out within 1–2 weeks.',
+    title: 'Become a Member',
+    description: 'Fill the form to let us know, and we\'ll get back to you.',
   },
 ];
 
@@ -76,9 +66,6 @@ export default function Membership() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
               <h2 className="font-heading text-4xl text-primary mb-6">What Does Membership Mean?</h2>
-              <p className="font-body text-muted-foreground leading-relaxed mb-6">
-                At Hope Church, membership is about family — showing up for each other, building something together, and doing life side by side. It's how you stop being a visitor and start belonging to something real.
-              </p>
               <p className="font-body text-muted-foreground leading-relaxed mb-8">
                 We believe the local church is God's primary means of growing people and reaching the world. 
                 Membership is how you plant yourself in that mission.
