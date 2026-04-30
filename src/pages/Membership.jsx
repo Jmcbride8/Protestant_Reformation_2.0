@@ -51,54 +51,26 @@ function QuoteGrid() {
 
 const steps = [
   {
-    icon: Heart,
+    num: '01',
+    title: 'Attend a Service',
+    body: 'Come as you are. You don\'t need to believe anything specific yet — just show up.',
+  },
+  {
+    num: '02',
     title: 'Follow Jesus',
-    description: 'Membership begins with a personal faith in Jesus Christ. We\'d love to hear your story.',
+    body: 'Faith isn\'t a prerequisite — it\'s an invitation. We walk with you wherever you are on that journey.',
   },
   {
-    icon: Users,
-    title: 'Connect with the Community',
-    description: 'Attend services, join a small group, and get to know the people of Hope Church.',
-  },
-  {
-    icon: UserPlus,
+    num: '03',
     title: 'Become a Member',
-    description: 'Fill the form to let us know, and we\'ll get back to you.',
+    body: 'When you\'re ready, fill out a short application. We review every one personally.',
+  },
+  {
+    num: '04',
+    title: 'Be More Than a Number',
+    body: 'Church isn\'t a place or program — it\'s your family in Christ. Build friendships, offer mutual support and do life together in the ways that matter.',
   },
 ];
-
-function StepCard({ step, isOpen, onToggle, index }) {
-  const Icon = step.icon;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      className={`border rounded-xl overflow-hidden transition-colors ${isOpen ? 'border-accent/40 bg-accent/5' : 'border-border/50 bg-card'}`}
-    >
-      <button onClick={onToggle} className="w-full flex items-center gap-4 p-6 text-left">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'bg-accent/15' : 'bg-secondary'}`}>
-          <Icon className={`w-5 h-5 transition-colors ${isOpen ? 'text-accent' : 'text-primary'}`} />
-        </div>
-        <div className="flex-1">
-          <h4 className="font-heading text-lg text-primary">{step.title}</h4>
-          <p className="font-body text-sm text-muted-foreground mt-0.5">{step.description}</p>
-        </div>
-        <ChevronDown className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: 'easeInOut' }}>
-            <div className="px-6 pb-6 pt-0 pl-20">
-              <p className="font-body text-muted-foreground leading-relaxed text-sm">{step.description}</p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
 
 const benefits = [
   'Get connected to get involved (we\'re friendly, we promise)',
@@ -110,7 +82,6 @@ const benefits = [
 
 export default function Membership() {
   const [showModal, setShowModal] = useState(false);
-  const [openStepIndex, setOpenStepIndex] = useState(null);
 
   return (
     <div className="pt-20">
@@ -159,11 +130,24 @@ export default function Membership() {
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div>
               <h2 className="font-heading text-4xl text-primary mb-6">How It Works</h2>
-              {steps.map((step, i) => (
-                <StepCard key={i} step={step} index={i} isOpen={openStepIndex === i} onToggle={() => setOpenStepIndex(openStepIndex === i ? null : i)} />
-              ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {steps.map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="bg-secondary/20 border border-border/50 rounded-2xl p-8"
+                  >
+                    <p className="font-heading text-4xl text-accent/40 mb-4">{step.num}</p>
+                    <h3 className="font-heading text-xl text-primary mb-2">{step.title}</h3>
+                    <p className="font-body text-muted-foreground text-sm leading-relaxed">{step.body}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
