@@ -31,11 +31,19 @@ const EMPTY_ITEM = { label: '', amount: '', description: '' };
 
 function ItemizationEditor({ items = [], onChange }) {
   const [draft, setDraft] = useState(EMPTY_ITEM);
+  const [editingIdx, setEditingIdx] = useState(null);
 
   const addItem = () => {
     if (!draft.label || !draft.amount) return;
     onChange([...items, { ...draft, amount: parseFloat(draft.amount) }]);
     setDraft(EMPTY_ITEM);
+  };
+
+  const updateItem = (idx, updated) => {
+    const newItems = [...items];
+    newItems[idx] = updated;
+    onChange(newItems);
+    setEditingIdx(null);
   };
 
   const removeItem = (idx) => onChange(items.filter((_, i) => i !== idx));
@@ -45,13 +53,45 @@ function ItemizationEditor({ items = [], onChange }) {
       <p className="font-body text-xs tracking-[0.18em] uppercase text-accent">Itemization Breakdown</p>
 
       {items.map((item, idx) => (
-        <div key={idx} className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
-          <span className="flex-1 text-foreground">{item.label}</span>
-          <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
-          {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
-          <button onClick={() => removeItem(idx)} className="ml-2 text-destructive/70 hover:text-destructive">
-            <X className="w-3.5 h-3.5" />
-          </button>
+        <div key={idx}>
+          {editingIdx === idx ? (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end bg-secondary/40 rounded-lg p-2">
+              <Input
+                className="font-body text-sm"
+                value={item.label}
+                onChange={e => updateItem(idx, { ...item, label: e.target.value })}
+              />
+              <Input
+                className="font-body text-sm"
+                type="number"
+                value={item.amount}
+                onChange={e => updateItem(idx, { ...item, amount: parseFloat(e.target.value) || 0 })}
+              />
+              <div className="flex gap-1">
+                <Input
+                  className="font-body text-sm flex-1"
+                  placeholder="Note"
+                  value={item.description || ''}
+                  onChange={e => updateItem(idx, { ...item, description: e.target.value })}
+                />
+                <Button variant="ghost" size="icon" onClick={() => setEditingIdx(null)} className="h-8 w-8">
+                  <Check className="w-3.5 h-3.5" />
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 bg-secondary/40 rounded-lg px-3 py-2 text-sm font-body">
+              <span className="flex-1 text-foreground">{item.label}</span>
+              <span className="text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
+              {item.description && <span className="text-xs text-muted-foreground italic">— {item.description}</span>}
+              <Button variant="ghost" size="icon" onClick={() => setEditingIdx(idx)} className="h-6 w-6">
+                <Pencil className="w-3.5 h-3.5 text-primary" />
+              </Button>
+              <Button variant="ghost" size="icon" onClick={() => removeItem(idx)} className="h-6 w-6">
+                <Trash2 className="w-3.5 h-3.5 text-destructive" />
+              </Button>
+            </div>
+          )}
         </div>
       ))}
 
