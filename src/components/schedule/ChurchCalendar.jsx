@@ -145,14 +145,12 @@ export default function ChurchCalendar({ user }) {
 
       {/* Events Popup - Show on hover or when selected */}
       {(hoveredDay || selectedDay) && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="absolute bg-card border border-border/50 rounded-xl p-4 shadow-lg z-50 max-w-sm top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
-          style={{
-            pointerEvents: 'auto',
-          }}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-card border border-border/50 rounded-xl p-4 shadow-lg z-50 max-w-sm pointer-events-auto"
         >
           <div className="mb-3">
             <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Events</p>
@@ -211,9 +209,10 @@ export default function ChurchCalendar({ user }) {
                 </div>
               );
             })}
-          </div>
-        </motion.div>
-      )}
+            </div>
+            </motion.div>
+            </div>
+            )}
 
       {rsvpEvent && (
         <RSVPModal
