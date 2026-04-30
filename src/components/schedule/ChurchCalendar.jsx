@@ -29,8 +29,7 @@ const categoryDots = {
 
 export default function ChurchCalendar({ user }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [dayModalOpen, setDayModalOpen] = useState(false);
+  const [hoveredDay, setHoveredDay] = useState(null);
   const [rsvpEvent, setRsvpEvent] = useState(null);
 
   const { data: events = [], refetch } = useQuery({
@@ -61,7 +60,7 @@ export default function ChurchCalendar({ user }) {
   const getEventsForDay = (d) =>
     activeEvents.filter(e => e.date === format(d, 'yyyy-MM-dd'));
 
-  const selectedDayEvents = selectedDay ? getEventsForDay(selectedDay) : [];
+
 
   const getRsvpCount = (eventId) =>
     rsvps.filter(r => r.event_id === eventId).reduce((sum, r) => sum + (r.guest_count || 1), 0);
@@ -80,9 +79,9 @@ export default function ChurchCalendar({ user }) {
           <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
             <ChevronLeft className="w-5 h-5" />
           </Button>
-          <Button variant="ghost" size="sm" onClick={() => { setCurrentMonth(new Date()); setSelectedDay(new Date()); }}
-            className="font-body text-xs">
-            Today
+          <Button variant="ghost" size="sm" onClick={() => setCurrentMonth(new Date())}
+           className="font-body text-xs">
+           Today
           </Button>
           <Button variant="ghost" size="icon" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
             <ChevronRight className="w-5 h-5" />
@@ -100,22 +99,23 @@ export default function ChurchCalendar({ user }) {
       {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-1">
         {days.map((d, i) => {
-          const dayEvents = getEventsForDay(d);
-          const isSelected = isSameDay(d, selectedDay);
-          const isCurrentMonth = isSameMonth(d, currentMonth);
-          const todayDay = isToday(d);
-          return (
-            <button
-              key={i}
-              onClick={() => { setSelectedDay(d); if (getEventsForDay(d).length > 0) setDayModalOpen(true); }}
-              className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
-                isSelected ? 'bg-secondary ring-2 ring-border' :
-                'hover:bg-secondary/60'
-              } ${!isCurrentMonth ? 'opacity-30' : ''}`}
-            >
+           const dayEvents = getEventsForDay(d);
+           const isHovered = hoveredDay && isSameDay(d, hoveredDay);
+           const isCurrentMonth = isSameMonth(d, currentMonth);
+           const todayDay = isToday(d);
+           return (
+             <button
+               key={i}
+               onMouseEnter={() => { if (getEventsForDay(d).length > 0) setHoveredDay(d); }}
+               onMouseLeave={() => setHoveredDay(null)}
+               className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
+                 isHovered ? 'bg-secondary ring-2 ring-border' :
+                 'hover:bg-secondary/60'
+               } ${!isCurrentMonth ? 'opacity-30' : ''}`}
+             >
               <span className={`font-body text-sm block text-center mb-1 w-7 h-7 flex items-center justify-center rounded-full mx-auto ${
                 todayDay ? 'bg-accent text-white font-semibold' :
-                isSelected ? 'text-primary font-semibold' :
+                isHovered ? 'text-primary font-semibold' :
                 'text-foreground/80'
               }`}>
                 {format(d, 'd')}
@@ -133,78 +133,72 @@ export default function ChurchCalendar({ user }) {
         })}
       </div>
 
-      {/* Day Events Modal */}
-      <Dialog open={dayModalOpen} onOpenChange={setDayModalOpen}>
-        <DialogContent className="max-w-lg">
-          {selectedDay && (
-            <>
-              <div className="mb-4">
-                <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Events</p>
-                <h3 className="font-heading text-2xl text-primary">{format(selectedDay, 'EEEE, MMMM d')}</h3>
-              </div>
-              {selectedDayEvents.length === 0 ? (
-                <p className="font-body text-sm text-muted-foreground italic">No events scheduled for this day.</p>
-              ) : (
-                <div className="space-y-3">
-                  {selectedDayEvents.map(event => {
-                    const rsvpCount = getRsvpCount(event.id);
-                    const myRsvp = userRsvp(event.id);
-                    return (
-                      <div key={event.id} className="bg-secondary/40 rounded-xl p-4 border border-border/50">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1 flex-wrap">
-                              <h4 className="font-heading text-base text-primary">{event.title}</h4>
-                            </div>
-                            {event.description && (
-                              <p className="font-body text-xs text-muted-foreground mb-2">{event.description}</p>
-                            )}
-                            <div className="flex flex-wrap gap-3 text-muted-foreground">
-                              {event.start_time && (
-                                <span className="flex items-center gap-1 font-body text-xs">
-                                  <Clock className="w-3 h-3" />
-                                  {event.start_time}{event.end_time ? ` – ${event.end_time}` : ''}
-                                </span>
-                              )}
-                              {event.location && (
-                                <span className="flex items-center gap-1 font-body text-xs">
-                                  <MapPin className="w-3 h-3" />
-                                  {event.location}
-                                </span>
-                              )}
-                              {event.is_rsvp_enabled && (
-                                <span className="flex items-center gap-1 font-body text-xs">
-                                  <Users className="w-3 h-3" />
-                                  {rsvpCount} attending{event.rsvp_limit ? ` / ${event.rsvp_limit} max` : ''}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          {event.is_rsvp_enabled && (
-                            <div className="shrink-0">
-                              {myRsvp ? (
-                                <span className="font-body text-xs text-emerald-600 font-medium">✓ Going</span>
-                              ) : (
-                                <Button
-                                  size="sm"
-                                  onClick={() => { setDayModalOpen(false); setRsvpEvent(event); }}
-                                  className="font-body text-xs bg-accent hover:bg-accent/90 text-white"
-                                >
-                                  RSVP
-                                </Button>
-                              )}
-                            </div>
-                          )}
-                        </div>
+      {/* Events Hover Popup */}
+      {hoveredDay && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="fixed bg-card border border-border/50 rounded-xl p-4 shadow-lg z-50 max-w-sm"
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <div className="mb-3">
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Events</p>
+            <h3 className="font-heading text-lg text-primary">{format(hoveredDay, 'EEEE, MMMM d')}</h3>
+          </div>
+          <div className="space-y-3">
+            {getEventsForDay(hoveredDay).map(event => {
+              const rsvpCount = getRsvpCount(event.id);
+              const myRsvp = userRsvp(event.id);
+              return (
+                <div key={event.id} className="bg-secondary/40 rounded-lg p-3 border border-border/30">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-heading text-sm text-primary mb-1">{event.title}</h4>
+                      {event.description && (
+                        <p className="font-body text-xs text-muted-foreground mb-2">{event.description}</p>
+                      )}
+                      <div className="flex flex-wrap gap-2 text-muted-foreground">
+                        {event.start_time && (
+                          <span className="flex items-center gap-1 font-body text-xs">
+                            <Clock className="w-3 h-3" />
+                            {event.start_time}{event.end_time ? ` – ${event.end_time}` : ''}
+                          </span>
+                        )}
+                        {event.location && (
+                          <span className="flex items-center gap-1 font-body text-xs">
+                            <MapPin className="w-3 h-3" />
+                            {event.location}
+                          </span>
+                        )}
+                        {event.is_rsvp_enabled && (
+                          <span className="flex items-center gap-1 font-body text-xs">
+                            <Users className="w-3 h-3" />
+                            {rsvpCount} attending
+                          </span>
+                        )}
                       </div>
-                    );
-                  })}
+                    </div>
+                    {event.is_rsvp_enabled && !userRsvp(event.id) && (
+                      <Button
+                        size="sm"
+                        onClick={() => setRsvpEvent(event)}
+                        className="font-body text-xs bg-accent hover:bg-accent/90 text-white shrink-0 mt-1"
+                      >
+                        RSVP
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              )}
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
 
       {rsvpEvent && (
         <RSVPModal
