@@ -90,8 +90,11 @@ export default function ChurchCalendar({ user }) {
         </div>
       </div>
 
-      {/* Day headers */}
-      <div className="grid grid-cols-7 gap-1">
+      {/* Instruction text */}
+       <p className="font-body text-xs text-muted-foreground text-center">Click a date to view events and RSVP</p>
+
+       {/* Day headers */}
+       <div className="grid grid-cols-7 gap-1">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
           <div key={d} className="text-center font-body text-xs text-muted-foreground uppercase tracking-wider py-1">{d}</div>
         ))}
