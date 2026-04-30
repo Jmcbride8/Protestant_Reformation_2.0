@@ -29,6 +29,7 @@ const categoryDots = {
 
 export default function ChurchCalendar({ user }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState(null);
   const [hoveredDay, setHoveredDay] = useState(null);
   const [rsvpEvent, setRsvpEvent] = useState(null);
 
@@ -100,22 +101,31 @@ export default function ChurchCalendar({ user }) {
       <div className="grid grid-cols-7 gap-1">
         {days.map((d, i) => {
            const dayEvents = getEventsForDay(d);
+           const isSelected = selectedDay && isSameDay(d, selectedDay);
            const isHovered = hoveredDay && isSameDay(d, hoveredDay);
            const isCurrentMonth = isSameMonth(d, currentMonth);
            const todayDay = isToday(d);
            return (
              <button
                key={i}
-               onMouseEnter={() => { if (getEventsForDay(d).length > 0) setHoveredDay(d); }}
+               onClick={() => { 
+                 if (isSelected) {
+                   setSelectedDay(null);
+                 } else if (getEventsForDay(d).length > 0) {
+                   setSelectedDay(d);
+                 }
+               }}
+               onMouseEnter={() => { if (!isSelected && getEventsForDay(d).length > 0) setHoveredDay(d); }}
                onMouseLeave={() => setHoveredDay(null)}
                className={`relative min-h-[52px] p-1.5 rounded-lg text-left transition-all ${
-                 isHovered ? 'bg-secondary ring-2 ring-border' :
+                 isSelected ? 'bg-secondary ring-2 ring-border' :
+                 isHovered ? 'bg-secondary/60' :
                  'hover:bg-secondary/60'
                } ${!isCurrentMonth ? 'opacity-30' : ''}`}
              >
               <span className={`font-body text-sm block text-center mb-1 w-7 h-7 flex items-center justify-center rounded-full mx-auto ${
                 todayDay ? 'bg-accent text-white font-semibold' :
-                isHovered ? 'text-primary font-semibold' :
+                isSelected || isHovered ? 'text-primary font-semibold' :
                 'text-foreground/80'
               }`}>
                 {format(d, 'd')}
@@ -133,8 +143,8 @@ export default function ChurchCalendar({ user }) {
         })}
       </div>
 
-      {/* Events Hover Popup */}
-      {hoveredDay && (
+      {/* Events Popup - Show on hover or when selected */}
+      {(hoveredDay || selectedDay) && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -148,10 +158,17 @@ export default function ChurchCalendar({ user }) {
         >
           <div className="mb-3">
             <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Events</p>
-            <h3 className="font-heading text-lg text-primary">{format(hoveredDay, 'EEEE, MMMM d')}</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-heading text-lg text-primary">{format(selectedDay || hoveredDay, 'EEEE, MMMM d')}</h3>
+              {selectedDay && (
+                <button onClick={() => setSelectedDay(null)} className="text-muted-foreground hover:text-foreground">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
           <div className="space-y-3">
-            {getEventsForDay(hoveredDay).map(event => {
+            {getEventsForDay(selectedDay || hoveredDay).map(event => {
               const rsvpCount = getRsvpCount(event.id);
               const myRsvp = userRsvp(event.id);
               return (
