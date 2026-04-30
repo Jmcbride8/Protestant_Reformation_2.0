@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CheckCircle2, Heart, Users, BookOpen, Droplets, UserPlus, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import BecomeMemberModal from '@/components/membership/BecomeMemberModal';
 
 const quotes = [
@@ -27,58 +27,24 @@ const quotes = [
   },
 ];
 
-function CyclingQuoteCard() {
-  const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1);
-      setIndex(i => (i + 1) % quotes.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const go = (dir) => {
-    setDirection(dir);
-    setIndex(i => (i + dir + quotes.length) % quotes.length);
-  };
-
+function QuoteGrid() {
   return (
-    <div className="bg-primary text-primary-foreground rounded-2xl p-8 max-w-4xl mx-auto text-center relative overflow-hidden" style={{ minHeight: '220px' }}>
-      <AnimatePresence mode="wait" custom={direction}>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {quotes.map((quote, i) => (
         <motion.div
-          key={index}
-          custom={direction}
-          initial={{ opacity: 0, x: direction * 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: direction * -40 }}
-          transition={{ duration: 0.4 }}
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.1 }}
+          className="bg-primary text-primary-foreground rounded-2xl p-8 flex flex-col justify-between h-full"
         >
-          <p className="font-heading text-2xl sm:text-3xl italic mb-4 leading-snug">
-            "{quotes[index].text}"
+          <p className="font-heading text-lg sm:text-xl italic leading-relaxed mb-6">
+            "{quote.text}"
           </p>
-          <p className="font-body text-sm text-primary-foreground/70">— {quotes[index].ref}</p>
+          <p className="font-body text-sm text-primary-foreground/70">— {quote.ref}</p>
         </motion.div>
-      </AnimatePresence>
-
-      <div className="flex items-center justify-center gap-4 mt-8">
-        <button onClick={() => go(-1)} className="text-primary-foreground/50 hover:text-primary-foreground transition-colors">
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <div className="flex gap-1.5">
-          {quotes.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
-              className={`w-1.5 h-1.5 rounded-full transition-all ${i === index ? 'bg-primary-foreground w-4' : 'bg-primary-foreground/30'}`}
-            />
-          ))}
-        </div>
-        <button onClick={() => go(1)} className="text-primary-foreground/50 hover:text-primary-foreground transition-colors">
-          <ChevronRight className="w-5 h-5" />
-        </button>
-      </div>
+      ))}
     </div>
   );
 }
@@ -101,6 +67,39 @@ const steps = [
   },
 ];
 
+function StepCard({ step, isOpen, onToggle, index }) {
+  const Icon = step.icon;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06 }}
+      className={`border rounded-xl overflow-hidden transition-colors ${isOpen ? 'border-accent/40 bg-accent/5' : 'border-border/50 bg-card'}`}
+    >
+      <button onClick={onToggle} className="w-full flex items-center gap-4 p-6 text-left">
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${isOpen ? 'bg-accent/15' : 'bg-secondary'}`}>
+          <Icon className={`w-5 h-5 transition-colors ${isOpen ? 'text-accent' : 'text-primary'}`} />
+        </div>
+        <div className="flex-1">
+          <h4 className="font-heading text-lg text-primary">{step.title}</h4>
+          <p className="font-body text-sm text-muted-foreground mt-0.5">{step.description}</p>
+        </div>
+        <ChevronDown className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: 'easeInOut' }}>
+            <div className="px-6 pb-6 pt-0 pl-20">
+              <p className="font-body text-muted-foreground leading-relaxed text-sm">{step.description}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
 const benefits = [
   'Get connected to get involved (we\'re friendly, we promise)',
   'Lets us know to plug you in — no more flying solo',
@@ -111,6 +110,7 @@ const benefits = [
 
 export default function Membership() {
   const [showModal, setShowModal] = useState(false);
+  const [openStepIndex, setOpenStepIndex] = useState(null);
 
   return (
     <div className="pt-20">
@@ -159,25 +159,10 @@ export default function Membership() {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h2 className="font-heading text-4xl text-primary mb-2">How It Works</h2>
+            <div className="space-y-3">
+              <h2 className="font-heading text-4xl text-primary mb-6">How It Works</h2>
               {steps.map((step, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="flex items-start gap-4 p-4 bg-card rounded-xl border border-border/50"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0">
-                    <step.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-body font-semibold text-primary text-sm">{step.title}</p>
-                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                  </div>
-                </motion.div>
+                <StepCard key={i} step={step} index={i} isOpen={openStepIndex === i} onToggle={() => setOpenStepIndex(openStepIndex === i ? null : i)} />
               ))}
             </div>
           </div>
@@ -197,10 +182,10 @@ export default function Membership() {
             <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">
               We Were Made for <span className="italic">Each Other</span>
             </h2>
-            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
+            <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-12">
               God designed us for and called us to live in community — yes, even us introverts.
             </p>
-            <CyclingQuoteCard />
+            <QuoteGrid />
           </motion.div>
 
 
