@@ -56,8 +56,7 @@ export default function Membership() {
               More Than <span className="italic">Attending</span>
             </h1>
             <p className="font-body text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-              Church membership is a commitment — to God, to one another, and to the mission of Hope Church. 
-              It's how you stop being a visitor and start being family.
+              Church membership is about belonging — making Hope Church your home. It is for when you are ready to move from being a visitor to becoming family.
             </p>
             <Button
               size="lg"
@@ -65,7 +64,7 @@ export default function Membership() {
               className="font-body bg-primary hover:bg-primary/90 gap-2"
             >
               <UserPlus className="w-5 h-5" />
-              Apply for Membership
+              Become a Member
             </Button>
           </motion.div>
         </div>
@@ -210,7 +209,7 @@ export default function Membership() {
             className="bg-white text-primary hover:bg-white/90 font-body tracking-wide gap-2"
           >
             <UserPlus className="w-5 h-5" />
-            Apply for Membership
+            Become a Member
           </Button>
         </div>
       </section>
