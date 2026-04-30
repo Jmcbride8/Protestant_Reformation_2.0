@@ -130,32 +130,7 @@ function LeadershipSection({ members }) {
 }
 
 // ─── Section 2: Vision ───────────────────────────────────────────────────────
-const visionPillars = [
-  {
-    heading: 'People Before Programs',
-    body: 'Jesus never ran a program — He sat with people. He ate with them, knew their names, and entered their pain. That is our model. Every ministry at Hope exists to connect people to each other, not to fill a calendar.',
-  },
-  {
-    heading: 'Counter-Cultural Community',
-    body: 'Society has drifted toward radical individualism. Family, friendship, and neighborhood have been replaced by screens and isolation. The Church was designed to be the antidote — a place where people are woven together by covenant love, not convenience.',
-  },
-  {
-    heading: 'Known by Name',
-    body: 'We refuse to be a place where you can attend for years without anyone knowing your name. Every person who walks through our doors carries a story worth knowing. We build structures that make that possible at every size.',
-  },
-  {
-    heading: 'Mutual Belonging',
-    body: 'Biblical community isn\'t one-directional. It\'s a web of mutual care — bearing one another\'s burdens, celebrating one another\'s joys, and showing up when it\'s hard. Membership here is a covenant, not a transaction.',
-  },
-  {
-    heading: 'Rooted in Scripture',
-    body: 'Our relational vision isn\'t a social experiment — it flows from the Word. The early church devoted themselves to fellowship (Acts 2:42). We take that seriously, letting Scripture shape how we structure our common life.',
-  },
-  {
-    heading: 'The Most Relational Church',
-    body: 'We want to be the most relationally rich church in Santa Barbara — not the largest, not the most impressive, but the one where people are most deeply known and loved. That is our north star.',
-  },
-];
+const visionPillars = [];
 
 function VisionPillarCard({ item, i }) {
   const [open, setOpen] = useState(false);
