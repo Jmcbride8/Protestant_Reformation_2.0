@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import FeatureTogglesManager from '../components/admin/FeatureTogglesManager';
 import ChurchInfoManager from '../components/admin/ChurchInfoManager';
 import GivingManager from '../components/admin/GivingManager';
-import FundsManager from '../components/admin/FundsManager';
 import StaffKanban from '../components/admin/StaffKanban';
 import BeliefsManager from '../components/admin/BeliefsManager';
 import GroupsManager from '../components/admin/GroupsManager';
@@ -529,7 +528,7 @@ export default function Admin() {
                 </div>
               </div>
             )}
-            {financesTab === 'budget' && <><GivingManager /><FundsManager /></>}
+            {financesTab === 'budget' && <GivingManager />}
           </div>
         )}
 
