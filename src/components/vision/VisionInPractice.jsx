@@ -86,7 +86,7 @@ const groupFeatures = [
 
 export default function VisionInPractice({ isAdmin }) {
   return (
-    <section className="py-24 bg-background w-screen relative left-[calc(-50vw+50%)]">
+    <section className="pt-24 pb-0 bg-background w-screen relative left-[calc(-50vw+50%)]">
       <div className="max-w-5xl mx-auto px-4">
 
         {/* Header */}
