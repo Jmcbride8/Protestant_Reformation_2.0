@@ -111,7 +111,10 @@ export default function Admin() {
 
   const { data: funds = [] } = useQuery({
     queryKey: ['fundSettings'],
-    queryFn: () => base44.entities.FundSettings.filter({}, 'sort_order', 50),
+    queryFn: async () => {
+      const allFunds = await base44.entities.FundSettings.list('-sort_order', 50);
+      return allFunds;
+    },
     enabled: !!user,
   });
 
