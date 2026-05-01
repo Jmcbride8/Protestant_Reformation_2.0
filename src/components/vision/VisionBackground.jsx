@@ -37,6 +37,17 @@ export default function VisionBackground({ isAdmin }) {
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Why I Built This</p>
           <h3 className="font-heading text-2xl text-primary mb-6">The Problem I Saw</h3>
           
+          <div className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden bg-muted group/editimg mb-6">
+            <EditableImage
+              imageKey="vision_creator_photo"
+              src={null}
+              alt="Creator photo"
+              className="w-full h-full object-cover"
+              wrapperClassName="relative w-full h-full"
+              isAdmin={isAdmin}
+            />
+          </div>
+          
           <EditableText
             storageKey="bg_para1"
             defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
@@ -52,7 +63,7 @@ export default function VisionBackground({ isAdmin }) {
 
           <EditableText
             storageKey="bg_quote"
-            defaultText={`"I wanted to use my skillset in technology to create a digital platform that solves what the physical space cannot: turning rows into circles. A way to blend the best of both competing models — the scale and inspiration of gathered worship, and the intimacy and care of small community."`}
+            defaultText={`"I wanted to use my skillset in technology to create a digital platform that solves what the physical space cannot: blending "rows" and "circles". A way to leverage the best of both competing models — the scale and inspiration of gathered worship, and the intimacy and care of small community."`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl italic mb-16"
             isAdmin={isAdmin}
           />
