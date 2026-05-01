@@ -181,15 +181,15 @@ export default function GivingManager({ selectedYear }) {
 
   useEffect(() => {
     if (record) {
-      setGoal(String(record.goal));
-      setCurrent(String(record.current));
+      setGoal(String(record.goal || ''));
+      setCurrent(String(record.current || ''));
       setStartDate(record.start_date || '');
       setEndDate(record.end_date || '');
     } else {
-      setGoal('250000');
-      setCurrent('187000');
-      setStartDate(new Date().toISOString().split('T')[0]);
-      setEndDate(new Date(new Date().getFullYear(), 11, 31).toISOString().split('T')[0]);
+      setGoal('');
+      setCurrent('');
+      setStartDate('');
+      setEndDate('');
     }
   }, [record]);
 
