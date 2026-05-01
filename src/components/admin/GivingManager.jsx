@@ -222,15 +222,28 @@ export default function GivingManager({ selectedYear }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label className="font-body text-xs text-muted-foreground">Fund Name *</Label>
-                <Input className="font-body text-sm" value={fundForm.name} onChange={handleFundNameChange} placeholder="Building Campaign" />
+                <Input className="font-body text-sm" value={fundForm.name} onChange={handleFundNameChange} placeholder="Building Campaign" disabled={fundForm.is_annual_budget} />
               </div>
               <div className="space-y-1.5">
-                <Label className="font-body text-xs text-muted-foreground">Slug (used in system)</Label>
+                <div className="flex items-center gap-2">
+                  <Label className="font-body text-xs text-muted-foreground">Slug (used in system)</Label>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="max-w-xs">
+                        <p className="font-body text-xs">Unique identifier used in URLs and system references. For Annual Budget Funds, this is locked to "annual_budget".</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <Input
                   className="font-body text-sm font-mono"
                   value={fundForm.slug}
                   onChange={e => setFundForm(f => ({ ...f, slug: toSlug(e.target.value) }))}
                   placeholder="building_campaign"
+                  disabled={fundForm.is_annual_budget}
                 />
               </div>
               <div className="sm:col-span-2 space-y-1.5">
