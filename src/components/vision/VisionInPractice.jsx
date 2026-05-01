@@ -89,7 +89,7 @@ export default function VisionInPractice({ isAdmin }) {
           {/* Watermark */}
           <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
 
-          <div className="relative z-10 max-w-3xl">
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
             <div className="mb-12">
               <p className="font-body text-xs tracking-[0.3em] uppercase text-accent/90 mb-3 font-medium">The Core Innovation</p>
               <h3 className="font-heading text-4xl text-white mb-6 leading-tight">Groups with Independent Power</h3>
