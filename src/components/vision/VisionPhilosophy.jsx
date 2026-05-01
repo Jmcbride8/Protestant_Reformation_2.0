@@ -83,7 +83,10 @@ export default function VisionPhilosophy({ isAdmin }) {
           className="text-center mb-16"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">The Philosophical Lineage</p>
-          <h2 className="font-heading text-4xl text-primary mb-5">Growth <span className="italic">and</span> Family</h2>
+          <h2 className="font-heading text-4xl text-primary mb-3">Growth <span className="italic">and</span> Family</h2>
+          <div className="inline-block bg-primary text-primary-foreground font-body text-xs tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-5">
+            The Protestant Reformation 2.0
+          </div>
           <p className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             God's vision for the church was never either/or. It was both: a movement that spread to every corner of the earth — and a family where every person was known. The question is how.
           </p>
