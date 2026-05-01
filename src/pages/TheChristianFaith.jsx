@@ -586,146 +586,210 @@ function CultSection() {
   );
 }
 
-// ─── Historical Timeline ────────────────────────────────────────────────────
+// ─── Historical Tapestry Cards ──────────────────────────────────────────────
 function HistorySection({ isAdmin }) {
-  const [activeEra, setActiveEra] = useState(0);
+  const [expanded, setExpanded] = useState(null);
 
-  const eras = [
+  const cards = [
     {
-      title: "Ancient Foundations: The Old Testament Story",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-      points: [
-        "Long before Jesus, God made promises to a man named Abraham—that his family would become a blessing to the world.",
-        "Moses led people out of slavery and received the Ten Commandments—God's moral guidance.",
-        "Kings like David united the people, and prophets spoke messages of hope and warning.",
-        "Through centuries of ups and downs, God consistently called His people back to Himself.",
-        "These stories weren't random—they were setting the stage for something bigger: the arrival of Jesus."
-      ]
+      key: 'hist_abraham',
+      year: 'c. 2000 BC',
+      name: 'Abraham',
+      subtitle: 'Father of Faith',
+      desc: 'God called Abraham out of Ur and made an extraordinary covenant: through his family, all nations on earth would be blessed. He left everything familiar, trusting a God he was only beginning to know. His willingness to obey — even when it made no sense — became the archetype of faith itself.',
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
     },
     {
-      title: "The Central Story: Jesus Arrives",
-      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80",
-      points: [
-        "Jesus was born in Bethlehem around 2,000 years ago. He lived a humble life—as a carpenter, then as a teacher.",
-        "He taught about God's love, healed the sick, and challenged systems of power and religious hypocrisy.",
-        "His core message: God loves you so much that He wants a relationship with you. You matter.",
-        "He was crucified—a brutal, shameful death. His followers were devastated.",
-        "But then, something extraordinary happened: He rose from the dead. Not as a ghost, but physically alive. This proved His claim that He was God's Son and that He had conquered death itself.",
-        "This resurrection changed everything. It became the cornerstone of Christian hope."
-      ]
+      key: 'hist_moses',
+      year: 'c. 1300 BC',
+      name: 'Moses & the Exodus',
+      subtitle: 'Liberation & the Law',
+      desc: 'God heard the cries of enslaved Israelites in Egypt and sent Moses to lead them out. Through dramatic signs and a sea divided, Israel was freed. At Sinai, God gave the Ten Commandments — moral bedrock that would shape Western civilization for millennia.',
+      image: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80',
     },
     {
-      title: "The Early Church: Good News Spreads",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80",
-      points: [
-        "After Jesus ascended to heaven, His followers gathered in Jerusalem. They were filled with courage and joy, despite danger.",
-        "On the day of Pentecost, the Holy Spirit empowered them to speak boldly. About 3,000 people became followers that day.",
-        "The apostles—especially Peter and Paul—traveled throughout the Roman Empire, sharing the message of Jesus.",
-        "Communities of believers formed, meeting in homes, sharing meals, and caring for one another.",
-        "Despite persecution, the message spread like wildfire. By the end of the first century, there were Christians from Spain to India.",
-        "The early believers wrote letters (now part of the New Testament) that guided new churches and deepened faith."
-      ]
+      key: 'hist_david',
+      year: 'c. 1000 BC',
+      name: 'King David',
+      subtitle: 'A Heart After God',
+      desc: 'Shepherd, warrior, poet, king. David united the twelve tribes of Israel and established Jerusalem as its capital. Despite profound moral failures, he repented deeply. His psalms — raw, honest, searching — remain the most widely read poetry in human history.',
+      image: 'https://images.unsplash.com/photo-1552083375-1447ce886485?w=800&q=80',
     },
     {
-      title: "Shaping the World: Key Moments in Christendom",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-      points: [
-        "Constantine (300s): The Roman Emperor legalized Christianity. It went from persecuted minority to accepted faith.",
-        "Medieval Period: The Church became deeply embedded in European culture. Some beautiful things happened (art, education, hospitals), and some troubling things too (corruption, misuse of power).",
-        "The Great Schism (1054): Eastern and Western Christianity split, creating the Orthodox and Catholic traditions.",
-        "The Reformation (1500s): A monk named Martin Luther challenged church practices and called for reform. This sparked Protestantism—a return to Scripture and personal faith.",
-        "Age of Discovery: Christian missionaries traveled globally, sometimes spreading faith, sometimes entangled with colonialism.",
-        "Modern Era: Christianity became truly global. Today, more Christians live outside Europe than within it."
-      ]
+      key: 'hist_isaiah',
+      year: 'c. 740–700 BC',
+      name: 'Isaiah the Prophet',
+      subtitle: 'The Voice of Hope',
+      desc: 'Isaiah wrote of a suffering servant who would bear the sins of many — a vision so precise it reads like history written in advance. Seven centuries before Jesus, he described a child to be born: Wonderful Counselor, Mighty God, Prince of Peace.',
+      image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80',
     },
     {
-      title: "Christianity Today: A Global Movement",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200&q=80",
-      points: [
-        "Over 2.4 billion Christians worldwide—roughly 1/3 of humanity.",
-        "Christianity is growing fastest in Africa, Asia, and Latin America.",
-        "Churches today range from massive stadiums to small home groups. Some are traditional, some contemporary, some blended.",
-        "Christians are engaged in education, healthcare, disaster relief, justice work, and community building.",
-        "The faith continues to evolve and adapt while staying rooted in its historic foundations.",
-        "For many, Christianity remains a source of hope, purpose, community, and peace in a complicated world."
-      ]
+      key: 'hist_jesus',
+      year: 'c. 4 BC – AD 30',
+      name: 'Jesus of Nazareth',
+      subtitle: 'God Made Flesh',
+      desc: 'The hinge of all history. Born in Bethlehem, raised in obscurity, revealed in glory. He healed the sick, befriended the outcast, and taught with unmatched authority. He was crucified under Roman law — and on the third day, rose bodily from the dead. His resurrection is the cornerstone on which Christianity rests.',
+      image: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&q=80',
+    },
+    {
+      key: 'hist_pentecost',
+      year: 'AD 33',
+      name: 'Pentecost',
+      subtitle: 'The Church Is Born',
+      desc: 'Fifty days after Passover, the risen Jesus\' followers gathered in Jerusalem. The Holy Spirit descended like fire. Peter stood and preached — and three thousand people believed in a single day. The Church had begun, not as an institution, but as a family of Spirit-empowered witnesses.',
+      image: 'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=800&q=80',
+    },
+    {
+      key: 'hist_paul',
+      year: 'AD 35–67',
+      name: 'The Apostle Paul',
+      subtitle: 'Architect of the Faith',
+      desc: 'A persecutor of Christians encountered the risen Jesus on the road to Damascus and was completely transformed. Paul traveled thousands of miles across the Roman Empire planting churches, writing letters that became Scripture, and articulating the theology of grace with unmatched clarity.',
+      image: 'https://images.unsplash.com/photo-1460472178825-e5240623afd5?w=800&q=80',
+    },
+    {
+      key: 'hist_constantine',
+      year: 'AD 312',
+      name: 'Constantine',
+      subtitle: 'Christianity Legalized',
+      desc: 'Before Constantine, Christians faced systematic execution. The Roman Emperor\'s conversion and the Edict of Milan in 313 AD ended three centuries of persecution and transformed Christianity from a hunted sect into the faith of an empire. A pivotal and complicated turning point.',
+      image: 'https://images.unsplash.com/photo-1552083374-1447ce886485?w=800&q=80',
+    },
+    {
+      key: 'hist_augustine',
+      year: 'AD 354–430',
+      name: 'Augustine of Hippo',
+      subtitle: 'Theology\'s Master',
+      desc: 'One of history\'s greatest intellectuals, Augustine wrestled honestly with God before surrendering: "Our heart is restless until it rests in Thee." His writings on grace, sin, and the nature of God shaped both Catholic and Protestant thought for 1,600 years.',
+      image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
+    },
+    {
+      key: 'hist_schism',
+      year: 'AD 1054',
+      name: 'The Great Schism',
+      subtitle: 'East & West Divide',
+      desc: 'After centuries of tension over theology, authority, and culture, the Eastern and Western churches formally split. Rome became the center of the Catholic Church; Constantinople the center of Eastern Orthodoxy. Two great streams of Christianity — each preserving something the other might neglect.',
+      image: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=80',
+    },
+    {
+      key: 'hist_luther',
+      year: 'AD 1517',
+      name: 'Martin Luther',
+      subtitle: 'The Reformation',
+      desc: 'A German monk nailed 95 theses to a church door in Wittenberg — a protest against corruption that ignited a revolution. Luther insisted salvation came by grace alone, through faith alone, according to Scripture alone. His courage fractured the medieval church and gave birth to Protestantism.',
+      image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
+    },
+    {
+      key: 'hist_bible',
+      year: 'AD 1455',
+      name: 'The Gutenberg Bible',
+      subtitle: 'Scripture for Everyone',
+      desc: 'Johann Gutenberg\'s printing press made the Bible the first mass-produced book in Europe. Within decades, Scripture spread to households, not just monasteries. Ordinary people could read God\'s word for themselves — a democratization of faith that fueled both the Reformation and modern literacy.',
+      image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80',
+    },
+    {
+      key: 'hist_missions',
+      year: '1700s–1900s',
+      name: 'The Great Missions Era',
+      subtitle: 'A Gospel to All Nations',
+      desc: 'Figures like William Carey, Hudson Taylor, and David Livingstone carried the gospel to India, China, and Africa at enormous personal cost. Imperfect and sometimes entangled with empire, the missionary movement also established schools, hospitals, and translated Scripture into thousands of languages.',
+      image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80',
+    },
+    {
+      key: 'hist_global',
+      year: 'Today',
+      name: 'A Global Church',
+      subtitle: '2.4 Billion & Growing',
+      desc: 'Christianity is now the world\'s largest religion — and growing fastest in the Global South. Africa, Asia, and Latin America are its new heartlands. In 2,000 years, the faith of twelve fishermen and a carpenter from Galilee has reached every nation, tongue, and tribe on earth.',
+      image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
     },
   ];
 
   return (
     <section className="py-28 bg-secondary/30">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">2,000 Years</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">A Tapestry of History</h2>
           <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Christianity is a real religion—rooted in real people, real places, and real lessons lived across millennia. These truths aren't abstract ideals; they're proven through centuries of consistency and persistence. Their potency has only been enhanced by their endurance.
+            Christianity is a real religion—rooted in real people, real places, and real lessons lived across millennia. Their potency has only been enhanced by their endurance.
           </p>
         </motion.div>
 
-        {/* Era Selector */}
-        <div className="flex flex-wrap gap-3 justify-center mb-12">
-          {eras.map((era, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveEra(i)}
-              className={`font-body text-sm px-4 py-2 rounded-full border transition-all ${
-                activeEra === i
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-background border-border hover:border-primary/50'
-              }`}
-            >
-              {era.title.split(':')[0]}
-            </button>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {cards.map((card, i) => {
+            const isOpen = expanded === card.key;
+            return (
+              <motion.div
+                key={card.key}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.04 }}
+                className={`group relative bg-card border border-border/50 rounded-2xl overflow-hidden cursor-pointer transition-shadow hover:shadow-xl ${isOpen ? 'ring-2 ring-accent/40' : ''}`}
+                onClick={() => setExpanded(isOpen ? null : card.key)}
+              >
+                {/* Image */}
+                <div className="relative h-44 overflow-hidden group/editimg" onClick={e => isAdmin && e.stopPropagation()}>
+                  <EditableImage
+                    imageKey={card.key}
+                    src={card.image}
+                    alt={card.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    isAdmin={isAdmin}
+                    wrapperClassName="relative w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/20 to-transparent" />
+                  {/* Year badge */}
+                  <span className="absolute top-3 left-3 font-body text-xs text-white/80 bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                    {card.year}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <h3 className="font-heading text-lg text-primary leading-tight mb-0.5">{card.name}</h3>
+                  <p className="font-body text-xs text-accent font-medium mb-3">{card.subtitle}</p>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen ? (
+                      <motion.p
+                        key="desc"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="font-body text-sm text-muted-foreground leading-relaxed overflow-hidden"
+                      >
+                        {card.desc}
+                      </motion.p>
+                    ) : (
+                      <motion.p
+                        key="preview"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="font-body text-sm text-muted-foreground leading-relaxed line-clamp-2"
+                      >
+                        {card.desc}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+
+                  <div className="mt-3 flex items-center gap-1 text-accent text-xs font-body">
+                    <span>{isOpen ? 'Show less' : 'Read more'}</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-
-        {/* Era Content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeEra}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8"
-          >
-            <div>
-              <h3 className="font-heading text-2xl sm:text-3xl text-primary mb-4">{eras[activeEra].title}</h3>
-            </div>
-
-            <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden group/editimg">
-              <EditableImage
-                imageKey={`faith_era_${activeEra}`}
-                src={eras[activeEra].image}
-                alt={eras[activeEra].title}
-                className="w-full h-full object-cover"
-                isAdmin={true}
-                wrapperClassName="relative w-full h-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
-            </div>
-
-            <div className="space-y-4">
-              {eras[activeEra].points.map((point, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex gap-4"
-                >
-                  <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0" />
-                  <p className="font-body text-muted-foreground leading-relaxed">{point}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
       </div>
     </section>
   );
