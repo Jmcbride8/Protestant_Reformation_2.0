@@ -203,7 +203,7 @@ export default function VisionInPractice({ isAdmin }) {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-6">
               {groupFeatures.map((f, i) => (
                 <motion.div
                   key={f.title}
@@ -211,7 +211,7 @@ export default function VisionInPractice({ isAdmin }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="relative bg-white/8 border border-white/15 rounded-2xl p-6 overflow-hidden"
+                  className="relative h-full bg-white/8 border border-white/15 rounded-2xl p-6 overflow-hidden"
                 >
                   {/* Roman numeral watermark */}
                   <span className="absolute top-4 right-5 font-heading text-3xl font-bold text-white/8 select-none pointer-events-none">
