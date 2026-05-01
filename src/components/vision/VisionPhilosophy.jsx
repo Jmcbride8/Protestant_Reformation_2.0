@@ -8,6 +8,68 @@ const verses = [
   { text: "From him the whole body, joined and held together by every supporting ligament, grows and builds itself up in love, as each part does its work.", ref: "Ephesians 4:16" },
 ];
 
+// SVG illustration: rows of seats pointing at a stage
+function RowsIllustration() {
+  return (
+    <svg viewBox="0 0 160 120" className="w-full h-28" fill="none">
+      {/* Stage / speaker */}
+      <rect x="60" y="8" width="40" height="10" rx="3" fill="currentColor" className="text-primary/25" />
+      <circle cx="80" cy="8" r="4" fill="currentColor" className="text-primary/40" />
+      {/* Rows */}
+      {[38, 58, 78, 98].map((y, ri) => (
+        <g key={ri}>
+          {Array.from({ length: 7 + ri }).map((_, i) => {
+            const total = 7 + ri;
+            const x = 80 - (total * 16) / 2 + i * 16 + 4;
+            return <rect key={i} x={x} y={y} width="10" height="9" rx="2" fill="currentColor" className="text-primary/20" />;
+          })}
+        </g>
+      ))}
+      {/* Arrow pointing forward */}
+      <line x1="80" y1="105" x2="80" y2="20" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" className="text-border" />
+      <polygon points="80,14 77,21 83,21" fill="currentColor" className="text-border" />
+    </svg>
+  );
+}
+
+// SVG illustration: several small circles of people
+function CirclesIllustration() {
+  const groups = [
+    { cx: 45, cy: 42, members: 5 },
+    { cx: 115, cy: 42, members: 4 },
+    { cx: 80, cy: 88, members: 6 },
+  ];
+  return (
+    <svg viewBox="0 0 160 120" className="w-full h-28" fill="none">
+      {/* Connection lines between groups */}
+      <line x1="45" y1="42" x2="115" y2="42" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="text-accent/40" />
+      <line x1="45" y1="42" x2="80" y2="88" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="text-accent/40" />
+      <line x1="115" y1="42" x2="80" y2="88" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="text-accent/40" />
+      {groups.map((g, gi) => {
+        const r = 18;
+        return (
+          <g key={gi}>
+            {/* center */}
+            <circle cx={g.cx} cy={g.cy} r="4" fill="currentColor" className="text-accent/50" />
+            {/* members */}
+            {Array.from({ length: g.members }).map((_, i) => {
+              const angle = (i / g.members) * 2 * Math.PI - Math.PI / 2;
+              const mx = g.cx + r * Math.cos(angle);
+              const my = g.cy + r * Math.sin(angle);
+              return (
+                <g key={i}>
+                  <line x1={g.cx} y1={g.cy} x2={mx} y2={my} stroke="currentColor" strokeWidth="0.8" className="text-accent/30" />
+                  <circle cx={mx} cy={my} r="5" fill="currentColor" className="text-accent" />
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export default function VisionPhilosophy({ isAdmin }) {
   return (
     <section className="py-24 px-4 bg-background">
@@ -27,80 +89,39 @@ export default function VisionPhilosophy({ isAdmin }) {
           </p>
         </motion.div>
 
-        {/* Circles vs Rows illustration */}
+        {/* Circles vs Rows — with headers */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 gap-4 mb-14"
+          className="grid grid-cols-2 gap-4 mb-6"
         >
           {/* Rows */}
           <div className="bg-muted/60 border border-border rounded-2xl p-7 text-center">
-            <div className="flex flex-col gap-2 items-center mb-5">
-              {/* Speaker dot */}
-              <div className="w-4 h-4 rounded-full bg-primary/30 mb-1" />
-              {/* Rows of seats */}
-              {[5, 7, 9].map((count, r) => (
-                <div key={r} className="flex gap-1.5 justify-center">
-                  {Array.from({ length: count }).map((_, i) => (
-                    <div key={i} className="w-3 h-3 rounded-sm bg-primary/20" />
-                  ))}
-                </div>
-              ))}
-            </div>
-            <p className="font-heading text-base text-primary">Rows</p>
-            <p className="font-body text-xs text-muted-foreground mt-1">Audience. Passive. Anonymous.</p>
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Programs vs People</p>
+            <h3 className="font-heading text-xl text-primary mb-4">Rows</h3>
+            <RowsIllustration />
+            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Audience. Passive. Anonymous.<br />One voice to many.</p>
           </div>
 
           {/* Circles */}
           <div className="bg-accent/10 border border-accent/30 rounded-2xl p-7 text-center">
-            <div className="flex flex-wrap gap-4 justify-center items-center mb-5">
-              {/* Two clusters of circles */}
-              {[
-                [0, 1, 2, 3],
-                [4, 5, 6],
-              ].map((group, gi) => (
-                <div key={gi} className="relative w-16 h-16">
-                  {group.map((_, i) => {
-                    const angles = [315, 45, 135, 225];
-                    const angle = (angles[i] ?? i * 90) * (Math.PI / 180);
-                    const r = group.length === 4 ? 22 : 20;
-                    const cx = 32 + r * Math.cos(angle);
-                    const cy = 32 + r * Math.sin(angle);
-                    return (
-                      <div
-                        key={i}
-                        className="absolute w-3.5 h-3.5 rounded-full bg-accent"
-                        style={{ left: cx - 7, top: cy - 7 }}
-                      />
-                    );
-                  })}
-                  {/* center connector dot */}
-                  <div className="absolute w-2 h-2 rounded-full bg-accent/40" style={{ left: 28, top: 28 }} />
-                </div>
-              ))}
-            </div>
-            <p className="font-heading text-base text-primary">Circles</p>
-            <p className="font-body text-xs text-muted-foreground mt-1">Family. Known. Accountable.</p>
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-1">Church vs Groups</p>
+            <h3 className="font-heading text-xl text-primary mb-4">Circles</h3>
+            <CirclesIllustration />
+            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Family. Known. Accountable.<br />Many voices, one body.</p>
           </div>
         </motion.div>
 
-        {/* Scripture — two verses side by side */}
-        <div className="grid md:grid-cols-2 gap-5 mb-14">
-          {verses.map((v, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-primary rounded-2xl p-7 flex flex-col justify-between"
-            >
-              <p className="font-heading text-lg italic text-white/90 leading-relaxed mb-4">"{v.text}"</p>
-              <p className="font-body text-xs text-accent font-medium">— {v.ref}</p>
-            </motion.div>
-          ))}
-        </div>
+        {/* We want both */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <p className="font-heading text-2xl text-primary italic">We want both.</p>
+        </motion.div>
 
         {/* Federation insight — full-width feature block */}
         <motion.div
@@ -108,11 +129,9 @@ export default function VisionPhilosophy({ isAdmin }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="relative bg-secondary/40 border border-border rounded-3xl p-10 mb-10 overflow-hidden"
+          className="relative bg-secondary/40 border border-border rounded-3xl p-10 mb-8 overflow-hidden"
         >
-          {/* Background watermark */}
           <span className="absolute right-8 top-6 font-heading text-[8rem] leading-none text-border/60 select-none pointer-events-none">1787</span>
-
           <div className="relative z-10 max-w-3xl">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-11 h-11 rounded-xl bg-accent/20 flex items-center justify-center shrink-0">
@@ -123,7 +142,6 @@ export default function VisionPhilosophy({ isAdmin }) {
                 <h3 className="font-heading text-2xl text-primary leading-tight">Federalism — A Christian Innovation</h3>
               </div>
             </div>
-
             <EditableText
               storageKey="philosophy_federation"
               defaultText="The American federal system wasn't just a political invention — it was a theological one. Its architects, shaped by Calvinist and Reformed thinking, were deeply suspicious of concentrated power. Their solution: push authority and resources down to the local level. Let communities govern themselves. Keep decision-making close to the people it affects."
@@ -139,44 +157,52 @@ export default function VisionPhilosophy({ isAdmin }) {
           </div>
         </motion.div>
 
-        {/* Two pillars — redesigned */}
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
+        {/* Two pillars — rich dark cards matching attached design */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="bg-card border border-border rounded-2xl p-7 flex flex-col"
+            transition={{ delay: 0.1 }}
+            className="relative bg-primary rounded-2xl p-8 flex flex-col overflow-hidden"
           >
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-              <Heart className="w-6 h-6 text-primary" />
+            <span className="absolute top-6 right-7 font-heading text-5xl font-bold text-white/5 select-none pointer-events-none">I</span>
+            <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+              <Heart className="w-5 h-5 text-accent" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">Relationships at Every Size</h3>
+            <h3 className="font-heading text-2xl text-white mb-3">Relationships at Every Size</h3>
             <EditableText
               storageKey="philosophy_roots"
               defaultText="The early church grew explosively — and stayed personal. Members knew each other's names, ate in each other's homes, and carried each other's burdens. Acts describes a community so visibly caring that it drew outsiders in. That wasn't despite their growth. It was how they grew."
-              className="font-body text-muted-foreground leading-relaxed text-sm flex-1"
+              className="font-body text-white/70 leading-relaxed text-sm flex-1"
               isAdmin={isAdmin}
             />
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="font-body text-xs italic text-accent/80">"And the Lord added to their number daily those who were being saved." — Acts 2:47</p>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.25 }}
-            className="bg-card border border-border rounded-2xl p-7 flex flex-col"
+            transition={{ delay: 0.2 }}
+            className="relative bg-primary/80 rounded-2xl p-8 flex flex-col overflow-hidden"
           >
-            <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-5">
-              <Users className="w-6 h-6 text-accent" />
+            <span className="absolute top-6 right-7 font-heading text-5xl font-bold text-white/5 select-none pointer-events-none">II</span>
+            <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+              <Users className="w-5 h-5 text-accent" />
             </div>
-            <h3 className="font-heading text-xl text-primary mb-3">Technology as Infrastructure</h3>
+            <h3 className="font-heading text-2xl text-white mb-3">Technology as Infrastructure</h3>
             <EditableText
               storageKey="philosophy_people"
-              defaultText="We believed technology could play the same role federalism did — making local connection practical at any scale. Not replacing the meal, the conversation, the care. Making it easier to find, offer, and sustain. A platform that serves community rather than substituting for it."
-              className="font-body text-muted-foreground leading-relaxed text-sm flex-1"
+              defaultText="We believed technology could play the same role federalism did — making local connection practical at any scale. Not replacing the meal, the conversation, the care. Making it easier to find, offer, and sustain. A platform that serves the circle, not the row."
+              className="font-body text-white/70 leading-relaxed text-sm flex-1"
               isAdmin={isAdmin}
             />
+            <div className="mt-6 pt-5 border-t border-white/10">
+              <p className="font-body text-xs italic text-accent/80">"The whole body… grows and builds itself up in love, as each part does its work." — Ephesians 4:16</p>
+            </div>
           </motion.div>
         </div>
 
