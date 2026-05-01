@@ -119,6 +119,69 @@ export default function VisionBackground({ isAdmin }) {
         </div>
 
         {/* Baptist Campus Ministries section */}
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.6 }}
+           className="mb-4"
+         >
+           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">A Radical Reimagining</p>
+           <h3 className="font-heading text-2xl text-primary mb-3">The Francis Chan Challenge</h3>
+           
+           <div className="grid lg:grid-cols-2 gap-12 items-start mb-8">
+             {/* Video */}
+             <motion.div
+               initial={{ opacity: 0, scale: 0.95 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6 }}
+               className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-border/30"
+             >
+               <iframe
+                 width="100%"
+                 height="100%"
+                 src="https://www.youtube.com/embed/P5GD9ftscFQ?si=OrPiuXXfWWbSEBA7"
+                 title="Francis Chan Challenge"
+                 frameBorder="0"
+                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                 referrerPolicy="strict-origin-when-cross-origin"
+                 allowFullScreen
+                 className="absolute inset-0"
+               />
+             </motion.div>
+
+             {/* Text content */}
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6, delay: 0.2 }}
+               className="flex flex-col justify-center space-y-5"
+             >
+               <EditableText
+                 storageKey="bg_francis_why_left"
+                 defaultText="At Cornerstone Church, Francis Chan had thousands of members — and struggled with a question that never got easier as the church grew: how do you preserve the relational warmth of a family at scale? He ultimately left to try to solve it from scratch."
+                 className="font-body text-muted-foreground leading-relaxed"
+                 isAdmin={isAdmin}
+               />
+               <EditableText
+                 storageKey="bg_francis_call"
+                 defaultText="But the challenge isn't unique to megachurches. Even small congregations drift toward anonymity — people show up, sit in rows, and leave without being truly known. The question remains open: how do you create the connectedness of family, not just the appearance of it?"
+                 className="font-body text-muted-foreground leading-relaxed"
+                 isAdmin={isAdmin}
+               />
+               <EditableText
+                 storageKey="bg_francis_hope"
+                 defaultText="Big isn't bad. Growth is good. But we believed you didn't have to choose between a thriving church and a close-knit family — that the two could coexist with the right intentionality. A balance Francis didn't find. One we're determined to build."
+                 className="font-body text-muted-foreground leading-relaxed italic"
+                 isAdmin={isAdmin}
+               />
+             </motion.div>
+           </div>
+         </motion.div>
+
+         {/* Baptist Campus Ministries section */}
          <motion.div
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
