@@ -60,8 +60,7 @@ const groupFeatures = [
 export default function VisionInPractice({ isAdmin }) {
   return (
     <section className="py-24 bg-background">
-      <div className="px-4">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-4">
 
         {/* Header */}
         <motion.div
@@ -85,7 +84,7 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-6 overflow-hidden relative shadow-xl"
+          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-6 overflow-hidden relative shadow-xl -mx-4"
         >
           {/* Watermark */}
           <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
@@ -271,7 +270,6 @@ export default function VisionInPractice({ isAdmin }) {
           </div>
         </motion.div>
 
-      </div>
       </div>
     </section>
   );
