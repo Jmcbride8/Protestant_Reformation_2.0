@@ -158,6 +158,8 @@ export default function GivingManager({ selectedYear }) {
     },
   });
 
+  const record = settings[0] || null;
+
   const { data: allocations = [], isLoading: allocLoading } = useQuery({
     queryKey: ['budgetAllocations', selectedYear],
     queryFn: async () => {
@@ -182,8 +184,6 @@ export default function GivingManager({ selectedYear }) {
       });
     },
   });
-
-  const record = settings[0] || null;
 
   const [goal, setGoal] = useState('');
   const [current, setCurrent] = useState('');
