@@ -111,7 +111,7 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-6 overflow-hidden relative shadow-xl mx-[-1000px] px-[1000px]"
+          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-0 overflow-hidden relative shadow-xl mx-[-1000px] px-[1000px]"
         >
           {/* Watermark */}
           <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
@@ -265,12 +265,12 @@ export default function VisionInPractice({ isAdmin }) {
         </motion.div>
 
         {/* Second Innovation: Church Platform — Everyday Life */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-secondary/40 rounded-3xl p-12 mb-0 overflow-hidden mx-[-1000px] px-[1000px]"
-        >
+         <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="bg-secondary/40 rounded-none p-12 mb-0 overflow-hidden mx-[-1000px] px-[1000px]"
+         >
           <div className="max-w-3xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
