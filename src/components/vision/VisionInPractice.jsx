@@ -269,7 +269,7 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-secondary/40 rounded-3xl p-12 mb-12 overflow-hidden mx-[-1000px] px-[1000px]"
+          className="bg-secondary/40 rounded-3xl p-12 mb-0 overflow-hidden mx-[-1000px] px-[1000px]"
         >
           <div className="max-w-3xl mx-auto">
             <motion.div
