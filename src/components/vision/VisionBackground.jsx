@@ -155,36 +155,23 @@ export default function VisionBackground({ isAdmin }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-6"
+              className="flex flex-col justify-center space-y-5"
             >
-              <div>
-                <h4 className="font-heading text-lg text-primary mb-2">Why He Left</h4>
-                <EditableText
-                  storageKey="bg_francis_why_left"
-                  defaultText="Cornerstone Church had grown to thousands. Francis had influence, platform, and success by every measure. But he couldn't shake a conviction: the New Testament describes churches that were small, personal, and radically generous. He was leading a machine. He wanted to lead a family."
-                  className="font-body text-sm text-muted-foreground leading-relaxed"
-                  isAdmin={isAdmin}
-                />
-              </div>
-
-              <div>
-                <h4 className="font-heading text-lg text-primary mb-2">The Call to Action</h4>
-                <EditableText
-                  storageKey="bg_francis_call"
-                  defaultText="What if your church wasn't measured by attendance, budget, or programs — but by whether your members actually know each other? Whether they carry each other's burdens? Whether a single mom down the street feels like she has a family? That's the challenge Francis lives. That's what we're building toward."
-                  className="font-body text-sm text-muted-foreground leading-relaxed"
-                  isAdmin={isAdmin}
-                />
-              </div>
+              <EditableText
+                storageKey="bg_francis_why_left"
+                defaultText="He walked away from a megachurch of thousands. Not because it was bad — because it wasn't enough. The New Testament describes churches that were small, personal, radically generous. He was leading a machine. He wanted to lead a family."
+                className="font-body text-muted-foreground leading-relaxed"
+                isAdmin={isAdmin}
+              />
+              <EditableText
+                storageKey="bg_francis_call"
+                defaultText="His challenge: measure your church not by attendance or budget — but by whether your members actually know each other. Whether a single mom down the street feels like she has a family. That's what we're building toward."
+                className="font-body text-muted-foreground leading-relaxed"
+                isAdmin={isAdmin}
+              />
+              <p className="font-body text-sm text-accent font-medium italic">Can technology serve community instead of replacing it?</p>
             </motion.div>
           </div>
-
-          <EditableText
-            storageKey="bg_francis_reflection"
-            defaultText={`His challenge isn't about condemning growth — it's about asking whether we're willing to prioritize relationships over reach, intimacy over influence. At Hope Church, we believed we could do both. We believed we could build up people and build up programs — that excellence in teaching, intentional leadership, and relational depth weren't opposing forces, but partners in creating something genuinely transformative. This platform is an experiment in that belief: Can technology actually serve community instead of replacing it?`}
-            className="font-body text-muted-foreground leading-relaxed max-w-3xl"
-            isAdmin={isAdmin}
-          />
         </motion.div>
 
       </div>
