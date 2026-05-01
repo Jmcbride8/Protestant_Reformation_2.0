@@ -210,37 +210,7 @@ export default function VisionInPractice({ isAdmin }) {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 divide-x divide-white/10 border-t border-white/10 pt-6">
-              {groupFeatures.map((f, i) => (
-                <motion.div
-                  key={f.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="relative h-full p-6 overflow-hidden"
-                  style={{ paddingLeft: i === 0 ? '0' : 'undefined' }}
-                >
-                  {/* Roman numeral watermark */}
-                  <span className="absolute top-4 right-5 font-heading text-3xl font-bold text-white/8 select-none pointer-events-none">
-                    {['I', 'II', 'III'][i]}
-                  </span>
 
-                  <div className="relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-accent/25 border border-accent/30 flex items-center justify-center mb-5">
-                      <f.icon className="w-5 h-5 text-accent/80" />
-                    </div>
-                    <h4 className="font-heading text-lg text-white mb-3 leading-tight pr-6">{f.title}</h4>
-                    <EditableText
-                      storageKey={f.descKey}
-                      defaultText={f.defaultDesc}
-                      className="font-body text-sm text-white/65 leading-relaxed"
-                      isAdmin={isAdmin}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </div>
           </motion.div>
 
@@ -252,26 +222,57 @@ export default function VisionInPractice({ isAdmin }) {
             className="p-12 pt-0"
           >
           <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-4 pl-1">The Church Platform</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {platformFeatures.map((feature, i) => (
+          <div className="flex gap-0 divide-x divide-white/10 w-full">
+            {platformFeatures.slice(0, 3).map((feature, i) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:shadow-md transition-shadow"
+                className="flex-1 p-6 text-center flex flex-col items-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
-                  <feature.icon className="w-5 h-5 text-accent" />
+                <div className="w-10 h-10 rounded-full bg-accent/25 border border-accent/30 flex items-center justify-center mb-4">
+                  <feature.icon className="w-5 h-5 text-accent/80" />
                 </div>
                 <h3 className="font-heading text-lg text-white mb-2">{feature.title}</h3>
                 <EditableText
                   storageKey={feature.descKey}
                   defaultText={feature.defaultDesc}
-                  className="font-body text-sm text-white/70 leading-relaxed"
+                  className="font-body text-sm text-white/70 leading-relaxed text-center"
                   isAdmin={isAdmin}
                 />
+              </motion.div>
+            ))}
+          </div>
+          {/* Bottom cards aligned below */}
+          <div className="flex gap-0 divide-x divide-white/10 w-full border-t border-white/10 pt-6">
+            {groupFeatures.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative flex-1 p-6 overflow-hidden"
+              >
+                {/* Roman numeral watermark */}
+                <span className="absolute top-4 right-5 font-heading text-3xl font-bold text-white/8 select-none pointer-events-none">
+                  {['I', 'II', 'III'][i]}
+                </span>
+
+                <div className="relative z-10">
+                  <div className="w-10 h-10 rounded-full bg-accent/25 border border-accent/30 flex items-center justify-center mb-5">
+                    <f.icon className="w-5 h-5 text-accent/80" />
+                  </div>
+                  <h4 className="font-heading text-lg text-white mb-3 leading-tight">{f.title}</h4>
+                  <EditableText
+                    storageKey={f.descKey}
+                    defaultText={f.defaultDesc}
+                    className="font-body text-sm text-white/65 leading-relaxed"
+                    isAdmin={isAdmin}
+                  />
+                </div>
               </motion.div>
             ))}
           </div>
