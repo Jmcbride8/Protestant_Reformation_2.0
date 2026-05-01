@@ -120,8 +120,8 @@ export default function Admin() {
   });
 
   const filteredDonations = donations.filter(d => {
-    const donationYear = new Date(d.created_date).getFullYear().toString();
-    const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
+    const donationYear = new Date(d.donation_date || d.created_date).getFullYear().toString();
+    const yearMatch = selectedYear ? donationYear === selectedYear : true;
     const fundMatch = !donationFilters.fund || d.fund_id === donationFilters.fund;
     const donorMatch = !donationFilters.donor || d.donor_name.toLowerCase().includes(donationFilters.donor.toLowerCase());
     return yearMatch && fundMatch && donorMatch;
