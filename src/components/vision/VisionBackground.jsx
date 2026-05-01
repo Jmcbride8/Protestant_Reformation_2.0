@@ -50,20 +50,20 @@ export default function VisionBackground({ isAdmin }) {
           
           <EditableText
             storageKey="bg_para1"
-            defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
+            defaultText="I joined VIVE Church in San Jose when it was just twenty people. Watching it grow was extraordinary. But growth without intentional relational infrastructure carries a hidden cost: the larger a congregation becomes, the easier it is for people to feel anonymous."
             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-6"
             isAdmin={isAdmin}
           />
           <EditableText
             storageKey="bg_para2"
-            defaultText="Having worked in startups, that observation wasn't unique to church — as is often the case, people tend to feel nostalgic about earlier times when the organization was smaller and relationships more organic. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online and an emphasis on the main page as a reminder to ourselves to keep the main thing the main thing."
+            defaultText="Every growing organization faces this challenge. The Sunday service is irreplaceable — but what about Tuesday? The meal for a family in crisis? The ride to church? The small group that becomes a second family? This site adds the connective tissue: a practical home for the care that's always been at the heart of church."
             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
             isAdmin={isAdmin}
           />
 
           <EditableText
             storageKey="bg_quote"
-            defaultText={`"I wanted to use my skillset in technology to create a digital platform that solves what the physical space cannot: blending "rows" and "circles". A way to leverage the best of both competing models — the scale and inspiration of gathered worship, and the intimacy and care of small community."`}
+            defaultText={`"The question isn't whether rows or circles are better — it's whether we can have both. Large gatherings for inspiration, small circles for intimacy. This site is built to help that vision work in practice."`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl italic mb-16"
             isAdmin={isAdmin}
           />
@@ -81,7 +81,7 @@ export default function VisionBackground({ isAdmin }) {
           <h3 className="font-heading text-2xl text-primary mb-3">VIVE Church</h3>
           <EditableText
             storageKey="bg_vive_v2"
-            defaultText={`VIVE Church is a thriving, well-run congregation with excellent production quality, strong teaching, and a genuinely enthusiastic culture. It is, in many ways, a model of what a modern church can be. The pastors were genuinely hospitable individuals, however they were still human and could only cover so much ground. This raised a question they struggled to solve: "As we grow, how do we keep church a family and not an impersonal institution?". This site is not an answer, but an experiment in building relational infrastructure alongside inspirational programming — so that the warmth of a 5 person gathering doesn't get lost in a congregation of dozens or thousands. Even their design aesthetic followed this arc: early on it carried a hand-crafted warmth; as they scaled, it became sleeker, cooler, more corporate. That shift is common, but — like the best architectural firms that manage to build at scale without losing soul — I don't think it's inevitable. You can grow and still feel like home.`}
+            defaultText={`VIVE Church is thriving, well-led, and genuinely welcoming. But like most growing congregations, it faced a real question: "How do we keep feeling like a family as we grow?" This site experiments with that very problem — building relational infrastructure that lets warmth scale. You can grow and still feel like home.`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
             isAdmin={isAdmin}
           />
@@ -161,19 +161,19 @@ export default function VisionBackground({ isAdmin }) {
              >
                <EditableText
                  storageKey="bg_francis_why_left"
-                 defaultText="At Cornerstone Church, Francis Chan had thousands of members — and struggled with a question that never got easier as the church grew: how do you preserve the relational warmth of a family at scale? He ultimately left to try to solve it from scratch."
+                 defaultText="Francis Chan's challenge at Cornerstone Church is instructive: how do you preserve family warmth at scale? He left to solve it from scratch."
                  className="font-body text-muted-foreground leading-relaxed"
                  isAdmin={isAdmin}
                />
                <EditableText
                  storageKey="bg_francis_call"
-                 defaultText="But the challenge isn't unique to megachurches. Even small congregations drift toward anonymity — people show up, sit in rows, and leave without being truly known. The question remains open: how do you create the connectedness of family, not just the appearance of it?"
+                 defaultText="It's not unique to megachurches. Even small congregations drift toward anonymity. How do you create real family, not just the appearance of it?"
                  className="font-body text-muted-foreground leading-relaxed"
                  isAdmin={isAdmin}
                />
                <EditableText
                  storageKey="bg_francis_hope"
-                 defaultText="Big isn't bad. Growth is good. But we believed you didn't have to choose between a thriving church and a close-knit family — that the two could coexist with the right intentionality. A balance Francis didn't find. One we're determined to build."
+                 defaultText="Growth is good. You don't have to choose between scale and family. With the right infrastructure, they work together."
                  className="font-body text-muted-foreground leading-relaxed italic"
                  isAdmin={isAdmin}
                />
@@ -193,13 +193,13 @@ export default function VisionBackground({ isAdmin }) {
            <h3 className="font-heading text-2xl text-primary mb-3">Baptist Campus Ministries</h3>
            <EditableText
              storageKey="bg_bcm_intro"
-             defaultText="During my time at Georgia Tech and the University of West Georgia, I observed something remarkable about Baptist Campus Ministries (BCM). These organizations had constructed physical buildings at the heart of campus — structures that carried institutional durability and staying power. What made this significant was what happened over time: as the universities grew and expanded, the campus literally developed around these BCM buildings. They persisted. They became permanent fixtures. This is a powerful lesson about the value of scale, structure, and institutional stability."
+             defaultText="At Georgia Tech and University of West Georgia, I watched Baptist Campus Ministries build physical homes at the heart of campus. Over decades, the universities literally grew around them. They persisted. This teaches something the small-group movement sometimes overlooks: scale and structure have their own power."
              className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-6"
              isAdmin={isAdmin}
            />
            <EditableText
              storageKey="bg_bcm_insight"
-             defaultText="This experience highlighted something that those who emphasize only the cell group or decentralized small-community model often overlook: scale, persistence, and organizational structure have their own form of power. An unorganized small group can be intimate, but it can dissolve overnight. A dispersed network of circles has warmth, but limited reach. The BCM buildings stood as monuments to the reality that there is profound value in having a durable, structured presence in a community — the kind of staying power that allows you to invest in culture over decades, not just seasons. The question isn't whether rows or circles are better. It's whether you can build infrastructure that sustains both."
+             defaultText="Small groups are intimate but fragile. Networks have warmth but no spine. The BCM buildings had staying power — they could invest in culture over decades. The real question isn't rows versus circles. It's building infrastructure strong enough to hold both."
              className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
              isAdmin={isAdmin}
            />
