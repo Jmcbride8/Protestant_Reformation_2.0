@@ -307,38 +307,62 @@ export default function GivingManager({ selectedYear }) {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center justify-between px-5 py-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                               <span className="font-heading text-base text-primary">{fund.name}</span>
-                               <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
-                               <select 
-                                 value={fund.status || 'active'} 
-                                 onChange={(e) => fundSaveMutation.mutate({ id: fund.id, data: { ...fund, status: e.target.value } })}
-                                 className={`font-body text-xs px-2 py-1 rounded border-0 cursor-pointer ${fund.status === 'active' ? 'bg-green-100 text-green-700' : fund.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}`}
-                               >
-                                 <option value="pending">Pending</option>
-                                 <option value="active">Active</option>
-                                 <option value="closed">Closed</option>
-                               </select>
-                             </div>
-                      {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
-                      {fund.itemization?.length > 0 && <p className="font-body text-xs text-accent mt-0.5">Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</p>}
-                    </div>
-                    <div className="flex items-center gap-1 ml-3 shrink-0">
-                      {fund.itemization?.length > 0 && (
-                        <Button variant="ghost" size="icon" onClick={() => setExpandedFundId(expandedFundId === fund.id ? null : fund.id)}>
-                          {expandedFundId === fund.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  <div className="px-5 py-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                                 <span className="font-heading text-base text-primary">{fund.name}</span>
+                                 <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
+                                 <select 
+                                   value={fund.status || 'active'} 
+                                   onChange={(e) => fundSaveMutation.mutate({ id: fund.id, data: { ...fund, status: e.target.value } })}
+                                   className={`font-body text-xs px-2 py-1 rounded border-0 cursor-pointer ${fund.status === 'active' ? 'bg-green-100 text-green-700' : fund.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}`}
+                                 >
+                                   <option value="pending">Pending</option>
+                                   <option value="active">Active</option>
+                                   <option value="closed">Closed</option>
+                                 </select>
+                               </div>
+                        {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
+                      </div>
+                      <div className="flex items-center gap-1 ml-3 shrink-0">
+                        {fund.itemization?.length > 0 && (
+                          <Button variant="ghost" size="icon" onClick={() => setExpandedFundId(expandedFundId === fund.id ? null : fund.id)}>
+                            {expandedFundId === fund.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="icon" onClick={() => { setEditingFundId(fund.id); setFundForm(fund); }}>
+                          <Pencil className="w-4 h-4 text-primary" />
                         </Button>
-                      )}
-                      <Button variant="ghost" size="icon" onClick={() => { setEditingFundId(fund.id); setFundForm(fund); }}>
-                        <Pencil className="w-4 h-4 text-primary" />
-                      </Button>
-                      <Button variant="ghost" size="icon" onClick={() => fundDeleteMutation.mutate(fund.id)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
-                    </div>
-                  </div>
+                        <Button variant="ghost" size="icon" onClick={() => fundDeleteMutation.mutate(fund.id)}>
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </div>
+                      </div>
+
+                      {fund.itemization?.length > 0 && (() => {
+                      const goal = fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0);
+                      const raised = 0; // Donations would be fetched per fund if needed
+                      const pct = goal > 0 ? Math.round((raised / goal) * 100) : 0;
+                      return (
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="font-body text-xs text-muted-foreground">Progress</span>
+                            <span className="font-body text-xs font-semibold text-primary">${raised.toLocaleString()} / ${goal.toLocaleString()}</span>
+                          </div>
+                          <div className="h-2 bg-border rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-accent transition-all duration-500" 
+                              style={{ width: `${Math.min(pct, 100)}%` }}
+                            />
+                          </div>
+                          <div className="text-right">
+                            <span className="font-body text-xs text-muted-foreground">{pct}% raised</span>
+                          </div>
+                        </div>
+                      );
+                      })()}
+                      </div>
 
                   {expandedFundId === fund.id && fund.itemization?.length > 0 && (
                     <div className="border-t border-border/40 px-5 py-4 space-y-2 bg-secondary/20">
