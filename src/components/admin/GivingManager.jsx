@@ -284,6 +284,17 @@ export default function GivingManager({ selectedYear }) {
             <div key={fund.id} className="bg-card border border-border/60 rounded-xl overflow-hidden">
               {editingFundId === fund.id ? (
                 <div className="p-4 space-y-5">
+                  <div className="grid grid-cols-1 sm:col-span-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="flex items-center gap-3 cursor-pointer p-4 rounded-lg border-2 transition-all" style={{ borderColor: fundForm.is_annual_budget ? 'hsl(var(--accent))' : 'hsl(var(--border))', backgroundColor: fundForm.is_annual_budget ? 'hsl(var(--accent) / 0.08)' : 'transparent' }}>
+                        <input type="checkbox" checked={fundForm.is_annual_budget || false} onChange={e => { const checked = e.target.checked; setFundForm(f => ({ ...f, is_annual_budget: checked, name: checked ? `${new Date().getFullYear()} Annual Budget` : f.name })); }} className="w-5 h-5 rounded border-2 cursor-pointer" />
+                        <div>
+                          <span className="font-body text-sm font-semibold text-primary block">Annual Budget Fund</span>
+                          <span className="font-body text-xs text-muted-foreground">Designate as the church's main annual budget</span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <Label className="font-body text-xs text-muted-foreground">Fund Name *</Label>
@@ -296,15 +307,6 @@ export default function GivingManager({ selectedYear }) {
                     <div className="sm:col-span-2 space-y-1.5">
                       <Label className="font-body text-xs text-muted-foreground">Description</Label>
                       <Input className="font-body text-sm" value={fundForm.description} onChange={e => setFundForm(f => ({ ...f, description: e.target.value }))} />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label className="flex items-center gap-3 cursor-pointer p-4 rounded-lg border-2 transition-all" style={{ borderColor: fundForm.is_annual_budget ? 'hsl(var(--accent))' : 'hsl(var(--border))', backgroundColor: fundForm.is_annual_budget ? 'hsl(var(--accent) / 0.08)' : 'transparent' }}>
-                        <input type="checkbox" checked={fundForm.is_annual_budget || false} onChange={e => setFundForm(f => ({ ...f, is_annual_budget: e.target.checked }))} className="w-5 h-5 rounded border-2 cursor-pointer" />
-                        <div>
-                          <span className="font-body text-sm font-semibold text-primary block">Annual Budget Fund</span>
-                          <span className="font-body text-xs text-muted-foreground">Designate as the church's main annual budget</span>
-                        </div>
-                      </label>
                     </div>
                       <div className="space-y-1.5">
                       <Label className="font-body text-xs text-muted-foreground">Fiscal Year Start</Label>
