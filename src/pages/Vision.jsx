@@ -3,7 +3,6 @@ import { base44 } from '@/api/base44Client';
 import VisionHero from '@/components/vision/VisionHero';
 import VisionBackground from '@/components/vision/VisionBackground';
 import VisionPhilosophy from '@/components/vision/VisionPhilosophy';
-import VisionLifeStages from '@/components/vision/VisionLifeStages';
 import VisionScale from '@/components/vision/VisionScale';
 import FrancisChanChallenge from '@/components/vision/FrancisChanChallenge';
 import VisionInPractice from '@/components/vision/VisionInPractice';
@@ -30,7 +29,6 @@ export default function Vision() {
       <FrancisChanChallenge isAdmin={isAdmin} />
       <VisionScale isAdmin={isAdmin} />
       <VisionPhilosophy isAdmin={isAdmin} />
-      <VisionLifeStages isAdmin={isAdmin} />
       <VisionInPractice isAdmin={isAdmin} />
       <VisionTechnology isAdmin={isAdmin} />
     </div>
