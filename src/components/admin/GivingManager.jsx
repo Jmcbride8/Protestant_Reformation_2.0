@@ -172,14 +172,14 @@ export default function GivingManager({ selectedYear }) {
   });
 
   const { data: donations = [] } = useQuery({
-    queryKey: ['donations', selectedYear, record?.id],
+    queryKey: ['donations', selectedYear],
     queryFn: async () => {
-      if (!record) return [];
       const year = parseInt(selectedYear) || new Date().getFullYear();
       const startOfYear = new Date(year, 0, 1).toISOString().split('T')[0];
       const endOfYear = new Date(year + 1, 0, 0).toISOString().split('T')[0];
+      // Query all donations for the annual fund in the fiscal year
       return base44.entities.Donation.filter({
-        fund_id: record.id,
+        fund_name: 'Annual Fund',
         donation_date: { $gte: startOfYear, $lte: endOfYear }
       });
     },
