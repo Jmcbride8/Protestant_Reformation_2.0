@@ -144,7 +144,16 @@ export default function GivingManager({ selectedYear }) {
 
   const { data: settings = [] } = useQuery({
     queryKey: ['fundSettings', selectedYear],
-    queryFn: () => base44.entities.FundSettings.filter({ key: FUND_KEY }),
+    queryFn: async () => {
+      const allSettings = await base44.entities.FundSettings.filter({ key: FUND_KEY });
+      if (!selectedYear) return allSettings;
+      // Filter annual fund by fiscal year
+      return allSettings.filter(s => {
+        if (!s.start_date || !s.end_date) return true;
+        const fundYear = new Date(s.start_date).getFullYear().toString();
+        return fundYear === selectedYear;
+      });
+    },
   });
 
   const { data: allocations = [], isLoading: allocLoading } = useQuery({
@@ -156,6 +165,8 @@ export default function GivingManager({ selectedYear }) {
 
   const [goal, setGoal] = useState('');
   const [current, setCurrent] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [saving, setSaving] = useState(false);
   const [newRow, setNewRow] = useState({ name: '', percentage: '', color: PRESET_COLORS[0] });
   const [seeding, setSeeding] = useState(false);
@@ -164,15 +175,19 @@ export default function GivingManager({ selectedYear }) {
     if (record) {
       setGoal(String(record.goal));
       setCurrent(String(record.current));
+      setStartDate(record.start_date || '');
+      setEndDate(record.end_date || '');
     } else {
       setGoal('250000');
       setCurrent('187000');
+      setStartDate(new Date().toISOString().split('T')[0]);
+      setEndDate(new Date(new Date().getFullYear(), 11, 31).toISOString().split('T')[0]);
     }
   }, [record]);
 
   const handleSave = async () => {
     setSaving(true);
-    const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund' };
+    const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund', start_date: startDate, end_date: endDate };
     if (record) {
       await base44.entities.FundSettings.update(record.id, data);
     } else {
@@ -259,14 +274,16 @@ export default function GivingManager({ selectedYear }) {
   const { data: funds = [] } = useQuery({
     queryKey: ['adminFunds', selectedYear],
     queryFn: async () => {
-      const allFunds = await base44.entities.FundSettings.filter({ slug: { $ne: FUND_KEY } });
-      if (!selectedYear) return allFunds;
-      // Filter funds by fiscal year if they have start_date and end_date
-      return allFunds.filter(f => {
-        if (!f.start_date || !f.end_date) return true;
-        const fundYear = new Date(f.start_date).getFullYear().toString();
-        return fundYear === selectedYear;
-      });
+      const query = { slug: { $ne: FUND_KEY } };
+      if (selectedYear) {
+        const year = parseInt(selectedYear);
+        const startOfYear = new Date(year, 0, 1).toISOString().split('T')[0];
+        const endOfYear = new Date(year + 1, 0, 0).toISOString().split('T')[0];
+        // Filter funds that overlap with the selected fiscal year
+        query.start_date = { $lte: endOfYear };
+        query.end_date = { $gte: startOfYear };
+      }
+      return base44.entities.FundSettings.filter(query);
     },
   });
 
@@ -334,6 +351,24 @@ export default function GivingManager({ selectedYear }) {
               value={current}
               onChange={e => setCurrent(e.target.value)}
               placeholder="187000"
+              className="font-body"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Fiscal Year Start</Label>
+            <Input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
+              className="font-body"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="font-body text-sm">Fiscal Year End</Label>
+            <Input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
               className="font-body"
             />
           </div>
@@ -558,13 +593,21 @@ export default function GivingManager({ selectedYear }) {
                     <div className="sm:col-span-2 space-y-1.5">
                       <Label className="font-body text-xs text-muted-foreground">Description</Label>
                       <Input className="font-body text-sm" value={fundForm.description} onChange={e => setFundForm(f => ({ ...f, description: e.target.value }))} />
-                    </div>
-                  </div>
+                      </div>
+                      <div className="space-y-1.5">
+                      <Label className="font-body text-xs text-muted-foreground">Fiscal Year Start</Label>
+                      <Input type="date" value={fundForm.start_date} onChange={e => setFundForm(f => ({ ...f, start_date: e.target.value }))} className="font-body text-sm" />
+                      </div>
+                      <div className="space-y-1.5">
+                      <Label className="font-body text-xs text-muted-foreground">Fiscal Year End</Label>
+                      <Input type="date" value={fundForm.end_date} onChange={e => setFundForm(f => ({ ...f, end_date: e.target.value }))} className="font-body text-sm" />
+                      </div>
+                      </div>
 
-                  <ItemizationEditor 
-                    items={fundForm.itemization || []} 
-                    onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
-                  />
+                      <ItemizationEditor 
+                      items={fundForm.itemization || []} 
+                      onChange={v => setFundForm(f => ({ ...f, itemization: v }))} 
+                      />
 
                   <div className="flex justify-end gap-2 pt-2">
                     <Button variant="ghost" size="sm" className="font-body text-xs" onClick={() => setEditingFundId(null)}>
