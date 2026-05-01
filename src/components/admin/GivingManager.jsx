@@ -145,20 +145,28 @@ export default function GivingManager({ selectedYear }) {
   const { data: settings = [] } = useQuery({
     queryKey: ['fundSettings', selectedYear],
     queryFn: async () => {
-      const allSettings = await base44.entities.FundSettings.filter({ key: FUND_KEY });
-      if (!selectedYear) return allSettings;
-      // Filter annual fund by fiscal year
-      return allSettings.filter(s => {
-        if (!s.start_date || !s.end_date) return true;
-        const fundYear = new Date(s.start_date).getFullYear().toString();
-        return fundYear === selectedYear;
-      });
+      const query = { key: FUND_KEY };
+      if (selectedYear) {
+        const year = parseInt(selectedYear);
+        const startOfYear = new Date(year, 0, 1).toISOString().split('T')[0];
+        const endOfYear = new Date(year + 1, 0, 0).toISOString().split('T')[0];
+        // Filter annual funds that overlap with the selected fiscal year
+        query.start_date = { $lte: endOfYear };
+        query.end_date = { $gte: startOfYear };
+      }
+      return base44.entities.FundSettings.filter(query);
     },
   });
 
   const { data: allocations = [], isLoading: allocLoading } = useQuery({
     queryKey: ['budgetAllocations', selectedYear],
-    queryFn: () => base44.entities.BudgetAllocation.list('sort_order', 50),
+    queryFn: async () => {
+      // If we have an annual fund record for this year, filter allocations to that year
+      if (record) {
+        return base44.entities.BudgetAllocation.filter({ fund_year: selectedYear || new Date().getFullYear().toString() }, 'sort_order', 50);
+      }
+      return [];
+    },
   });
 
   const record = settings[0] || null;
@@ -189,11 +197,13 @@ export default function GivingManager({ selectedYear }) {
     setSaving(true);
     const data = { key: FUND_KEY, goal: parseFloat(goal), current: parseFloat(current), label: 'Annual Fund', start_date: startDate, end_date: endDate };
     if (record) {
+      // Update existing record for this year
       await base44.entities.FundSettings.update(record.id, data);
     } else {
+      // Create new annual fund record for this year
       await base44.entities.FundSettings.create(data);
     }
-    queryClient.invalidateQueries({ queryKey: ['fundSettings'] });
+    queryClient.invalidateQueries({ queryKey: ['fundSettings', selectedYear] });
     toast.success("Fund settings saved");
     setSaving(false);
   };
@@ -210,12 +220,12 @@ export default function GivingManager({ selectedYear }) {
 
   const handleUpdateAllocation = async (id, field, value) => {
     await base44.entities.BudgetAllocation.update(id, { [field]: field === 'percentage' ? Number(value) : value });
-    queryClient.invalidateQueries({ queryKey: ['budgetAllocations'] });
+    queryClient.invalidateQueries({ queryKey: ['budgetAllocations', selectedYear] });
   };
 
   const handleDeleteAllocation = async (id) => {
     await base44.entities.BudgetAllocation.delete(id);
-    queryClient.invalidateQueries({ queryKey: ['budgetAllocations'] });
+    queryClient.invalidateQueries({ queryKey: ['budgetAllocations', selectedYear] });
     toast.success("Category removed");
   };
 
@@ -227,8 +237,9 @@ export default function GivingManager({ selectedYear }) {
       percentage: Number(newRow.percentage),
       color: newRow.color,
       sort_order: allocations.length + 1,
+      fund_year: selectedYear || new Date().getFullYear().toString(),
     });
-    queryClient.invalidateQueries({ queryKey: ['budgetAllocations'] });
+    queryClient.invalidateQueries({ queryKey: ['budgetAllocations', selectedYear] });
     setNewRow({ name: '', percentage: '', color: PRESET_COLORS[allocations.length % PRESET_COLORS.length] });
     toast.success("Category added");
     setSaving(false);
