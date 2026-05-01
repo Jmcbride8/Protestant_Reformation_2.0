@@ -118,8 +118,63 @@ export default function VisionBackground({ isAdmin }) {
           ))}
         </div>
 
-        {/* Francis Chan Challenge as second example */}
-        <motion.div
+        {/* Baptist Campus Ministries section */}
+         <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.6 }}
+           className="mb-4"
+         >
+           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">The Value of Scale</p>
+           <h3 className="font-heading text-2xl text-primary mb-3">Baptist Campus Ministries</h3>
+           <EditableText
+             storageKey="bg_bcm_intro"
+             defaultText="During my time at Georgia Tech and the University of West Georgia, I observed something remarkable about Baptist Campus Ministries (BCM). These organizations had constructed physical buildings at the heart of campus — structures that carried institutional durability and staying power. What made this significant was what happened over time: as the universities grew and expanded, the campus literally developed around these BCM buildings. They persisted. They became permanent fixtures. This is a powerful lesson about the value of scale, structure, and institutional stability."
+             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-6"
+             isAdmin={isAdmin}
+           />
+           <EditableText
+             storageKey="bg_bcm_insight"
+             defaultText="This experience highlighted something that those who emphasize only the cell group or decentralized small-community model often overlook: scale, persistence, and organizational structure have their own form of power. An unorganized small group can be intimate, but it can dissolve overnight. A dispersed network of circles has warmth, but limited reach. The BCM buildings stood as monuments to the reality that there is profound value in having a durable, structured presence in a community — the kind of staying power that allows you to invest in culture over decades, not just seasons. The question isn't whether rows or circles are better. It's whether you can build infrastructure that sustains both."
+             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
+             isAdmin={isAdmin}
+           />
+         </motion.div>
+
+         {/* Three uploadable BCM images */}
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+           {[
+             { label: 'Georgia Tech BCM', hint: 'Upload a photo of the Georgia Tech Baptist Campus Ministry', key: 'bcm_georgia_tech' },
+             { label: 'UWG BCM', hint: 'Upload a photo of the University of West Georgia Baptist Campus Ministry', key: 'bcm_uwg' },
+             { label: 'Campus Impact', hint: 'Upload a photo showing the BCM buildings in their campus context', key: 'bcm_campus_impact' },
+           ].map((slot, i) => (
+             <motion.div
+               key={slot.label}
+               initial={{ opacity: 0, y: 15 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.5, delay: i * 0.1 }}
+               className="flex flex-col gap-2"
+             >
+               <div className="aspect-video w-full rounded-xl overflow-hidden bg-muted group/editimg">
+                 <EditableImage
+                   imageKey={`vision_${slot.key}`}
+                   src={null}
+                   alt={slot.label}
+                   className="w-full h-full object-cover"
+                   wrapperClassName="relative w-full h-full"
+                   isAdmin={isAdmin}
+                 />
+               </div>
+               <p className="font-body text-xs font-medium text-foreground">{slot.label}</p>
+               <p className="font-body text-xs text-muted-foreground">{slot.hint}</p>
+             </motion.div>
+           ))}
+         </div>
+
+         {/* Francis Chan Challenge as second example */}
+         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
