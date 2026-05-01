@@ -81,7 +81,7 @@ export default function VisionBackground({ isAdmin }) {
           <h3 className="font-heading text-2xl text-primary mb-3">VIVE Church</h3>
           <EditableText
             storageKey="bg_vive_v2"
-            defaultText={`VIVE Church is thriving, well-led, and genuinely welcoming. But like most growing congregations, it faced a real question: "How do we keep feeling like a family as we grow?" This site experiments with that very problem — building relational infrastructure that lets warmth scale. You can grow and still feel like home.`}
+            defaultText={`VIVE Church is thriving, well-led, and genuinely welcoming. The pastors are truly hospitable people — but they're still human, and as the church grew, they couldn't reach everyone the way they once could. Like most growing congregations, it faced a real question: "How do we keep feeling like a family as we grow?" This site experiments with that very problem — building relational infrastructure that lets warmth scale. You can grow and still feel like home.`}
             className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8"
             isAdmin={isAdmin}
           />
