@@ -59,11 +59,12 @@ const groupFeatures = [
 
 export default function VisionInPractice({ isAdmin }) {
   return (
-    <section className="py-24 bg-background">
-      <div className="max-w-5xl mx-auto px-4">
+    <>
+      <section className="py-24 px-4 bg-background">
+        <div className="max-w-5xl mx-auto">
 
-        {/* Header */}
-        <motion.div
+          {/* Header */}
+          <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -79,13 +80,19 @@ export default function VisionInPractice({ isAdmin }) {
           />
         </motion.div>
 
-        {/* Groups — the core innovation — prominent full-width block */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-0 overflow-hidden relative shadow-xl"
-        >
+        </div>
+      </section>
+
+      {/* Full-width dark section */}
+      <section className="bg-gradient-to-br from-primary to-primary/95 py-0">
+        <div className="max-w-5xl mx-auto px-4">
+          {/* Groups — the core innovation — prominent full-width block */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-12 overflow-hidden relative"
+          >
           {/* Watermark */}
           <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
 
@@ -235,15 +242,15 @@ export default function VisionInPractice({ isAdmin }) {
               ))}
             </div>
           </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Church platform features — supporting grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary to-primary/95 rounded-b-3xl p-12 pt-0"
-        >
+          {/* Church platform features — supporting grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-12 pt-0"
+          >
           <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-4 pl-1">The Church Platform</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {platformFeatures.map((feature, i) => (
@@ -268,9 +275,9 @@ export default function VisionInPractice({ isAdmin }) {
               </motion.div>
             ))}
           </div>
-        </motion.div>
-
-      </div>
-    </section>
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 }
