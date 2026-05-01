@@ -51,9 +51,9 @@ const groupFeatures = [
   },
   {
     icon: ShieldCheck,
-    title: 'Group Autonomy',
+    title: 'Peer-to-Peer & Group Giving',
     descKey: 'practice_autonomy',
-    defaultDesc: 'Each group can organize, communicate, and act independently — without waiting for top-down approval. The church is the platform. The group is the family.',
+    defaultDesc: 'Members can give directly to each other\'s posted needs — no intermediary required. Or contribute to a shared group pool that leaders deploy for events and care. Three modes: church, group, and person-to-person.',
   },
 ];
 
@@ -103,6 +103,104 @@ export default function VisionInPractice({ isAdmin }) {
               <p className="font-body text-white/60 text-sm mt-4 leading-relaxed max-w-xl">
                 Financial commitment creates emotional commitment. When you've given to someone's need — or received from a group that showed up for you — you're no longer an audience member. You're family.
               </p>
+            </div>
+
+            {/* Giving Modes Illustration */}
+            <div className="mb-8">
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
+              <div className="grid grid-cols-3 gap-3">
+
+                {/* Mode 1: Church Only */}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                  <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Traditional</p>
+                  <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
+                    {/* Church building */}
+                    <rect x="35" y="20" width="30" height="28" rx="2" fill="currentColor" className="text-accent/40" />
+                    <polygon points="50,8 30,22 70,22" fill="currentColor" className="text-accent/60" />
+                    {/* Arrow down to people */}
+                    <line x1="50" y1="50" x2="50" y2="62" stroke="currentColor" strokeWidth="1.5" className="text-accent/50" />
+                    <polygon points="50,66 47,61 53,61" fill="currentColor" className="text-accent/50" />
+                    {/* People row */}
+                    {[20, 35, 50, 65, 80].map((x, i) => (
+                      <g key={i}>
+                        <circle cx={x} cy="74" r="5" fill="currentColor" className="text-white/20" />
+                        <rect x={x - 4} y="80" width="8" height="7" rx="2" fill="currentColor" className="text-white/15" />
+                      </g>
+                    ))}
+                  </svg>
+                  <p className="font-body text-xs text-white/50 mt-3 leading-snug">Church → Congregation</p>
+                  <p className="font-body text-[10px] text-white/30 mt-1 leading-snug">One-directional. Broadcast.</p>
+                </div>
+
+                {/* Mode 2: Groups */}
+                <div className="bg-white/5 border border-accent/30 rounded-2xl p-5 text-center ring-1 ring-accent/20">
+                  <p className="font-body text-xs text-accent/80 uppercase tracking-widest mb-4">Groups</p>
+                  <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
+                    {/* Church at top */}
+                    <rect x="38" y="4" width="24" height="16" rx="2" fill="currentColor" className="text-accent/30" />
+                    <polygon points="50,0 36,6 64,6" fill="currentColor" className="text-accent/50" />
+                    {/* Arrow to group circles */}
+                    <line x1="30" y1="22" x2="20" y2="38" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" className="text-white/20" />
+                    <line x1="50" y1="22" x2="50" y2="38" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" className="text-white/20" />
+                    <line x1="70" y1="22" x2="80" y2="38" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" className="text-white/20" />
+                    {/* Three group clusters */}
+                    {[
+                      { cx: 20, cy: 50, members: [[10,44],[20,42],[30,44],[14,56],[26,56]] },
+                      { cx: 50, cy: 50, members: [[40,44],[50,42],[60,44],[44,56],[56,56]] },
+                      { cx: 80, cy: 50, members: [[70,44],[80,42],[90,44],[74,56],[86,56]] },
+                    ].map((g, gi) => (
+                      <g key={gi}>
+                        {g.members.map(([mx, my], mi) => (
+                          <circle key={mi} cx={mx} cy={my} r="4" fill="currentColor" className="text-accent/50" />
+                        ))}
+                        {/* pool coin */}
+                        <circle cx={g.cx} cy={72} r="6" fill="currentColor" className="text-accent/30" />
+                        <text x={g.cx} y={75} textAnchor="middle" fontSize="6" fill="currentColor" className="text-accent">$</text>
+                      </g>
+                    ))}
+                  </svg>
+                  <p className="font-body text-xs text-white/60 mt-3 leading-snug">Church → Groups → Members</p>
+                  <p className="font-body text-[10px] text-accent/60 mt-1 leading-snug">Shared pool. Leader-deployed.</p>
+                </div>
+
+                {/* Mode 3: Peer-to-Peer */}
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                  <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Peer-to-Peer</p>
+                  <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
+                    {/* People constellation with mutual arrows */}
+                    {[
+                      { cx: 50, cy: 18 },
+                      { cx: 82, cy: 40 },
+                      { cx: 70, cy: 74 },
+                      { cx: 30, cy: 74 },
+                      { cx: 18, cy: 40 },
+                    ].map((p, pi, arr) => {
+                      const next = arr[(pi + 1) % arr.length];
+                      const skip = arr[(pi + 2) % arr.length];
+                      return (
+                        <g key={pi}>
+                          <line x1={p.cx} y1={p.cy} x2={next.cx} y2={next.cy} stroke="currentColor" strokeWidth="0.8" className="text-accent/25" />
+                          <line x1={p.cx} y1={p.cy} x2={skip.cx} y2={skip.cy} stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" className="text-white/10" />
+                        </g>
+                      );
+                    })}
+                    {[
+                      { cx: 50, cy: 18 },
+                      { cx: 82, cy: 40 },
+                      { cx: 70, cy: 74 },
+                      { cx: 30, cy: 74 },
+                      { cx: 18, cy: 40 },
+                    ].map((p, pi) => (
+                      <circle key={pi} cx={p.cx} cy={p.cy} r="7" fill="currentColor" className="text-white/30" />
+                    ))}
+                    {/* heart in center */}
+                    <text x="50" y="50" textAnchor="middle" fontSize="12" fill="currentColor" className="text-accent/70">♥</text>
+                  </svg>
+                  <p className="font-body text-xs text-white/50 mt-3 leading-snug">Member → Member</p>
+                  <p className="font-body text-[10px] text-white/30 mt-1 leading-snug">Direct. No intermediary.</p>
+                </div>
+
+              </div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
