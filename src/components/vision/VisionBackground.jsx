@@ -159,17 +159,22 @@ export default function VisionBackground({ isAdmin }) {
             >
               <EditableText
                 storageKey="bg_francis_why_left"
-                defaultText="He walked away from a megachurch of thousands. Not because it was bad — because it wasn't enough. The New Testament describes churches that were small, personal, radically generous. He was leading a machine. He wanted to lead a family."
+                defaultText="At Cornerstone Church, Francis Chan had thousands of members — and struggled with a question that never got easier as the church grew: how do you preserve the relational warmth of a family at scale? He ultimately left to try to solve it from scratch."
                 className="font-body text-muted-foreground leading-relaxed"
                 isAdmin={isAdmin}
               />
               <EditableText
                 storageKey="bg_francis_call"
-                defaultText="His challenge: measure your church not by attendance or budget — but by whether your members actually know each other. Whether a single mom down the street feels like she has a family. That's what we're building toward."
+                defaultText="But the challenge isn't unique to megachurches. Even small congregations drift toward anonymity — people show up, sit in rows, and leave without being truly known. The question remains open: how do you create the connectedness of family, not just the appearance of it?"
                 className="font-body text-muted-foreground leading-relaxed"
                 isAdmin={isAdmin}
               />
-              <p className="font-body text-sm text-accent font-medium italic">Can technology serve community instead of replacing it?</p>
+              <EditableText
+                storageKey="bg_francis_hope"
+                defaultText="It's a challenge we wanted to address — even here, at a small church — before we ever needed to."
+                className="font-body text-muted-foreground leading-relaxed italic"
+                isAdmin={isAdmin}
+              />
             </motion.div>
           </div>
         </motion.div>
