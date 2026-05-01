@@ -98,7 +98,7 @@ export default function VisionPhilosophy({ isAdmin }) {
         >
           {/* Rows */}
           <div className="bg-muted/60 border border-border rounded-2xl p-7 text-center">
-            <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Programs vs People</p>
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Church & Programs</p>
             <h3 className="font-heading text-xl text-primary mb-4">Rows</h3>
             <RowsIllustration />
             <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Audience. Passive. Anonymous.<br />One voice to many.</p>
@@ -106,7 +106,7 @@ export default function VisionPhilosophy({ isAdmin }) {
 
           {/* Circles */}
           <div className="bg-accent/10 border border-accent/30 rounded-2xl p-7 text-center">
-            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-1">Church vs Groups</p>
+            <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-1">Groups & Relationships</p>
             <h3 className="font-heading text-xl text-primary mb-4">Circles</h3>
             <CirclesIllustration />
             <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Family. Known. Accountable.<br />Many voices, one body.</p>
