@@ -27,6 +27,64 @@ export default function VisionPhilosophy({ isAdmin }) {
           </p>
         </motion.div>
 
+        {/* Circles vs Rows illustration */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="grid grid-cols-2 gap-4 mb-14"
+        >
+          {/* Rows */}
+          <div className="bg-muted/60 border border-border rounded-2xl p-7 text-center">
+            <div className="flex flex-col gap-2 items-center mb-5">
+              {/* Speaker dot */}
+              <div className="w-4 h-4 rounded-full bg-primary/30 mb-1" />
+              {/* Rows of seats */}
+              {[5, 7, 9].map((count, r) => (
+                <div key={r} className="flex gap-1.5 justify-center">
+                  {Array.from({ length: count }).map((_, i) => (
+                    <div key={i} className="w-3 h-3 rounded-sm bg-primary/20" />
+                  ))}
+                </div>
+              ))}
+            </div>
+            <p className="font-heading text-base text-primary">Rows</p>
+            <p className="font-body text-xs text-muted-foreground mt-1">Audience. Passive. Anonymous.</p>
+          </div>
+
+          {/* Circles */}
+          <div className="bg-accent/10 border border-accent/30 rounded-2xl p-7 text-center">
+            <div className="flex flex-wrap gap-4 justify-center items-center mb-5">
+              {/* Two clusters of circles */}
+              {[
+                [0, 1, 2, 3],
+                [4, 5, 6],
+              ].map((group, gi) => (
+                <div key={gi} className="relative w-16 h-16">
+                  {group.map((_, i) => {
+                    const angles = [315, 45, 135, 225];
+                    const angle = (angles[i] ?? i * 90) * (Math.PI / 180);
+                    const r = group.length === 4 ? 22 : 20;
+                    const cx = 32 + r * Math.cos(angle);
+                    const cy = 32 + r * Math.sin(angle);
+                    return (
+                      <div
+                        key={i}
+                        className="absolute w-3.5 h-3.5 rounded-full bg-accent"
+                        style={{ left: cx - 7, top: cy - 7 }}
+                      />
+                    );
+                  })}
+                  {/* center connector dot */}
+                  <div className="absolute w-2 h-2 rounded-full bg-accent/40" style={{ left: 28, top: 28 }} />
+                </div>
+              ))}
+            </div>
+            <p className="font-heading text-base text-primary">Circles</p>
+            <p className="font-body text-xs text-muted-foreground mt-1">Family. Known. Accountable.</p>
+          </div>
+        </motion.div>
+
         {/* Scripture — two verses side by side */}
         <div className="grid md:grid-cols-2 gap-5 mb-14">
           {verses.map((v, i) => (
