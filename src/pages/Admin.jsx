@@ -109,10 +109,16 @@ export default function Admin() {
     enabled: !!user,
   });
 
+  const { data: funds = [] } = useQuery({
+    queryKey: ['fundSettings'],
+    queryFn: () => base44.entities.FundSettings.filter({}, 'sort_order', 50),
+    enabled: !!user,
+  });
+
   const filteredDonations = donations.filter(d => {
     const donationYear = new Date(d.created_date).getFullYear().toString();
     const yearMatch = !donationFilters.year || donationYear === donationFilters.year;
-    const fundMatch = !donationFilters.fund || d.fund === donationFilters.fund;
+    const fundMatch = !donationFilters.fund || d.fund_id === donationFilters.fund;
     const donorMatch = !donationFilters.donor || d.donor_name.toLowerCase().includes(donationFilters.donor.toLowerCase());
     return yearMatch && fundMatch && donorMatch;
   });
@@ -482,12 +488,12 @@ export default function Admin() {
                       </select>
                     </div>
                     <div>
-                      <label className="font-body text-sm text-muted-foreground block mb-1">Fund</label>
-                      <select onChange={(e) => setDonationFilters(prev => ({ ...prev, fund: e.target.value }))} value={donationFilters.fund} className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background">
-                        <option value="">All Funds</option>
-                        {['general', 'building_campaign', 'missions', 'youth', 'community_meals'].map(fund => <option key={fund} value={fund}>{fund.replace('_', ' ')}</option>)}
-                      </select>
-                    </div>
+                       <label className="font-body text-sm text-muted-foreground block mb-1">Fund</label>
+                       <select onChange={(e) => setDonationFilters(prev => ({ ...prev, fund: e.target.value }))} value={donationFilters.fund} className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background">
+                         <option value="">All Funds</option>
+                         {funds.map(fund => <option key={fund.id} value={fund.id}>{fund.name}</option>)}
+                       </select>
+                     </div>
                     <div className="flex-1 min-w-[200px]">
                       <label className="font-body text-sm text-muted-foreground block mb-1">Donor Name</label>
                       <input type="text" onChange={(e) => setDonationFilters(prev => ({ ...prev, donor: e.target.value }))} value={donationFilters.donor} placeholder="Search donor..." className="font-body text-sm px-3 py-1.5 rounded border border-input bg-background w-full" />
@@ -497,13 +503,13 @@ export default function Admin() {
                     {filteredDonations.map(donation => (
                       <div key={donation.id} className="flex items-center justify-between p-4 bg-card rounded-lg border border-border/50">
                         <div>
-                          <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
-                          <p className="font-body text-xs text-muted-foreground">{donation.donor_email} • {format(new Date(donation.donation_date + 'T00:00:00'), 'MMM d, yyyy')}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
-                          <Badge variant="secondary" className="font-body text-xs capitalize">{donation.fund?.replace('_', ' ')}</Badge>
-                        </div>
+                           <h4 className="font-heading text-base text-primary">{donation.donor_name}</h4>
+                           <p className="font-body text-xs text-muted-foreground">{donation.donor_email} • {format(new Date(donation.donation_date + 'T00:00:00'), 'MMM d, yyyy')}</p>
+                         </div>
+                         <div className="text-right">
+                           <p className="font-heading text-lg text-primary">${donation.amount?.toLocaleString()}</p>
+                           <Badge variant="secondary" className="font-body text-xs capitalize">{donation.fund_name || 'Unknown'}</Badge>
+                         </div>
                       </div>
                     ))}
                     {filteredDonations.length === 0 && <p className="font-body text-muted-foreground text-center py-8">No donations matching filters.</p>}
