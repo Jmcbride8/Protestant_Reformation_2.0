@@ -32,27 +32,25 @@ export default function VisionBackground({ isAdmin }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-4"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Why I Built This</p>
           <h3 className="font-heading text-2xl text-primary mb-6">The Problem I Saw</h3>
           
-          <div className="space-y-6 mb-8">
-            <EditableText
-              storageKey="bg_para1"
-              defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
-              className="font-body text-muted-foreground leading-relaxed bg-card border border-border rounded-2xl p-6"
-              isAdmin={isAdmin}
-            />
-            <EditableText
-              storageKey="bg_para2"
-              defaultText="Having worked in startups, that observation wasn't unique to church — as is often the case, people tend to feel nostalgic about earlier times when the organization was smaller and relationships more organic. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online and an emphasis on the main page as a reminder to ourselves to keep the main thing the main thing."
-              className="font-body text-muted-foreground leading-relaxed bg-card border border-border rounded-2xl p-6"
-              isAdmin={isAdmin}
-            />
-          </div>
+          <EditableText
+            storageKey="bg_para1"
+            defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
+            className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-4 bg-card border border-border rounded-2xl p-6"
+            isAdmin={isAdmin}
+          />
+          <EditableText
+            storageKey="bg_para2"
+            defaultText="Having worked in startups, that observation wasn't unique to church — as is often the case, people tend to feel nostalgic about earlier times when the organization was smaller and relationships more organic. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online and an emphasis on the main page as a reminder to ourselves to keep the main thing the main thing."
+            className="font-body text-muted-foreground leading-relaxed max-w-3xl mb-8 bg-card border border-border rounded-2xl p-6"
+            isAdmin={isAdmin}
+          />
 
-          <div className="bg-primary rounded-2xl p-8 text-white">
+          <div className="bg-primary rounded-2xl p-8 text-white mb-16">
             <EditableText
               storageKey="bg_quote"
               defaultText={`"I wanted to use my skillset in technology to create a digital platform that solves what the physical space cannot: turning rows into circles. A way to blend the best of both competing models — the scale and inspiration of gathered worship, and the intimacy and care of small community."`}
