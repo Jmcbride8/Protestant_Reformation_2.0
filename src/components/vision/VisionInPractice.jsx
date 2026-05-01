@@ -108,10 +108,10 @@ export default function VisionInPractice({ isAdmin }) {
             {/* Giving Modes Illustration */}
             <div className="mb-12">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
-              <div className="flex gap-0 divide-x divide-white/10 w-full">
+              <div className="flex gap-0 divide-x divide-white/10 w-full mb-8">
 
                 {/* Mode 1: Church Only */}
-                <div className="flex-1 p-5 text-center flex flex-col items-center">
+                <div className="flex-1 p-5 text-center flex flex-col items-center min-h-64">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Traditional</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* Church building */}
@@ -133,7 +133,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 2: Groups */}
-                <div className="flex-1 p-5 text-center flex flex-col items-center">
+                <div className="flex-1 p-5 text-center flex flex-col items-center min-h-64">
                   <p className="font-body text-xs text-accent/80 uppercase tracking-widest mb-4">Groups</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* Church at top */}
@@ -164,7 +164,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 3: Peer-to-Peer */}
-                <div className="flex-1 p-5 text-center flex flex-col items-center">
+                <div className="flex-1 p-5 text-center flex flex-col items-center min-h-64">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Peer-to-Peer</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* People constellation with mutual arrows */}
