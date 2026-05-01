@@ -108,10 +108,10 @@ export default function VisionInPractice({ isAdmin }) {
             {/* Giving Modes Illustration */}
             <div className="mb-12">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
-              <div className="grid grid-cols-3 gap-px bg-white/10 rounded-lg overflow-hidden w-full mb-8">
+              <div className="grid grid-cols-3 gap-px rounded-lg overflow-hidden w-full mb-8">
 
                 {/* Mode 1: Church Only */}
-                <div className="bg-primary p-6 text-center flex flex-col items-center justify-start">
+                <div className="p-6 text-center flex flex-col items-center justify-start">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Traditional</p>
                   <svg viewBox="0 0 100 90" className="w-24 h-24" fill="none">
                     {/* Church building */}
@@ -133,7 +133,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 2: Groups */}
-                <div className="bg-primary p-6 text-center flex flex-col items-center justify-start">
+                <div className="p-6 text-center flex flex-col items-center justify-start">
                   <p className="font-body text-xs text-accent/80 uppercase tracking-widest mb-4">Groups</p>
                   <svg viewBox="0 0 100 90" className="w-24 h-24" fill="none">
                     {/* Church at top */}
@@ -164,7 +164,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 3: Peer-to-Peer */}
-                <div className="bg-primary p-6 text-center flex flex-col items-center justify-start">
+                <div className="p-6 text-center flex flex-col items-center justify-start">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Peer-to-Peer</p>
                   <svg viewBox="0 0 100 90" className="w-24 h-24" fill="none">
                     {/* People constellation with mutual arrows */}
