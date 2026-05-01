@@ -22,6 +22,14 @@ export default function Giving() {
   const [donationSubmitted, setDonationSubmitted] = useState(false);
   const { isEnabled } = useFeatures();
 
+  const { data: allFunds = [] } = useQuery({
+    queryKey: ['allFundSettings'],
+    queryFn: async () => {
+      const funds = await base44.entities.FundSettings.list('sort_order', 50);
+      return funds.filter(f => f.status === 'active' || f.status === undefined);
+    },
+  });
+
   useEffect(() => {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
@@ -36,14 +44,6 @@ export default function Giving() {
       }));
     }
   }, [allFunds]);
-
-  const { data: allFunds = [] } = useQuery({
-    queryKey: ['allFundSettings'],
-    queryFn: async () => {
-      const funds = await base44.entities.FundSettings.list('sort_order', 50);
-      return funds.filter(f => f.status === 'active' || f.status === undefined);
-    },
-  });
 
   const annualFund = allFunds.find(f => f.slug === 'annual_fund');
   const fundGoal = annualFund?.goal ?? 250000;
