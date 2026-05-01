@@ -584,7 +584,7 @@ export default function GivingManager({ selectedYear }) {
                                <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
                                <select 
                                  value={fund.status || 'active'} 
-                                 onChange={(e) => handleUpdateAllocation(fund.id, 'status', e.target.value)}
+                                 onChange={(e) => fundSaveMutation.mutate({ id: fund.id, data: { ...fund, status: e.target.value } })}
                                  className={`font-body text-xs px-2 py-1 rounded border-0 cursor-pointer ${fund.status === 'active' ? 'bg-green-100 text-green-700' : fund.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}`}
                                >
                                  <option value="pending">Pending</option>
