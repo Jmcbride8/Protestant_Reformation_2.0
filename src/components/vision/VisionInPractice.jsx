@@ -3,36 +3,63 @@ import { motion } from 'framer-motion';
 import { Car, HandHeart, Calendar, Users, HeartHandshake, MessageSquare, Coins, ShieldCheck } from 'lucide-react';
 import EditableText from './EditableText';
 
-const platformFeatures = [
+const everydayLifeFeatures = [
+  {
+    icon: MessageSquare,
+    title: 'Memories',
+    descKey: 'practice_memories',
+    defaultDesc: 'Members share moments — baptisms, milestones, gatherings. A living record of life together. Not broadcast. Moments to remember.',
+  },
   {
     icon: Car,
     title: 'Carpool Coordination',
     descKey: 'practice_carpool',
-    defaultDesc: 'Members offer and request rides to services — a small act that removes real barriers to attendance and opens a door for friendship.',
+    defaultDesc: 'Members offer and request rides. A simple act that removes real barriers and opens doors for friendship.',
   },
   {
     icon: HandHeart,
     title: 'Community Support Board',
     descKey: 'practice_support',
-    defaultDesc: 'A living board where members post needs and offers: meals, childcare, prayer, a helping hand. Neighbors caring for neighbors.',
+    defaultDesc: 'Members post needs and offers: meals, childcare, prayer. Neighbors caring for neighbors in real time.',
   },
   {
     icon: Calendar,
     title: 'Volunteer & Events',
     descKey: 'practice_volunteer',
-    defaultDesc: 'Specific needs, real dates, real people. Members see where they can show up and make it happen in seconds.',
+    defaultDesc: 'Specific needs, real dates, real people. Members see where they can show up and sign up in seconds.',
   },
   {
     icon: HeartHandshake,
     title: 'Life Milestones',
     descKey: 'practice_milestones',
-    defaultDesc: 'Baptism, marriage, new families — the church acknowledges and walks with members through every sacred season of life.',
+    defaultDesc: 'The church walks with members through baptism, marriage, new families — every sacred season of life.',
   },
   {
     icon: MessageSquare,
     title: 'Pastoral Contact',
     descKey: 'practice_contact',
-    defaultDesc: 'A simple, categorized form for reaching out about counseling, prayer, grief support — reducing the friction of asking for help.',
+    defaultDesc: 'A simple form for reaching out about counseling, prayer, grief support — reducing friction in asking for help.',
+  },
+];
+
+const programmingFeatures = [
+  {
+    icon: Users,
+    title: 'Groups & Classes',
+    descKey: 'practice_programming_groups',
+    defaultDesc: 'Sunday services, small groups, classes, and ministries — all coordinated on the platform so members can find where they belong.',
+  },
+  {
+    icon: Calendar,
+    title: 'Events & Engagement',
+    descKey: 'practice_programming_events',
+    defaultDesc: 'From Sunday worship to midweek Bible studies, mission trips to serve days — the full rhythm of church life, all visible and accessible.',
+  },
+  {
+    icon: Users,
+    title: 'Beyond Sunday',
+    descKey: 'practice_programming_beyond',
+    defaultDesc: 'Programming that extends the Sunday experience — weeknight gatherings, prayer, mentorship, spiritual formation. A living, active community.',
   },
 ];
 
@@ -237,28 +264,93 @@ export default function VisionInPractice({ isAdmin }) {
           </div>
         </motion.div>
 
-        {/* Church platform features — supporting grid */}
+        {/* Second Innovation: Church Platform — Everyday Life */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-secondary/40 rounded-3xl p-12 mb-12 overflow-hidden"
+        >
+          <div className="max-w-3xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-3 font-medium">The Second Innovation</p>
+              <h3 className="font-heading text-3xl text-primary mb-5">A Platform for Everyday Life</h3>
+              <EditableText
+                storageKey="practice_platform_intro"
+                defaultText='Groups need tools. Members need connection. The platform keeps life practical and alive — not with broadcasts, but with moments to share, needs to meet, and rides to coordinate.'
+                className="font-body text-muted-foreground leading-relaxed"
+                isAdmin={isAdmin}
+              />
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {everydayLifeFeatures.map((feature, i) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-card border border-border rounded-2xl p-6 hover:shadow-md transition-shadow"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
+                    <feature.icon className="w-5 h-5 text-accent" />
+                  </div>
+                  <h4 className="font-heading text-lg text-primary mb-2">{feature.title}</h4>
+                  <EditableText
+                    storageKey={feature.descKey}
+                    defaultText={feature.defaultDesc}
+                    className="font-body text-sm text-muted-foreground leading-relaxed"
+                    isAdmin={isAdmin}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Third Section: Programming & Engagement */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-6"
         >
-          <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 pl-1">The Church Platform</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {platformFeatures.map((feature, i) => (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-3 font-medium">Beyond Sunday</p>
+            <h3 className="font-heading text-3xl text-primary mb-5">Enabling Programming & Engagement</h3>
+            <EditableText
+              storageKey="practice_programming_intro"
+              defaultText='Sunday is the gathering. But real growth happens Monday through Saturday. The platform enables the full rhythms of church life — from midweek Bible studies to prayer meetings, mission trips to mentor relationships.'
+              className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+              isAdmin={isAdmin}
+            />
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {programmingFeatures.map((feature, i) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: i * 0.05 }}
                 className="bg-card border border-border rounded-2xl p-6 hover:shadow-md transition-shadow"
               >
                 <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
                   <feature.icon className="w-5 h-5 text-accent" />
                 </div>
-                <h3 className="font-heading text-lg text-primary mb-2">{feature.title}</h3>
+                <h4 className="font-heading text-lg text-primary mb-2">{feature.title}</h4>
                 <EditableText
                   storageKey={feature.descKey}
                   defaultText={feature.defaultDesc}
