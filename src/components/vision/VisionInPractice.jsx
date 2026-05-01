@@ -108,7 +108,7 @@ export default function VisionInPractice({ isAdmin }) {
             {/* Giving Modes Illustration */}
             <div className="mb-8">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-0">
 
                 {/* Mode 1: Church Only */}
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
