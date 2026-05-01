@@ -716,8 +716,10 @@ function HistorySection({ isAdmin }) {
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">2,000 Years</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-6">A Tapestry of History</h2>
-          <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-            Christianity is a real religion—rooted in real people, real places, and real lessons lived across millennia. Their potency has only been enhanced by their endurance.
+          <p className="font-body text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            People began compiling stories of their search for a one true God — and in that search, they <span className="text-foreground font-medium">honestly tracked good and evil across millennia, often in the same person</span>. Unlike the god-kings of old who could do no wrong, this became the greatest, longest, and most candid exploration of morality ever recorded — across kings and subjects, wealthy and poor. Until one day, the person everything pointed to arrived: Jesus Christ, unremarkable in every outward way, claiming to be God come to meet and save us.
+            <br /><br />
+            A figure so singular in moral clarity, impact, death, and resurrection that <span className="text-foreground font-medium">history itself was cleaved in two</span> — Before Christ and After. Completely ordinary individuals died spreading this extraordinary story, conquering empires with the word, not the sword. And though the movement was sometimes seized for evil ends by popes, conquistadors, and kings — the truth was so potent that even buried embers reignited into reformations, transforming civilization itself again and again.
           </p>
         </motion.div>
 
