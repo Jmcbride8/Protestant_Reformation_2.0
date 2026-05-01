@@ -59,7 +59,8 @@ const groupFeatures = [
 
 export default function VisionInPractice({ isAdmin }) {
   return (
-    <section className="py-24 px-4 bg-background">
+    <section className="py-24 bg-background">
+      <div className="px-4">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -270,6 +271,7 @@ export default function VisionInPractice({ isAdmin }) {
           </div>
         </motion.div>
 
+      </div>
       </div>
     </section>
   );
