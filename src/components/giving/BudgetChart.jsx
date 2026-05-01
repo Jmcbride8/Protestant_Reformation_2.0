@@ -71,22 +71,7 @@ export default function BudgetChart({ fund, totalRaised }) {
           <Tooltip content={<CustomTooltip totalBudget={totalBudget} />} />
         </PieChart>
       </ResponsiveContainer>
-      <div className="flex flex-col gap-2 mt-6">
-        {data.map((item, index) => (
-          <div key={index} className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
-              <span className="font-body text-xs text-muted-foreground truncate">{item.name}</span>
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {item.amount !== undefined && (
-                <span className="font-body text-xs font-medium text-primary">${item.amount.toLocaleString()}</span>
-              )}
-              <span className="font-body text-xs text-muted-foreground">({item.value}%)</span>
-            </div>
-          </div>
-        ))}
-      </div>
+
     </div>
   );
 }

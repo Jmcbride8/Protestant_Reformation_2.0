@@ -38,6 +38,31 @@ export default function AnnualBudgetSection({ fund, isEnabled }) {
                 <BudgetChart fund={fund} totalRaised={totalRaised} />
               </motion.div>
             </div>
+
+            {/* Cost Breakdown Table */}
+            {fund.itemization?.length > 0 && (
+              <div className="mt-16">
+                <h3 className="font-heading text-2xl text-primary mb-6">Cost Breakdown</h3>
+                <div className="space-y-3">
+                  {fund.itemization.map((item, idx) => {
+                    const percentage = goal > 0 ? Math.round((item.amount / goal) * 100) : 0;
+                    return (
+                      <div key={idx} className="flex justify-between items-center py-3 border-b border-border/50">
+                        <span className="font-body text-sm text-foreground">{item.label}</span>
+                        <div className="flex items-center gap-6">
+                          <span className="font-body text-sm text-muted-foreground">${parseFloat(item.amount).toLocaleString()}</span>
+                          <span className="font-body text-sm font-medium text-primary min-w-[50px] text-right">({percentage}%)</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div className="flex justify-between items-center py-3 font-semibold border-t-2 border-primary">
+                    <span className="font-heading text-primary">Total</span>
+                    <span className="font-heading text-primary">${goal.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
