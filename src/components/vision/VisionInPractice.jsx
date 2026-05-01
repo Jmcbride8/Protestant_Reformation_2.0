@@ -211,18 +211,25 @@ export default function VisionInPractice({ isAdmin }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="bg-white/8 border border-white/10 rounded-2xl p-6"
+                  className="relative bg-white/8 border border-white/15 rounded-2xl p-6 overflow-hidden"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
-                    <f.icon className="w-5 h-5 text-accent" />
+                  {/* Roman numeral watermark */}
+                  <span className="absolute top-4 right-5 font-heading text-3xl font-bold text-white/8 select-none pointer-events-none">
+                    {['I', 'II', 'III'][i]}
+                  </span>
+
+                  <div className="relative z-10">
+                    <div className="w-10 h-10 rounded-full bg-accent/25 border border-accent/30 flex items-center justify-center mb-5">
+                      <f.icon className="w-5 h-5 text-accent/80" />
+                    </div>
+                    <h4 className="font-heading text-lg text-white mb-3 leading-tight pr-6">{f.title}</h4>
+                    <EditableText
+                      storageKey={f.descKey}
+                      defaultText={f.defaultDesc}
+                      className="font-body text-sm text-white/65 leading-relaxed"
+                      isAdmin={isAdmin}
+                    />
                   </div>
-                  <h4 className="font-heading text-base text-white mb-2">{f.title}</h4>
-                  <EditableText
-                    storageKey={f.descKey}
-                    defaultText={f.defaultDesc}
-                    className="font-body text-sm text-white/60 leading-relaxed"
-                    isAdmin={isAdmin}
-                  />
                 </motion.div>
               ))}
             </div>
