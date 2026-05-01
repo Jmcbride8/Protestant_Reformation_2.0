@@ -84,29 +84,29 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-primary rounded-3xl p-10 mb-6 overflow-hidden relative"
+          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-6 overflow-hidden relative shadow-xl"
         >
           {/* Watermark */}
-          <span className="absolute right-8 bottom-4 font-heading text-[7rem] leading-none text-white/4 select-none pointer-events-none">Groups</span>
+          <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
 
-          <div className="relative z-10">
-            <div className="mb-8">
-              <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-2">The Core Innovation</p>
-              <h3 className="font-heading text-3xl text-white mb-4">Groups with Independent Power</h3>
-              <p className="font-body text-white/70 leading-relaxed max-w-2xl">
+          <div className="relative z-10 max-w-3xl">
+            <div className="mb-12">
+              <p className="font-body text-xs tracking-[0.3em] uppercase text-accent/90 mb-3 font-medium">The Core Innovation</p>
+              <h3 className="font-heading text-4xl text-white mb-6 leading-tight">Groups with Independent Power</h3>
+              <p className="font-body text-lg text-white/75 leading-relaxed mb-6">
                 The church is the platform. Groups are the family. Each group has its own leadership, its own tools — and most importantly, its own finances. Members contribute directly to a group pool, leaders deploy those funds toward individual needs or shared events.
               </p>
-              <blockquote className="mt-5 border-l-2 border-accent pl-5">
-                <p className="font-heading text-lg italic text-white/80">"Where your treasure is, there your heart will be also."</p>
-                <p className="font-body text-xs text-accent mt-1">— Matthew 6:21</p>
+              <blockquote className="bg-white/8 border-l-3 border-accent rounded-r-lg pl-6 pr-6 py-5 my-6">
+                <p className="font-heading text-lg italic text-white/90 mb-2">"Where your treasure is, there your heart will be also."</p>
+                <p className="font-body text-xs text-accent/80 font-medium">— Matthew 6:21</p>
               </blockquote>
-              <p className="font-body text-white/60 text-sm mt-4 leading-relaxed max-w-xl">
+              <p className="font-body text-white/65 leading-relaxed max-w-2xl">
                 Financial commitment creates emotional commitment. When you've given to someone's need — or received from a group that showed up for you — you're no longer an audience member. You're family.
               </p>
             </div>
 
             {/* Giving Modes Illustration */}
-            <div className="mb-8">
+            <div className="mb-12">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
               <div className="grid grid-cols-3 gap-0">
 
