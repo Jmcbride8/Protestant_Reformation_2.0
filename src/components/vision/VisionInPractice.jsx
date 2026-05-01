@@ -314,53 +314,7 @@ export default function VisionInPractice({ isAdmin }) {
           </div>
         </motion.div>
 
-        {/* Third Section: Programming & Engagement */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-6"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-3 font-medium">Beyond Sunday</p>
-            <h3 className="font-heading text-3xl text-primary mb-5">Enabling Programming & Engagement</h3>
-            <EditableText
-              storageKey="practice_programming_intro"
-              defaultText='Sunday is the gathering. But real growth happens Monday through Saturday. The platform enables the full rhythms of church life — from midweek Bible studies to prayer meetings, mission trips to mentor relationships.'
-              className="font-body text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-              isAdmin={isAdmin}
-            />
-          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {programmingFeatures.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:shadow-md transition-shadow"
-              >
-                <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
-                  <feature.icon className="w-5 h-5 text-accent" />
-                </div>
-                <h4 className="font-heading text-lg text-primary mb-2">{feature.title}</h4>
-                <EditableText
-                  storageKey={feature.descKey}
-                  defaultText={feature.defaultDesc}
-                  className="font-body text-sm text-muted-foreground leading-relaxed"
-                  isAdmin={isAdmin}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
 
       </div>
     </section>
