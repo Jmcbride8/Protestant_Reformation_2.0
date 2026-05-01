@@ -59,8 +59,8 @@ const groupFeatures = [
 
 export default function VisionInPractice({ isAdmin }) {
   return (
-    <section className="py-24 px-4 bg-background">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-24 bg-background">
+      <div className="max-w-5xl mx-auto px-4">
 
         {/* Header */}
         <motion.div
@@ -84,7 +84,7 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-6 overflow-hidden relative shadow-xl"
+          className="bg-gradient-to-br from-primary to-primary/95 rounded-3xl p-12 mb-0 overflow-hidden relative shadow-xl"
         >
           {/* Watermark */}
           <span className="absolute right-6 top-1/2 -translate-y-1/2 font-heading text-[10rem] leading-none text-white/5 select-none pointer-events-none">Groups</span>
@@ -203,7 +203,7 @@ export default function VisionInPractice({ isAdmin }) {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 divide-x divide-white/10">
+            <div className="grid md:grid-cols-3 gap-6 divide-x divide-white/10 border-t border-white/10 pt-6">
               {groupFeatures.map((f, i) => (
                 <motion.div
                   key={f.title}
@@ -242,9 +242,9 @@ export default function VisionInPractice({ isAdmin }) {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-6"
+          className="bg-gradient-to-br from-primary to-primary/95 rounded-b-3xl p-12 pt-0"
         >
-          <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4 pl-1">The Church Platform</p>
+          <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-4 pl-1">The Church Platform</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {platformFeatures.map((feature, i) => (
               <motion.div
@@ -253,16 +253,16 @@ export default function VisionInPractice({ isAdmin }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="bg-card border border-border rounded-2xl p-6 hover:shadow-md transition-shadow"
+                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:shadow-md transition-shadow"
               >
                 <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
                   <feature.icon className="w-5 h-5 text-accent" />
                 </div>
-                <h3 className="font-heading text-lg text-primary mb-2">{feature.title}</h3>
+                <h3 className="font-heading text-lg text-white mb-2">{feature.title}</h3>
                 <EditableText
                   storageKey={feature.descKey}
                   defaultText={feature.defaultDesc}
-                  className="font-body text-sm text-muted-foreground leading-relaxed"
+                  className="font-body text-sm text-white/70 leading-relaxed"
                   isAdmin={isAdmin}
                 />
               </motion.div>
