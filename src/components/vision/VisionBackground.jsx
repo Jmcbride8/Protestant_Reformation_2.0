@@ -171,7 +171,7 @@ export default function VisionBackground({ isAdmin }) {
               />
               <EditableText
                 storageKey="bg_francis_hope"
-                defaultText="It's a challenge we wanted to address — even here, at a small church — before we ever needed to."
+                defaultText="Big isn't bad. Growth is good. But we believed you didn't have to choose between a thriving church and a close-knit family — that the two could coexist with the right intentionality. A balance Francis didn't find. One we're determined to build."
                 className="font-body text-muted-foreground leading-relaxed italic"
                 isAdmin={isAdmin}
               />
