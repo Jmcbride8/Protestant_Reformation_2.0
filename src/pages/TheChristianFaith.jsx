@@ -703,14 +703,7 @@ function HistorySection({ isAdmin }) {
       desc: 'Figures like William Carey, Hudson Taylor, and David Livingstone carried the gospel to India, China, and Africa at enormous personal cost. Imperfect and sometimes entangled with empire, the missionary movement also established schools, hospitals, and translated Scripture into thousands of languages.',
       image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80',
     },
-    {
-      key: 'hist_science',
-      year: '16th–18th Century',
-      name: 'The Scientific Revolution',
-      subtitle: 'Faith & Reason',
-      desc: 'Copernicus, Galileo, Kepler, Newton — the architects of modern science were, almost without exception, devout Christians who saw their work as "thinking God\'s thoughts after Him." Though the Galileo affair became a symbol of conflict, the fuller story is more complex: Christian monasteries preserved ancient knowledge, universities were born from cathedral schools, and the conviction that a rational God made a rational universe provided the very foundation that made modern science possible.',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80',
-    },
+
     {
       key: 'hist_atheism_debates',
       year: '2000s–Present',
