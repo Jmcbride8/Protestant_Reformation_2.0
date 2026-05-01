@@ -139,16 +139,16 @@ function ItemizationEditor({ items = [], onChange }) {
   );
 }
 
-export default function GivingManager() {
+export default function GivingManager({ selectedYear }) {
   const queryClient = useQueryClient();
 
   const { data: settings = [] } = useQuery({
-    queryKey: ['fundSettings'],
+    queryKey: ['fundSettings', selectedYear],
     queryFn: () => base44.entities.FundSettings.filter({ key: FUND_KEY }),
   });
 
   const { data: allocations = [], isLoading: allocLoading } = useQuery({
-    queryKey: ['budgetAllocations'],
+    queryKey: ['budgetAllocations', selectedYear],
     queryFn: () => base44.entities.BudgetAllocation.list('sort_order', 50),
   });
 
@@ -224,9 +224,11 @@ export default function GivingManager() {
   const pctRaised = goalNum > 0 ? Math.round((currentNum / goalNum) * 100) : 0;
 
   const now = new Date();
-  const startOfYear = new Date(now.getFullYear(), 0, 1);
-  const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
-  const pctOfYear = Math.round(((now - startOfYear) / (endOfYear - startOfYear)) * 100);
+  const displayYear = parseInt(selectedYear) || now.getFullYear();
+  const startOfYear = new Date(displayYear, 0, 1);
+  const endOfYear = new Date(displayYear + 1, 0, 1);
+  const isCurrentYear = displayYear === now.getFullYear();
+  const pctOfYear = isCurrentYear ? Math.round(((now - startOfYear) / (endOfYear - startOfYear)) * 100) : 0;
 
   const diff = pctRaised - pctOfYear;
   const isAhead = diff > 2;
@@ -255,8 +257,17 @@ export default function GivingManager() {
 
   // Fundraising funds data and mutations
   const { data: funds = [] } = useQuery({
-    queryKey: ['adminFunds'],
-    queryFn: () => base44.entities.FundSettings.filter({ slug: { $ne: FUND_KEY } }),
+    queryKey: ['adminFunds', selectedYear],
+    queryFn: async () => {
+      const allFunds = await base44.entities.FundSettings.filter({ slug: { $ne: FUND_KEY } });
+      if (!selectedYear) return allFunds;
+      // Filter funds by fiscal year if they have start_date and end_date
+      return allFunds.filter(f => {
+        if (!f.start_date || !f.end_date) return true;
+        const fundYear = new Date(f.start_date).getFullYear().toString();
+        return fundYear === selectedYear;
+      });
+    },
   });
 
   const [editingFundId, setEditingFundId] = useState(null);
@@ -332,7 +343,7 @@ export default function GivingManager() {
         <div className="p-4 rounded-xl border border-border bg-secondary/30 space-y-3">
           <div className="flex items-center justify-between">
             <span className="font-body text-xs uppercase tracking-widest text-muted-foreground">Live Preview</span>
-            <span className="font-body text-xs text-muted-foreground">{pctOfYear}% through {now.getFullYear()}</span>
+            <span className="font-body text-xs text-muted-foreground">{isCurrentYear ? `${pctOfYear}% through` : ''} {displayYear}</span>
           </div>
           <div className="relative h-3 bg-border rounded-full overflow-hidden">
             <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/50 z-10" style={{ left: `${pctOfYear}%` }} />

@@ -547,7 +547,7 @@ export default function Admin() {
                 </div>
               </div>
             )}
-            {financesTab === 'budget' && <GivingManager />}
+            {financesTab === 'budget' && <GivingManager selectedYear={selectedYear} />}
           </div>
         )}
 
