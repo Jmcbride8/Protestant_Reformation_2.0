@@ -27,22 +27,27 @@ const CustomTooltip = ({ active, payload, totalBudget }) => {
   return null;
 };
 
-export default function BudgetChart({ totalBudget: totalBudgetProp }) {
-  const { data: allocations = [] } = useQuery({
-    queryKey: ['budgetAllocations'],
-    queryFn: () => base44.entities.BudgetAllocation.list('sort_order', 50),
-  });
+export default function BudgetChart({ fund, totalRaised }) {
+  // If fund has itemization, use it; otherwise use fallback
+  const itemization = fund?.itemization || [];
+  const totalBudget = itemization.reduce((sum, item) => sum + (item.amount || 0), 0) || 250000;
 
-  const { data: fundSettings = [] } = useQuery({
-    queryKey: ['fundSettings'],
-    queryFn: () => base44.entities.FundSettings.filter({ key: 'annual_fund' }),
-  });
-
-  const fundRecord = fundSettings[0];
-  const totalBudget = fundRecord?.goal ?? totalBudgetProp ?? 250000;
-
-  const data = allocations.length > 0
-    ? allocations.map(a => ({ name: a.name, value: Number(a.percentage), color: a.color || 'hsl(224, 52%, 23%)' }))
+  const data = itemization.length > 0
+    ? itemization.map((item, idx) => {
+        const percentage = totalBudget > 0 ? Math.round((item.amount / totalBudget) * 100) : 0;
+        return {
+          name: item.label,
+          value: percentage,
+          amount: item.amount,
+          color: [
+            'hsl(224, 52%, 23%)',
+            'hsl(38, 45%, 60%)',
+            'hsl(224, 30%, 50%)',
+            'hsl(38, 60%, 75%)',
+            'hsl(224, 20%, 70%)',
+          ][idx % 5],
+        };
+      })
     : FALLBACK.map(a => ({ name: a.name, value: a.percentage, color: a.color }));
 
   return (
@@ -67,23 +72,20 @@ export default function BudgetChart({ totalBudget: totalBudgetProp }) {
         </PieChart>
       </ResponsiveContainer>
       <div className="flex flex-col gap-2 mt-6">
-        {data.map((item, index) => {
-          const dollars = totalBudget ? Math.round((item.value / 100) * totalBudget) : null;
-          return (
-            <div key={index} className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 min-w-0">
-                <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
-                <span className="font-body text-xs text-muted-foreground truncate">{item.name}</span>
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                {dollars !== null && (
-                  <span className="font-body text-xs font-medium text-primary">${dollars.toLocaleString()}</span>
-                )}
-                <span className="font-body text-xs text-muted-foreground">({item.value}%)</span>
-              </div>
+        {data.map((item, index) => (
+          <div key={index} className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+              <span className="font-body text-xs text-muted-foreground truncate">{item.name}</span>
             </div>
-          );
-        })}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              {item.amount !== undefined && (
+                <span className="font-body text-xs font-medium text-primary">${item.amount.toLocaleString()}</span>
+              )}
+              <span className="font-body text-xs text-muted-foreground">({item.value}%)</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

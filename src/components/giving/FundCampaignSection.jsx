@@ -23,7 +23,7 @@ function FundCard({ fund }) {
    });
 
   const totalRaised = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
-  const goal = fund.goal ?? 0;
+  const goal = fund.itemization?.reduce((sum, item) => sum + (item.amount || 0), 0) || 0;
 
   const handlePledge = async (e) => {
     e.preventDefault();
@@ -173,16 +173,14 @@ function FundCard({ fund }) {
   );
 }
 
-export default function FundCampaignSection() {
-  const { data: funds = [] } = useQuery({
-    queryKey: ['activeFundSettings'],
-    queryFn: async () => {
-      const allFunds = await base44.entities.FundSettings.list('sort_order', 50);
-      return allFunds.filter(f => f.status === 'active' || f.status === undefined);
-    },
-  });
-
-  if (funds.length === 0) return null;
+export default function FundCampaignSection({ funds = [] }) {
+  if (funds.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-24 text-center">
+        <p className="font-body text-muted-foreground">No active campaigns at this time.</p>
+      </div>
+    );
+  }
 
   return (
     <>
