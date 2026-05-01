@@ -26,42 +26,37 @@ export default function VisionBackground({ isAdmin }) {
           />
         </motion.div>
 
-        {/* Personal profile */}
+        {/* Why I Built This */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-card border border-border rounded-2xl p-8 mb-10 flex flex-col md:flex-row gap-8 items-start"
+          className="mb-16"
         >
-          <div className="flex-shrink-0 w-36 h-36 rounded-full overflow-hidden bg-muted group/editimg">
-            <EditableImage
-              imageKey="vision_creator_photo"
-              src={null}
-              alt="Creator photo"
-              className="w-full h-full object-cover"
-              wrapperClassName="relative w-full h-full"
-              isAdmin={isAdmin}
-            />
-          </div>
-          <div className="flex-1">
-            <p className="font-body text-xs tracking-widest uppercase text-accent mb-2">Why I Built This</p>
+          <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Why I Built This</p>
+          <h3 className="font-heading text-2xl text-primary mb-6">The Problem I Saw</h3>
+          
+          <div className="space-y-6 mb-8">
             <EditableText
               storageKey="bg_para1"
               defaultText="My relationship with church has always been relational before institutional. A formative experience to my relationship with church was joining VIVE Church in San Jose when it was just twenty people gathering with a shared conviction that something meaningful was possible. Watching it grow was extraordinary. But growth, unchecked by intentional relational infrastructure, imposed a quiet cost: the larger a congregation became, the easier it was for individuals to become anonymous and new members to feel disconnected."
-              className="font-body text-muted-foreground leading-relaxed mb-4"
+              className="font-body text-muted-foreground leading-relaxed bg-card border border-border rounded-2xl p-6"
               isAdmin={isAdmin}
             />
             <EditableText
               storageKey="bg_para2"
               defaultText="Having worked in startups, that observation wasn't unique to church — as is often the case, people tend to feel nostalgic about earlier times when the organization was smaller and relationships more organic. The Sunday service, the worship, the teaching — these are irreplaceable. What this site attempts to add is the connective tissue in between: the midweek ride to church, the meal offered to a family in need, the small group that becomes a second family. It's not about doing church differently. It's about doing more of what church has always done best — caring for people — and giving that care a practical, accessible home online and an emphasis on the main page as a reminder to ourselves to keep the main thing the main thing."
-              className="font-body text-muted-foreground leading-relaxed mb-4"
+              className="font-body text-muted-foreground leading-relaxed bg-card border border-border rounded-2xl p-6"
               isAdmin={isAdmin}
             />
+          </div>
+
+          <div className="bg-primary rounded-2xl p-8 text-white">
             <EditableText
               storageKey="bg_quote"
-              defaultText={`"The goal was never to replace what's sacred about gathering together. It was to extend it into the six days between Sundays."`}
-              className="font-body text-muted-foreground leading-relaxed italic"
+              defaultText={`"I wanted to use my skillset in technology to create a digital platform that solves what the physical space cannot: turning rows into circles. A way to blend the best of both competing models — the scale and inspiration of gathered worship, and the intimacy and care of small community."`}
+              className="font-body leading-relaxed italic text-white/90"
               isAdmin={isAdmin}
             />
           </div>
