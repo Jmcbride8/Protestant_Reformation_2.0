@@ -108,10 +108,10 @@ export default function VisionInPractice({ isAdmin }) {
             {/* Giving Modes Illustration */}
             <div className="mb-12">
               <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/60 mb-5">Three Modes of Giving</p>
-              <div className="grid grid-cols-3 gap-0">
+              <div className="grid grid-cols-3 gap-0 divide-x divide-white/10">
 
                 {/* Mode 1: Church Only */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                <div className="p-5 text-center">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Traditional</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* Church building */}
@@ -133,7 +133,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 2: Groups */}
-                <div className="bg-white/5 border border-accent/30 rounded-2xl p-5 text-center ring-1 ring-accent/20">
+                <div className="p-5 text-center">
                   <p className="font-body text-xs text-accent/80 uppercase tracking-widest mb-4">Groups</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* Church at top */}
@@ -164,7 +164,7 @@ export default function VisionInPractice({ isAdmin }) {
                 </div>
 
                 {/* Mode 3: Peer-to-Peer */}
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+                <div className="p-5 text-center">
                   <p className="font-body text-xs text-white/40 uppercase tracking-widest mb-4">Peer-to-Peer</p>
                   <svg viewBox="0 0 100 90" className="w-full h-24 mx-auto" fill="none">
                     {/* People constellation with mutual arrows */}
@@ -203,7 +203,7 @@ export default function VisionInPractice({ isAdmin }) {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 divide-x divide-white/10">
               {groupFeatures.map((f, i) => (
                 <motion.div
                   key={f.title}
@@ -211,7 +211,8 @@ export default function VisionInPractice({ isAdmin }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="relative h-full bg-white/8 border border-white/15 rounded-2xl p-6 overflow-hidden"
+                  className="relative h-full p-6 overflow-hidden"
+                  style={{ paddingLeft: i === 0 ? '0' : 'undefined' }}
                 >
                   {/* Roman numeral watermark */}
                   <span className="absolute top-4 right-5 font-heading text-3xl font-bold text-white/8 select-none pointer-events-none">
