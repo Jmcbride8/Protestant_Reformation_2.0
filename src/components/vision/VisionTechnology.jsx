@@ -28,7 +28,7 @@ const advantages = [
 
 export default function VisionTechnology({ isAdmin }) {
   return (
-    <section className="py-24 px-4 bg-primary text-primary-foreground">
+    <section className="py-16 px-4 bg-primary text-primary-foreground">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
