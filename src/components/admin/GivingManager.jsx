@@ -181,7 +181,14 @@ export default function GivingManager({ selectedYear }) {
     },
   });
 
-  const handleSaveFund = (id, data) => {
+  const handleSaveFund = async (id, data) => {
+    // If marking this as annual budget, unset all others
+    if (data.is_annual_budget) {
+      const otherFunds = funds.filter(f => f.id !== (id === 'new' ? null : id) && f.is_annual_budget);
+      for (const fund of otherFunds) {
+        await base44.entities.FundSettings.update(fund.id, { is_annual_budget: false });
+      }
+    }
     fundSaveMutation.mutate({ id, data: { ...data, goal: (data.itemization || []).reduce((s, i) => s + parseFloat(i.amount || 0), 0) } });
   };
 
@@ -238,14 +245,20 @@ export default function GivingManager({ selectedYear }) {
                 </select>
               </div>
               <div className="space-y-1.5">
-                <Label className="font-body text-xs text-muted-foreground">Fiscal Year Start</Label>
-                <Input type="date" value={fundForm.start_date} onChange={e => setFundForm(f => ({ ...f, start_date: e.target.value }))} className="font-body text-sm" />
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={fundForm.is_annual_budget || false} onChange={e => setFundForm(f => ({ ...f, is_annual_budget: e.target.checked }))} className="w-4 h-4 rounded border border-input" />
+                  <span className="font-body text-xs text-muted-foreground">Mark as Annual Budget</span>
+                </label>
               </div>
               <div className="space-y-1.5">
-                <Label className="font-body text-xs text-muted-foreground">Fiscal Year End</Label>
-                <Input type="date" value={fundForm.end_date} onChange={e => setFundForm(f => ({ ...f, end_date: e.target.value }))} className="font-body text-sm" />
+              <Label className="font-body text-xs text-muted-foreground">Fiscal Year Start</Label>
+              <Input type="date" value={fundForm.start_date} onChange={e => setFundForm(f => ({ ...f, start_date: e.target.value }))} className="font-body text-sm" />
               </div>
-            </div>
+              <div className="space-y-1.5">
+              <Label className="font-body text-xs text-muted-foreground">Fiscal Year End</Label>
+              <Input type="date" value={fundForm.end_date} onChange={e => setFundForm(f => ({ ...f, end_date: e.target.value }))} className="font-body text-sm" />
+              </div>
+              </div>
 
             <ItemizationEditor 
               items={fundForm.itemization || []} 
@@ -313,6 +326,7 @@ export default function GivingManager({ selectedYear }) {
                         <div className="flex items-center gap-2 flex-wrap">
                                  <span className="font-heading text-base text-primary">{fund.name}</span>
                                  <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
+                                 {fund.is_annual_budget && <span className="font-body text-xs px-2 py-0.5 rounded bg-accent text-accent-foreground font-semibold">Annual Budget</span>}
                                  <select 
                                    value={fund.status || 'active'} 
                                    onChange={(e) => fundSaveMutation.mutate({ id: fund.id, data: { ...fund, status: e.target.value } })}

@@ -18,6 +18,11 @@
       "type": "number",
       "description": "Annual fundraising goal in dollars"
     },
+    "is_annual_budget": {
+      "type": "boolean",
+      "default": false,
+      "description": "Marks this as the church's annual budget fund"
+    },
     "status": {
       "type": "string",
       "enum": [
