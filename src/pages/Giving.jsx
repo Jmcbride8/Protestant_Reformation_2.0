@@ -39,7 +39,10 @@ export default function Giving() {
 
   const { data: allFunds = [] } = useQuery({
     queryKey: ['allFundSettings'],
-    queryFn: () => base44.entities.FundSettings.filter({ is_active: true }, 'sort_order', 50),
+    queryFn: async () => {
+      const funds = await base44.entities.FundSettings.list('sort_order', 50);
+      return funds.filter(f => f.status === 'active' || f.status === undefined);
+    },
   });
 
   const annualFund = allFunds.find(f => f.slug === 'annual_fund');

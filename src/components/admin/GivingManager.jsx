@@ -242,7 +242,9 @@ export default function GivingManager() {
     name: '',
     slug: '',
     description: '',
-    is_active: true,
+    status: 'active',
+    start_date: new Date().toISOString().split('T')[0],
+    end_date: new Date(new Date().getFullYear(), 11, 31).toISOString().split('T')[0],
     itemization: [],
     sort_order: 0,
   };
@@ -496,10 +498,19 @@ export default function GivingManager() {
               </div>
               <div className="space-y-1.5">
                 <Label className="font-body text-xs text-muted-foreground">Status</Label>
-                <div className="flex items-center gap-3 mt-2">
-                  <input type="checkbox" id="fund_active" checked={fundForm.is_active} onChange={e => setFundForm(f => ({ ...f, is_active: e.target.checked }))} className="w-4 h-4 accent-primary" />
-                  <label htmlFor="fund_active" className="font-body text-sm text-foreground cursor-pointer">Active (accepting donations)</label>
-                </div>
+                <select value={fundForm.status || 'active'} onChange={e => setFundForm(f => ({ ...f, status: e.target.value }))} className="w-full font-body text-sm px-3 py-1.5 rounded border border-input bg-background">
+                  <option value="pending">Pending</option>
+                  <option value="active">Active</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="font-body text-xs text-muted-foreground">Fiscal Year Start</Label>
+                <Input type="date" value={fundForm.start_date} onChange={e => setFundForm(f => ({ ...f, start_date: e.target.value }))} className="font-body text-sm" />
+              </div>
+              <div className="space-y-1.5">
+                <Label className="font-body text-xs text-muted-foreground">Fiscal Year End</Label>
+                <Input type="date" value={fundForm.end_date} onChange={e => setFundForm(f => ({ ...f, end_date: e.target.value }))} className="font-body text-sm" />
               </div>
             </div>
 
@@ -558,12 +569,12 @@ export default function GivingManager() {
                   <div className="flex items-center justify-between px-5 py-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-heading text-base text-primary">{fund.name}</span>
-                        <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
-                        {fund.is_active
-                          ? <Badge className="bg-green-100 text-green-700 font-body text-xs">Active</Badge>
-                          : <Badge variant="secondary" className="font-body text-xs">Inactive</Badge>}
-                      </div>
+                          <span className="font-heading text-base text-primary">{fund.name}</span>
+                          <span className="font-body text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded">{fund.slug}</span>
+                          <Badge className={`font-body text-xs ${fund.status === 'active' ? 'bg-green-100 text-green-700' : fund.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}`}>
+                            {fund.status?.charAt(0).toUpperCase() + fund.status?.slice(1) || 'Active'}
+                          </Badge>
+                        </div>
                       {fund.description && <p className="font-body text-xs text-muted-foreground mt-0.5">{fund.description}</p>}
                       {fund.itemization?.length > 0 && <p className="font-body text-xs text-accent mt-0.5">Goal: ${fund.itemization.reduce((s, i) => s + parseFloat(i.amount || 0), 0).toLocaleString()}</p>}
                     </div>

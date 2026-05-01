@@ -50,6 +50,7 @@ export default function Admin() {
   const [financesTab, setFinancesTab] = useState('donations');
   const [staffTab, setStaffTab] = useState('kanban');
   const [donationFilters, setDonationFilters] = useState({ year: '', fund: '', donor: '' });
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -475,13 +476,22 @@ export default function Admin() {
         )}
 
         {/* Finances */}
-        {adminSection === 'finances' && (
-          <div className="space-y-6">
-            {financesTab === 'donations' && (
-              <div className="space-y-6">
-                <DonationKPIs donations={filteredDonations} />
-                <DonationMonthlyChart donations={filteredDonations} />
-                <div className="space-y-4">
+         {adminSection === 'finances' && (
+           <div className="space-y-6">
+             {/* Year Toggle */}
+             <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-4">
+               <span className="font-body text-sm text-muted-foreground">Fiscal Year:</span>
+               <div className="flex gap-2">
+                 <Button variant={selectedYear === (parseInt(selectedYear) - 1).toString() ? "default" : "outline"} size="sm" onClick={() => setSelectedYear((parseInt(selectedYear) - 1).toString())} className="font-body">← {parseInt(selectedYear) - 1}</Button>
+                 <Button variant="default" size="sm" disabled className="font-body font-semibold">{selectedYear}</Button>
+                 <Button variant={selectedYear === (parseInt(selectedYear) + 1).toString() ? "default" : "outline"} size="sm" onClick={() => setSelectedYear((parseInt(selectedYear) + 1).toString())} className="font-body">{parseInt(selectedYear) + 1} →</Button>
+               </div>
+             </div>
+             {financesTab === 'donations' && (
+               <div className="space-y-6">
+                 <DonationKPIs donations={filteredDonations} />
+                 <DonationMonthlyChart donations={filteredDonations} />
+                 <div className="space-y-4">
                   <div className="flex gap-4 flex-wrap">
                     <div>
                       <label className="font-body text-sm text-muted-foreground block mb-1">Year</label>

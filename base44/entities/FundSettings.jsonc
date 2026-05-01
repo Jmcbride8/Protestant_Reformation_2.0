@@ -18,10 +18,30 @@
       "type": "number",
       "description": "Annual fundraising goal in dollars"
     },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "closed",
+        "pending"
+      ],
+      "default": "active",
+      "description": "Fund status: active (accepting donations), closed (archived), pending (not yet open)"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fund fiscal year start date (YYYY-MM-DD)"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fund fiscal year end date (YYYY-MM-DD)"
+    },
     "is_active": {
       "type": "boolean",
       "default": true,
-      "description": "Whether this fund is currently accepting donations"
+      "description": "Whether this fund is currently accepting donations (deprecated: use status field instead)"
     },
     "itemization": {
       "type": "array",

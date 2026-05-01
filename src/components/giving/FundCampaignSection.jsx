@@ -176,7 +176,10 @@ function FundCard({ fund }) {
 export default function FundCampaignSection() {
   const { data: funds = [] } = useQuery({
     queryKey: ['activeFundSettings'],
-    queryFn: () => base44.entities.FundSettings.filter({ is_active: true }, 'sort_order', 50),
+    queryFn: async () => {
+      const allFunds = await base44.entities.FundSettings.list('sort_order', 50);
+      return allFunds.filter(f => f.status === 'active' || f.status === undefined);
+    },
   });
 
   if (funds.length === 0) return null;
