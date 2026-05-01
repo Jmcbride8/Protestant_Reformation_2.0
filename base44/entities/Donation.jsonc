@@ -18,17 +18,13 @@
       "type": "number",
       "description": "Donation amount in dollars"
     },
-    "fund": {
+    "fund_id": {
       "type": "string",
-      "enum": [
-        "general",
-        "building_campaign",
-        "missions",
-        "youth",
-        "community_meals",
-        "people"
-      ],
-      "description": "Which fund the donation goes to. 'people' = gift to an individual via Care & Support board."
+      "description": "Reference to FundSettings.id"
+    },
+    "fund_name": {
+      "type": "string",
+      "description": "Cached fund name for display"
     },
     "donation_date": {
       "type": "string",
@@ -37,7 +33,7 @@
     },
     "recipient_name": {
       "type": "string",
-      "description": "Name of the individual recipient for 'people' fund gifts"
+      "description": "Name of the individual recipient for person-to-person giving"
     },
     "is_recurring": {
       "type": "boolean",
@@ -50,6 +46,6 @@
   "required": [
     "donor_name",
     "amount",
-    "fund"
+    "fund_id"
   ]
 }

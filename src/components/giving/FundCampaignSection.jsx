@@ -17,10 +17,10 @@ function FundCard({ fund }) {
    const [submitted, setSubmitted] = useState(false);
 
   // Fetch total donated to this fund
-  const { data: donations = [] } = useQuery({
-    queryKey: ['fundDonations', fund.slug],
-    queryFn: () => base44.entities.Donation.filter({ fund: fund.slug }),
-  });
+   const { data: donations = [] } = useQuery({
+     queryKey: ['fundDonations', fund.id],
+     queryFn: () => base44.entities.Donation.filter({ fund_id: fund.id }),
+   });
 
   const totalRaised = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
   const goal = fund.goal ?? 0;
@@ -31,7 +31,8 @@ function FundCard({ fund }) {
       donor_name: name,
       donor_email: email,
       amount: parseFloat(amount),
-      fund: fund.slug,
+      fund_id: fund.id,
+      fund_name: fund.name,
       donation_date: new Date().toISOString().split('T')[0],
       is_recurring: frequency !== 'one_time',
       notes: frequency !== 'one_time' ? `Recurring: ${frequency}` : '',

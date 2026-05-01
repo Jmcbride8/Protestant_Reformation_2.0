@@ -18,7 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function Giving() {
   const [activeTab, setActiveTab] = useState('budget');
   const [user, setUser] = useState(null);
-  const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fund: 'general', frequency: 'one_time' });
+  const [donationForm, setDonationForm] = useState({ name: '', email: '', amount: '', fundId: '', frequency: 'one_time' });
   const [donationSubmitted, setDonationSubmitted] = useState(false);
   const { isEnabled } = useFeatures();
 
@@ -26,13 +26,27 @@ export default function Giving() {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
-  const { data: fundSettings = [] } = useQuery({
-    queryKey: ['fundSettings'],
-    queryFn: () => base44.entities.FundSettings.filter({ key: 'annual_fund' }),
+  useEffect(() => {
+    // Set default fundId when funds load
+    if (allFunds.length > 0 && !donationForm.fundId) {
+      const annualFund = allFunds.find(f => f.slug === 'annual_fund');
+      setDonationForm(prev => ({
+        ...prev,
+        fundId: annualFund?.id || allFunds[0].id
+      }));
+    }
+  }, [allFunds]);
+
+  const { data: allFunds = [] } = useQuery({
+    queryKey: ['allFundSettings'],
+    queryFn: () => base44.entities.FundSettings.filter({ is_active: true }, 'sort_order', 50),
   });
-  const fundRecord = fundSettings[0];
-  const fundGoal = fundRecord?.goal ?? 250000;
-  const fundCurrent = fundRecord?.current ?? 187000;
+
+  const annualFund = allFunds.find(f => f.slug === 'annual_fund');
+  const fundGoal = annualFund?.goal ?? 250000;
+  const fundCurrent = annualFund?.current ?? 187000;
+  
+  const defaultFundId = annualFund?.id || '';
 
   // Look up the member's profile to find their group
   const { data: memberProfiles = [] } = useQuery({
@@ -54,11 +68,14 @@ export default function Giving() {
 
   const handleDonation = async (e) => {
     e.preventDefault();
+    const selectedFund = allFunds.find(f => f.id === donationForm.fundId);
     await base44.entities.Donation.create({
       donor_name: donationForm.name,
       donor_email: donationForm.email,
       amount: parseFloat(donationForm.amount),
-      fund: donationForm.fund,
+      fund_id: donationForm.fundId,
+      fund_name: selectedFund?.name || '',
+      donation_date: new Date().toISOString().split('T')[0],
       is_recurring: donationForm.frequency !== 'one_time',
       notes: donationForm.frequency !== 'one_time' ? `Recurring: ${donationForm.frequency}` : '',
     });
@@ -128,7 +145,7 @@ export default function Giving() {
                     <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
                     <h3 className="font-heading text-2xl text-primary mb-2">Thank You!</h3>
                     <p className="font-body text-muted-foreground">Your gift has been recorded. You'll receive a receipt by email.</p>
-                    <Button className="mt-6 font-body" onClick={() => { setDonationSubmitted(false); setDonationForm({ name: '', email: '', amount: '', fund: 'general', frequency: 'one_time' }); }}>
+                    <Button className="mt-6 font-body" onClick={() => { setDonationSubmitted(false); setDonationForm({ name: '', email: '', amount: '', fundId: defaultFundId, frequency: 'one_time' }); }}>
                       Make Another Gift
                     </Button>
                   </motion.div>
@@ -146,14 +163,12 @@ export default function Giving() {
                     </div>
                     <div className="space-y-2">
                       <Label className="font-body text-sm">Fund</Label>
-                      <Select value={donationForm.fund} onValueChange={(val) => setDonationForm({ ...donationForm, fund: val })}>
-                        <SelectTrigger className="font-body"><SelectValue /></SelectTrigger>
+                      <Select value={donationForm.fundId} onValueChange={(val) => setDonationForm({ ...donationForm, fundId: val })}>
+                        <SelectTrigger className="font-body"><SelectValue placeholder="Select a fund" /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="general">General Fund</SelectItem>
-                          <SelectItem value="building_campaign">Building Renovation</SelectItem>
-                          <SelectItem value="missions">Missions & Outreach</SelectItem>
-                          <SelectItem value="youth">Youth Ministry</SelectItem>
-                          <SelectItem value="community_meals">Community Meals</SelectItem>
+                          {allFunds.map(fund => (
+                            <SelectItem key={fund.id} value={fund.id}>{fund.name}</SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
