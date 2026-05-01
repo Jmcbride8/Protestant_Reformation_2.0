@@ -169,6 +169,20 @@ export default function GivingManager({ selectedYear }) {
     },
   });
 
+  const { data: donations = [] } = useQuery({
+    queryKey: ['donations', selectedYear, record?.id],
+    queryFn: async () => {
+      if (!record) return [];
+      const year = parseInt(selectedYear) || new Date().getFullYear();
+      const startOfYear = new Date(year, 0, 1).toISOString().split('T')[0];
+      const endOfYear = new Date(year + 1, 0, 0).toISOString().split('T')[0];
+      return base44.entities.Donation.filter({
+        fund_id: record.id,
+        donation_date: { $gte: startOfYear, $lte: endOfYear }
+      });
+    },
+  });
+
   const record = settings[0] || null;
 
   const [goal, setGoal] = useState('');
@@ -182,7 +196,8 @@ export default function GivingManager({ selectedYear }) {
   useEffect(() => {
     if (record) {
       setGoal(String(record.goal || ''));
-      setCurrent(String(record.current || ''));
+      const totalDonated = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
+      setCurrent(String(totalDonated));
       setStartDate(record.start_date || '');
       setEndDate(record.end_date || '');
     } else {
@@ -191,7 +206,7 @@ export default function GivingManager({ selectedYear }) {
       setStartDate('');
       setEndDate('');
     }
-  }, [record]);
+  }, [record, donations]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -360,10 +375,10 @@ export default function GivingManager({ selectedYear }) {
             <Input
               type="number"
               value={current}
-              onChange={e => setCurrent(e.target.value)}
-              placeholder="187000"
+              disabled
               className="font-body"
             />
+            <p className="font-body text-xs text-muted-foreground">Auto-calculated from donations</p>
           </div>
           <div className="space-y-2">
             <Label className="font-body text-sm">Fiscal Year Start</Label>
