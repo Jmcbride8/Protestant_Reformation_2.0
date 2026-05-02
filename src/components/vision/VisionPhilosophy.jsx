@@ -104,7 +104,7 @@ export default function VisionPhilosophy({ isAdmin }) {
             <p className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-1">Church & Programs</p>
             <h3 className="font-heading text-xl text-primary mb-4">Rows</h3>
             <RowsIllustration />
-            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Audience. Passive. Anonymous.</p>
+            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Audience. Passive. Teaching.</p>
           </div>
 
           {/* Circles */}
@@ -112,7 +112,7 @@ export default function VisionPhilosophy({ isAdmin }) {
             <p className="font-body text-xs tracking-[0.2em] uppercase text-accent/70 mb-1">Groups & Relationships</p>
             <h3 className="font-heading text-xl text-primary mb-4">Circles</h3>
             <CirclesIllustration />
-            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Family. Known. Accountable.</p>
+            <p className="font-body text-xs text-muted-foreground mt-4 leading-relaxed">Family. Engaged. Accountable.</p>
           </div>
         </motion.div>
 
