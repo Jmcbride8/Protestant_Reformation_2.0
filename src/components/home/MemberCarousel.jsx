@@ -199,10 +199,11 @@ export default function MemberCarousel({ isAdmin }) {
         </div>
 
         {/* CTA below carousel */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-14">
+          <p className="font-body text-muted-foreground text-sm mb-5">Ready to go deeper? Membership is the next step.</p>
           <Link to="/contact">
-            <Button className="font-body bg-primary hover:bg-primary/90 gap-2">
-              <UserPlus className="w-4 h-4" />
+            <Button size="lg" className="font-body bg-primary hover:bg-primary/90 gap-2 text-base px-8 py-6 shadow-lg hover:shadow-xl transition-shadow">
+              <UserPlus className="w-5 h-5" />
               Become a Member
             </Button>
           </Link>
