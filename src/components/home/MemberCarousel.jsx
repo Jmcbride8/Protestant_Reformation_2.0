@@ -113,7 +113,7 @@ export default function MemberCarousel({ isAdmin }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
               className="rounded-2xl overflow-hidden text-left shadow-2xl cursor-pointer relative w-full"
-              style={{ aspectRatio: '3/4' }}
+              style={{ aspectRatio: '2/3' }}
             >
               <EditableImage
                 imageKey={`member_${members[current].name.toLowerCase().replace(/\s+/g, '_')}`}
@@ -137,7 +137,7 @@ export default function MemberCarousel({ isAdmin }) {
           </div>
 
           {/* Desktop: three-card carousel */}
-          <div className="hidden sm:flex gap-5 overflow-hidden w-full max-w-4xl">
+          <div className="hidden sm:flex gap-5 overflow-hidden w-full max-w-5xl">
             {visible.map((member, i) => (
               <motion.div
                 key={member.id || member.name}
@@ -153,7 +153,7 @@ export default function MemberCarousel({ isAdmin }) {
                     ? 'shadow-2xl cursor-pointer hover:shadow-2xl'
                     : 'cursor-default pointer-events-none'
                 }`}
-                style={{ aspectRatio: '3/4' }}
+                style={{ aspectRatio: '2/3' }}
               >
                 <EditableImage
                   imageKey={`member_${member.name.toLowerCase().replace(/\s+/g, '_')}`}
