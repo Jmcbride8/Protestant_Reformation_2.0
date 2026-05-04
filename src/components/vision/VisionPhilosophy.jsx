@@ -151,12 +151,7 @@ export default function VisionPhilosophy({ isAdmin }) {
               className="font-body text-muted-foreground leading-relaxed mb-4"
               isAdmin={isAdmin}
             />
-            <EditableText
-              storageKey="philosophy_federation2"
-              defaultText="The same instinct runs through the New Testament church. Not a centralized hierarchy issuing directives — but a network of local congregations, each led by elders, each caring for its own, each connected to something larger. Intimacy at the local level. Scale across the network."
-              className="font-body text-muted-foreground leading-relaxed"
-              isAdmin={isAdmin}
-            />
+
           </div>
         </motion.div>
 
