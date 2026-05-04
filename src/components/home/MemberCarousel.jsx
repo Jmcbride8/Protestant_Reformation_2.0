@@ -94,7 +94,7 @@ export default function MemberCarousel({ isAdmin }) {
   };
 
   return (
-    <section className="py-24" style={{ background: '#F5F0E8' }}>
+    <section className="py-24 bg-secondary/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -104,7 +104,8 @@ export default function MemberCarousel({ isAdmin }) {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="font-heading text-5xl sm:text-6xl text-primary">Who You'll Meet</h2>
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-2">Our Community</p>
+          <h2 className="font-heading text-4xl sm:text-5xl text-primary">Who You'll Meet</h2>
         </motion.div>
 
         {/* Fan carousel */}
@@ -142,20 +143,17 @@ export default function MemberCarousel({ isAdmin }) {
                     cursor: isCenter ? 'pointer' : 'default',
                   }}
                 >
-                  {/* Rainbow border wrapper for center card */}
+                  {/* Card border/shadow */}
                   <div
+                    className={isCenter ? 'ring-1 ring-accent/30' : ''}
                     style={{
-                      padding: isCenter ? 2.5 : 0,
-                      borderRadius: 28,
-                      background: isCenter
-                        ? 'linear-gradient(135deg, #a8edea 0%, #fed6e3 35%, #c3b1e1 65%, #a8edea 100%)'
-                        : 'transparent',
+                      borderRadius: 24,
                       boxShadow: isCenter
-                        ? '0 24px 64px rgba(0,0,0,0.16)'
-                        : '0 8px 24px rgba(0,0,0,0.08)',
+                        ? '0 24px 64px rgba(0,0,0,0.13)'
+                        : '0 6px 20px rgba(0,0,0,0.07)',
                     }}
                   >
-                    <div className="bg-white overflow-hidden" style={{ borderRadius: isCenter ? 26 : 24 }}>
+                    <div className="bg-card overflow-hidden" style={{ borderRadius: 24 }}>
                       {/* Photo */}
                       <div className="relative overflow-hidden" style={{ height: 300 }}>
                         <EditableImage
@@ -169,6 +167,9 @@ export default function MemberCarousel({ isAdmin }) {
                       </div>
                       {/* Text */}
                       <div className="p-5 pb-6">
+                        {isCenter && (
+                          <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-1">Member Story</p>
+                        )}
                         <h4 className="font-heading text-xl text-primary leading-tight mb-2">{member.name}</h4>
                         <p className="font-body text-sm text-muted-foreground leading-relaxed line-clamp-3">
                           "{member.short_quote}"
@@ -191,16 +192,23 @@ export default function MemberCarousel({ isAdmin }) {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-14">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-14"
+        >
+          <p className="font-body text-muted-foreground mb-5">Ready to find your people?</p>
           <Link to="/contact">
             <Button
               size="lg"
-              className="font-body bg-primary hover:bg-primary/90 gap-2 text-base px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+              className="font-body bg-primary hover:bg-primary/90 gap-2 text-base px-10 font-medium tracking-wide"
             >
+              <UserPlus className="w-4 h-4" />
               Become a Member
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </div>
 
       {/* Profile Dialog */}
@@ -212,9 +220,10 @@ export default function MemberCarousel({ isAdmin }) {
                 <img
                   src={selected.image_url}
                   alt={selected.name}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-accent/30"
+                  className="w-20 h-20 rounded-full object-cover ring-2 ring-accent/30"
                 />
                 <div>
+                  <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-1">Member Story</p>
                   <h3 className="font-heading text-2xl text-primary">{selected.name}</h3>
                   <p className="font-body text-sm text-muted-foreground">{selected.profession}</p>
                 </div>
@@ -227,9 +236,9 @@ export default function MemberCarousel({ isAdmin }) {
                   </div>
                 )}
                 {selected.why_hope && (
-                  <div className="border-t pt-4">
+                  <div className="border-t border-border pt-4">
                     <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Why Hope Church?</p>
-                    <p className="font-body text-sm text-foreground leading-relaxed italic">"{selected.why_hope}"</p>
+                    <blockquote className="border-l-2 border-accent pl-4 font-heading text-primary/80 italic leading-relaxed">"{selected.why_hope}"</blockquote>
                   </div>
                 )}
               </div>
