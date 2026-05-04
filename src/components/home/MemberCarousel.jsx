@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -56,6 +56,16 @@ const FALLBACK_MEMBERS = [
   },
 ];
 
+// Card configs: [farLeft, left, center, right, farRight]
+// x is in px offset from center
+const CARD_CONFIGS = [
+  { x: -420, rotate: -16, scale: 0.68, opacity: 0.40, zIndex: 1 },
+  { x: -210, rotate: -8,  scale: 0.82, opacity: 0.62, zIndex: 2 },
+  { x: 0,    rotate: 0,   scale: 1,    opacity: 1,    zIndex: 5 },
+  { x: 210,  rotate: 8,   scale: 0.82, opacity: 0.62, zIndex: 2 },
+  { x: 420,  rotate: 16,  scale: 0.68, opacity: 0.40, zIndex: 1 },
+];
+
 export default function MemberCarousel({ isAdmin }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -75,135 +85,118 @@ export default function MemberCarousel({ isAdmin }) {
     setCurrent(prev => (prev + dir + members.length) % members.length);
   };
 
-  const visible = [
-    members[(current - 1 + members.length) % members.length],
-    members[current],
-    members[(current + 1) % members.length],
-  ];
+  // Get 5 visible members centered around current
+  const getVisible = () => {
+    return [-2, -1, 0, 1, 2].map(offset => ({
+      member: members[(current + offset + members.length) % members.length],
+      offset,
+    }));
+  };
 
   return (
-    <section className="py-24 bg-secondary/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24" style={{ background: '#F5F0E8' }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real People, Real Life</p>
-          <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Who You'll Meet</h2>
-
+          <h2 className="font-heading text-5xl sm:text-6xl text-primary">Who You'll Meet</h2>
         </motion.div>
 
-        {/* Carousel */}
-        <div className="relative flex items-center justify-center gap-3 sm:gap-5">
+        {/* Fan carousel */}
+        <div className="relative flex items-center justify-center" style={{ height: 560 }}>
+
+          {/* Left arrow */}
           <button
             onClick={() => go(-1)}
-            className="z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-border shadow-md flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
+            className="absolute left-2 z-20 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
           >
             <ChevronLeft className="w-5 h-5 text-primary" />
           </button>
 
-          {/* Mobile: single full-width card */}
-          <div className="sm:hidden w-full max-w-sm mx-auto">
-            <motion.div
-              key={members[current].id || members[current].name}
-              onClick={() => setSelected(members[current])}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="rounded-2xl overflow-hidden text-left shadow-2xl cursor-pointer relative w-full"
-              style={{ aspectRatio: '2/3' }}
-            >
-              <EditableImage
-                imageKey={`member_${members[current].name.toLowerCase().replace(/\s+/g, '_')}`}
-                src={members[current].image_url}
-                alt={members[current].name}
-                className="absolute inset-0 w-full h-full object-cover"
-                isAdmin={isAdmin}
-                wrapperClassName="absolute inset-0 group/editimg"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h4 className="font-heading text-2xl text-white leading-tight">{members[current].name}</h4>
-                <p className="font-body text-sm text-white/70 mb-3">{members[current].profession}</p>
-                <Quote className="w-5 h-5 text-accent/80 mb-1" />
-                <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-3">
-                  {members[current].short_quote}
-                </p>
-                <p className="font-body text-sm text-accent mt-3 font-medium">Tap to read their story →</p>
-              </div>
-            </motion.div>
+          {/* Cards */}
+          <div className="relative w-full flex items-center justify-center" style={{ height: 540 }}>
+            {getVisible().map(({ member, offset }, i) => {
+              const cfg = CARD_CONFIGS[i];
+              const isCenter = offset === 0;
+              return (
+                <motion.div
+                  key={member.id || member.name}
+                  animate={{
+                    x: cfg.x,
+                    rotate: cfg.rotate,
+                    scale: cfg.scale,
+                    opacity: cfg.opacity,
+                    zIndex: cfg.zIndex,
+                  }}
+                  transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                  onClick={() => isCenter && setSelected(member)}
+                  className="absolute"
+                  style={{
+                    width: 300,
+                    transformOrigin: 'bottom center',
+                    cursor: isCenter ? 'pointer' : 'default',
+                  }}
+                >
+                  {/* Rainbow border wrapper for center card */}
+                  <div
+                    style={{
+                      padding: isCenter ? 2.5 : 0,
+                      borderRadius: 28,
+                      background: isCenter
+                        ? 'linear-gradient(135deg, #a8edea 0%, #fed6e3 35%, #c3b1e1 65%, #a8edea 100%)'
+                        : 'transparent',
+                      boxShadow: isCenter
+                        ? '0 24px 64px rgba(0,0,0,0.16)'
+                        : '0 8px 24px rgba(0,0,0,0.08)',
+                    }}
+                  >
+                    <div className="bg-white overflow-hidden" style={{ borderRadius: isCenter ? 26 : 24 }}>
+                      {/* Photo */}
+                      <div className="relative overflow-hidden" style={{ height: 300 }}>
+                        <EditableImage
+                          imageKey={`member_${member.name.toLowerCase().replace(/\s+/g, '_')}`}
+                          src={member.image_url}
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                          isAdmin={isAdmin && isCenter}
+                          wrapperClassName="w-full h-full group/editimg"
+                        />
+                      </div>
+                      {/* Text */}
+                      <div className="p-5 pb-6">
+                        <h4 className="font-heading text-xl text-primary leading-tight mb-2">{member.name}</h4>
+                        <p className="font-body text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                          "{member.short_quote}"
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* Desktop: three-card carousel */}
-          <div className="hidden sm:flex gap-5 overflow-hidden w-full max-w-5xl">
-            {visible.map((member, i) => (
-              <motion.div
-                key={member.id || member.name}
-                onClick={() => i === 1 && setSelected(member)}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{
-                  opacity: i === 1 ? 1 : 0.4,
-                  scale: i === 1 ? 1 : 0.9,
-                }}
-                transition={{ duration: 0.3 }}
-                className={`flex-1 min-w-0 rounded-2xl overflow-hidden text-left transition-all duration-300 relative ${
-                  i === 1
-                    ? 'shadow-2xl cursor-pointer hover:shadow-2xl'
-                    : 'cursor-default pointer-events-none'
-                }`}
-                style={{ aspectRatio: '2/3' }}
-              >
-                <EditableImage
-                  imageKey={`member_${member.name.toLowerCase().replace(/\s+/g, '_')}`}
-                  src={member.image_url}
-                  alt={member.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  isAdmin={isAdmin && i === 1}
-                  wrapperClassName="absolute inset-0 group/editimg"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h4 className="font-heading text-2xl text-white leading-tight">{member.name}</h4>
-                  <p className="font-body text-sm text-white/70 mb-3">{member.profession}</p>
-                  <Quote className="w-5 h-5 text-accent/80 mb-1" />
-                  <p className="font-body text-base text-white/90 leading-relaxed italic line-clamp-2">
-                    {member.short_quote}
-                  </p>
-                  {i === 1 && (
-                    <p className="font-body text-sm text-accent mt-3 font-medium">Click to read their story →</p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
+          {/* Right arrow */}
           <button
             onClick={() => go(1)}
-            className="z-10 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-border shadow-md flex items-center justify-center hover:bg-secondary transition-colors shrink-0"
+            className="absolute right-2 z-20 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
           >
             <ChevronRight className="w-5 h-5 text-primary" />
           </button>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {members.map((m, i) => (
-            <button
-              key={m.id || i}
-              onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
-              className={`w-2 h-2 rounded-full transition-all ${i === current ? 'bg-accent w-5' : 'bg-border'}`}
-            />
-          ))}
-        </div>
-
-        {/* CTA below carousel */}
+        {/* CTA */}
         <div className="text-center mt-14">
-          <p className="font-body text-muted-foreground text-sm mb-5">Ready to go deeper? Membership is the next step.</p>
           <Link to="/contact">
-            <Button size="lg" className="font-body bg-primary hover:bg-primary/90 gap-2 text-base px-8 py-6 shadow-lg hover:shadow-xl transition-shadow">
-              <UserPlus className="w-5 h-5" />
+            <Button
+              size="lg"
+              className="font-body bg-primary hover:bg-primary/90 gap-2 text-base px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+            >
               Become a Member
             </Button>
           </Link>
@@ -226,7 +219,6 @@ export default function MemberCarousel({ isAdmin }) {
                   <p className="font-body text-sm text-muted-foreground">{selected.profession}</p>
                 </div>
               </div>
-
               <div className="space-y-4">
                 {selected.testimony && (
                   <div>
