@@ -92,28 +92,7 @@ export default function MemberCarousel({ isAdmin }) {
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Real People, Real Life</p>
           <h2 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Who You'll Meet</h2>
-          {/* Identity Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto mt-10 mb-14">
-            <div className="bg-white border border-border/50 rounded-xl p-5 text-left shadow-sm">
-              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">What We Are</p>
-              <p className="font-body text-sm text-foreground leading-relaxed">A place and platform for life and relationships — with God, and with each other.</p>
-            </div>
-            <div className="bg-white border border-border/50 rounded-xl p-5 text-left shadow-sm">
-              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">What We Are Not</p>
-              <p className="font-body text-sm text-foreground leading-relaxed">A one-person show or a lecture hall. We're here together, not just in rows.</p>
-            </div>
-            <div className="bg-primary rounded-xl p-5 text-left shadow-sm">
-              <p className="font-body text-xs tracking-[0.2em] uppercase text-accent mb-2">Our Belief</p>
-              <p className="font-body text-sm text-primary-foreground leading-relaxed italic">"It's the people, not the place, that are the church."</p>
-            </div>
-          </div>
 
-          {/* Segue into member cards */}
-          <div className="text-center mb-2">
-            <p className="font-body text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
-              These are a few of the people you'll run into on a Sunday morning — neighbours, newcomers, and longtime friends. Click on a card to get to know them more.
-            </p>
-          </div>
         </motion.div>
 
         {/* Carousel */}
