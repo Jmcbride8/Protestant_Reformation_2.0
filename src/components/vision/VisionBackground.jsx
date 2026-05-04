@@ -35,7 +35,7 @@ export default function VisionBackground({ isAdmin }) {
           className="mb-4"
         >
           <p className="font-body text-xs tracking-[0.25em] uppercase text-accent mb-3">Why I Built This</p>
-          <h3 className="font-heading text-2xl text-primary mb-6">The Problem I Saw</h3>
+          <h3 className="font-heading text-2xl text-primary mb-6">The Opportunity I Saw</h3>
           
           <div className="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden bg-muted group/editimg mb-6">
             <EditableImage
