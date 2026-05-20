@@ -58,9 +58,10 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-heading text-lg mb-4">About This Site</h4>
+            <h4 className="font-heading text-lg mb-4">Vision & Design Philosophy</h4>
             <div className="space-y-2 font-body text-sm">
               <Link to="/vision" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Vision & Design Philosophy</Link>
+              <Link to="/features" className="block text-primary-foreground/70 hover:text-primary-foreground transition-colors">Features</Link>
             </div>
           </div>
         </div>
