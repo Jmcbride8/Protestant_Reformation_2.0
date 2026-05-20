@@ -65,7 +65,7 @@ export default function AboutThisSite() {
           className="text-center mb-16"
         >
           <p className="font-body text-sm tracking-[0.3em] uppercase text-accent mb-3">Design Philosophy</p>
-          <h1 className="font-heading text-4xl sm:text-5xl text-primary mb-4">Features</h1>
+          <h1 className="font-heading text-4xl sm:text-5xl text-primary mb-4">About This Site</h1>
           <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
             Every feature exists for a reason. Here's the thinking behind what we built and why.
           </p>
