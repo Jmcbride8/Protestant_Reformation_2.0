@@ -12,9 +12,10 @@ const navLinks = [
 ];
 
 const aboutLinksAll = [
-  { label: 'The Christian Faith', sub: 'History, beliefs & denominations', path: '/the-christian-faith' },
   { label: 'Hope Church', sub: 'Who we are & what we believe', path: '/about' },
   { label: 'Membership', sub: 'Join the Hope Church family', path: '/membership' },
+  { label: 'The Christian Faith', sub: 'History, beliefs & denominations', path: '/the-christian-faith' },
+  { label: 'About This Site', sub: 'Why we built this', path: '/about-this-site' },
 ];
 
 const churchLinksAll = [
