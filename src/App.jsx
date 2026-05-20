@@ -67,7 +67,7 @@ const AuthenticatedApp = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<Church />} />
         <Route path="/the-christian-faith" element={<TheChristianFaith />} />
-        <Route path="/about-this-site" element={<AboutThisSite />} />
+        <Route path="/features" element={<AboutThisSite />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/sermons" element={<FeatureRoute featureKey="page_sermons" isPublic><Sermons /></FeatureRoute>} />
         <Route path="/vision" element={<Vision />} />
